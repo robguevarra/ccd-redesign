@@ -1,0 +1,15 @@
+26Aug, 2013
+
+##### Monday, August 26, 2013
+
+After finally moving into our new facility, I compiled an inventory of dental supplies and equipment that I no longer needed. Estimated net worth of these items based off of comparative sales equates to over $4500.00. Once we were settled into our new office, I contacted Loma Linda School of Dentistry and arranged for a pick-up for my donation. For those other dentists, who do not realize, Loma Linda has international outreach missions of free clinics that are in dire need of dental equipment and supplies. Loma Linda runs these missions through NASDAD (National Association of Seventh-day Adventist Dentists) Should anyone wish to send in a donation please contact them at:  909-558-8187
+
+The following month I was contacted by the director of the Tzu Chi Medical Foundation  about their very first free medical and dental clinic in Orange County. This organization has been operating various mobile clinics throughout Southern California and Mexico for over a decade. I immediately made arrangements so that I would be able to volunteer and donate my services.
+
+Upon arrival on 8/25/2013 in Santa Ana, I noticed that while there were a lot of patients in the waiting area, the numbers were not anywhere near what I am used to experiencing in the free clinics in San Bernardino and Mexico. Perhaps the population in Orange County were not as financially strapped and therefore did not need as many of these free services? I was immediately ushered into the mobile unit and assigned to perform surgical extractions and fillings.
+
+![](https://www.dentisthsu.com/wp-content/uploads/2014/09/MobileClinic-300x225.jpg)
+
+What I felt was nice, was that they assigned 1-2 assistants to help me with my dental surgeries. Normally the doctors at free clinics receive 0 – 1 assistants – so this was a pleasant surprise. These assistants were also volunteers – the lady in the photo is a retired molecular biologist, while the gentleman was an engineer. Because this was Tzu Chi’s  very first free clinic in Orange County, it took the organization almost an hour before we were able to see patients. Therefore we started around 10 am and ended at 2:30 pm. Even though the duration of this free clinic was shortened, I was still able to see about 12 patients, all with procedures such as scaling and root planning, fillings and surgical extractions. In general, I did notice that the oral health of patients here in Santa Ana were definitely in better condition than that of the patients in the San Bernardino and LA counties. However regardless of the conditions of their teeth, all these patients were in need of dental work, and all of them were very grateful that we provided them with our services.
+
+Posted by Dr. Brien Hsu at [1:04 PM](http://www.blog.dentisthsu.com/2013/08/donations-free-clinic-in-orange-county.html)

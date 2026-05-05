@@ -1,0 +1,21 @@
+{
+  "url": "http://2017.dentisthsu.com/images/carecredit2.pdf",
+  "slug": "images-carecredit2-pdf",
+  "scrapedAt": "2026-05-05T08:02:11.136Z",
+  "metadata": {
+    "scrapeId": "019df728-6edd-75d9-9895-b9180a1f6158",
+    "sourceURL": "http://2017.dentisthsu.com/images/carecredit2.pdf",
+    "url": "http://2017.dentisthsu.com/images/carecredit2.pdf",
+    "statusCode": 200,
+    "numPages": 1,
+    "contentType": "application/pdf",
+    "proxyUsed": "basic",
+    "cacheState": "miss",
+    "indexId": "650e46fa-cbed-4dfc-be1b-dff95e33c3f0",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "links": [
+    "http://www.carecredit.com/"
+  ]
+}

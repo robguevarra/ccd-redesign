@@ -1,0 +1,18 @@
+{
+  "url": "https://dentisthsu.com/category-sitemap.xml",
+  "slug": "category-sitemap-xml",
+  "scrapedAt": "2026-05-05T07:41:50.110Z",
+  "metadata": {
+    "scrapeId": "019df716-0a3a-7168-a4fb-b0f1a9c2bf5b",
+    "sourceURL": "https://dentisthsu.com/category-sitemap.xml",
+    "url": "https://dentisthsu.com/category-sitemap.xml",
+    "statusCode": 200,
+    "contentType": "text/xml; charset=UTF-8",
+    "proxyUsed": "basic",
+    "cacheState": "hit",
+    "cachedAt": "2026-05-05T06:12:00.556Z",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "links": []
+}

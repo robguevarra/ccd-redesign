@@ -1,0 +1,9 @@
+24Feb, 2017
+
+##### Sunday, February 26, 2017
+
+[![](https://3.bp.blogspot.com/-mjx8gVrTzvY/WLCpOwX98II/AAAAAAAAAI8/vQmGiD6gqfQMBoLIZGeVUJl8EWR-E9U3wCLcB/s320/ADAF_GKAS_Logo_color_for_print.jpg)](https://3.bp.blogspot.com/-mjx8gVrTzvY/WLCpOwX98II/AAAAAAAAAI8/vQmGiD6gqfQMBoLIZGeVUJl8EWR-E9U3wCLcB/s1600/ADAF_GKAS_Logo_color_for_print.jpg)[![](https://2.bp.blogspot.com/-gEy6Ufcug3E/WLCl-4img2I/AAAAAAAAAIs/UF-lzMZzDN4VzkBFpKRNF18kaD_womrpwCLcB/s320/Kids.jpg)](https://2.bp.blogspot.com/-gEy6Ufcug3E/WLCl-4img2I/AAAAAAAAAIs/UF-lzMZzDN4VzkBFpKRNF18kaD_womrpwCLcB/s1600/Kids.jpg)
+
+On Friday 2/24/2017 I volunteered for the ADA Give Kids a Smile Program at a preschool in Monrovia. Unfortunately I was the only non-staff volunteer dentist to participate. I know for a fact that they were doing mass emails to find other dentists to volunteer – I just feel an indescribable sadness because I was the only person to respond …
+
+We provided oral examinations, oral hygiene instructions, and gift bags for over 72 kids from the ages of 2-5 years old. What I found interesting was that although a few number of kids needed proper oral hygiene instructions, I found no children with existing carious lesions. It was a far cry from 1999-2000 when I was volunteering at the USC Mobile Clinic; back then with those kids over 75% were in need of immediate dental work. Monrovia was obviously a much more affluent area than the cities that we visited with the USC Mobile Clinic. It’s days like these that remind me the stark differences in oral health between the impoverished areas and the more economically developed cities. While some of the reasons are a result of access to care, I believe the majority are the results of financial constraints.
