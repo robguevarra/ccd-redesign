@@ -3,6 +3,7 @@ import './globals.css';
 import { practiceInfo } from '@/content/practice-info';
 import { fontSerif, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/cn';
+import { LenisProvider } from '@/components/lenis-provider';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dentisthsu-redesign.vercel.app'),
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(fontSerif.variable, fontSans.variable)}>
       <body className="antialiased font-sans bg-stone-50 text-stone-800">
-        {children}
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

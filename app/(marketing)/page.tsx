@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { FadeUp } from '@/components/motion/fade-up';
+import { Hero } from '@/components/hero';
 
 const SERVICE_CATEGORIES = [
   {
@@ -52,41 +53,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ─────────── Hero — wow zone ─────────── */}
-      <section className="relative overflow-hidden bg-stone-900 text-stone-50">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--color-stone-700)_0%,_transparent_55%)] opacity-60" />
-        <div className="mx-auto max-w-7xl px-5 md:px-8 pt-24 md:pt-40 pb-32 md:pb-48 relative">
-          <p className="text-xs uppercase tracking-[0.22em] text-stone-400 mb-8">
-            {practiceInfo.brandName} · {practiceInfo.address.city}, CA
-          </p>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.95] max-w-5xl text-stone-50">
-            Considered dentistry,
-            <br />
-            <span className="italic font-light">in {practiceInfo.address.city}</span> since 1999.
-          </h1>
-          <p className="mt-10 max-w-xl text-lg md:text-xl text-stone-300 leading-relaxed">
-            Six doctors. Twenty-five years. Two specialty CT scanners,
-            one digital scanning workflow, and a clinical microscope you'd usually
-            only find at a specialist's office.
-          </p>
-          <div className="mt-12 flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/request-appointment"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-50 text-stone-900 px-8 py-4 text-base font-medium hover:bg-stone-200 transition-colors"
-            >
-              Request appointment
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a
-              href={`tel:${main.tel}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-50 text-stone-50 px-8 py-4 text-base font-medium hover:bg-stone-50 hover:text-stone-900 transition-colors"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              Call {main.number}
-            </a>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* ─────────── Lede / value statement ─────────── */}
       <FadeUp>

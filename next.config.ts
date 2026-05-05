@@ -9,13 +9,15 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
   },
 
-  // Image domains — for now, allow Supabase Storage + the existing
-  // dentisthsu.com domain so we can lazily migrate scraped imagery.
+  // Image domains — Supabase Storage, the legacy dentisthsu.com domain
+  // for migrated imagery, and Unsplash for editorial pitch photography.
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'dentisthsu.com' },
       { protocol: 'https', hostname: '*.dentisthsu.com' },
       { protocol: 'https', hostname: '*.supabase.co' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'plus.unsplash.com' },
     ],
   },
 

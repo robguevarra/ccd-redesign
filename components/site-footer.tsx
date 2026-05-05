@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { practiceInfo } from '@/content/practice-info';
+import { Wordmark } from './wordmark';
 
 export function SiteFooter() {
   const dayLabel = (day: string) => day.slice(0, 3);
@@ -8,10 +9,8 @@ export function SiteFooter() {
     <footer className="bg-stone-900 text-stone-200 mt-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <div className="font-serif text-2xl tracking-tight text-stone-50">
-            {practiceInfo.brandName}
-          </div>
-          <p className="mt-4 text-sm text-stone-400 leading-relaxed">
+          <Wordmark variant="dark" className="text-stone-50 h-9" />
+          <p className="mt-6 text-sm text-stone-400 leading-relaxed">
             Considered dentistry in {practiceInfo.address.city}, since 1999. Led by Dr. Brien Hsu, DDS.
           </p>
         </div>

@@ -8,6 +8,7 @@ import {
   services,
 } from '@/content/services';
 import { practiceInfo } from '@/content/practice-info';
+import { TmjSignature } from '@/components/tmj/tmj-signature';
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -43,7 +44,7 @@ export default async function ServiceDetailPage({
 
   // Wow-zone signature variant for TMJ and any future signature service.
   if (service.signature) {
-    return <SignatureServiceLayout service={service} related={related} mainPhone={main} />;
+    return <TmjSignature service={service} />;
   }
 
   return <UtilityServiceLayout service={service} related={related} mainPhone={main} />;
@@ -131,9 +132,9 @@ function UtilityServiceLayout({
   );
 }
 
-/* --- Wow-zone signature service detail layout (TMJ) ----------------- */
+/* --- Legacy signature variant (kept for reference; not used) -------- */
 
-function SignatureServiceLayout({
+function _LegacySignatureLayout({
   service,
   related,
   mainPhone,

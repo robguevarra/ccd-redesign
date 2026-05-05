@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
+import { Wordmark } from './wordmark';
 
 const NAV_ITEMS = [
   { href: '/services', label: 'Services' },
@@ -33,11 +34,8 @@ export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 md:px-8 md:py-5">
-        <Link
-          href="/"
-          className="font-serif text-xl md:text-2xl tracking-tight font-medium"
-        >
-          {practiceInfo.brandName}
+        <Link href="/" className="block" aria-label={`${practiceInfo.brandName} home`}>
+          <Wordmark variant={variant} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-sm">
