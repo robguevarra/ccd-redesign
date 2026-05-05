@@ -27,13 +27,20 @@ A **pitch website** — a live, deployed reimagining of [dentisthsu.com](https:/
 | Phase 1 detail spec | ✅ Written, approved 2026-05-05 — [P1 spec](docs/superpowers/specs/2026-05-05-dentisthsu-phase-1-discovery-audit.md) |
 | Phase 1 implementation plan | ✅ Written 2026-05-05 — [P1 plan](docs/superpowers/plans/2026-05-05-phase-1-discovery-audit-pipeline.md) |
 | **Phase 1 execution** | **✅ Shipped 2026-05-05** — [`docs/audit/`](docs/audit/) |
-| Phase 2–5 detail specs | ⛔ Not started — P2 (IA + Content Strategy) is next |
+| **Phase 2 detail spec** | **✅ Written, approved 2026-05-05** — [P2 spec](docs/superpowers/specs/2026-05-05-dentisthsu-phase-2-ia-content-strategy.md) |
+| **Phase 2 implementation plan** | **✅ Written 2026-05-05** — [P2 plan](docs/superpowers/plans/2026-05-05-phase-2-ia-content-strategy.md) |
+| **Phase 2 execution** | **✅ Shipped 2026-05-05** — [`docs/ia/`](docs/ia/), [`content/`](content/) |
+| Phase 3 — Visual & Brand Direction | ⏳ Next. **Invoke `ui-ux-pro-max` skill** when starting (see decisions log). |
+| Phase 4–5 detail specs | ⛔ Not started |
 | Code (Next.js front-end) | ⛔ Not started — begins in P4 |
 | Vercel project | ⛔ Not created yet — created in P4 |
 | Supabase project | ⛔ Not created yet — created in P4 |
 | Firecrawl API key | ✅ In `.env.local` (gitignored) |
 | Discovery pipeline | ✅ `scripts/p1-discovery/` — 7 cache-aware steps + run-all + teardown-captures |
-| Branch | `phase-1-discovery` (20 commits ahead of `main`) |
+| Content schemas | ✅ `content/schemas.ts` — 8 typed contracts (Service, Doctor, BlogPost, …, Redirect) |
+| Practice info singleton | ✅ `content/practice-info.ts` — Comfort Care Dental, real address/phones/socials |
+| Redirect map | ✅ `content/redirects.ts` — ~110 rules (16 service slug normalizations + ~50 page consolidations + ~40 410 Gone + 3 subdomains) |
+| Branch | `phase-1-discovery` (29+ commits ahead of `main`; will be merged or renamed when P2 closes) |
 
 ## Phase 1 deliverables
 
@@ -49,6 +56,22 @@ Source-of-truth artifacts in `source/`:
 - `sitemap.json` (184 URLs), `practice-info.json`, `image-index.json` (221 unique images)
 - `pages/*.{md,json}` (181 scraped pages — committed)
 - `images/`, `screenshots/`, `lighthouse/`, `axe/`, `teardowns/` (binaries — gitignored except `teardowns/` for the pitch leave-behind)
+
+## Phase 2 deliverables
+
+IA documents in [`docs/ia/`](docs/ia/):
+
+- **[sitemap.md](docs/ia/sitemap.md)** — 17 marketing routes + 4 admin routes; old → new IA changes
+- **[services-taxonomy.md](docs/ia/services-taxonomy.md)** — 4 categories, ~20 services with slugs
+- **[page-templates.md](docs/ia/page-templates.md)** — 6 templates + 1 admin template with variants
+- **[redirects.md](docs/ia/redirects.md)** — human-readable mirror of `content/redirects.ts`
+- **[admin-scope.md](docs/ia/admin-scope.md)** — CMS scope + workflow + security posture
+
+Typed code in [`content/`](content/):
+
+- **[schemas.ts](content/schemas.ts)** — 8 TypeScript contracts (Service, Doctor, BlogPost, Review, AppointmentRequest, PracticeInfo, MediaAsset, Redirect)
+- **[practice-info.ts](content/practice-info.ts)** — singleton with Comfort Care Dental brand, real Rancho Cucamonga address, 3 phones, 4 socials
+- **[redirects.ts](content/redirects.ts)** — ~110 typed redirect rules consumable by `vercel.ts` in P4
 
 ## Stack (locked)
 

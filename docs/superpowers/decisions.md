@@ -4,6 +4,40 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 
 ---
 
+## 2026-05-05 — P2 deliverables shipped
+
+**Scope:** Phase 2 (IA + Content Strategy) acceptance.
+**Decision:** All P2 §11 acceptance criteria met. Five IA documents committed under [`docs/ia/`](../ia/) and three typed code files under [`content/`](../../content/), all type-checked clean against `tsconfig.json`.
+
+**Locked decisions carried forward:**
+
+- **Brand name:** "Comfort Care Dental" (replaces dentisthsu.com / Hsu's Dental Practice — dual identities resolved). Domain stays `dentisthsu.com`. Logo + wordmark designed in P3.
+- **Sitemap:** ~17 marketing routes + 4 admin routes. Added `/technology` page (audit found Dr. Hsu's strongest differentiator — CBCT, Trios, Zeiss microscope — was buried). 27+ testimonial URLs collapsed into single `/reviews` page.
+- **Service taxonomy:** 4 categories — General Dentistry (12 services), Cosmetic (2), Specialty (4 incl. TMJ as wow-zone signature), Orthodontics (2). ~20 services total.
+- **Page templates:** 6 public templates (Home / Service / Doctor / Editorial / Utility / Blog) + 1 admin template.
+- **CMS scope:** `blog_posts` only editable via admin. Services, doctors, technology, reviews remain code-versioned (MDX/JSON). Single dentist account for the demo.
+- **Content schemas:** 8 TypeScript types in `content/schemas.ts` covering Service, Doctor, BlogPost, Review, AppointmentRequest, PracticeInfo, MediaAsset, Redirect.
+- **Practice info:** populated from curated P1 facts. Address `11458 Kenyon Way, Rancho Cucamonga, CA 91730` (zip flagged for confirmation). 3 phones (toll-free + 2 local). Real socials (Facebook, Yelp, Twitter @drbrienhsu). Email = `null` per audit finding.
+- **Redirect map:** ~110 rules in `content/redirects.ts`. Service slug normalization (16), page consolidation (~50), 410 Gone for zombie content (~40), subdomain consolidation handled at DNS level (3).
+
+**Key carry-forward issues:**
+- Suite number on the practice address still TBD (audit found "Suite" but no number).
+- Saturday hours guessed at 8–13:00; needs confirmation.
+- Personal/family blog content disposition deferred to v2 — pitch redirects them to `/about` for now.
+
+**Reference:** [docs/ia/](../ia/), [content/](../../content/), [P2 detail spec](specs/2026-05-05-dentisthsu-phase-2-ia-content-strategy.md), [P2 plan](../plans/2026-05-05-phase-2-ia-content-strategy.md)
+
+---
+
+## 2026-05-05 — P3 visual phase: invoke `ui-ux-pro-max` skill
+
+**Scope:** Future P3 (Visual & Brand Direction) execution.
+**Decision:** When P3 begins, invoke the `ui-ux-pro-max` skill (installed in `~/.claude/plugins/cache/ui-ux-pro-max-skill/`). It provides 161 color palettes, 57 font pairings, 50+ visual styles, and design-system patterns — directly aligned with P3 outputs (mood board, type pairing, color palette, motion language, hero comps, logo direction).
+**Rationale:** Skill explicitly skips backend / content-architecture work, so P2 was wrong phase. P3 is its sweet spot. The skill's `brand` and `design-system` sub-skills are also direct fits.
+**Why this is logged:** so a future session reading the decisions log knows to invoke it at the right moment without re-discovering the question.
+
+---
+
 ## 2026-05-05 — P1 deliverables shipped
 
 **Scope:** Phase 1 (Discovery & Audit) acceptance.
