@@ -17,9 +17,15 @@ export interface CuratedImage {
 const u = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
-/* ---- Service category covers (used on /services overview) ---- */
+/* ---- Service category covers (used on /services overview) ----
+ *
+ * Each category cover may be either a CuratedImage or `null` (renders as a
+ * typography-led gradient placeholder). Covers are nullable on purpose
+ * because Unsplash content for our queries is unreliable — better to show
+ * an honest placeholder than off-brand stock photography.
+ */
 
-export const serviceCategoryCovers: Record<string, CuratedImage> = {
+export const serviceCategoryCovers: Record<string, CuratedImage | null> = {
   general: {
     src: u('1606811971618-4486d14f3f99'),
     alt: 'Hands holding a precision dental tool, soft daylight',
@@ -30,16 +36,10 @@ export const serviceCategoryCovers: Record<string, CuratedImage> = {
     alt: 'A bright editorial portrait of an open mouth being examined',
     credit: 'Daniel Frank / Unsplash',
   },
-  specialty: {
-    src: u('1551601651-2a8555f1a136'),
-    alt: 'A clinician in PPE working with focused light',
-    credit: 'CDC / Unsplash',
-  },
-  orthodontics: {
-    src: u('1622253692010-333f2da6031d'),
-    alt: 'A close-up of orthodontic work',
-    credit: 'Diana Polekhina / Unsplash',
-  },
+  // Specialty + Orthodontics use gradient placeholders — the available
+  // Unsplash stock content for these categories isn't on-brand.
+  specialty: null,
+  orthodontics: null,
 };
 
 /* ---- Hero supporting / section break imagery ---- */

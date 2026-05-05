@@ -39,7 +39,7 @@ export default function ServicesPage() {
 
       {ALL_CATEGORIES.map((cat, idx) => {
         const items = getServicesByCategory(cat);
-        const cover = serviceCategoryCovers[cat]!;
+        const cover = serviceCategoryCovers[cat];
         const isAlt = idx % 2 === 1;
         return (
           <section
@@ -56,22 +56,39 @@ export default function ServicesPage() {
               >
                 <FadeUp className="lg:col-span-5 [direction:ltr]">
                   <div className="relative aspect-[4/5] overflow-hidden bg-stone-200">
-                    <Image
-                      src={cover.src}
-                      alt={cover.alt}
-                      fill
-                      sizes="(min-width: 1024px) 40vw, 100vw"
-                      className="object-cover grayscale-[0.65] group-hover:grayscale-0 transition-all duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/30 to-transparent" />
-                    <div className="absolute bottom-6 left-6 text-stone-50">
-                      <p className="text-[10px] uppercase tracking-[0.24em] text-stone-300 mb-1">
-                        {String(idx + 1).padStart(2, '0')}
-                      </p>
-                      <p className="font-serif text-3xl">
-                        {SERVICE_CATEGORY_LABELS[cat]}
-                      </p>
-                    </div>
+                    {cover ? (
+                      <>
+                        <Image
+                          src={cover.src}
+                          alt={cover.alt}
+                          fill
+                          sizes="(min-width: 1024px) 40vw, 100vw"
+                          className="object-cover grayscale-[0.65] group-hover:grayscale-0 transition-all duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 to-transparent" />
+                        <div className="absolute bottom-6 left-6 text-stone-50">
+                          <p className="text-[10px] uppercase tracking-[0.24em] text-stone-300 mb-1">
+                            {String(idx + 1).padStart(2, '0')}
+                          </p>
+                          <p className="font-serif text-3xl">
+                            {SERVICE_CATEGORY_LABELS[cat]}
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Editorial gradient placeholder — same treatment as TMJ */}
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(245,236,219,0.65),transparent_55%),radial-gradient(ellipse_at_70%_85%,rgba(184,85,58,0.20),transparent_55%)]" />
+                        <div className="absolute bottom-6 left-6 text-stone-900">
+                          <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-1">
+                            {String(idx + 1).padStart(2, '0')}
+                          </p>
+                          <p className="font-serif text-3xl italic font-light">
+                            {SERVICE_CATEGORY_LABELS[cat]}
+                          </p>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </FadeUp>
 
