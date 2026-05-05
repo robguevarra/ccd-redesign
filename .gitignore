@@ -6,9 +6,11 @@ node_modules/
 
 # Build output
 .next/
+.turbo/
 out/
 build/
 dist/
+next-env.d.ts
 
 # Environment
 .env

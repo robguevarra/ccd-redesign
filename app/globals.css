@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Fraunces', Georgia, ui-serif, serif;
+  --font-sans: 'Geist', system-ui, sans-serif;
+
+  /* Editorial neutrals — warm-light surface per master spec §5 */
+  --color-stone-50: #faf9f7;
+  --color-stone-100: #f4f1ec;
+  --color-stone-200: #e8e3da;
+  --color-stone-300: #d6cfc1;
+  --color-stone-400: #a89f8e;
+  --color-stone-500: #7a7263;
+  --color-stone-600: #5a5346;
+  --color-stone-700: #3d3830;
+  --color-stone-800: #292621;
+  --color-stone-900: #1a1815;
+
+  /* Accent — TBD in P3; placeholder warm terracotta */
+  --color-accent-500: #b8553a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-stone-50);
+  color: var(--color-stone-800);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
