@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { tmjImages } from '@/content/photography';
 import { practiceInfo } from '@/content/practice-info';
 import type { Service } from '@/content/schemas';
 
@@ -18,19 +16,16 @@ const SECTIONS = [
     label: 'How we evaluate',
     body:
       'Comprehensive bite analysis, jaw-joint imaging via 3D Cone Beam CT, muscle palpation, and a careful review of headache, ear, and sleep symptoms. Most TMJ cases are misdiagnosed as ear infections or tension headaches first.',
-    image: tmjImages.scan,
   },
   {
     label: 'How we treat',
     body:
       'Custom splint therapy, bite equilibration, physical therapy coordination, and targeted muscle work. We avoid surgical intervention except as a last resort and have not had to refer for surgery in the majority of our cases.',
-    image: tmjImages.treatment,
   },
   {
     label: 'What patients tell us',
     body:
       "Most TMJ patients have been to multiple practices before us. The shared experience: someone is finally listening to the whole symptom picture, not just the part of it that's in the mouth.",
-    image: tmjImages.consultation,
   },
 ];
 
@@ -52,22 +47,17 @@ export function TmjSignature({ service }: TmjSignatureProps) {
       {/* ─────────── Pinned cinematic hero ─────────── */}
       <section
         ref={heroRef}
-        className="relative h-[120svh] bg-stone-950 text-stone-50 overflow-hidden"
+        className="relative isolate h-[120svh] bg-stone-950 text-stone-50 overflow-hidden"
       >
         <motion.div
           style={reduced ? undefined : { scale: heroScale, opacity: heroOpacity }}
           className="sticky top-0 h-screen w-full"
         >
-          <Image
-            src={tmjImages.hero.src}
-            alt={tmjImages.hero.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/70 to-transparent" />
+          {/* Editorial gradient — replaces photo placeholder until v2 shoot.
+              Two radial accents on near-black for depth without competing
+              with the typography. */}
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_30%,rgba(245,236,219,0.10),transparent_55%),radial-gradient(ellipse_at_15%_80%,rgba(184,85,58,0.10),transparent_60%)]" />
+          <div className="absolute inset-0 -z-10 bg-stone-950" />
 
           <motion.div
             style={reduced ? undefined : { y: titleY }}
@@ -142,20 +132,10 @@ function Section({
   sec: (typeof SECTIONS)[number];
   index: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
-
   const isAlt = index % 2 === 1;
 
   return (
     <section
-      ref={ref}
       className={`py-24 md:py-36 ${isAlt ? 'bg-stone-100/60' : 'bg-stone-50'}`}
     >
       <div
@@ -164,19 +144,14 @@ function Section({
         }`}
       >
         <div className="lg:col-span-7 [direction:ltr]">
-          <div className="relative aspect-[4/3] overflow-hidden bg-stone-300">
-            <motion.div
-              style={reduced ? undefined : { y: imageY, scale: imageScale }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={sec.image.src}
-                alt={sec.image.alt}
-                fill
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                className="object-cover"
-              />
-            </motion.div>
+          <div className="relative aspect-[4/3] overflow-hidden bg-stone-200 flex items-end p-10 md:p-14">
+            {/* Editorial gradient placeholder. Replaced with the practice's
+                own photo session in v2. */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(245,236,219,0.6),transparent_55%),radial-gradient(ellipse_at_70%_80%,rgba(184,85,58,0.18),transparent_55%)]" />
+            <div className="absolute inset-0 bg-stone-200 -z-10" />
+            <p className="relative font-serif text-3xl md:text-5xl text-stone-900 italic font-light leading-[1.1] max-w-md">
+              {sec.label}.
+            </p>
           </div>
         </div>
         <div className="lg:col-span-5 [direction:ltr]">

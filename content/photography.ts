@@ -56,7 +56,7 @@ export const editorialPhotos = {
     credit: 'Quang Tri Nguyen / Unsplash',
   } satisfies CuratedImage,
   cbctScanner: {
-    src: u('1583912267550-3b9e6e8b0ff9'),
+    src: u('1576091160550-2173dba999ef'),
     alt: '3D imaging equipment in a clinical setting',
     credit: 'NCI / Unsplash',
   } satisfies CuratedImage,
@@ -81,12 +81,12 @@ export const editorialPhotos = {
 
 export const tmjImages = {
   hero: {
-    src: u('1606811951341-6b5f59d1bd44'),
-    alt: 'A patient profile showing the jawline area',
-    credit: 'Diana Polekhina / Unsplash',
+    src: u('1559757148-5c350d0d3c56', 2400),
+    alt: 'A patient portrait, editorial framing',
+    credit: 'Christina @ wocintechchat / Unsplash',
   } satisfies CuratedImage,
   scan: {
-    src: u('1583912267550-3b9e6e8b0ff9'),
+    src: u('1576091160550-2173dba999ef'),
     alt: 'A 3D dental imaging scan visualization',
     credit: 'NCI / Unsplash',
   } satisfies CuratedImage,
