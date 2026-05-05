@@ -44,16 +44,16 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[100svh] overflow-hidden bg-stone-950 text-stone-50"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-stone-950 text-stone-50"
       aria-label="Hero"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_70%_20%,rgba(245,236,219,0.18),transparent_55%),radial-gradient(ellipse_at_15%_80%,rgba(184,85,58,0.12),transparent_55%)]" />
 
-      {/* 3D Canvas — pinned to the right two-thirds on desktop, centered on mobile */}
+      {/* 3D Canvas — pinned to the right half on desktop, full-bleed on mobile (low opacity) */}
       <motion.div
         style={reduced ? undefined : { opacity: canvasOpacity, y: canvasY }}
-        className="absolute inset-0 -z-10 md:left-1/3 pointer-events-none"
+        className="absolute inset-0 -z-10 md:left-1/2 pointer-events-none opacity-50 md:opacity-100"
       >
         <HeroCanvas />
       </motion.div>
@@ -71,9 +71,9 @@ export function Hero() {
 
         <motion.div
           style={reduced ? undefined : { scale: titleScale, opacity: titleOpacity }}
-          className="max-w-5xl"
+          className="max-w-3xl md:max-w-2xl lg:max-w-3xl"
         >
-          <h1 className="font-serif text-[clamp(3rem,9vw,9rem)] leading-[0.92] tracking-tighter font-light">
+          <h1 className="font-serif text-[clamp(2.75rem,7vw,7rem)] leading-[0.95] tracking-tighter font-light">
             <WordReveal words={HEADLINE_LINE_1} />
             <br />
             <WordReveal

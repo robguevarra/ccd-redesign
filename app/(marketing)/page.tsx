@@ -91,25 +91,24 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-px md:grid-cols-2 lg:grid-cols-4 bg-stone-300">
-            {SERVICE_CATEGORIES.map((cat, i) => (
-              <FadeUp key={cat.label} delay={i * 0.07} className="contents">
-                <Link
-                  href={cat.href}
-                  className="group bg-stone-50 p-8 md:p-10 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[280px]"
-                >
-                  <h3 className="font-serif text-2xl md:text-3xl tracking-tight text-stone-900">
-                    {cat.label}
-                  </h3>
-                  <div className="mt-8">
-                    <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                      {cat.description}
-                    </p>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
-                      Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
-              </FadeUp>
+            {SERVICE_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.label}
+                href={cat.href}
+                className="group bg-stone-50 p-8 md:p-10 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[280px]"
+              >
+                <h3 className="font-serif text-2xl md:text-3xl tracking-tight text-stone-900">
+                  {cat.label}
+                </h3>
+                <div className="mt-8">
+                  <p className="text-stone-600 text-sm leading-relaxed mb-6">
+                    {cat.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
+                    Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

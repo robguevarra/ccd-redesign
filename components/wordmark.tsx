@@ -2,20 +2,16 @@ import { cn } from '@/lib/cn';
 
 interface WordmarkProps {
   className?: string;
-  /** Accessible label override. Default: brand name. */
   ariaLabel?: string;
-  /** Color theme. */
   variant?: 'light' | 'dark';
 }
 
 /**
  * SVG wordmark for Comfort Care Dental. Inline SVG so it scales crisply at
- * any size and inherits its color from CSS — no PNG raster, no Google Font
- * fallback flash on load.
+ * any size and inherits color via CSS — no PNG raster, no font fallback flash.
  *
- * Composed of two glyph rows with a deliberate typographic conceit: an italic
- * "Care" mark sits between the roman "Comfort" and "Dental." That italic
- * pivot is the visual signature.
+ * Composed using explicit tspan x positioning so the layout is deterministic
+ * and never truncates, regardless of font availability.
  */
 export function Wordmark({
   className,
@@ -26,28 +22,29 @@ export function Wordmark({
 
   return (
     <svg
-      viewBox="0 0 240 40"
+      viewBox="0 0 360 44"
       xmlns="http://www.w3.org/2000/svg"
       aria-label={ariaLabel}
       role="img"
-      className={cn('inline-block h-7 md:h-8 w-auto', className)}
+      className={cn('inline-block h-7 md:h-8 w-auto select-none', className)}
       fill="none"
     >
-      <text
-        x="0"
-        y="29"
+      <g
         fontFamily="var(--font-serif), Georgia, serif"
-        fontSize="28"
-        fontWeight="400"
+        fontSize="32"
         letterSpacing="-0.02em"
         fill={fill}
       >
-        Comfort
-        <tspan fontStyle="italic" fontWeight="300" dx="6">
+        <text x="0" y="32" fontWeight="400">
+          Comfort
+        </text>
+        <text x="125" y="32" fontWeight="300" fontStyle="italic">
           Care
-        </tspan>
-        <tspan dx="6">Dental</tspan>
-      </text>
+        </text>
+        <text x="200" y="32" fontWeight="400">
+          Dental
+        </text>
+      </g>
     </svg>
   );
 }

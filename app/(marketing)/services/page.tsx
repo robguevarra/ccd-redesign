@@ -90,37 +90,30 @@ export default function ServicesPage() {
 
               {/* Service list — minimal, editorial */}
               <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
-                {items.map((s, i) => (
-                  <FadeUp
-                    key={s.slug}
-                    delay={i * 0.04}
-                    distance={8}
-                    className="contents"
-                  >
-                    <li className="bg-stone-50">
-                      <Link
-                        href={`/services/${s.slug}`}
-                        className="group relative block p-6 md:p-8 hover:bg-stone-100 transition-colors h-full"
-                      >
-                        <div className="flex items-start justify-between gap-4 mb-3">
-                          <h3 className="font-serif text-xl md:text-2xl text-stone-900">
-                            {s.name}
-                          </h3>
-                          {s.signature && (
-                            <span className="shrink-0 text-[9px] uppercase tracking-[0.22em] text-stone-50 bg-stone-900 px-2 py-1 rounded-full">
-                              Signature
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                          {s.summary}
-                        </p>
-                        <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
-                          Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                        </span>
-                      </Link>
-                    </li>
-                  </FadeUp>
+                {items.map((s) => (
+                  <li key={s.slug} className="bg-stone-50">
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="group relative block p-6 md:p-8 hover:bg-stone-100 transition-colors h-full"
+                    >
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <h3 className="font-serif text-xl md:text-2xl text-stone-900">
+                          {s.name}
+                        </h3>
+                        {s.signature && (
+                          <span className="shrink-0 text-[9px] uppercase tracking-[0.22em] text-stone-50 bg-stone-900 px-2 py-1 rounded-full">
+                            Signature
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-stone-600 text-sm leading-relaxed mb-6">
+                        {s.summary}
+                      </p>
+                      <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
+                        Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      </span>
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
