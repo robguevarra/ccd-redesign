@@ -40,3 +40,9 @@ supabase/.temp/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# P1 discovery — heavy binaries gitignored, indexes committed
+source/images/
+source/screenshots/
+source/lighthouse/
+source/axe/

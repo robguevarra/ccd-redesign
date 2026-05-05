@@ -1,0 +1,32 @@
+{
+  "name": "dentisthsu-redesign",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "p1:discover": "tsx scripts/p1-discovery/01-discover.ts",
+    "p1:scrape": "tsx scripts/p1-discovery/02-scrape.ts",
+    "p1:globals": "tsx scripts/p1-discovery/03-extract-globals.ts",
+    "p1:images": "tsx scripts/p1-discovery/04-images.ts",
+    "p1:screenshots": "tsx scripts/p1-discovery/05-screenshots.ts",
+    "p1:lighthouse": "tsx scripts/p1-discovery/06-lighthouse.ts",
+    "p1:axe": "tsx scripts/p1-discovery/07-axe.ts",
+    "p1:run-all": "tsx scripts/p1-discovery/run-all.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@types/node": "^24.0.0",
+    "@mendable/firecrawl-js": "^1.20.0",
+    "lighthouse": "^12.3.0",
+    "playwright": "^1.49.0",
+    "sharp": "^0.34.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0",
+    "zod": "^3.24.0"
+  }
+}
