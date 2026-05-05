@@ -48,3 +48,5 @@ source/images/
 source/screenshots/
 source/lighthouse/
 source/axe/
+.vercel
+.env*.local

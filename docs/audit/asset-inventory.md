@@ -118,3 +118,5 @@ Estimate: 30–45 minutes of manual review against the live site + image preview
 ## Tooling note
 
 Verdicts above were generated via inline `jq` heuristics against `source/image-index.json`. For programmatic re-runs after manual curation, the project's `scripts/p1-discovery/` toolchain can be extended with an `08-classify-images.ts` step in v2.
+
+g.
