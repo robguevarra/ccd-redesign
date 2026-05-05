@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
 
 export interface AppointmentSubmitResult {
   ok: boolean;
@@ -41,12 +42,32 @@ export async function submitAppointmentRequest(
     };
   }
 
-  // Stub for the pitch demo: log the request server-side. Wired to Supabase
-  // + Resend in a later commit; current state intentionally doesn't depend on
-  // those to keep the demo deployable independent of backend status.
-  console.log('[appointment-request]', parsed.data);
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase.from('appointment_requests').insert({
+      name: parsed.data.name,
+      phone: parsed.data.phone,
+      email: parsed.data.email || null,
+      preferred_time: parsed.data.preferredTime,
+      notes: parsed.data.notes || null,
+    });
 
-  // Simulate a small RTT so the UX feels real.
-  await new Promise((r) => setTimeout(r, 400));
-  return { ok: true };
+    if (error) {
+      console.error('[appointment-request] supabase error:', error);
+      return {
+        ok: false,
+        error:
+          'Something went wrong on our end. Please call us directly — we\'d love to hear from you.',
+      };
+    }
+
+    return { ok: true };
+  } catch (e) {
+    console.error('[appointment-request] unexpected error:', e);
+    return {
+      ok: false,
+      error:
+        'Something went wrong on our end. Please call us directly — we\'d love to hear from you.',
+    };
+  }
 }

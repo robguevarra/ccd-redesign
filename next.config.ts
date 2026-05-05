@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   // Strict mode is the default in Next 15+, but explicit:
   reactStrictMode: true,
 
+  // Pin Turbopack to the project root so it ignores parent-dir lockfiles.
+  turbopack: {
+    root: process.cwd(),
+  },
+
   // Image domains — for now, allow Supabase Storage + the existing
   // dentisthsu.com domain so we can lazily migrate scraped imagery.
   images: {
