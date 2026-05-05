@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { practiceInfo } from '@/content/practice-info';
 
 // Lazy-load the 3D Canvas client-side so we don't ship Three.js to first paint.
-const HeroCanvas = dynamic(
+const HeroCanvas = dynamic<{ scrollProgress: ReturnType<typeof useScroll>['scrollYProgress'] }>(
   () => import('./hero-canvas').then((m) => m.HeroCanvas),
   {
     ssr: false,
@@ -55,7 +55,7 @@ export function Hero() {
         style={reduced ? undefined : { opacity: canvasOpacity, y: canvasY }}
         className="absolute inset-0 -z-10 md:left-1/2 pointer-events-none opacity-50 md:opacity-100"
       >
-        <HeroCanvas />
+        <HeroCanvas scrollProgress={scrollYProgress} />
       </motion.div>
 
       {/* Foreground composition */}
