@@ -279,7 +279,7 @@ Implemented in P4 via `vercel.ts` route config. The map below is the source of t
 | `/services-removableorthodontics-html` | `/services/removable-orthodontics` | 301 | Slug normalization |
 | `/services-fixedbridges-html` | `/services/fixed-bridges` | 301 | Slug normalization |
 | `/services-compositefillings-html` | `/services/composite-fillings` | 301 | Slug normalization |
-| `/services-laserdentistry-html` | (deprecated; merged into `/services/oral-hygiene` or `/services/periodontal-treatment`) | 301 | Service consolidation |
+| `/services-laserdentistry-html` | `/services/periodontal-treatment` | 301 | Laser dentistry consolidates into periodontal (most common clinical use) |
 | `/services-orthodontics-html` | `/services/orthodontics` | 301 | Slug normalization |
 | `/services-oralhygiene-html` | `/services/oral-hygiene` | 301 | Slug normalization |
 | `/services-periodontaltreatment-html` | `/services/periodontal-treatment` | 301 | Slug normalization |
