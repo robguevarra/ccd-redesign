@@ -1,0 +1,28 @@
+{
+  "url": "http://2017.dentisthsu.com/blog.html",
+  "slug": "blog-html",
+  "scrapedAt": "2026-05-05T06:25:30.255Z",
+  "metadata": {
+    "robots": "index, follow",
+    "title": "Dentist Rancho Cucamonga Blog | Alta Loma Dentist, Upland, & Fontana | Dr. Brien Hsu DDS | Comfort Care Dental",
+    "description": "This is our blog page, ",
+    "scrapeId": "019df6cf-ff98-735b-a29d-f1faced63bdc",
+    "sourceURL": "http://2017.dentisthsu.com/blog.html",
+    "url": "http://2017.dentisthsu.com/blog.html",
+    "statusCode": 200,
+    "contentType": "text/html",
+    "timezone": "America/New_York",
+    "proxyUsed": "basic",
+    "cacheState": "miss",
+    "indexId": "42398552-0e9b-412d-8a66-65749364eaae",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "links": [
+    "http://www.blog.dentisthsu.com/",
+    "http://www.familyblog.dentisthsu.com/",
+    "http://dentistfontana-ca.com/",
+    "http://dentistontario-ca.com/",
+    "http://www.dentistupland-ca.com/"
+  ]
+}

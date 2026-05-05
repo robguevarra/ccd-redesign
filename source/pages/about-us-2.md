@@ -1,0 +1,9 @@
+## About Comfort Care Dental
+
+At Comfort Care Dental, we know that the feel of the needle and the sound of the drill are the two most feared elements of dentistry. It’s why our doctor employs a unique technique to make his injections practically painless. In fact many of our young children patients have no clue that they have had an injection, until their procedure is completed and they are out the door – that’s when the child’s eyes grow big when they find out that they already had the injection and didn’t even know it.
+
+Clean TeethAfraid of the high-pitched sound of the drill? Not a problem. When Dr. Hsu took over the practice in 2002, he became the first dental office in Rancho Cucamonga and San Bernardino county to spare no expenses and change out all his dental drills to the more advanced electric handpieces. . . just so patients wouldn’t have to hear the high-pitched sound coming out of the air turbine handpieces. It’s unfortunate that even today, over 95% of all dentists still use those terrible sounding air turbine drills.
+
+Still afraid of hearing the sounds of teeth or metal being drilled on . . . we can offer conscious sedation, nitrous sedation, and/or movies with headphones to keep our patients at ease. Our staff and doctor are very well trained in taking care of phobic patients – we have families who continue their dental visits with us even though they have moved out of the Rancho Cucamonga, Fontana, Upland, and other local areas. They now commute from as far as San Francisco, Arizona, Texas, Nevada, and all over Orange and LA county.
+
+![](https://www.dentisthsu.com/wp-content/uploads/2016/05/ToothMirror-300x251.jpg)

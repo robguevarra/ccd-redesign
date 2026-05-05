@@ -1,0 +1,59 @@
+{
+  "url": "https://dentisthsu.com/doctors",
+  "slug": "doctors",
+  "scrapedAt": "2026-05-05T06:14:26.770Z",
+  "metadata": {
+    "og:site_name": "Dr. Brien Hsu",
+    "twitter:site": "@drbrienhsu",
+    "og:title": "Doctors Archive - Dr. Brien Hsu",
+    "msapplication-TileColor": "#212c43",
+    "og:locale": "en_US",
+    "language": "en",
+    "ogUrl": "https://dentisthsu.com/doctors/",
+    "ogLocale": "en_US",
+    "generator": [
+      "WordPress 6.4.8",
+      "Powered by WPBakery Page Builder - drag and drop page builder for WordPress.",
+      "Powered by Slider Revolution 6.6.20 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface."
+    ],
+    "apple-mobile-web-app-title": "Dr. Brien Hsu",
+    "application-name": "Dr. Brien Hsu",
+    "ogSiteName": "Dr. Brien Hsu",
+    "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    "twitter:card": "summary_large_image",
+    "msapplication-TileImage": "https://dentisthsu.com/wp-content/uploads/2018/02/cropped-CCD-logo-050610-final-web-lg1600-270x270.png",
+    "position": [
+      "1",
+      "2"
+    ],
+    "url": "https://dentisthsu.com/doctors/",
+    "og:url": "https://dentisthsu.com/doctors/",
+    "title": "Doctors Archive - Dr. Brien Hsu",
+    "ogTitle": "Doctors Archive - Dr. Brien Hsu",
+    "viewport": "width=device-width, initial-scale=1",
+    "og:type": "website",
+    "favicon": "https://dentisthsu.com/wp-content/uploads/2018/02/cropped-CCD-logo-050610-final-web-lg1600-32x32.png",
+    "scrapeId": "019df6c5-ec43-70a3-96ab-99e439f6103f",
+    "sourceURL": "https://dentisthsu.com/doctors",
+    "statusCode": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "timezone": "America/New_York",
+    "proxyUsed": "basic",
+    "cacheState": "miss",
+    "indexId": "cbb6f782-64fb-42d2-8f55-ac2aadcc5aa1",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "links": [
+    "https://dentisthsu.com/doctors/#",
+    "https://dentisthsu.com/doctors/dr-brien-hsu/",
+    "https://dentisthsu.com/section/dental/",
+    "https://dentisthsu.com/section/medical/",
+    "https://dentisthsu.com/doctors/dr-robert-sharobiem/",
+    "https://dentisthsu.com/doctors/dr-serena-hsu/",
+    "https://dentisthsu.com/doctors/dr-rachel-lim/",
+    "https://dentisthsu.com/doctors/dr-earlene-milone-2/",
+    "https://dentisthsu.com/doctors/dr-angela-huang/",
+    "https://dentisthsu.com/doctors/#top"
+  ]
+}
