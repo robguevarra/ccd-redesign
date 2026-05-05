@@ -1,5 +1,6 @@
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { PracticeStructuredData } from '@/components/structured-data';
 
 export default function MarketingLayout({
   children,
@@ -8,6 +9,7 @@ export default function MarketingLayout({
 }) {
   return (
     <>
+      <PracticeStructuredData />
       <SiteHeader />
       {children}
       <SiteFooter />

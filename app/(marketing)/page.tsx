@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
+import { FadeUp } from '@/components/motion/fade-up';
 
 const SERVICE_CATEGORIES = [
   {
@@ -88,19 +89,21 @@ export default function HomePage() {
       </section>
 
       {/* ─────────── Lede / value statement ─────────── */}
-      <section className="mx-auto max-w-4xl px-5 md:px-8 py-24 md:py-32 text-center">
-        <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-8">
-          Why patients choose us
-        </p>
-        <p className="font-serif text-3xl md:text-5xl leading-tight text-stone-900 tracking-tight">
-          Your time is the gift. Our job is to give it back to you — with{' '}
-          <em className="text-stone-700">work that lasts</em> and a chair you don't
-          mind being in.
-        </p>
-      </section>
+      <FadeUp>
+        <section className="mx-auto max-w-4xl px-5 md:px-8 py-24 md:py-32 text-center">
+          <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-8">
+            Why patients choose us
+          </p>
+          <p className="font-serif text-3xl md:text-5xl leading-tight text-stone-900 tracking-tight">
+            Your time is the gift. Our job is to give it back to you — with{' '}
+            <em className="text-stone-700">work that lasts</em> and a chair you don't
+            mind being in.
+          </p>
+        </section>
+      </FadeUp>
 
       {/* ─────────── Services overview ─────────── */}
-      <section className="bg-stone-100/60 py-24 md:py-32">
+      <FadeUp as="section" className="bg-stone-100/60 py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="md:flex md:items-end md:justify-between mb-16 md:mb-20">
             <div className="max-w-2xl">
@@ -121,31 +124,32 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-px md:grid-cols-2 lg:grid-cols-4 bg-stone-300">
-            {SERVICE_CATEGORIES.map((cat) => (
-              <Link
-                key={cat.label}
-                href={cat.href}
-                className="group bg-stone-50 p-8 md:p-10 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[280px]"
-              >
-                <h3 className="font-serif text-2xl md:text-3xl tracking-tight text-stone-900">
-                  {cat.label}
-                </h3>
-                <div className="mt-8">
-                  <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                    {cat.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
-                    Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </span>
-                </div>
-              </Link>
+            {SERVICE_CATEGORIES.map((cat, i) => (
+              <FadeUp key={cat.label} delay={i * 0.07} className="contents">
+                <Link
+                  href={cat.href}
+                  className="group bg-stone-50 p-8 md:p-10 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[280px]"
+                >
+                  <h3 className="font-serif text-2xl md:text-3xl tracking-tight text-stone-900">
+                    {cat.label}
+                  </h3>
+                  <div className="mt-8">
+                    <p className="text-stone-600 text-sm leading-relaxed mb-6">
+                      {cat.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
+                      Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </FadeUp>
             ))}
           </div>
         </div>
-      </section>
+      </FadeUp>
 
       {/* ─────────── Technology / differentiator strip ─────────── */}
-      <section className="mx-auto max-w-7xl px-5 md:px-8 py-24 md:py-32">
+      <FadeUp as="section" className="mx-auto max-w-7xl px-5 md:px-8 py-24 md:py-32">
         <div className="grid md:grid-cols-3 gap-12 md:gap-16 items-start">
           <div className="md:col-span-1">
             <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-4">
@@ -177,10 +181,10 @@ export default function HomePage() {
             ))}
           </ul>
         </div>
-      </section>
+      </FadeUp>
 
       {/* ─────────── Doctors intro ─────────── */}
-      <section className="bg-stone-900 text-stone-50 py-24 md:py-32">
+      <FadeUp as="section" className="bg-stone-900 text-stone-50 py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <p className="text-xs uppercase tracking-[0.22em] text-stone-400 mb-6">
             The team
@@ -204,10 +208,10 @@ export default function HomePage() {
             your bite has changed since 2007.
           </p>
         </div>
-      </section>
+      </FadeUp>
 
       {/* ─────────── Final CTA ─────────── */}
-      <section className="mx-auto max-w-5xl px-5 md:px-8 py-24 md:py-32 text-center">
+      <FadeUp as="section" className="mx-auto max-w-5xl px-5 md:px-8 py-24 md:py-32 text-center">
         <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-6">
           Ready when you are
         </p>
@@ -235,7 +239,7 @@ export default function HomePage() {
             Call {main.number}
           </a>
         </div>
-      </section>
+      </FadeUp>
     </>
   );
 }

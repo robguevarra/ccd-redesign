@@ -73,7 +73,7 @@ export const redirects: Redirect[] = [
   { from: '/about-our-dentist-brien-hsu-dds', to: '/doctors/dr-brien-hsu', status: 301 },
   { from: '/doctors-dr-brien-hsu', to: '/doctors/dr-brien-hsu', status: 301 },
   { from: '/doctors-dr-angela-huang', to: '/doctors/dr-angela-huang', status: 301 },
-  { from: '/doctors-dr-earlene-milone-2', to: '/doctors/dr-earlene-milone', status: 301 },
+  { from: '/doctors-dr-earlene-milone-2', to: '/doctors/dr-amandeep-singh', status: 301, note: 'Old WP slug was for prior associate; current doctor is Dr. Singh' },
   { from: '/doctors-dr-rachel-lim', to: '/doctors/dr-rachel-lim', status: 301 },
   { from: '/doctors-dr-robert-sharobiem', to: '/doctors/dr-robert-sharobiem', status: 301 },
   { from: '/doctors-dr-serena-hsu', to: '/doctors/dr-serena-hsu', status: 301 },
