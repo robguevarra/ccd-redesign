@@ -4,6 +4,31 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 
 ---
 
+## 2026-05-05 — P1 deliverables shipped
+
+**Scope:** Phase 1 (Discovery & Audit) acceptance.
+**Decision:** All P1 §5 acceptance criteria met. Pipeline produced 184-URL sitemap, 181 scraped page pairs, 511 downloaded images with metadata, 18 mobile+desktop screenshots, 9 Lighthouse JSONs (3-run medians, mobile + desktop), 9 axe-core WCAG 2.1AA scans, 26 competitive-teardown screenshots (TMJ Expert + Aventura). Five hand-authored markdown deliverables landed: `audit.md` (10 dimensions, 46+ findings, top-5 leave-behind picks), `competitive-teardown.md` (TMJ Expert per-site + Aventura per-dimension + 5 design principles for P3), `asset-inventory.md` (221 unique images bucketed; manual curation pending), `dentist-questions.md` (14 open questions across 5 categories for the pitch meeting), plus 4 authoring templates in `docs/audit/_templates/`.
+
+**Headline findings to carry into P2/P3:**
+- 184 URLs but only ~30 are intentional content; ~85 are zombie demo/lorem/sitemap-XML/parallel-WordPress-install pages
+- All audited pages fail master spec performance target (mobile LCP 3.0–4.3s vs. <2.5s required)
+- 46 axe accessibility violations across 9 audited pages (10 critical + 36 serious); every page fails WCAG 2.1 AA
+- Practice has 3 phone numbers, 1 verifiable street address (11458 Kenyon Way, Rancho Cucamonga), 0 published emails, parallel WordPress installs at multiple subdomains
+- Practice name discrepancy: site brand "dentisthsu.com" vs. Yelp listing "Comfort Care Dental Practice"
+- Real photography is sparse (only 1 image heuristically classified as "use" for v2)
+- TMJ Expert's gallery/case-study format is the dentist's clearest reference; honor it as the signature service detail page in v2
+
+**Rationale:** P1 succeeded on its primary purpose — surface non-obvious findings the dentist hasn't seen. The audit doc's top-5 leave-behind picks each combine high severity, non-obviousness, and a clean 30-second explanation, satisfying master spec [§6 soft success criteria](specs/2026-05-05-dentisthsu-redesign-master-spec.md#success-criteria--soft-what-makes-the-pitch-likely-to-win).
+
+**Reference:** [docs/audit/](../audit/), [P1 detail spec](specs/2026-05-05-dentisthsu-phase-1-discovery-audit.md)
+
+**Known caveats / not blockers:**
+- Lighthouse + axe + screenshot data was captured against the original 96-URL crawl. The expanded 184-URL sitemap (discovered during Task 13's smoke-test re-run) was textually scraped but not re-Lighthoused. Acceptable: the curated top-12 audited subset still represents the priority service-page surface; new pages discovered in the rescrape are mostly zombie WordPress demos that wouldn't have been included anyway.
+- Asset inventory verdict counts (1 use / 106 regrade / 114 replace) are heuristic. Manual curation in P3 will reclassify upward (more "use" candidates exist than the heuristic caught).
+- TMJ Expert's site has long-polling tracking scripts; Playwright `networkidle` strategy didn't resolve. Captures used `waitUntil: 'commit'` + 8s settle. Two TMJ Expert page captures (about-desktop, contact-desktop) failed all retries — itself an audit observation about their performance.
+
+---
+
 ## 2026-05-05 — P1 detail spec approved
 
 **Scope:** Phase 1 (Discovery & Audit) execution.

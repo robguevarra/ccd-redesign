@@ -25,12 +25,30 @@ A **pitch website** — a live, deployed reimagining of [dentisthsu.com](https:/
 |---|---|
 | Master spec | ✅ Written, approved 2026-05-05 |
 | Phase 1 detail spec | ✅ Written, approved 2026-05-05 — [P1 spec](docs/superpowers/specs/2026-05-05-dentisthsu-phase-1-discovery-audit.md) |
-| Phase 1 implementation plan | ⏳ Next — to be produced via the writing-plans skill |
-| Phase 2–5 detail specs | ⛔ Not started |
-| Code | ⛔ Not started — implementation begins after the P1 plan exists |
-| Vercel project | ⛔ Not created yet |
-| Supabase project | ⛔ Not created yet |
+| Phase 1 implementation plan | ✅ Written 2026-05-05 — [P1 plan](docs/superpowers/plans/2026-05-05-phase-1-discovery-audit-pipeline.md) |
+| **Phase 1 execution** | **✅ Shipped 2026-05-05** — [`docs/audit/`](docs/audit/) |
+| Phase 2–5 detail specs | ⛔ Not started — P2 (IA + Content Strategy) is next |
+| Code (Next.js front-end) | ⛔ Not started — begins in P4 |
+| Vercel project | ⛔ Not created yet — created in P4 |
+| Supabase project | ⛔ Not created yet — created in P4 |
 | Firecrawl API key | ✅ In `.env.local` (gitignored) |
+| Discovery pipeline | ✅ `scripts/p1-discovery/` — 7 cache-aware steps + run-all + teardown-captures |
+| Branch | `phase-1-discovery` (20 commits ahead of `main`) |
+
+## Phase 1 deliverables
+
+Located in [`docs/audit/`](docs/audit/):
+
+- **[audit.md](docs/audit/audit.md)** — 10 dimensions, 46+ findings, top-5 leave-behind picks
+- **[competitive-teardown.md](docs/audit/competitive-teardown.md)** — TMJ Expert per-site + Aventura per-dimension + 5 design principles for P3
+- **[asset-inventory.md](docs/audit/asset-inventory.md)** — 221 unique images heuristically bucketed; manual curation pending
+- **[dentist-questions.md](docs/audit/dentist-questions.md)** — 14 open questions across 5 categories for the pitch meeting
+- **[_templates/](docs/audit/_templates/)** — 4 authoring scaffolds for downstream phases
+
+Source-of-truth artifacts in `source/`:
+- `sitemap.json` (184 URLs), `practice-info.json`, `image-index.json` (221 unique images)
+- `pages/*.{md,json}` (181 scraped pages — committed)
+- `images/`, `screenshots/`, `lighthouse/`, `axe/`, `teardowns/` (binaries — gitignored except `teardowns/` for the pitch leave-behind)
 
 ## Stack (locked)
 
