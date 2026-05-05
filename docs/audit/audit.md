@@ -186,6 +186,8 @@ Source: `source/axe/<slug>.json` — 9 unique slugs scanned with WCAG 2A + 2AA +
 
 - **[Critical] Practice name discrepancy: site brand is "dentisthsu.com" but Yelp lists the practice as "Comfort Care Dental Practice — Brien Hsu, DDS".** Two brand identities (the doctor's surname domain vs. the practice name) compete in the patient's mind. *Recommendation: P3 brand-direction work establishes a unified identity; the dentist already has full rebrand permission per decisions log.*
 
+- **[Critical] Google Maps API key exposed in page source on `/contact`.** The contact page embeds a Google Static Maps tile via a URL containing the practice's API key. Anyone who right-clicks → View Source can see and harvest it. We discovered the key during the P1 scrape; it was visible in the page HTML. *Recommendation:* (1) **rotate the API key immediately** in Google Cloud Console; (2) **restrict the new key by HTTP referrer** to `dentisthsu.com/*` so it cannot be reused on other domains; (3) consider switching to embedding via the iframe `<iframe>` form which doesn't expose the key in a `key=` query param visible to scrapers. *(Note for future Claude sessions: the captured key is sanitized to `REDACTED-GOOGLE-MAPS-API-KEY` in `source/pages/contact.md` and `source/image-index.json`; the original is in git history at commit `a263eaa`. If this repo is ever made public, run `git filter-repo` to scrub the historical commits, OR confirm the key has been rotated first.)*
+
 ---
 
 ## Appendix: full page list
