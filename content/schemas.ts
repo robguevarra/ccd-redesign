@@ -18,7 +18,20 @@
  * See: docs/superpowers/specs/2026-05-05-dentisthsu-phase-2-ia-content-strategy.md §6
  */
 
-export type ServiceCategory = 'general' | 'cosmetic' | 'specialty' | 'orthodontics';
+export type ServiceLane = 'medical' | 'dental';
+
+export type ServiceSubcategory =
+  // Medical
+  | 'tmj-orofacial-pain'
+  | 'oral-medicine-pathology'
+  | 'sleep-airway'
+  | 'surgical-regenerative-medical'
+  // Dental
+  | 'preventive'
+  | 'restorative'
+  | 'endodontics'
+  | 'oral-surgery-dental'
+  | 'periodontal-surgical';
 
 export type TechnologyRef = 'cbct' | 'trios' | 'zeiss-microscope' | 'laser';
 
@@ -32,8 +45,9 @@ export interface Image {
 export interface Service {
   slug: string;
   name: string;
-  category: ServiceCategory;
-  /** 1–2 sentences. Used on `/services` overview cards and meta description. */
+  lane: ServiceLane;
+  subcategory: ServiceSubcategory;
+  /** 1–2 sentences. Used on lane landing cards and meta description. */
   summary: string;
   hero?: Image;
   /** True only for the wow-zone signature service (TMJ). Flips template variant. */
