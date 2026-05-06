@@ -1,152 +1,64 @@
-import type { Service, ServiceCategory } from './schemas';
+import type { Service, ServiceLane, ServiceSubcategory } from './schemas';
 
 /**
- * Curated service catalog. Source: master spec §4 service taxonomy +
- * scraped service pages in `source/pages/`.
+ * Service catalog. 32 services across 9 subcategories under 2 lanes
+ * (medical, dental). Source: docs/superpowers/specs/2026-05-06-dentisthsu-pre-pitch-audit-pass.md §5
  *
- * Body content here is intentionally short for the pitch (1–2 paragraphs).
- * Full long-form MDX bodies are written in P4 or v2.
+ * Body content for new stub services is intentionally short (50-80 words)
+ * for the pitch. Full long-form bodies are P5/v2 work.
  */
 
-export const SERVICE_CATEGORY_LABELS: Record<ServiceCategory, string> = {
-  general: 'General Dentistry',
-  cosmetic: 'Cosmetic',
-  specialty: 'Specialty',
-  orthodontics: 'Orthodontics',
+export const SERVICE_LANE_LABELS: Record<ServiceLane, string> = {
+  medical: 'Medical Practice',
+  dental: 'Dental Practice',
 };
 
-export const SERVICE_CATEGORY_DESCRIPTIONS: Record<ServiceCategory, string> = {
-  general:
-    'Routine and restorative dentistry — the work that keeps the mouth healthy and the smile intact.',
-  cosmetic:
-    'Considered changes to color, shape, and proportion. Designed around how a smile actually moves and reads in conversation.',
-  specialty:
-    'Complex cases that most general practices refer out: TMJ, sleep apnea, oral pathology, orofacial pain. Twenty-five years of experience handling these in-house.',
-  orthodontics:
-    'Bite correction for teens and adults. Traditional and removable approaches.',
+export const SERVICE_LANE_SUBLABELS: Record<ServiceLane, string> = {
+  medical: 'Orofacial Pain & Oral Medicine',
+  dental: 'Family · Restorative · Cosmetic',
+};
+
+export const SERVICE_SUBCATEGORY_LABELS: Record<ServiceSubcategory, string> = {
+  // Medical
+  'tmj-orofacial-pain': 'TMJ & Orofacial Pain',
+  'oral-medicine-pathology': 'Oral Medicine & Pathology',
+  'sleep-airway': 'Sleep & Airway',
+  'surgical-regenerative-medical': 'Surgical & Regenerative',
+  // Dental
+  'preventive': 'Preventive Dentistry',
+  'restorative': 'Restorative Dentistry',
+  'endodontics': 'Endodontics',
+  'oral-surgery-dental': 'Oral Surgery',
+  'periodontal-surgical': 'Periodontal & Surgical',
+};
+
+export const SERVICE_SUBCATEGORY_BY_LANE: Record<ServiceLane, ServiceSubcategory[]> = {
+  medical: [
+    'tmj-orofacial-pain',
+    'oral-medicine-pathology',
+    'sleep-airway',
+    'surgical-regenerative-medical',
+  ],
+  dental: [
+    'preventive',
+    'restorative',
+    'endodontics',
+    'oral-surgery-dental',
+    'periodontal-surgical',
+  ],
 };
 
 export const services: Service[] = [
-  // ─────── General Dentistry (12) ───────
-  {
-    slug: 'cleaning',
-    name: 'Professional Cleaning',
-    category: 'general',
-    summary:
-      'Bi-annual hygiene visits done thoroughly — the foundation everything else rests on.',
-    body: 'Periodic professional cleanings remove plaque and tartar that brushing alone cannot reach. We pair them with oral cancer screening and a periodontal probe so we catch issues before they become expensive.',
-  },
-  {
-    slug: 'composite-fillings',
-    name: 'Composite Fillings',
-    category: 'general',
-    summary:
-      'Tooth-colored composite restorations placed under microscope-level magnification.',
-    body: 'Modern composites bond to the tooth and reinforce it. Done well, they last a decade or more. We place them with rubber dam isolation and surgical-grade magnification — the difference between a 5-year filling and a 15-year one.',
-  },
-  {
-    slug: 'amalgam-fillings',
-    name: 'Amalgam Fillings',
-    category: 'general',
-    summary:
-      'Traditional silver fillings — still appropriate for some clinical situations.',
-    body: 'We do not place new amalgam fillings as a default, but they remain the right answer in specific cases (very large restorations under heavy load, certain pediatric situations). Existing amalgams are not automatically replaced — we only intervene when there is a clinical reason.',
-  },
-  {
-    slug: 'crowns-caps',
-    name: 'Crowns & Caps',
-    category: 'general',
-    summary:
-      'Full-coverage restorations for teeth that need protection beyond a filling.',
-    body: 'Crowns are designed and fitted using our 3Shape Trios digital scanner — no traditional impression trays, faster turnaround, more accurate fit. Materials include porcelain-fused-to-metal, full zirconia, and lithium disilicate depending on location and load.',
-  },
-  {
-    slug: 'fixed-bridges',
-    name: 'Fixed Bridges',
-    category: 'general',
-    summary:
-      'Permanent multi-tooth restorations for replacing missing teeth between healthy abutments.',
-    body: 'A fixed bridge replaces one or more missing teeth using the adjacent teeth as anchors. Designed digitally, milled to fit, and bonded permanently in place. Often a faster and less invasive alternative to implants.',
-  },
-  {
-    slug: 'dentures',
-    name: 'Dentures & Partial Dentures',
-    category: 'general',
-    summary: 'Full and partial removable prosthetics, including immediate dentures.',
-    body: 'Conventional dentures are made after the gums heal (4–6 weeks of being without teeth). Immediate dentures are made in advance and placed the same day as extractions. We adjust them as the tissues remodel.',
-  },
-  {
-    slug: 'root-canal-therapy',
-    name: 'Root Canal Therapy',
-    category: 'general',
-    summary:
-      'Endodontic treatment to save teeth that would otherwise need extraction.',
-    body: 'Modern root canals, performed under microscope-level magnification, are not the painful procedure they were a generation ago. Most patients describe them as comparable to having a filling done. We complete most cases in a single visit.',
-  },
-  {
-    slug: 'oral-hygiene',
-    name: 'Oral Hygiene',
-    category: 'general',
-    summary:
-      'Personalized education and at-home care plans for patients with specific risk factors.',
-    body: 'Beyond the cleaning itself, we teach you what to do between visits — adapted to whether you have crowns, bridges, implants, orthodontics, or a higher-than-average decay risk. The goal is fewer interventions over time, not more.',
-  },
-  {
-    slug: 'tooth-extractions',
-    name: 'Tooth Extractions',
-    category: 'general',
-    summary:
-      'Surgical and non-surgical extractions, performed in-house using CBCT planning.',
-    body: 'Most extractions, including complex cases involving impacted teeth, can be done in our office without referral. CBCT scanning before extraction gives us the spatial information needed to avoid surprises.',
-  },
-  {
-    slug: 'sedation-dentistry',
-    name: 'Sedation Dentistry',
-    category: 'general',
-    summary:
-      'Oral and IV sedation for patients with dental anxiety or extensive treatment needs.',
-    body: 'Sedation is a tool, not a default. For patients who avoid the dentist due to anxiety, or for treatment that would otherwise require multiple visits, sedation lets us do more in less time and with no recall of the procedure.',
-  },
-  {
-    slug: 'children-oral-healthcare',
-    name: "Children's Oral Healthcare",
-    category: 'general',
-    summary:
-      'Pediatric dentistry that builds positive associations early — and avoids unnecessary treatment.',
-    body: 'We see children from age one onward. Most early visits are about normalizing the chair, not treatment. When intervention is needed (sealants, fluoride, occasionally fillings), we choose the most conservative approach.',
-  },
-  {
-    slug: 'periodontal-treatment',
-    name: 'Periodontal Treatment',
-    category: 'general',
-    summary:
-      'Active treatment of gum disease — including laser-assisted therapy where indicated.',
-    body: 'Periodontitis affects half of US adults over 30 and is one of the most under-diagnosed dental conditions. We screen at every cleaning and treat actively when we find it: scaling and root planing, laser-assisted decontamination, and ongoing maintenance.',
-  },
+  // ═════════════════════════════════════════════════════════════════
+  // MEDICAL LANE (10 services across 4 subcategories)
+  // ═════════════════════════════════════════════════════════════════
 
-  // ─────── Cosmetic (2) ───────
-  {
-    slug: 'porcelain-veneers',
-    name: 'Porcelain Veneers',
-    category: 'cosmetic',
-    summary:
-      'Custom-shaped porcelain shells that change a smile without changing the underlying teeth.',
-    body: 'Veneers are a meaningful commitment — they are also one of the most rewarding cosmetic procedures in dentistry when done well. We design every case digitally first, mock it up in your mouth, and only proceed once the proportions and color are right.',
-  },
-  {
-    slug: 'teeth-whitening',
-    name: 'Teeth Whitening',
-    category: 'cosmetic',
-    summary:
-      'In-office and at-home whitening, including deep-bleaching for stubborn cases.',
-    body: 'Most over-the-counter whitening underperforms because it does not address tooth permeability. Our deep-bleaching protocol — alternating in-office and supervised at-home phases — works on cases other approaches cannot move.',
-  },
-
-  // ─────── Specialty (4) ───────
+  // ─────── TMJ & Orofacial Pain (4) ───────
   {
     slug: 'tmj',
     name: 'TMJ Treatment',
-    category: 'specialty',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
     summary:
       'Comprehensive evaluation and treatment for temporomandibular joint disorders. Most cases are managed without surgery.',
     signature: true,
@@ -154,61 +66,107 @@ export const services: Service[] = [
     body: "TMJ symptoms — jaw pain, clicking, headaches, ear pressure, limited opening — are often misdiagnosed for years before someone connects them to bite mechanics. We use CBCT imaging to see the joint in three dimensions, and we design splint therapy and bite-equilibration protocols tailored to the specific dysfunction. Surgery is a last resort.",
   },
   {
-    slug: 'sleep-apnea',
-    name: 'Sleep Apnea Treatment',
-    category: 'specialty',
-    summary:
-      'Oral appliance therapy as an alternative to CPAP for mild to moderate obstructive sleep apnea.',
-    signature: true,
-    body: 'Many patients diagnosed with OSA cannot tolerate CPAP. A custom-fitted oral appliance, designed to advance the lower jaw during sleep, opens the airway and is well-tolerated by most. We coordinate with your sleep physician.',
-  },
-  {
-    slug: 'oral-pathology',
-    name: 'Oral Pathology',
-    category: 'specialty',
-    summary:
-      'Diagnosis and biopsy of oral lesions — both routine and concerning.',
-    body: 'Most oral lesions are benign but every one is worth identifying. We screen at every cleaning, and we biopsy and pathology-track any lesion that warrants it.',
-  },
-  {
     slug: 'orofacial-pain',
     name: 'Orofacial Pain',
-    category: 'specialty',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
     summary:
       'Chronic facial pain syndromes — when the cause is dental, when it is not, and how to tell the difference.',
     body: 'Facial pain is one of the hardest diagnostic problems in clinical medicine. Some of it is dental in origin (cracked teeth, occlusion); much of it is not. We rule out the dental causes systematically and refer appropriately when the source is elsewhere.',
   },
+  {
+    slug: 'trigger-point-injections',
+    name: 'Trigger Point Injections',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'Targeted injections to release muscle tension around the jaw, head, and neck.',
+    body: 'Many TMJ and orofacial pain cases involve hyperactive trigger points in the masseter, temporalis, or related muscles. A small injection of anesthetic — sometimes paired with PRF — into the trigger point relieves the local muscle spasm and breaks the pain cycle. Done in-office, takes minutes, and is most effective when combined with appliance therapy.',
+  },
+  {
+    slug: 'prf-prp-injections',
+    name: 'PRF / PRP Injections',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'Platelet-rich fibrin or plasma injections to support healing and tissue regeneration.',
+    body: 'PRF and PRP are concentrated from your own blood and applied to surgical sites or pain points to accelerate healing. We use them in extraction sockets, bone graft sites, and orofacial pain treatment. The procedure adds about fifteen minutes to a visit and significantly improves recovery for the right cases.',
+  },
 
-  // ─────── Orthodontics (2) ───────
+  // ─────── Oral Medicine & Pathology (4) ───────
   {
-    slug: 'orthodontics',
-    name: 'Traditional Orthodontics',
-    category: 'orthodontics',
+    slug: 'oral-pathology',
+    name: 'Oral Pathology',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
     summary:
-      'Comprehensive bite correction for teens and adults using traditional brackets.',
-    body: 'Traditional orthodontics remain the most predictable treatment for complex bite corrections. Treatment time runs 18–24 months for most adult cases. We coordinate with our orthodontic specialist for cases requiring it.',
+      'Diagnosis and biopsy of oral lesions — both routine and concerning.',
+    body: 'Most oral lesions are benign, but every one is worth identifying. We screen at every cleaning, and we biopsy and pathology-track any lesion that warrants it. Dr. Hsu is board-certified in Oral Medicine and brings decades of experience to the diagnosis of conditions affecting the soft tissues and bones of the mouth.',
   },
   {
-    slug: 'removable-orthodontics',
-    name: 'Removable Orthodontics',
-    category: 'orthodontics',
+    slug: 'biopsies',
+    name: 'Biopsies',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
     summary:
-      'Clear aligner therapy for adult patients with simple to moderate alignment needs.',
-    body: 'Removable aligners are best for patients with predictable, well-defined movements. We screen carefully — some cases that look straightforward in photos are not — and we are honest about when traditional orthodontics is the better choice.',
+      'Soft-tissue and oral lesion biopsies, performed in-office with pathology turnaround in days.',
+    body: 'When a lesion warrants pathology — and most do not — we perform the biopsy in our office under local anesthesia and send the sample to a board-certified oral pathologist. Results return in three to five days. We follow up with you directly, in person, with a clear treatment plan.',
   },
+  {
+    slug: 'oral-cancer-screening',
+    name: 'Oral Cancer Screening',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
+    summary:
+      'Visual and tactile examination for soft-tissue lesions and early signs of oral malignancy.',
+    body: 'Performed at every cleaning. We examine the lips, tongue, palate, floor of the mouth, and throat for any lesion, change in color, or texture difference. Early detection is the single largest factor in oral cancer survival. The screen takes five minutes and adds nothing to the visit cost.',
+  },
+  {
+    slug: 'oral-cancer-shields',
+    name: 'Oral Cancer Shields',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
+    summary:
+      'Custom radiation shields for patients undergoing head and neck cancer treatment.',
+    body: 'Patients receiving radiation for head and neck cancers benefit from custom intra-oral shields that protect uninvolved tissues and minimize side effects. We fabricate them in-office in close coordination with the radiation oncology team. Most are fitted within a week of consultation.',
+  },
+
+  // ─────── Sleep & Airway (1) ───────
+  {
+    slug: 'sleep-apnea',
+    name: 'Sleep Apnea Treatment',
+    lane: 'medical',
+    subcategory: 'sleep-airway',
+    summary:
+      'Oral appliance therapy as an alternative to CPAP for mild to moderate obstructive sleep apnea.',
+    signature: false,
+    body: 'Many patients diagnosed with OSA cannot tolerate CPAP. A custom-fitted oral appliance, designed to advance the lower jaw during sleep, opens the airway and is well-tolerated by most. We coordinate with your sleep physician. Dr. Hsu is board-certified by the American Board of Dental Sleep Medicine.',
+  },
+
+  // ─────── Surgical & Regenerative — medical context (1) ───────
+  {
+    slug: 'surgical-laser-therapy',
+    name: 'Surgical Laser Therapy',
+    lane: 'medical',
+    subcategory: 'surgical-regenerative-medical',
+    summary:
+      'Diode laser treatment for soft-tissue procedures, decontamination, and biostimulation.',
+    body: 'Used for frenectomies, gingivectomies, peri-implantitis decontamination, and biostimulation of surgical sites. The laser cauterizes as it cuts — minimal bleeding, faster healing, less post-operative discomfort than traditional scalpel approaches. Particularly effective for pediatric and anxious patients.',
+  },
+
+  // ═════════════════════════════════════════════════════════════════
+  // DENTAL LANE — added in Task 6 of the implementation plan
+  // ═════════════════════════════════════════════════════════════════
 ];
 
 export function getService(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);
 }
 
-export function getServicesByCategory(category: ServiceCategory): Service[] {
-  return services.filter((s) => s.category === category);
+export function getServicesByLane(lane: ServiceLane): Service[] {
+  return services.filter((s) => s.lane === lane);
 }
 
-export const ALL_CATEGORIES: ServiceCategory[] = [
-  'general',
-  'cosmetic',
-  'specialty',
-  'orthodontics',
-];
+export function getServicesBySubcategory(sub: ServiceSubcategory): Service[] {
+  return services.filter((s) => s.subcategory === sub);
+}
