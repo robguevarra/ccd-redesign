@@ -4,7 +4,7 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'About',
-  description: `${practiceInfo.brandName} — a six-doctor practice in ${practiceInfo.address.city}, in continuous service since 1999.`,
+  description: `${practiceInfo.brandName} — a five-doctor practice in ${practiceInfo.address.city}, in continuous service since 1999.`,
 };
 
 const TIMELINE = [
@@ -42,7 +42,7 @@ export default function AboutPage() {
             the brief.
           </p>
           <p>
-            Six doctors work alongside Dr. Brien Hsu today — including the next
+            Four doctors work alongside Dr. Brien Hsu today — including the next
             generation of the Hsu family. We invest in technology when it actually
             improves a clinical outcome (3D CBCT in 2014, the Trios scanner in
             2024) and we leave the rest of the dental industry's gimmicks alone.

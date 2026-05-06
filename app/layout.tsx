@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1999`,
     template: `%s — ${practiceInfo.brandName}`,
   },
-  description: `${practiceInfo.brandName} is a six-doctor dental practice in ${practiceInfo.address.city}, California, led by Dr. Brien Hsu, DDS. General, cosmetic, specialty (TMJ, sleep apnea), and orthodontic care.`,
+  description: `Comfort Care Dental — a five-doctor hybrid medical and dental practice in Rancho Cucamonga since 1999. Family dentistry, restorative care, plus medical-grade orofacial pain, TMJ, and sleep apnea treatment under one roof.`,
   openGraph: {
     type: 'website',
     siteName: practiceInfo.brandName,

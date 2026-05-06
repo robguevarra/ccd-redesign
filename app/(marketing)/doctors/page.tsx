@@ -8,7 +8,7 @@ import { FadeUp } from '@/components/motion/fade-up';
 export const metadata = {
   title: 'Doctors',
   description:
-    'Six doctors. Twenty-five years of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
+    'Five doctors. Twenty-five years of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
 };
 
 export default function DoctorsPage() {
@@ -20,7 +20,7 @@ export default function DoctorsPage() {
             The team
           </p>
           <h1 className="font-serif text-[clamp(3rem,9vw,8rem)] tracking-tighter text-stone-900 leading-[0.92] font-light">
-            Six doctors,
+            Five doctors,
             <br />
             <span className="italic">one office.</span>
           </h1>

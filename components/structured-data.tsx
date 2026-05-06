@@ -46,7 +46,6 @@ export function PracticeStructuredData() {
       'Orofacial Pain',
       'Endodontics',
       'Oral and Maxillofacial Surgery',
-      'Orthodontics',
       'Periodontics',
     ],
     priceRange: '$$',

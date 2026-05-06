@@ -31,7 +31,7 @@
      small icons, medical-lane chrome. Dental lane stays warm stone. */
   --color-accent-50: #e8f1f0;
   --color-accent-200: #a9c8c5;
-  --color-accent-600: #3f7a76;
+  --color-accent-600: #356a66;   /* slightly darker for WCAG AA on stone-100 */
   --color-accent-900: #1f3d3b;
 }
 
