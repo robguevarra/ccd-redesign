@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
+import { cn } from '@/lib/cn';
 
 const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
   {
@@ -25,29 +26,20 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
   },
 ];
 
-const SERVICE_CATEGORIES = [
+const PRACTICE_LANES = [
   {
-    label: 'General',
+    label: 'Dental Practice',
+    sublabel: 'Family · Restorative · Cosmetic',
     description:
-      'Cleanings, fillings, crowns, bridges, dentures, root canals, extractions, sedation, pediatric care.',
-    href: '/services?category=general',
+      'Cleanings, fillings, crowns and bridges, veneers, whitening, root canals, implants, periodontal care — the everyday dentistry that keeps a family healthy, plus the cosmetic work that makes a smile worth showing.',
+    href: '/dental',
   },
   {
-    label: 'Cosmetic',
+    label: 'Medical Practice',
+    sublabel: 'Orofacial Pain & Oral Medicine',
     description:
-      'Porcelain veneers and deep-bleaching teeth whitening — designed around how the smile actually moves and reads.',
-    href: '/services?category=cosmetic',
-  },
-  {
-    label: 'Specialty',
-    description:
-      'TMJ, sleep apnea, oral pathology, orofacial pain. Twenty-five years of complex-case experience.',
-    href: '/services?category=specialty',
-  },
-  {
-    label: 'Orthodontics',
-    description: 'Traditional and removable orthodontics for teens and adults.',
-    href: '/services?category=orthodontics',
+      'TMJ, sleep apnea, orofacial pain, oral pathology, biopsies, oral cancer screening — medical-grade dentistry led by a doctor with a USC Master\'s in Orofacial Pain, Oral Medicine, and Sleep Disorders.',
+    href: '/medical',
   },
 ];
 
@@ -113,34 +105,49 @@ export default function HomePage() {
                 Services
               </p>
               <h2 className="font-serif text-4xl md:text-6xl tracking-tighter text-stone-900">
-                Four practices,{' '}
+                Two practices,{' '}
                 <span className="italic font-light">under one roof.</span>
               </h2>
             </div>
             <Link
-              href="/technology"
+              href="/dental"
               className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-stone-700 hover:text-stone-900 mt-6 md:mt-0"
             >
-              All services <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              Browse dental <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
 
-          <div className="grid gap-px md:grid-cols-2 lg:grid-cols-4 bg-stone-300">
-            {SERVICE_CATEGORIES.map((cat) => (
+          <div className="grid gap-px md:grid-cols-2 bg-stone-300">
+            {PRACTICE_LANES.map((lane, i) => (
               <Link
-                key={cat.label}
-                href={cat.href}
-                className="group bg-stone-50 p-8 md:p-10 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[280px]"
+                key={lane.label}
+                href={lane.href}
+                className={cn(
+                  'group p-10 md:p-14 transition-colors flex flex-col justify-between min-h-[360px]',
+                  i === 0
+                    ? 'bg-stone-50 hover:bg-stone-100'
+                    : 'bg-stone-50 hover:bg-[var(--color-accent-50)]',
+                )}
               >
-                <h3 className="font-serif text-2xl md:text-3xl tracking-tight text-stone-900">
-                  {cat.label}
-                </h3>
-                <div className="mt-8">
-                  <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                    {cat.description}
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-3">
+                    {lane.sublabel}
                   </p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-stone-900 group-hover:gap-2 transition-all">
-                    Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  <h3 className="font-serif text-3xl md:text-5xl tracking-tight text-stone-900">
+                    {lane.label}
+                  </h3>
+                </div>
+                <div className="mt-12">
+                  <p className="text-stone-600 text-base leading-relaxed mb-8 max-w-md">
+                    {lane.description}
+                  </p>
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1 text-sm font-medium group-hover:gap-2 transition-all',
+                      i === 0 ? 'text-stone-900' : 'text-[var(--color-accent-600)]',
+                    )}
+                  >
+                    Enter {lane.label.toLowerCase()} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                 </div>
               </Link>
