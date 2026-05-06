@@ -42,12 +42,10 @@ Outside of clinical practice, Dr. Hsu has won numerous awards for his portrait a
     title: 'DMD',
     portrait: { src: '/images/doctors/dr-angela-huang.jpg', alt: 'Dr. Angela Huang' },
     short:
-      'General dentist with a passion for cosmetic and restorative dentistry. Temple University DMD, certified in Tissue Management for Implants and Advanced Dental Implant & Reconstructive Surgery.',
-    bio: `Dr. Angela Huang is a general dentist who has a passion for cosmetic and restorative dentistry. She earned her BS in Biological Science at the University of California, Irvine.
+      'A highly skilled general dentist known for her exceptional work in cosmetic and restorative dentistry, with a gentle touch and a warm, personable approach.',
+    bio: `Dr. Angela Huang is a highly skilled general dentist known for her exceptional work in cosmetic and restorative dentistry. With a gentle touch and a warm, personable approach, she makes every patient feel at ease.
 
-In 2008 she graduated from the Temple University School of Dentistry, earning her Doctorate in Dental Medicine. As a dental student, she spent significant time with the Student Outreach Program at Temple, performing dental work on underprivileged patients at various designated dental group facilities.
-
-Dr. Huang has earned certification in Tissue Management for Implants and the Advanced Dental Implant & Reconstructive Surgery Training Program. During her free time she enjoys baking, running, and spending time with her family.`,
+Dr. Huang earned her B.S. in Biological Sciences from UC Irvine and her Doctorate in Dental Medicine from Temple University in 2008. She is also certified in Tissue Management for Implants and Advanced Dental Implant & Reconstructive Surgery, further enhancing her ability to deliver beautiful, lasting results.`,
     specialties: [
       'General dentistry',
       'Cosmetic dentistry',
@@ -63,12 +61,10 @@ Dr. Huang has earned certification in Tissue Management for Implants and the Adv
     title: 'DMD · Periodontal Specialist',
     portrait: { src: '/images/doctors/dr-amandeep-singh.jpg', alt: 'Dr. Amandeep Singh' },
     short:
-      'Dental Hygiene and Periodontal Specialist. University of Pennsylvania DMD. Specializes in performing professional, gentle periodontal procedures since 2006.',
-    bio: `Dental Hygiene Specialist Dr. Amandeep Singh earned his Bachelor of Science in Biology at the University of California, Irvine.
+      'Focused on dental hygiene and periodontal care since 2006, bringing both expertise and a gentle touch to every patient interaction.',
+    bio: `Dr. Singh earned his B.S. in Biology from UC Irvine and his Doctorate of Dental Medicine from the University of Pennsylvania.
 
-He continued his education at the University of Pennsylvania School of Dental Medicine, where he earned his Doctorate of Dental Medicine. His accomplishments include serving as Assistant Instructor to first-year dental students on periodontal treatment, Dean's Honor Roll, and Secretary and Treasurer of the Medical Health Science Society.
-
-Dr. Singh has been specializing in performing dental hygiene and periodontal procedures since 2006. He is known by many of his patients for providing professional yet gentle care.`,
+With a focus on dental hygiene and periodontal care since 2006, he brings both expertise and a gentle touch to his practice. Patients appreciate his professional and compassionate approach to care.`,
     specialties: [
       'Dental hygiene',
       'Periodontal treatment',
@@ -83,12 +79,10 @@ Dr. Singh has been specializing in performing dental hygiene and periodontal pro
     title: 'DMD · Endodontist',
     portrait: { src: '/images/doctors/dr-rachel-lim.jpg', alt: 'Dr. Rachel Lim' },
     short:
-      'Board-certified Endodontist (root canal specialist). Western University DMD, Columbia University endodontic residency. Co-founder of the American Association of Women Dentists.',
-    bio: `Dr. Rachel Lim is a board-certified Endodontist (root canal specialist). She earned her Doctor of Dental Medicine (DMD) at Western University of Health Sciences, College of Dental Medicine. She then attended Columbia University, College of Dental Medicine to specialize in Endodontics.
+      'Board-certified endodontist. DMD from Western University, endodontic specialty at Columbia University. Co-founder of the American Association of Women Dentists.',
+    bio: `Dr. Rachel Lim is a board-certified endodontist who earned her DMD from Western University of Health Sciences and completed her specialty training in Endodontics at Columbia University.
 
-Her achievements include board certification by the American Board of Endodontics, Dean's List recognition, the Outstanding Resident Award, and induction into the Omicron Kappa Upsilon honor society. She is also the Co-founder and previous Secretary of the American Association of Women Dentists.
-
-Dr. Lim grew up in Orange County and enjoys exploring new cities, hiking, and spending quality time with loved ones.`,
+She has received multiple honors, including the Outstanding Resident Award, and induction into the Omicron Kappa Upsilon honor society. Dr. Rachel is also a co-founder and former Secretary of the American Association of Women Dentists, reflecting her commitment to leadership and advocacy in the dental field.`,
     specialties: [
       'Endodontics (root canal therapy)',
       'Microscopic endodontics',
@@ -103,12 +97,10 @@ Dr. Lim grew up in Orange County and enjoys exploring new cities, hiking, and sp
     title: 'DDS · Oral & Maxillofacial Surgeon',
     portrait: { src: '/images/doctors/dr-robert-sharobiem.jpg', alt: 'Dr. Robert Sharobiem' },
     short:
-      'Board-certified Oral & Maxillofacial Surgeon. UCLA DDS (top 5% of class), Mount Sinai NY surgery certificate. American Association of Oral and Maxillofacial Surgeons Humanitarian Award recipient.',
-    bio: `Dr. Robert Sharobiem completed his Doctorate in Dental Surgery at UCLA in 2009, graduating in the top five percent of his class. From there, he earned a General Dental Practice Residency Certificate at St. Barnabas Hospital, NY, where he was named Resident of the Year in Oral and Maxillofacial Surgery.
+      'Board-certified oral and maxillofacial surgeon. UCLA DDS and Mount Sinai NY surgical training in facial trauma, oral surgery, and reconstruction.',
+    bio: `Dr. Robert Sharobiem is a board-certified oral and maxillofacial surgeon who earned his DDS from UCLA. He completed advanced surgical training at Mount Sinai Hospital in New York, where he specialized in facial trauma, oral surgery, and reconstruction.
 
-He completed his Oral and Maxillofacial Surgery Certificate at Mount Sinai Hospital, NY, receiving advanced training in facial trauma, oral surgery, and reconstruction. His accomplishments include board certification by the American Board of Oral Maxillofacial Surgery, serving as Director of the UCLA/USC Mobile Dental Clinic, and being one of the founders of the Oral and Maxillofacial Surgery Study Club at UCLA.
-
-For Dr. Sharobiem, giving back to the community is a priority. He has participated in dental mission trips to help impoverished people in Mexico, Haiti, and Guatemala. The American Association of Oral and Maxillofacial Surgeons honored Dr. Sharobiem with the Humanitarian Award for Residents in 2013.`,
+Dr. Sharobiem has been recognized with numerous honors, including the AAOMS Humanitarian Award, and has served as Director of the UCLA/USC Mobile Dental Clinic.`,
     specialties: [
       'Oral & maxillofacial surgery',
       'Dental implants',
@@ -116,29 +108,6 @@ For Dr. Sharobiem, giving back to the community is a priority. He has participat
       'Wisdom tooth extraction',
     ],
     joinedYear: 2014,
-    isLead: false,
-  },
-  {
-    slug: 'dr-serena-hsu',
-    name: 'Dr. Serena Hsu',
-    title: 'DDS, MS · Orthodontist',
-    portrait: { src: '/images/doctors/dr-serena-hsu.jpg', alt: 'Dr. Serena Hsu' },
-    short:
-      'Board-certified Orthodontist. UCLA BS, USC DDS (with honors), USC Orthodontic Specialty + MS in Craniofacial Biology. Speaks English, Mandarin, and Spanish.',
-    bio: `Dr. Serena Hsu was born and raised in Southern California and speaks English, Mandarin, and Spanish.
-
-Before becoming an orthodontist, she earned a Bachelor of Science in Biology from UCLA. She went on to obtain a Doctorate of Dental Surgery degree with honors from USC, where she received the Dean's Award for Outstanding Service and Commitment. She continued at USC, attaining an Orthodontic Specialty certificate and a Master of Science degree in Craniofacial Biology — the study of jaw and facial growth.
-
-She is now a board-certified member of the American Board of Orthodontics, finally able to achieve her goal of making beautiful smiles and seeing her patients grow into wonderful, more confident individuals.
-
-Dr. Serena also serves as a part-time Clinical Instructor at the Ostrow School of Dentistry of USC. To stay current with new orthodontic technology and continuing education, she is an active member of the American Association of Orthodontists, California Association of Orthodontists, Pacific Coast Society of Orthodontists, American Dental Association, and California Dental Association.`,
-    specialties: [
-      'Orthodontics',
-      'Clear aligner therapy',
-      'Pediatric orthodontics',
-      'Adult orthodontics',
-    ],
-    joinedYear: 2018,
     isLead: false,
   },
 ];
