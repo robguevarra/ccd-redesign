@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Phone } from 'lucide-react';
 import { doctors, getDoctor } from '@/content/doctors';
-import { doctorPlaceholders } from '@/content/photography';
 import { practiceInfo } from '@/content/practice-info';
 import { FadeUp } from '@/components/motion/fade-up';
 
@@ -34,23 +33,21 @@ export default async function DoctorDetailPage({
   const doctor = getDoctor(slug);
   if (!doctor) notFound();
 
-  const main = practiceInfo.phones[1] ?? practiceInfo.phones[0]!;
-  const portrait = doctorPlaceholders[doctor.slug as keyof typeof doctorPlaceholders];
+  const main = practiceInfo.phones[0]!;
+  const { portrait } = doctor;
 
   return (
     <article>
       {/* Cinematic portrait header */}
       <header className="relative h-[80svh] md:h-[100svh] bg-stone-900 text-stone-50 overflow-hidden">
-        {portrait && (
-          <Image
-            src={portrait.src}
-            alt={portrait.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-65"
-          />
-        )}
+        <Image
+          src={portrait.src}
+          alt={portrait.alt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-65"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/60 to-transparent" />
 

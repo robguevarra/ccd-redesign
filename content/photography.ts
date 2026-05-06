@@ -102,37 +102,6 @@ export const tmjImages = {
   } satisfies CuratedImage,
 };
 
-/* ---- Doctor placeholder portraits — until the real session ---- */
-
-export const doctorPlaceholders = {
-  'dr-brien-hsu': {
-    src: u('1612531386530-97286d97c2d2'),
-    alt: 'A clinician in a clinical setting',
-    credit: 'Usman Yousaf / Unsplash',
-  } satisfies CuratedImage,
-  'dr-angela-huang': {
-    src: u('1559839734-2b71ea197ec2'),
-    alt: 'A doctor in a clinic setting',
-    credit: 'Christina @ wocintechchat / Unsplash',
-  } satisfies CuratedImage,
-  'dr-amandeep-singh': {
-    src: u('1622253692010-333f2da6031d'),
-    alt: 'A clinician at work',
-    credit: 'Diana Polekhina / Unsplash',
-  } satisfies CuratedImage,
-  'dr-rachel-lim': {
-    src: u('1559839734-2b71ea197ec2'),
-    alt: 'A doctor in a clinic setting',
-    credit: 'Christina @ wocintechchat / Unsplash',
-  } satisfies CuratedImage,
-  'dr-robert-sharobiem': {
-    src: u('1612531386530-97286d97c2d2'),
-    alt: 'A clinician in a clinical setting',
-    credit: 'Usman Yousaf / Unsplash',
-  } satisfies CuratedImage,
-  'dr-serena-hsu': {
-    src: u('1559839734-2b71ea197ec2'),
-    alt: 'A doctor in a clinic setting',
-    credit: 'Christina @ wocintechchat / Unsplash',
-  } satisfies CuratedImage,
-};
+/* Doctor portraits live in `content/doctors.ts` (`portrait` field) and point
+ * to real PNG photos in `public/images/doctors/`. The placeholder map that
+ * used to live here was retired once the practice provided real headshots. */

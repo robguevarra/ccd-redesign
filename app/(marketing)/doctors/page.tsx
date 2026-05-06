@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { doctors } from '@/content/doctors';
-import { doctorPlaceholders } from '@/content/photography';
 import { FadeUp } from '@/components/motion/fade-up';
 
 export const metadata = {
@@ -36,20 +35,18 @@ export default function DoctorsPage() {
       <section className="mx-auto max-w-7xl px-5 md:px-8 py-24 md:py-36">
         <ul className="grid gap-x-8 gap-y-20 md:grid-cols-2 lg:grid-cols-3">
           {doctors.map((d) => {
-            const portrait = doctorPlaceholders[d.slug as keyof typeof doctorPlaceholders];
+            const { portrait } = d;
             return (
               <li key={d.slug}>
                 <Link href={`/doctors/${d.slug}`} className="group block">
                   <div className="relative aspect-[3/4] bg-stone-200 mb-8 overflow-hidden">
-                    {portrait && (
-                      <Image
-                        src={portrait.src}
-                        alt={portrait.alt}
-                        fill
-                        sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
-                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700 ease-out"
-                      />
-                    )}
+                    <Image
+                      src={portrait.src}
+                      alt={portrait.alt}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
+                      className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700 ease-out"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-950/30 to-transparent" />
                   </div>
                   <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-2">
