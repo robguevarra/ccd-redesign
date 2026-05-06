@@ -46,6 +46,7 @@ export default async function DoctorDetailPage({
           fill
           priority
           sizes="100vw"
+          style={{ objectPosition: portrait.objectPosition ?? 'center' }}
           className="object-cover opacity-65"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />

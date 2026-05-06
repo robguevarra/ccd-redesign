@@ -40,6 +40,14 @@ export interface Image {
   alt: string;
   width?: number;
   height?: number;
+  /**
+   * CSS object-position value used when the image is rendered via object-cover
+   * into a container with a different aspect ratio (e.g. landscape portrait
+   * cropped into a 3/4 thumbnail). Default 'center center'. Values like
+   * '30% center' shift the focal point — useful when the subject sits off
+   * the horizontal midpoint in the source frame.
+   */
+  objectPosition?: string;
 }
 
 export interface Service {
