@@ -4,7 +4,7 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Contact',
-  description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[1]?.number}.`,
+  description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[0]?.number}.`,
 };
 
 export default function ContactPage() {
@@ -47,7 +47,7 @@ export default function ContactPage() {
           </a>
         </div>
 
-        {/* Phones */}
+        {/* Phones & Email */}
         <div className="space-y-6">
           <div className="flex items-center gap-3 text-stone-900">
             <Phone className="h-5 w-5" aria-hidden="true" />
@@ -64,6 +64,16 @@ export default function ContactPage() {
                 </a>
               </li>
             ))}
+            {practiceInfo.email && (
+              <li>
+                <p className="text-sm text-stone-500 uppercase tracking-[0.18em]">
+                  Email
+                </p>
+                <a href={`mailto:${practiceInfo.email}`} className="text-stone-700 hover:text-stone-900 transition-colors break-all">
+                  {practiceInfo.email}
+                </a>
+              </li>
+            )}
           </ul>
         </div>
 
@@ -111,10 +121,10 @@ export default function ContactPage() {
           and applying the relevant accessibility standards. If you experience any
           difficulty in accessing any part of this website, please call us at{' '}
           <a
-            href={`tel:${practiceInfo.phones[1]?.tel}`}
+            href={`tel:${practiceInfo.phones[0]?.tel}`}
             className="text-stone-900 underline underline-offset-4"
           >
-            {practiceInfo.phones[1]?.number}
+            {practiceInfo.phones[0]?.number}
           </a>{' '}
           and we will be happy to assist you.
         </p>
