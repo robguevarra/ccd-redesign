@@ -151,7 +151,7 @@ export const services: Service[] = [
     subcategory: 'surgical-regenerative-medical',
     summary:
       'Diode laser treatment for soft-tissue procedures, decontamination, and biostimulation.',
-    body: 'Used for frenectomies, gingivectomies, peri-implantitis decontamination, and biostimulation of surgical sites. The laser cauterizes as it cuts — minimal bleeding, faster healing, less post-operative discomfort than traditional scalpel approaches. Particularly effective for pediatric and anxious patients.',
+    body: 'Used for frenectomies, gingivectomies, peri-implantitis decontamination, and biostimulation of surgical sites. The laser cauterizes as it cuts — minimal bleeding, faster healing, less post-operative discomfort than traditional scalpel approaches. Particularly effective for pediatric and anxious patients, and for cases where bleeding control matters more than visibility through a magnification lens.',
   },
 
   // ═════════════════════════════════════════════════════════════════
