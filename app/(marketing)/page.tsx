@@ -6,22 +6,22 @@ import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
   {
-    eyebrow: 'The thing about sleep apnea',
-    title: 'Sleep apnea is treatable.',
-    italicize: [2],
-    body: 'It interrupts your sleep, strains your heart, and is widely under-diagnosed.',
+    eyebrow: 'Why patients stay',
+    title: 'Comfort, restored.',
+    italicize: [1],
+    body: "For sleep that actually rests you. For a jaw that doesn't ache. For a tooth fixed once and left alone.",
   },
   {
-    eyebrow: 'The surprising part',
-    title: 'And often, it\'s dental.',
+    eyebrow: "What you're looking at",
+    title: 'Sleep apnea, treatable.',
+    italicize: [1],
+    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks. This is what medical-grade dentistry looks like.',
+  },
+  {
+    eyebrow: 'Two practices, under one roof',
+    title: 'Five doctors. Twenty-five years.',
     italicize: [3],
-    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks.',
-  },
-  {
-    eyebrow: 'Why patients drive in',
-    title: 'Three board-certified specialists.',
-    italicize: [2],
-    body: 'Plus a USC Master\'s in Orofacial Pain, Oral Medicine, and Sleep Disorders — rare even for a multispecialty practice. Sought after in Rancho Cucamonga since 1999.',
+    body: "A USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders. A board-certified oral surgeon. A board-certified endodontist. Sought after in Rancho Cucamonga since 1999.",
   },
 ];
 
@@ -75,14 +75,14 @@ export default function HomePage() {
   return (
     <>
       <AirwayHero
-        topEyebrow={<>Multispecialty &middot; Dental + Medical &middot; Since 1999</>}
+        topEyebrow={<>Comfort Care Dental &middot; Dental + Medical &middot; Since 1999</>}
         keyframes={HOME_KEYFRAMES}
-        ariaLabel="A dental practice that treats medical conditions"
+        ariaLabel="Comfort Care Dental — two practices, one roof"
         fallbackHeading={
           <>
-            Dentistry,
+            Comfort,
             <br />
-            <span className="italic">crossed with medicine.</span>
+            <span className="italic">restored.</span>
           </>
         }
         cta={
@@ -103,63 +103,6 @@ export default function HomePage() {
           </div>
         }
       />
-
-      {/* ─────────── Editorial positioning hero ─────────── */}
-      <FadeUp>
-        <section className="relative mx-auto max-w-7xl px-5 md:px-8 py-28 md:py-44 lg:py-56">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
-            <div className="lg:col-span-2">
-              <p className="text-[10px] md:text-xs uppercase tracking-[0.32em] text-stone-500 lg:sticky lg:top-32">
-                The practice
-              </p>
-            </div>
-            <div className="lg:col-span-10">
-              <h2 className="font-serif text-5xl md:text-7xl lg:text-[8.5rem] xl:text-[10rem] tracking-tighter text-stone-900 leading-[0.92] font-light">
-                Sought-after,
-                <br />
-                <span className="italic font-extralight">
-                  in Rancho Cucamonga.
-                </span>
-              </h2>
-              <div className="mt-12 md:mt-16 max-w-3xl text-stone-700 text-lg md:text-2xl leading-[1.5]">
-                <p>
-                  For sleep apnea. For TMJ. For orofacial pain. For the cases
-                  that ask for three board-certified specialists, a USC
-                  Master's in Orofacial Pain, Oral Medicine, and Sleep
-                  Disorders, and twenty-five years of experience —{' '}
-                  <em className="font-light">under one roof.</em>
-                </p>
-              </div>
-              <div className="mt-14 grid sm:grid-cols-3 gap-y-6 gap-x-10">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                    Specialty
-                  </p>
-                  <p className="text-stone-900 leading-snug">
-                    Endodontics · Oral & Maxillofacial Surgery · Orthodontics
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                    Sub-specialty
-                  </p>
-                  <p className="text-stone-900 leading-snug">
-                    Orofacial pain · Oral medicine · Sleep disorders
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                    Practice
-                  </p>
-                  <p className="text-stone-900 leading-snug">
-                    Six doctors · Rancho Cucamonga · Since 1999
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeUp>
 
       {/* ─────────── Services overview ─────────── */}
       <FadeUp as="section" className="bg-stone-100/60 py-24 md:py-32">
@@ -249,7 +192,7 @@ export default function HomePage() {
           </p>
           <div className="md:flex md:items-end md:justify-between mb-12">
             <h2 className="font-serif text-4xl md:text-6xl tracking-tighter max-w-3xl">
-              Six doctors,{' '}
+              Five doctors,{' '}
               <span className="italic font-light text-stone-300">trained at the practices that train other practices.</span>
             </h2>
             <Link
@@ -261,7 +204,7 @@ export default function HomePage() {
           </div>
           <p className="max-w-2xl text-stone-300 leading-relaxed text-lg">
             Dr. Brien Hsu has been seeing patients in {practiceInfo.address.city} since 1999.
-            Five additional dentists work alongside him today, including the next generation
+            Four additional dentists work alongside him today, including the next generation
             of the Hsu family. Long tenure means we remember your case, your kids, and how
             your bite has changed since 2007.
           </p>
