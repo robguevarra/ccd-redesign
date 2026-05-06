@@ -76,7 +76,7 @@ export const redirects: Redirect[] = [
   { from: '/doctors-dr-earlene-milone-2', to: '/doctors/dr-amandeep-singh', status: 301, note: 'Old WP slug was for prior associate; current doctor is Dr. Singh' },
   { from: '/doctors-dr-rachel-lim', to: '/doctors/dr-rachel-lim', status: 301 },
   { from: '/doctors-dr-robert-sharobiem', to: '/doctors/dr-robert-sharobiem', status: 301 },
-  { from: '/doctors-dr-serena-hsu', to: '/doctors/dr-serena-hsu', status: 301 },
+  { from: '/doctors-dr-serena-hsu', to: '/doctors', status: 410, note: 'Doctor dropped per audit — direct 410 (no 301 hop through removed slug)' },
   { from: '/aboutus-associates-html', to: '/doctors', status: 301 },
   { from: '/our-team', to: '/doctors', status: 301 },
   { from: '/aboutus-interview-html', to: '/about', status: 301 },

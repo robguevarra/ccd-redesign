@@ -211,9 +211,9 @@ export default function HomePage() {
           </div>
           <p className="max-w-2xl text-stone-300 leading-relaxed text-lg">
             Dr. Brien Hsu has been seeing patients in {practiceInfo.address.city} since 1999.
-            Four additional dentists work alongside him today, including the next generation
-            of the Hsu family. Long tenure means we remember your case, your kids, and how
-            your bite has changed since 2007.
+            Four additional doctors work alongside him today — board-certified specialists
+            in oral surgery, endodontics, and orofacial pain. Long tenure means we remember
+            your case, your kids, and how your bite has changed since 2007.
           </p>
         </div>
       </FadeUp>

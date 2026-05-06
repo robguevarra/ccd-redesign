@@ -42,10 +42,11 @@ export default function AboutPage() {
             the brief.
           </p>
           <p>
-            Four doctors work alongside Dr. Brien Hsu today — including the next
-            generation of the Hsu family. We invest in technology when it actually
-            improves a clinical outcome (3D CBCT in 2014, the Trios scanner in
-            2024) and we leave the rest of the dental industry's gimmicks alone.
+            Four doctors work alongside Dr. Brien Hsu today — board-certified
+            specialists in oral surgery, endodontics, and orofacial pain. We
+            invest in technology when it actually improves a clinical outcome
+            (3D CBCT in 2014, the Trios scanner in 2024) and we leave the rest
+            of the dental industry's gimmicks alone.
           </p>
           <p>
             Outside of the practice, our doctors volunteer with the ADA Give Kids a
