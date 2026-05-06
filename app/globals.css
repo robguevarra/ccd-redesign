@@ -16,6 +16,16 @@
   --color-stone-800: #292621;
   --color-stone-900: #1a1815;
 
+  /* Brand navy — used for the hero, accents, and highlight moments. */
+  --color-ink-950: #02060f;
+  --color-ink-900: #050a16;
+  --color-ink-800: #0a1428;
+  --color-ink-700: #142035;
+  --color-ink-600: #1f2c45;
+  --color-ink-500: #2c3a55;
+  --color-ink-400: #4a5a78;
+  --color-ink-300: #7888a3;
+
   /* Accent — TBD in P3; placeholder warm terracotta */
   --color-accent-500: #b8553a;
 }

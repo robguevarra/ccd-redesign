@@ -29,7 +29,7 @@ export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
         'sticky top-0 z-40 w-full border-b backdrop-blur-md',
         variant === 'light'
           ? 'bg-stone-50/85 border-stone-200/60 text-stone-900'
-          : 'bg-stone-900/40 border-stone-800/60 text-stone-50',
+          : 'bg-ink-950/60 border-ink-700/40 text-stone-100',
         className,
       )}
     >
@@ -57,7 +57,7 @@ export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
               'hidden sm:inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors',
               variant === 'light'
                 ? 'bg-stone-900 text-stone-50 hover:bg-stone-700'
-                : 'bg-stone-50 text-stone-900 hover:bg-stone-200',
+                : 'bg-stone-100 text-ink-950 hover:bg-stone-50',
             )}
           >
             Request appointment
@@ -68,7 +68,7 @@ export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
               'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors',
               variant === 'light'
                 ? 'border-stone-900 hover:bg-stone-900 hover:text-stone-50'
-                : 'border-stone-50 hover:bg-stone-50 hover:text-stone-900',
+                : 'border-stone-100/50 hover:bg-stone-100 hover:text-ink-950',
             )}
             aria-label={`Call ${practiceInfo.brandName} at ${main.number}`}
           >

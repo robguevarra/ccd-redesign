@@ -2,7 +2,28 @@ import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { FadeUp } from '@/components/motion/fade-up';
-import { Hero } from '@/components/hero';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
+
+const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'The thing about sleep apnea',
+    title: 'Sleep apnea is treatable.',
+    italicize: [2],
+    body: 'It interrupts your sleep, strains your heart, and is widely under-diagnosed.',
+  },
+  {
+    eyebrow: 'The surprising part',
+    title: 'And often, it\'s dental.',
+    italicize: [3],
+    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks.',
+  },
+  {
+    eyebrow: 'Why patients drive in',
+    title: 'Three board-certified specialists.',
+    italicize: [2],
+    body: 'Plus a USC Master\'s in Orofacial Pain, Oral Medicine, and Sleep Disorders — rare even for a multispecialty practice. Sought after in Rancho Cucamonga since 1999.',
+  },
+];
 
 const SERVICE_CATEGORIES = [
   {
@@ -53,19 +74,90 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero />
+      <AirwayHero
+        topEyebrow={<>Multispecialty &middot; Dental + Medical &middot; Since 1999</>}
+        keyframes={HOME_KEYFRAMES}
+        ariaLabel="A dental practice that treats medical conditions"
+        fallbackHeading={
+          <>
+            Dentistry,
+            <br />
+            <span className="italic">crossed with medicine.</span>
+          </>
+        }
+        cta={
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/request-appointment"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-50 text-stone-950 px-6 py-3 text-sm font-medium hover:bg-stone-200 transition-colors"
+            >
+              Request appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <a
+              href={`tel:${main.tel}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-50/70 text-stone-50 px-6 py-3 text-sm font-medium hover:bg-stone-50 hover:text-stone-950 transition-colors"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {main.number}
+            </a>
+          </div>
+        }
+      />
 
-      {/* ─────────── Lede / value statement ─────────── */}
+      {/* ─────────── Editorial positioning hero ─────────── */}
       <FadeUp>
-        <section className="mx-auto max-w-4xl px-5 md:px-8 py-24 md:py-32 text-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-8">
-            Why patients choose us
-          </p>
-          <p className="font-serif text-3xl md:text-5xl leading-tight text-stone-900 tracking-tight">
-            Your time is the gift. Our job is to give it back to you — with{' '}
-            <em className="text-stone-700">work that lasts</em> and a chair you don't
-            mind being in.
-          </p>
+        <section className="relative mx-auto max-w-7xl px-5 md:px-8 py-28 md:py-44 lg:py-56">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="lg:col-span-2">
+              <p className="text-[10px] md:text-xs uppercase tracking-[0.32em] text-stone-500 lg:sticky lg:top-32">
+                The practice
+              </p>
+            </div>
+            <div className="lg:col-span-10">
+              <h2 className="font-serif text-5xl md:text-7xl lg:text-[8.5rem] xl:text-[10rem] tracking-tighter text-stone-900 leading-[0.92] font-light">
+                Sought-after,
+                <br />
+                <span className="italic font-extralight">
+                  in Rancho Cucamonga.
+                </span>
+              </h2>
+              <div className="mt-12 md:mt-16 max-w-3xl text-stone-700 text-lg md:text-2xl leading-[1.5]">
+                <p>
+                  For sleep apnea. For TMJ. For orofacial pain. For the cases
+                  that ask for three board-certified specialists, a USC
+                  Master's in Orofacial Pain, Oral Medicine, and Sleep
+                  Disorders, and twenty-five years of experience —{' '}
+                  <em className="font-light">under one roof.</em>
+                </p>
+              </div>
+              <div className="mt-14 grid sm:grid-cols-3 gap-y-6 gap-x-10">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
+                    Specialty
+                  </p>
+                  <p className="text-stone-900 leading-snug">
+                    Endodontics · Oral & Maxillofacial Surgery · Orthodontics
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
+                    Sub-specialty
+                  </p>
+                  <p className="text-stone-900 leading-snug">
+                    Orofacial pain · Oral medicine · Sleep disorders
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
+                    Practice
+                  </p>
+                  <p className="text-stone-900 leading-snug">
+                    Six doctors · Rancho Cucamonga · Since 1999
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </FadeUp>
 
@@ -149,8 +241,8 @@ export default function HomePage() {
         </div>
       </FadeUp>
 
-      {/* ─────────── Doctors intro ─────────── */}
-      <FadeUp as="section" className="bg-stone-900 text-stone-50 py-24 md:py-32">
+      {/* ─────────── Doctors intro — uses the navy as accent ─────────── */}
+      <FadeUp as="section" className="bg-ink-950 text-stone-50 py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <p className="text-xs uppercase tracking-[0.22em] text-stone-400 mb-6">
             The team
@@ -158,7 +250,7 @@ export default function HomePage() {
           <div className="md:flex md:items-end md:justify-between mb-12">
             <h2 className="font-serif text-4xl md:text-6xl tracking-tighter max-w-3xl">
               Six doctors,{' '}
-              <span className="italic font-light">trained at the practices that train other practices.</span>
+              <span className="italic font-light text-stone-300">trained at the practices that train other practices.</span>
             </h2>
             <Link
               href="/doctors"

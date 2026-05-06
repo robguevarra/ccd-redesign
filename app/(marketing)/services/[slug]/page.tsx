@@ -9,6 +9,7 @@ import {
 } from '@/content/services';
 import { practiceInfo } from '@/content/practice-info';
 import { TmjSignature } from '@/components/tmj/tmj-signature';
+import { SleepApneaSignature } from '@/components/sleep-apnea/sleep-apnea-signature';
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -42,8 +43,11 @@ export default async function ServiceDetailPage({
     .filter((s) => s.slug !== service.slug)
     .slice(0, 3);
 
-  // Wow-zone signature variant for TMJ and any future signature service.
+  // Wow-zone signature variants — dispatch by slug.
   if (service.signature) {
+    if (service.slug === 'sleep-apnea') {
+      return <SleepApneaSignature service={service} />;
+    }
     return <TmjSignature service={service} />;
   }
 

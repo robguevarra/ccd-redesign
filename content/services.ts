@@ -159,6 +159,7 @@ export const services: Service[] = [
     category: 'specialty',
     summary:
       'Oral appliance therapy as an alternative to CPAP for mild to moderate obstructive sleep apnea.',
+    signature: true,
     body: 'Many patients diagnosed with OSA cannot tolerate CPAP. A custom-fitted oral appliance, designed to advance the lower jaw during sleep, opens the airway and is well-tolerated by most. We coordinate with your sleep physician.',
   },
   {
