@@ -50,3 +50,5 @@ source/lighthouse/
 source/axe/
 .vercel
 .env*.local
+
+tsconfig.tsbuildinfo
