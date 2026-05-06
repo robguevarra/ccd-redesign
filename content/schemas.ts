@@ -154,7 +154,6 @@ export interface PracticeInfo {
   address: { street: string; city: string; state: string; zip: string };
   hours: BusinessHours[];
   phones: PhoneNumber[];
-  /** Currently null per audit — practice publishes no public email. v2 candidate. */
   email: string | null;
   socials: {
     facebook?: string;
