@@ -175,7 +175,7 @@ export default function HomePage() {
               </h2>
             </div>
             <Link
-              href="/services"
+              href="/technology"
               className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-stone-700 hover:text-stone-900 mt-6 md:mt-0"
             >
               All services <ArrowRight className="h-4 w-4" aria-hidden="true" />

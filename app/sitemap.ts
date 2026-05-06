@@ -1,5 +1,4 @@
 import type { MetadataRoute } from 'next';
-import { services } from '@/content/services';
 import { doctors } from '@/content/doctors';
 import { listPublishedPosts } from '@/lib/supabase/queries';
 
@@ -12,7 +11,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${BASE}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/services`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/doctors`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/technology`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/reviews`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
@@ -21,13 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/financing`, lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
     { url: `${BASE}/request-appointment`, lastModified: now, changeFrequency: 'yearly', priority: 0.9 },
   ];
-
-  const serviceRoutes: MetadataRoute.Sitemap = services.map((s) => ({
-    url: `${BASE}/services/${s.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: s.signature ? 0.9 : 0.7,
-  }));
 
   const doctorRoutes: MetadataRoute.Sitemap = doctors.map((d) => ({
     url: `${BASE}/doctors/${d.slug}`,
@@ -43,5 +34,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...doctorRoutes, ...blogRoutes];
+  return [...staticRoutes, ...doctorRoutes, ...blogRoutes];
 }
