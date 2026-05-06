@@ -1,27 +1,40 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
+import { getSublabel } from '@/lib/sublabel';
+import { Logo } from './logo';
 import { Wordmark } from './wordmark';
 
 const NAV_ITEMS = [
-  { href: '/services', label: 'Services' },
+  { href: '/dental', label: 'Dental' },
+  { href: '/medical', label: 'Medical' },
   { href: '/doctors', label: 'Doctors' },
   { href: '/technology', label: 'Technology' },
   { href: '/reviews', label: 'Reviews' },
   { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ];
 
 interface SiteHeaderProps {
   /** When true, renders dark-on-transparent — for use on the wow-zone hero. */
   variant?: 'light' | 'dark';
+  /** Optional override; otherwise resolved from current pathname. */
+  sublabel?: string;
   className?: string;
 }
 
-export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
-  const main = practiceInfo.phones[1] ?? practiceInfo.phones[0]!;
+export function SiteHeader({
+  variant = 'light',
+  sublabel,
+  className,
+}: SiteHeaderProps) {
+  const pathname = usePathname();
+  const resolvedSublabel = sublabel ?? getSublabel(pathname);
+  const main = practiceInfo.phones[0]!;
 
   return (
     <header
@@ -34,8 +47,20 @@ export function SiteHeader({ variant = 'light', className }: SiteHeaderProps) {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 md:px-8 md:py-5">
-        <Link href="/" className="block" aria-label={`${practiceInfo.brandName} home`}>
-          <Wordmark variant={variant} />
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          aria-label={`${practiceInfo.brandName} home`}
+        >
+          <Logo size={28} mobileSize={24} decorative />
+          <span className="flex flex-col">
+            <Wordmark variant={variant} />
+            {resolvedSublabel && (
+              <span className="mt-0.5 text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
+                {resolvedSublabel}
+              </span>
+            )}
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-sm">
