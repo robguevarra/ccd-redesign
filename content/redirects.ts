@@ -214,4 +214,39 @@ export const redirects: Redirect[] = [
   // 2017.dentisthsu.com/*           -> https://dentisthsu.com/
   // www.blog.dentisthsu.com/*       -> https://dentisthsu.com/
   // www.familyblog.dentisthsu.com/* -> https://dentisthsu.com/
+
+  // ------------------------------------------------------------------
+  // 4. P3.5 audit-pass: lane migration (services subtree → lane URLs)
+  // ------------------------------------------------------------------
+  // Medical lane migrations
+  { from: '/services/tmj', to: '/medical/tmj', status: 301, note: 'Lane migration' },
+  { from: '/services/orofacial-pain', to: '/medical/orofacial-pain', status: 301, note: 'Lane migration' },
+  { from: '/services/sleep-apnea', to: '/medical/sleep-apnea', status: 301, note: 'Lane migration' },
+  { from: '/services/oral-pathology', to: '/medical/oral-pathology', status: 301, note: 'Lane migration' },
+
+  // Dental lane migrations + slug renames
+  { from: '/services/cleaning', to: '/dental/professional-cleaning', status: 301, note: 'Lane migration + rename' },
+  { from: '/services/composite-fillings', to: '/dental/composite-fillings', status: 301, note: 'Lane migration' },
+  { from: '/services/crowns-caps', to: '/dental/crowns-and-bridges', status: 301, note: 'Rename + merge fixed-bridges' },
+  { from: '/services/fixed-bridges', to: '/dental/crowns-and-bridges', status: 301, note: 'Merged into crowns-and-bridges' },
+  { from: '/services/dentures', to: '/dental/dentures', status: 301, note: 'Lane migration' },
+  { from: '/services/root-canal-therapy', to: '/dental/root-canal', status: 301, note: 'Lane migration + rename' },
+  { from: '/services/tooth-extractions', to: '/dental/extractions', status: 301, note: 'Lane migration + rename' },
+  { from: '/services/porcelain-veneers', to: '/dental/porcelain-veneers', status: 301, note: 'Lane migration (was cosmetic)' },
+  { from: '/services/teeth-whitening', to: '/dental/teeth-whitening', status: 301, note: 'Lane migration (was cosmetic)' },
+  { from: '/services/periodontal-treatment', to: '/dental/periodontal-treatment', status: 301, note: 'Lane migration' },
+
+  // Lane index redirects
+  { from: '/services', to: '/dental', status: 301, note: 'Default lane is dental for legacy /services traffic' },
+
+  // ------------------------------------------------------------------
+  // 5. P3.5 audit-pass: 410 Gone — services dropped from catalog
+  // ------------------------------------------------------------------
+  { from: '/services/amalgam-fillings', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/services/orthodontics', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/services/removable-orthodontics', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/services/sedation-dentistry', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/services/children-oral-healthcare', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/services/oral-hygiene', to: '/', status: 410, note: 'Folded into professional-cleaning' },
+  { from: '/doctors/dr-serena-hsu', to: '/doctors', status: 410, note: 'Doctor dropped pending dentist confirmation' },
 ];
