@@ -4,6 +4,7 @@ import { Wordmark } from './wordmark';
 
 export function SiteFooter() {
   const dayLabel = (day: string) => day.slice(0, 3);
+  const primaryPhone = practiceInfo.phones[0];
 
   return (
     <footer className="bg-stone-900 text-stone-200 mt-32">
@@ -41,15 +42,25 @@ export function SiteFooter() {
 
         <div>
           <h3 className="text-xs uppercase tracking-[0.18em] text-stone-500">Contact</h3>
-          <ul className="mt-4 text-sm leading-relaxed space-y-1">
-            {practiceInfo.phones.map((p) => (
-              <li key={p.tel}>
-                <span className="text-stone-500">{p.label} · </span>
-                <a href={`tel:${p.tel}`} className="hover:text-white">
-                  {p.number}
+          <ul className="mt-4 text-sm leading-relaxed space-y-2">
+            {primaryPhone && (
+              <li>
+                <span className="text-stone-500">{primaryPhone.label} · </span>
+                <a href={`tel:${primaryPhone.tel}`} className="hover:text-white">
+                  {primaryPhone.number}
                 </a>
               </li>
-            ))}
+            )}
+            {practiceInfo.email && (
+              <li>
+                <a
+                  href={`mailto:${practiceInfo.email}`}
+                  className="text-stone-400 hover:text-white transition-colors"
+                >
+                  {practiceInfo.email}
+                </a>
+              </li>
+            )}
           </ul>
           <ul className="mt-6 flex gap-4 text-sm">
             {practiceInfo.socials.facebook && (
@@ -98,6 +109,12 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {practiceInfo.brandName}. {practiceInfo.legalName}.
           </p>
           <nav className="flex gap-5">
+            <Link href="/dental" className="hover:text-stone-300">
+              Dental
+            </Link>
+            <Link href="/medical" className="hover:text-stone-300">
+              Medical
+            </Link>
             <Link href="/financing" className="hover:text-stone-300">
               Financing
             </Link>
