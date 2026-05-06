@@ -238,7 +238,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'preventive',
     summary:
       'Bi-annual hygiene visits done thoroughly — the foundation everything else rests on.',
-    body: 'Periodic professional cleanings remove plaque and tartar that brushing alone cannot reach. Some patients need three or four visits a year — we calibrate the cadence to your risk profile. Each visit pairs the cleaning with patient education, hygiene maintenance coaching, fluoride application, and sealants where indicated.',
+    body: `The foundation of every healthy mouth is a consistent cleaning schedule — and we take that foundation seriously. A professional cleaning removes the calculus and biofilm that daily brushing and flossing cannot reach: the buildup that accumulates at the gumline, in the proximal spaces, and in the pockets that form as gum tissue ages. Without it, that accumulation becomes the primary driver of both decay and periodontal disease.
+
+Most patients do well with two visits per year. Others — patients with a history of periodontal disease, those with crowded or difficult-to-clean dentition, patients managing systemic conditions that increase oral disease risk, or those with a high decay rate — benefit from three or four cleanings annually. We establish that cadence at your first comprehensive visit and adjust it over time based on what we actually see at each appointment.
+
+Each visit is more than an instrument appointment. We document any changes since the last visit, probe pocket depths where indicated, screen for soft-tissue changes and oral lesions, apply fluoride to strengthen enamel against acid attack, and apply sealants where deep pitting in molars creates ongoing decay risk. We also review your home care — not to lecture, but because small technique corrections often make a meaningful difference in where decay and inflammation occur.
+
+Patient education at these visits is practical: what is happening in your specific mouth, what habits are driving problems, what the X-rays show, and what we plan to monitor. You should leave each cleaning appointment with a clearer picture of your oral health than when you arrived.
+
+If it has been years since your last professional cleaning, do not let that delay you further. We see that every week — catching up is straightforward, and judgment is not part of how we practice.`,
   },
   {
     slug: 'comprehensive-exam',
@@ -247,7 +255,17 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'preventive',
     summary:
       'Full-mouth diagnostic exam with CT scan, panoramic imaging, and periodontal charting.',
-    body: 'A complete baseline exam at the first visit and annually thereafter. Includes a panoramic X-ray, CBCT scan when indicated, periodontal probe charting, oral cancer screening, occlusal evaluation, and a treatment-plan consultation. Sets the foundation for every cleaning and procedure that follows.',
+    body: `A thorough diagnosis at the start of care prevents a long list of problems that come from treating teeth in isolation. The comprehensive exam is where we establish a baseline for your entire oral health — not just the chief complaint, not just the teeth that hurt, but the whole picture.
+
+At a new-patient comprehensive exam, we take a full-mouth series of X-rays or a panoramic radiograph. When the anatomy, a presenting problem, or clinical findings warrant it, we capture a CBCT scan using our iCAT FLX — a three-dimensional image that reveals the bone volume, root anatomy, sinus relationships, and joint structure that a flat X-ray cannot show. This is especially relevant before any extraction, implant, or surgical procedure, and for any patient presenting with jaw pain or bite problems.
+
+We perform a full periodontal chart: pocket depths at six sites per tooth, bleeding on probing, recession, furcation involvement, and mobility. This data tells us the actual disease status of your periodontium at a level that a visual inspection alone cannot provide. We repeat it at every recall visit and track changes over time.
+
+The soft-tissue examination covers lips, cheeks, tongue, floor of mouth, palate, and oropharynx — part of every comprehensive exam, not a separate add-on. We evaluate occlusion, check for signs of bruxism or parafunction, and assess existing restorations for integrity and marginal fit.
+
+The consultation that follows the exam is not a sales presentation. We explain what we found, what it means, and what the treatment options are — including doing nothing when that is a reasonable choice. A treatment plan is built with you, not handed to you.
+
+We recommend a comprehensive re-evaluation annually. Your mouth changes, and the baseline needs to keep pace.`,
   },
   {
     slug: 'scaling-root-planing',
@@ -256,7 +274,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'preventive',
     summary:
       'Deep cleaning below the gumline for patients with active or early periodontal disease.',
-    body: "When pocket depths exceed 4mm and there is calculus below the gumline, a routine cleaning isn't enough. Scaling and root planing — sometimes called deep cleaning — removes biofilm and calculus from root surfaces, allows the gums to reattach, and arrests the progression of periodontitis. Usually completed in two visits.",
+    body: `When pocket depths exceed four millimeters and calculus has formed below the gumline, a standard cleaning cannot reach the problem. Scaling and root planing — sometimes called a deep cleaning — is the first active treatment for early to moderate periodontitis, and it is frequently the only treatment needed to arrest the disease progression when caught at that stage.
+
+The procedure removes calculus, plaque, and bacterial toxins from the root surfaces both above and below the gum margin. The root planing component smooths the root surface, which discourages future bacterial adhesion and allows the gum tissue to reattach and form a healthier, shallower pocket. After the procedure, a medicated solution is often irrigated into the treated pockets to address any remaining bacterial burden.
+
+We complete the procedure one quadrant at a time under local anesthesia, which means each session is comfortable and focused. Most patients need two appointments to cover the full mouth; some cases with less severe involvement can be addressed in one visit. We schedule a re-evaluation at four to six weeks post-treatment to re-probe and assess the tissue response — pockets that have not responded adequately may need additional intervention.
+
+The indication for scaling and root planing is clinical, not cosmetic. If your probe readings are in the healthy range at your annual exam, you do not need this procedure. If they are not, continuing with routine cleanings does not address the underlying disease. We screen proactively at every hygiene visit and recommend deep cleaning when the measurements support it, not as a default.
+
+Dr. Singh, our periodontist with a focus on periodontal disease since 2006, is available for cases that require more advanced surgical management when scaling alone is insufficient.`,
   },
   {
     slug: 'fluoride-sealants',
@@ -265,7 +291,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'preventive',
     summary:
       'Topical fluoride and sealant application for enamel protection in children, teens, and high-risk adults.',
-    body: 'Fluoride strengthens enamel against acid attack; sealants physically block the deep grooves where decay starts. We apply both as appropriate at hygiene visits, especially for patients with high decay risk, orthodontic appliances, or genetic susceptibility. Quick to apply, no anesthetic, dramatic long-term protection.',
+    body: `Prevention is the most cost-effective work we do, and fluoride and sealants are its two most reliably effective tools. Neither requires anesthetic, neither takes much chair time, and both return meaningful protection across the years that follow.
+
+Fluoride works at the chemistry level. Tooth enamel is composed of hydroxyapatite crystals that are vulnerable to the acid produced by oral bacteria when they metabolize dietary sugars. Fluoride incorporates into that crystal structure and converts it to a more acid-resistant form, reducing the rate at which enamel demineralizes. Topical fluoride applied professionally is more concentrated than what you get from toothpaste or tap water, and the clinical evidence for its protective effect is among the most well-established in preventive dentistry. We apply it at hygiene visits in gel, foam, or varnish form depending on age and risk profile.
+
+Sealants address a different vulnerability: the deep pits and fissures in the biting surfaces of back teeth, where toothbrush bristles cannot reach and where a significant portion of childhood and adolescent decay originates. A sealant is a thin resin material flowed into those grooves and light-cured to form a physical barrier against bacteria and food debris. Applied correctly and maintained over time, they last years and prevent the cavities that would otherwise form.
+
+We recommend fluoride for patients across all ages with elevated decay risk — those with dry mouth from medications, orthodontic patients, people with a history of frequent cavities, and patients with exposed root surfaces from recession. Sealants are most valuable on newly erupted permanent molars in children and adolescents, but we also place them on adult patients whose molar anatomy creates ongoing risk.
+
+Both are included as part of routine hygiene visits when indicated. We do not wait to be asked.`,
   },
   {
     slug: 'occlusal-splints',
@@ -274,7 +308,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'preventive',
     summary:
       'Custom-fitted night guards for bruxism, clenching, and bite-force protection.',
-    body: 'For patients who grind or clench at night — and there are many — a custom occlusal splint protects teeth from wear, fracture, and TMJ overload. We fabricate from impressions or digital scans, fit at a follow-up, and adjust over time. Distinct from sleep apnea oral appliances, which target a different problem.',
+    body: `Bruxism — grinding and clenching — is one of the most common and least noticed sources of dental damage. Most people who do it are entirely unaware, because it happens during sleep. The signs accumulate over years: worn enamel, chipped cusp tips, cracked teeth, morning jaw soreness, headaches on waking, and increasing fracture risk in back teeth that have already been restored. By the time patients notice, the damage is already significant.
+
+A custom occlusal splint distributes bite forces across the full arch, removing concentrated load from individual teeth and reducing the compressive force transmitted to the temporomandibular joint. It does not stop the bruxism itself — the neurological drive to grind persists — but it intercepts the damage pathway. Worn enamel does not grow back; protecting what remains is the whole point.
+
+We fabricate splints from digital scans or conventional impressions. The splint is fit and adjusted at a follow-up appointment, with particular attention to the way it sits in your bite — a poorly fitting splint can create new bite problems, so the fit appointment is not optional. We adjust and refine over time as the appliance wears and as your bite changes.
+
+An occlusal splint for bruxism is a distinct device from a sleep apnea oral appliance, even though both are worn during sleep. Sleep apnea appliances are designed to reposition the mandible forward to maintain the airway; they work against the bite and should not double as bruxism protection. If you have both conditions, we address them with the appropriate appliances for each.
+
+We also place splints for patients with active TMJ symptoms, where reducing joint load is part of the treatment plan. The overlap between bruxism, bite mechanics, and TMJ health is real, and the splint prescription reflects that context.`,
   },
 
   // ─────── Restorative Dentistry (6) ───────
@@ -285,7 +327,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'restorative',
     summary:
       'Tooth-colored composite restorations placed to halt decay and restore tooth function.',
-    body: 'Modern adhesive composites bond to the tooth and reinforce it. Done well, they last a decade or more. We place them with rubber dam isolation to stop the progression of dental caries and restore the tooth back to function — closing the cavity, sealing against re-decay, and matching natural enamel.',
+    body: `A composite filling stops the progression of decay and restores the tooth to full function. The decayed tissue is removed, the cavity is cleaned, and a tooth-colored resin is bonded into place — shaped to restore the original contour of the tooth and polished to match the natural enamel around it. Done well, a composite filling is indistinguishable from the tooth it repairs.
+
+The bonding mechanism matters. Modern adhesive composites form a chemical and mechanical bond with tooth structure, which means they reinforce what remains rather than just filling a void. A well-placed composite filling seals the cavity margin against re-contamination, which is what determines long-term durability. We place all direct restorations under rubber dam isolation — this controls moisture in a way that is not achievable without it, and moisture control at the bonding step is the primary determinant of how long the filling lasts.
+
+We use composite for the full range of direct restorations: small cavities in posterior teeth, interproximal decay in both anterior and posterior teeth, chipped or fractured anterior teeth, and conservative restorations where tooth structure needs to be preserved. Composite is also used to replace deteriorating amalgam restorations when the indication supports it.
+
+What to expect: the appointment is completed in a single visit with local anesthesia. Some sensitivity to hot and cold in the days following placement is common and resolves as the tooth settles. We check your bite before you leave; if something feels off after the anesthetic wears off, call and we will adjust it.
+
+We do not claim a composite filling lasts forever. With proper home care and regular maintenance visits, a decade or more of service is a realistic expectation. Fillings at high-stress sites — molar contacts, areas subject to heavy bite force — are monitored at every hygiene visit.`,
   },
   {
     slug: 'direct-composite-veneers',
@@ -294,7 +344,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'restorative',
     summary:
       'Esthetic-focused composite veneers placed in a single visit. Conservative and reversible.',
-    body: "For patients who want the look of porcelain veneers without the time, cost, or commitment, direct composite veneers are an excellent option. Sculpted in-mouth in a single visit, polished to a natural finish, fully reversible. Typical lifespan is five to seven years. Often a stepping stone to porcelain when budget allows.",
+    body: `Some smile transformations do not require a laboratory, a two-week wait, or irreversible tooth preparation. Direct composite veneers are sculpted chairside in a single appointment — composite resin shaped and polished directly on the tooth surface to correct shape, color, or proportion. No impressions sent to a lab, no temporaries, no second appointment.
+
+The range of problems they address is broader than many patients expect. Direct veneers can close a gap between the front teeth, build out a tooth that is too narrow, repair a chipped or worn edge, cover discoloration that does not respond to whitening, and reshape teeth with irregular contour. Cases involving multiple front teeth can often be completed in one visit.
+
+The technique is exacting. Building tooth form in resin requires an understanding of dental anatomy, light behavior, and color characterization — the same skills that drive good direct composite work across the rest of the mouth, applied at a higher level of esthetic demand. We mock up the proposed changes before bonding anything permanently, so you see the result before we commit.
+
+The trade-offs are honest. Direct composite does not have the translucency or strength of a laboratory-fabricated porcelain veneer. A typical lifespan is five to seven years, after which the composite may need touch-up or replacement. Polishability is good but not identical to glazed ceramic. For patients with heavy bite forces or prominent bruxism habits, composite at the front teeth carries more risk of chipping.
+
+No enamel is removed in most direct veneer cases — the procedure is reversible. For patients who want to see a smile change before committing to the cost and irreversibility of porcelain veneers, direct composite is the right first step.`,
   },
   {
     slug: 'porcelain-veneers',
@@ -303,7 +361,16 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'restorative',
     summary:
       'Custom-shaped porcelain shells that change a smile without changing the underlying teeth.',
-    body: 'Veneers are a meaningful commitment — they are also one of the most rewarding cosmetic procedures in dentistry when done well. We design every case digitally first, mock it up in your mouth, and only proceed once the proportions and color are right.',
+    body: `Porcelain veneers are among the most powerful tools in cosmetic dentistry — thin ceramic shells custom-fabricated to cover the front surface of teeth, changing their shape, color, length, and proportion while preserving most of the underlying tooth structure. When the case is designed well and executed well, the result is a smile that looks entirely natural and is indistinguishable from healthy enamel.
+
+The range of problems veneers address: severe discoloration that whitening cannot correct (tetracycline staining, fluorosis, intrinsic gray tones), chipped or worn edges, irregular shape or size, minor crowding or spacing, and congenitally malformed teeth. They are not the right solution for every cosmetic problem — we discuss alternatives honestly and recommend veneers only when they are genuinely the best option for the case.
+
+Preparation involves removing a thin layer of enamel from the front surface of each tooth — about the thickness of a contact lens — to create space for the veneer without making the tooth look bulky. This is an irreversible step, which is why the design phase matters so much. We use our 3Shape Trios digital scanner to capture the existing dentition and plan the case in three dimensions. A digital or provisional mock-up lets you see the proposed proportions and color in your mouth before any preparation begins. We do not skip that step.
+
+Temporaries protect the prepared teeth while the porcelain is fabricated. The second appointment — delivery — involves careful bonding and bite verification. Post-delivery adjustments are normal; we schedule a follow-up to make them.
+
+Porcelain veneers are strong and stain-resistant, but they are not indestructible. Patients with heavy bruxism habits need a protective night splint. We discuss these considerations before any preparation, so there are no surprises after the case is complete.`,
+    technologyRefs: ['trios'],
   },
   {
     slug: 'crowns-and-bridges',
@@ -312,7 +379,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'restorative',
     summary:
       'Full-coverage restorations and multi-tooth bridges that restore function and protect the tooth.',
-    body: 'Crowns and bridges are designed and fitted using our 3Shape Trios digital scanner — no impression trays, faster turnaround, more accurate fit. Materials include porcelain-fused-to-metal, full zirconia, and lithium disilicate depending on location and load. Bridges replace one or more missing teeth using adjacent teeth as anchors, restoring the tooth back to functionality.',
+    body: `A crown is the appropriate restoration when a tooth can no longer be repaired with a filling alone — when decay is too extensive, when a fracture line runs too deep, when a large existing restoration has failed, or when a tooth has been treated with a root canal and needs full-coverage protection. The crown encases the entire visible portion of the tooth, restoring it back to functionality: the ability to bite and chew normally, to close the bite properly, and to hold its position in the arch.
+
+We design and plan crowns using our 3Shape Trios digital scanner. The scanner captures the tooth and the surrounding dentition in three dimensions without the discomfort and distortion of conventional impression trays. Digital files go directly to the laboratory, which shortens turnaround time and produces restorations with consistently accurate fit at the margin — the single most important variable in how long a crown stays in service.
+
+Material selection is matched to the clinical situation. Full zirconia is the current standard for posterior teeth under heavy load: extremely strong, biocompatible, and conservative in preparation requirements. Lithium disilicate (e-max) offers exceptional esthetics with good strength for anterior and premolar positions. Porcelain-fused-to-metal remains an option where specific clinical factors favor it. We discuss the trade-offs with you before any preparation begins.
+
+A bridge replaces one or more missing teeth by crowning the teeth on either side of the gap and suspending one or more artificial teeth between them. The adjacent teeth serve as anchors, which means some healthy tooth structure must be prepared to accommodate the crowns. For patients with natural, unrestored adjacent teeth, we discuss implants as an alternative that preserves that structure entirely.
+
+The crown and bridge appointment involves two visits: preparation and temporaries at the first, delivery and adjustment at the second. The temporary protects the prepared tooth between visits and gives you a preview of the final restoration's shape.`,
     technologyRefs: ['trios'],
   },
   {
@@ -321,7 +396,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     lane: 'dental',
     subcategory: 'restorative',
     summary: 'Full and partial removable prosthetics, including immediate dentures.',
-    body: 'Conventional dentures are made after the gums heal (4–6 weeks of being without teeth). Immediate dentures are made in advance and placed the same day as extractions. We adjust them as the tissues remodel over the following months. Implant-retained overdentures are also available for patients who want greater stability.',
+    body: `Losing teeth changes more than appearance — it changes how you eat, how you speak, and over time, how the underlying bone behaves. Dentures address those changes with a removable prosthesis custom-made to fit your ridge and replicate natural tooth form. When well-made and properly fitted, they restore chewing function and support the facial structure that the teeth were maintaining.
+
+A conventional full denture is fabricated after the extraction sites have healed and the ridge has remodeled — typically four to six weeks after extractions. This timeline allows the denture to be fitted to stable tissue, which means better initial fit and less need for early relining. The process involves several appointments: impressions, bite registration, a try-in with the teeth set in wax where you approve the look before final processing, and the delivery appointment.
+
+Immediate dentures are made before the extractions occur and placed at the same appointment as the extractions. The patient leaves without a gap in their smile, which is the primary advantage. The trade-off is that the tissue continues to remodel for months after extraction, which means the immediate denture will loosen and require relining as the ridge changes shape. Most patients with immediate dentures need a reline within the first year.
+
+Partial dentures replace several missing teeth in an arch where natural teeth remain. A framework of metal or flexible resin clasps onto the remaining teeth for retention. Partial dentures prevent the remaining teeth from drifting into the gap and restore chewing balance across the arch.
+
+For patients who want greater stability and retention than a conventional denture provides, implant-retained overdentures attach to implants placed in the jaw. The implants provide anchorage that prevents the prosthesis from moving during function — a meaningful quality-of-life improvement for patients who find conventional dentures unreliable.`,
   },
   {
     slug: 'teeth-whitening',
@@ -330,7 +413,17 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'restorative',
     summary:
       'In-office and at-home whitening, including deep-bleaching for stubborn cases.',
-    body: 'Most over-the-counter whitening underperforms because it does not address tooth permeability. Our deep-bleaching protocol — alternating in-office and supervised at-home phases — works on cases other approaches cannot move. Results are stable with a brief annual touch-up, and the process is closely supervised to avoid sensitivity.',
+    body: `Teeth discolor for different reasons, and the reason determines what whitening will actually work. Extrinsic staining from coffee, tea, or wine responds quickly to surface bleaching agents. Intrinsic discoloration — the kind embedded in the dentin, resulting from aging, old restorations, tetracycline exposure, or fluorosis — requires a different approach. Most whitening products, including the higher-end over-the-counter options, do not adequately address intrinsic color.
+
+The problem with many whitening treatments is that they prioritize initial brightness without addressing tooth permeability — the capacity of the whitening agent to penetrate into the dentin where the deeper staining lives. Dehydration from in-office plasma lights creates an apparent whitening effect that partially reverses when the tooth rehydrates. High-concentration gel without preparation can cause sensitivity.
+
+We take a more deliberate approach. Before any bleaching begins, we use a medicated paste that strengthens the enamel and conditions the tooth for whitening — reducing sensitivity and improving the depth of penetration that follows. Our deep-bleaching protocol alternates in-office and supervised at-home phases, allowing the bleaching agent to work progressively without the discomfort associated with high-concentration single-session treatments.
+
+Deep bleaching is indicated for cases that other approaches cannot move: stubborn intrinsic staining, severe discoloration from tetracycline exposure or fluorosis, and patients who have tried other whitening methods with disappointing results. It achieves color change that single-session in-office treatment typically cannot match.
+
+We also screen for restorations and crowns in the smile zone before recommending whitening. Composite and ceramic do not bleach with the teeth — any restorations that were matched to the pre-whitening shade will need replacement after the treatment to match the new color. We discuss this upfront.
+
+Results are stable with a brief annual maintenance touch-up at home. We provide the protocol and the materials at the end of treatment.`,
   },
 
   // ─────── Endodontics (3) ───────
@@ -341,7 +434,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'endodontics',
     summary:
       'Endodontic treatment to save teeth that would otherwise need extraction.',
-    body: 'Modern root canals, performed under high magnification, are not the painful procedure they were a generation ago. Most patients describe them as comparable to having a filling done. We complete most cases in a single visit. Dr. Lim is a board-certified endodontist with specialty training at Columbia University.',
+    body: `Root canal therapy saves a tooth that would otherwise need to be extracted. When decay reaches the pulp — the soft tissue inside the tooth containing the nerve and blood supply — or when trauma, a crack, or a leaking crown causes the pulp to become infected or inflamed, the infection cannot resolve on its own. The tooth needs to be either treated or removed. Root canal therapy cleans and seals the canals, removes the source of infection, and allows the tooth to remain in the mouth functioning normally.
+
+The procedure has a reputation for discomfort that belongs to an older era of dentistry. Modern root canal therapy, performed under adequate local anesthesia, is not significantly different from having a filling placed. Most patients who are anxious beforehand are surprised by how uneventful the experience actually is.
+
+An access opening is made through the crown of the tooth. The pulp, nerve tissue, and bacteria are removed using a series of files, and the canal system is shaped to receive the permanent filling material. Irrigation with disinfecting solutions throughout the procedure addresses the bacterial load that instruments alone cannot reach. The cleaned canals are then sealed with a material called gutta-percha, which prevents reinfection.
+
+Most cases are completed in a single appointment; multi-rooted teeth or cases with more complex anatomy may require a second visit. After root canal treatment, the tooth needs a permanent restoration — most posterior teeth require a crown to protect against fracture, since the treated tooth becomes more brittle without its vital tissue.
+
+Dr. Rachel Lim is a board-certified endodontist with training at Western University and Columbia University. She handles the complex endodontic cases in our practice: multiple canals, calcified canals, retreatments, and cases referred from other practices in the region.`,
   },
   {
     slug: 'apicoectomy',
@@ -350,7 +451,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'endodontics',
     summary:
       "Surgical endodontic procedure to save a tooth when conventional retreatment isn't viable.",
-    body: "When a previous root canal has failed and orthograde retreatment isn't feasible, an apicoectomy removes the root tip and seals the canal from below. Performed under microscope-level magnification by Dr. Lim. Saves teeth that would otherwise require extraction, particularly for molars where re-entry through the existing crown is impractical.",
+    body: `Sometimes a root canal that was completed correctly, years or decades ago, develops new problems at the root tip — residual infection, a cyst that has formed around the apex, or a canal that cannot be reached from above because of a post or a well-fitting crown that would be difficult to remove and replace. In those cases, the surgical approach is to address the problem from the other direction: through the gum and bone rather than through the crown of the tooth.
+
+An apicoectomy — surgical endodontic treatment — removes the tip of the root and the surrounding infected tissue, then seals the canal from the apex to prevent reinfection. The access is made through a small flap in the gum tissue, a small opening in the overlying bone, and the root tip is removed with a precise amount of the root length to eliminate the source of the problem. A retrograde filling material seals the end of the canal.
+
+The procedure is done under local anesthesia in our office. Post-operative swelling and some discomfort for a few days are typical; most patients are comfortable with over-the-counter analgesics and return to normal activity quickly. Sutures are removed at a follow-up appointment within a week to ten days.
+
+Dr. Lim performs apicoectomies for cases where the evidence supports a surgical approach rather than orthograde retreatment. Not all failing root canals are best managed surgically — retreatment through the tooth remains the better option in many cases. We evaluate the anatomy with imaging before recommending a direction, and we do not default to surgery when retreatment is a more conservative and equally appropriate choice.
+
+Saving a tooth with an apicoectomy is almost always preferable to extraction followed by implant, particularly when the tooth is otherwise sound and the surrounding bone is adequate.`,
   },
   {
     slug: 'root-canal-retreatment',
@@ -359,7 +468,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'endodontics',
     summary:
       'Re-entry of a previously root-canalled tooth to address residual infection or technical issues.',
-    body: "Sometimes a root canal needs to be redone — the original treatment didn't fully resolve, the seal compromised, or new decay reached the canal. Retreatment removes the prior filling material and re-cleans the canal system. More involved than first-time RCT, with high success rates when the indication is right and the tooth is still restorable.",
+    body: `A tooth that was successfully root-canalled years ago can develop new problems. The seal at the filling material may have broken down over time, allowing bacteria to re-enter. The original treatment may have missed a canal — particularly in multi-rooted teeth where the anatomy can be complex. A crack may have formed. Or new decay may have progressed far enough to compromise the integrity of the existing treatment. In all these situations, the tooth is not lost — but it needs to be treated again.
+
+Root canal retreatment re-enters the tooth through the crown, removes the prior filling material, re-cleans and re-shapes the canal system, and re-seals it. This is technically more demanding than an initial root canal: the existing gutta-percha must be dissolved or mechanically removed, posts may need to be taken out, and calcified canals that were challenging the first time must be navigated again.
+
+Before recommending retreatment, we evaluate the tooth carefully: the existing crown or restoration, the quality of the original treatment, the bone levels around the root, and whether there are signs of fracture that would make the tooth unrestorable regardless of the endodontic outcome. Retreatment is the right choice when the tooth is structurally sound and the source of the problem is addressable through the canal.
+
+Dr. Lim handles retreatment cases in our practice. The complexity of retreatment — particularly when posts are involved, or when the original canal preparation was incomplete — benefits from the clinical experience and specialized training that an endodontist brings to the procedure.
+
+If retreatment is not viable because of fracture, anatomy, or the condition of the surrounding bone, we discuss the surgical alternative — apicoectomy — or, when the tooth genuinely cannot be saved, the extraction-and-replacement pathway.`,
   },
 
   // ─────── Oral Surgery — dental context (3) ───────
@@ -370,7 +487,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'oral-surgery-dental',
     summary:
       'Simple and surgical extractions, performed in-house using CBCT planning.',
-    body: 'Most extractions, including complex cases involving impacted teeth, can be done in our office without referral. CBCT scanning before extraction gives us the spatial information needed to avoid surprises. For surgical cases, Dr. Sharobiem is a board-certified oral and maxillofacial surgeon with advanced training at Mount Sinai.',
+    body: `Our goal is to save every tooth we can. When extraction is necessary, we make that determination based on clinical evidence: extensive decay that leaves too little tooth structure for a restoration to hold, advanced periodontal disease with bone loss that cannot support the tooth's function, a fracture that extends below the bone level, symptomatic impaction, or orthodontic requirements. We explain the reasoning before we proceed.
+
+Most extractions can be done in our office under local anesthesia without a hospital referral or general sedation. Simple extractions — teeth with intact roots that can be loosened and removed in one piece — are straightforward. Surgical extractions involve sectioning the tooth, removing bone where necessary, or working around curved or fused root anatomy. We handle both.
+
+Before any surgical extraction, we capture a CBCT scan when the anatomy warrants it. The three-dimensional image from our iCAT FLX shows us the relationship between the roots and adjacent structures — the inferior alveolar nerve in the lower jaw, the maxillary sinus in the upper jaw, root curvature that a flat X-ray would underrepresent. That information changes the surgical approach and prevents avoidable complications.
+
+Dr. Robert Sharobiem is a board-certified oral and maxillofacial surgeon with training from UCLA and Mount Sinai, a member of AAOMS, and a recipient of the AAOMS Humanitarian Award. He handles the complex surgical extractions: deeply impacted third molars, teeth with challenging root anatomy, cases where the surgical approach requires the level of training that an OMFS brings.
+
+Post-operative instructions are provided in writing at the appointment. When bone grafting to preserve the site for future use is indicated, we discuss it before the extraction — placing a graft at the time of extraction is significantly simpler and more effective than attempting augmentation later.`,
     technologyRefs: ['cbct'],
   },
   {
@@ -380,7 +505,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'oral-surgery-dental',
     summary:
       'Site preservation and ridge augmentation to support future implant placement.',
-    body: 'When a tooth is extracted, the bone underneath begins to resorb. A bone graft placed at extraction (or later) preserves the ridge for future implant placement, denture support, or esthetics. We use a combination of allograft material and PRF; healing typically takes three to four months before implant placement.',
+    body: `When a tooth is removed, the bone that surrounded the root begins to resorb. This is a predictable biological response to the absence of stimulation — without a tooth root transmitting bite forces into the bone, the body's metabolic activity reduces bone volume. Within six to twelve months of an extraction, a significant percentage of the ridge width and height can be lost. That lost volume creates problems: not enough bone for an implant, a ridge shape that makes denture fit difficult, and a cosmetic contour change visible at the gumline.
+
+A socket preservation graft placed at the time of extraction substantially reduces this resorption. The graft material — a combination of processed bone graft material and, when indicated, platelet-rich fibrin from your own blood — fills the socket, maintains the three-dimensional volume of the site, and provides a scaffold for the body's own bone-forming cells to repopulate the space. Over three to four months, the graft integrates and matures into bone that can support an implant or a stable prosthesis.
+
+Grafting at extraction is considerably simpler than attempting ridge augmentation later. The socket is already prepared, the surrounding bone walls are intact, and the healing starts immediately. Waiting until bone loss has already occurred means a more complex surgical procedure, a longer treatment timeline, and a less predictable outcome.
+
+We also perform more extensive ridge augmentation procedures for patients who present with bone deficiency from previous extractions, severe periodontal bone loss, or trauma — cases where the extraction socket has long closed and the grafting must be done as a separate surgical procedure.
+
+Dr. Sharobiem performs complex grafting cases in our practice. For straightforward socket preservation at a single-tooth extraction, this is often completed at the same appointment as the extraction under the same local anesthesia.`,
   },
   {
     slug: 'implants',
@@ -389,7 +522,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'oral-surgery-dental',
     summary:
       'Single-tooth and multi-tooth dental implants with CBCT-guided placement.',
-    body: 'A titanium implant replaces the root of a missing tooth, supporting a crown, bridge, or denture. We plan placement using our CBCT scanner for precise positioning around nerves and sinuses. Most patients are candidates after a graft if needed. Surgical phase is in-office; restoration follows after osseointegration over three to four months.',
+    body: `A dental implant replaces the root of a missing tooth. A titanium post integrates with the jawbone through a process called osseointegration, becoming a stable foundation that functions like a natural root — supporting a crown, bridge, or denture without involving adjacent teeth. The result is a restoration that looks, bites, and feels like a tooth.
+
+The difference between an implant and the alternatives matters clinically. A bridge requires preparing the adjacent teeth, removing healthy tooth structure to serve as anchors. A removable partial denture relies on the remaining teeth for retention and provides less chewing efficiency. An implant stands alone, preserves the adjacent teeth, and provides the bone stimulation that prevents the ridge resorption that occurs after tooth loss.
+
+Planning is the most important phase of the procedure. We use our iCAT FLX CBCT scanner to capture the three-dimensional anatomy of the site: bone volume and density, distance to the inferior alveolar nerve in the lower jaw, proximity to the sinus in the upper jaw, and the spatial relationship between the implant position and the planned crown. Placement without this level of spatial planning is placement without full information — a situation we avoid.
+
+If the extraction site did not receive a bone graft, or if bone volume has already been lost, augmentation may be required before implant placement. Most patients with a preserved site can proceed directly to surgery. The implant is placed under local anesthesia in our office. The integration period takes three to four months; during that time, a temporary restoration maintains the esthetic and spatial situation.
+
+Dr. Sharobiem and Dr. Huang collaborate on complex implant cases in our practice. Single-tooth implant placement in ideal anatomy, guided by CBCT imaging, is well within the scope of what we manage here without an external surgical referral.`,
     technologyRefs: ['cbct'],
   },
 
@@ -401,7 +542,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'periodontal-surgical',
     summary:
       'Active treatment of gum disease — including laser-assisted therapy where indicated.',
-    body: 'Periodontitis affects half of US adults over 30 and is one of the most under-diagnosed dental conditions. We screen at every cleaning and treat actively when we find it: scaling and root planing, laser-assisted decontamination, and ongoing periodontal maintenance visits calibrated to your risk profile.',
+    body: `Periodontal disease is a chronic bacterial infection of the gum tissue and supporting bone around the teeth. It begins as gingivitis — inflammation without structural damage, reversible with improved hygiene and a cleaning — and progresses to periodontitis when the bacterial burden persists long enough to trigger bone resorption. The loss of bone that supports the teeth is not reversible. Managing periodontal disease is about arresting the progression, not restoring what has already been lost.
+
+The disease is widespread and underdiagnosed. A large portion of adults over thirty have some degree of periodontal involvement, and many of them do not know it — periodontitis is frequently painless until it is advanced. The probing that happens at a comprehensive exam and at regular hygiene visits is the only way to detect it reliably.
+
+We screen at every cleaning visit. When we find pocket depths and bone loss consistent with periodontitis, we treat it directly rather than monitoring it through cleaning-only appointments. Active treatment begins with scaling and root planing: thorough removal of calculus and bacterial biofilm from root surfaces below the gum margin, under local anesthesia, one quadrant at a time. For infected pockets around teeth or implants, laser-assisted decontamination with our diode laser reaches areas that instruments alone cannot adequately address.
+
+After active treatment, we schedule the patient on a periodontal maintenance program — typically every three to four months rather than the standard six-month recall. The maintenance interval is based on individual risk, disease severity, and tissue response, not a fixed standard. Periodontal disease can be controlled with consistent maintenance; it progresses reliably without it.
+
+Dr. Singh brings a periodontics specialty to the cases that require more advanced surgical management: osseous surgery, guided tissue regeneration, and complex multi-tooth involvement. Most patients do not need that level of intervention, but having it in-house means continuity of care when they do.`,
   },
   {
     slug: 'crown-lengthening',
@@ -410,7 +559,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'periodontal-surgical',
     summary:
       'Surgical exposure of additional tooth structure for restorative or cosmetic reasons.',
-    body: 'When a tooth is broken near the gumline or a smile shows excessive gum, crown lengthening reshapes the tissue (and sometimes bone) to expose more enamel. Restorative crown lengthening saves teeth that would otherwise be unrestorable; cosmetic crown lengthening evens out a smile that shows too much gum tissue when you laugh.',
+    body: `Crown lengthening creates access to tooth structure that the gum tissue and bone are covering — either because the tooth has broken at or below the gumline, or because the gum line itself sits too high to allow a restoration or veneer to be placed with proper margins.
+
+The restorative indication is more urgent. When a tooth breaks near or below the gumline, the remaining structure may be too short for a crown to grip. Attempting to place a crown without adequate tooth exposure above bone results in a restoration that violates the biologic width — the soft-tissue attachment zone the body maintains around every tooth. That violation causes chronic inflammation and progressive bone loss that undermines the restoration over time. Crown lengthening surgically repositions the gum and bone to expose the minimum tooth structure needed for a sound restoration, respecting the biologic boundary while saving a tooth that would otherwise need extraction.
+
+The cosmetic indication is different in severity but meaningful in impact. A smile that shows a disproportionate amount of gum tissue — sometimes called a "gummy smile" — often has teeth that are fully present beneath the tissue. Crown lengthening removes the excess and reveals the true proportion of the teeth, sometimes transforming the smile without any cosmetic restorative work at all.
+
+The procedure is done under local anesthesia. A small flap is made in the gum tissue, and the tissue and underlying bone are reshaped to the planned level. Sutures are placed and removed at a follow-up in about ten days. The tissue must heal fully before a permanent crown is placed — typically six to eight weeks.
+
+Dr. Singh performs crown lengthening procedures in our practice. For restorative cases, we coordinate timing with the restorative phase to avoid any delay in the restoration once healing is complete.`,
   },
   {
     slug: 'gingivectomy',
@@ -419,7 +576,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'periodontal-surgical',
     summary:
       'Soft-tissue contouring for periodontal pockets, hyperplasia, or cosmetic shaping.',
-    body: 'A gingivectomy removes excess or diseased gum tissue. Indications include drug-induced hyperplasia, persistent pockets after scaling, and cosmetic asymmetry. Performed with a diode laser in most cases — minimal bleeding, faster healing, less discomfort than traditional scalpel approaches, and ideal for patients with anxiety.',
+    body: `A gingivectomy removes excess or diseased gum tissue when the anatomy creates a clinical problem that cannot be resolved through cleaning or medication alone. The result is healthier tissue, shallower pockets, and gum margins that sit at the right level relative to the teeth.
+
+The most common indications fall into a few categories. Drug-induced gingival hyperplasia — enlargement of the gum tissue as a side effect of certain blood pressure medications, anticonvulsants, or immunosuppressants — creates pockets that trap bacteria and are impossible to clean adequately. Gingivectomy removes the excess tissue and restores a cleaner tissue architecture. Persistent pockets that remain after scaling and root planing, and that have not responded to conventional maintenance, can be reduced surgically to bring the pocket depth within a manageable range. Cosmetic asymmetry — gum margins at different levels, uneven display, tissue that sits too low and makes teeth appear short — can be refined to create better proportions.
+
+We perform most gingivectomies with our diode laser rather than a conventional scalpel. The laser seals tissue as it works, which means significantly less intraoperative bleeding, less post-operative swelling, and a faster recovery compared to traditional techniques. Sutures are often unnecessary for laser procedures. Most patients describe the post-operative experience as mild — some sensitivity for a few days and soft-diet guidance, but not the extended healing associated with conventional gingival surgery.
+
+The procedure is done under local anesthesia. For patients with dental anxiety, the laser approach is considerably less intimidating than scalpel surgery, and the absence of bleeding changes the experience meaningfully. We discuss sedation options for any patient who needs additional support.
+
+The tissue response is typically visible within a few weeks as the swelling fully resolves and the new gum margin heals in place.`,
   },
   {
     slug: 'frenectomy',
@@ -428,7 +593,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'periodontal-surgical',
     summary:
       'Release of restrictive frenum attachments — lip-tie, tongue-tie, or labial frenum.',
-    body: 'A tight or thick frenum can pull on the gums, restrict tongue movement, or create a midline diastema between the front teeth. A laser frenectomy releases the attachment in minutes with minimal post-op discomfort. Performed for infants, children, and adults — often in coordination with orthodontics or speech therapy.',
+    body: `A frenum is a small fold of tissue that connects the lip or tongue to the gum. Everyone has them. When a frenum is unusually thick, short, or attached too close to the gum margin, it creates clinical problems — and when those problems are significant, a frenectomy releases the attachment.
+
+The labial frenum — the tissue connecting the upper lip to the gum above the front teeth — can pull on the gum tissue directly, contributing to recession and making adequate oral hygiene difficult in that area. In some patients, a thick or low labial frenum also maintains a gap between the upper central incisors. Orthodontic treatment can close the gap mechanically, but without frenectomy, the tissue can cause the space to reopen after braces or aligners are removed. Timing the frenectomy in coordination with orthodontic treatment matters: we work with your orthodontist directly.
+
+Lingual frenectomy — releasing a tongue tie — addresses restriction in tongue mobility that can affect speech articulation, the ability to breastfeed in infants, and oral function in older children and adults. Tongue ties range in clinical significance from mild and functionally irrelevant to severe and meaningfully disruptive. We evaluate rather than treat automatically, because not every tongue tie requires intervention.
+
+We perform frenectomies with our diode laser. The procedure takes only a few minutes under local anesthesia. The laser approach seals the tissue as it cuts, which means minimal bleeding, rapid healing, and rarely any need for sutures. Post-operative discomfort is typically mild and short-lived.
+
+Frenectomies for infants are evaluated and coordinated with a lactation consultant or pediatrician when breastfeeding is the primary concern. For older patients, we coordinate with the referring orthodontist or speech-language pathologist to align the timing with the broader treatment plan.`,
   },
   {
     slug: 'alveoloplasty',
@@ -437,7 +610,15 @@ Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesio
     subcategory: 'periodontal-surgical',
     summary:
       'Surgical smoothing and reshaping of the bony ridge after extractions.',
-    body: 'Often performed at the same visit as extractions — particularly multiple extractions — to smooth the bone and prepare the ridge for a denture or implant. Reduces post-extraction discomfort and improves prosthesis fit. Patients with full-arch extractions especially benefit from immediate alveoloplasty before tissue heals.',
+    body: `After teeth are extracted, the bone that supported them does not heal in a smooth, even contour on its own. Sharp ridges, bony projections, and irregular undercuts are common — particularly after multiple extractions in a row, or after teeth that were already compromised by bone loss or infection. That uneven ridge creates problems: pressure points under a denture that cause pain and sores, poor prosthesis stability, and, in some cases, discomfort even without a prosthesis.
+
+Alveoloplasty reshapes and smooths the bony ridge at the time of extraction — removing sharp peaks, filling in undercuts, and contouring the bone to a form that heals with a smooth, regular shape. It is most commonly done at the same appointment as multiple extractions, before the tissue is sutured closed, while the surgical site is already open. Adding alveoloplasty at that stage adds minimal time and healing burden compared to the significant benefit it provides.
+
+For patients receiving an immediate denture — one placed the same day as the extractions — alveoloplasty is particularly important. The denture is made in advance using pre-extraction impressions, and the fit depends on the ridge conforming reasonably well to what the lab anticipated. Contouring the bone at extraction improves how the immediate denture seats and reduces the number of pressure-point adjustments needed in the weeks that follow.
+
+Alveoloplasty is also performed as a separate procedure in patients who have already healed after prior extractions but whose ridge shape is incompatible with a well-fitting prosthesis. This is a less common scenario — most patients benefit most from addressing it at the time of extraction — but it is an option when the situation warrants it.
+
+Dr. Sharobiem performs alveoloplasty in the context of complex extractions and full-arch surgical planning.`,
   },
 ];
 
