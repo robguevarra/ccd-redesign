@@ -21,10 +21,10 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
     body: 'A custom oral appliance, fitted to your bite. No mask, no machine, no white noise. Most patients adapt within two weeks, and most partners notice on the first night. This is what dental and medical care under one roof can do.',
   },
   {
-    eyebrow: 'Two practices, under one roof',
+    eyebrow: 'The team',
     title: 'Five doctors. Twenty-five years.',
     italicize: [3],
-    body: "Dr. Brien Hsu — USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders. Joined by a board-certified oral surgeon, a board-certified endodontist, and two general dentists who've watched a generation of Rancho Cucamonga families grow up. Same office, since 1999.",
+    body: "Same office on Kenyon Way since 1999. Dr. Brien Hsu — known around Rancho Cucamonga as the gentle dentist — practices alongside an oral surgeon, an endodontist, and two family dentists. We treat the children of the people we first treated thirty years ago.",
   },
 ];
 

@@ -133,6 +133,12 @@ export function SiteFooter() {
               Medical
             </Link>
             <Link
+              href="/blog"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
+              Blog
+            </Link>
+            <Link
               href="/financing"
               className="hover:text-[var(--color-accent-200)] transition-colors"
             >
