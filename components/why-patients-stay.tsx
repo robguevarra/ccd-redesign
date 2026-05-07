@@ -104,16 +104,48 @@ export function WhyPatientsStay() {
     const section = sectionRef.current;
     if (!section) return;
 
-    // Scroll-end snap state: when progress stops changing for ~150ms while
-    // the user is mid-section, smoothly pull to the nearest panel boundary
-    // (0, 0.5, or 1). Mirrors Apple/Stripe's "magnet" feel without fighting
-    // active scroll input.
+    // Scroll-end snap: smoothly pull to the nearest panel boundary
+    // (0, 0.5, or 1) once the user has *stopped giving input* for long enough.
+    //
+    // Two-stage gate: (1) no wheel/touch/key event for SNAP_AFTER_QUIET_MS,
+    // and (2) progress hasn't changed for STABLE_FRAMES on top of that.
+    // The wheel-based gate is the important one — it prevents snapping
+    // between wheel ticks during a continuous gesture (the bug where the
+    // snap would fire when you briefly paused mid-scroll).
+    //
+    // If the user starts scrolling during a snap animation, we cancel the
+    // snap (Lenis won't fight live input that way).
     const SNAP_POINTS = [0, 0.5, 1] as const;
-    const STABLE_FRAMES = 10; // ~167ms at 60fps
-    const NEAR_TOLERANCE = 0.02; // already snapped
+    const SNAP_AFTER_QUIET_MS = 450;
+    const STABLE_FRAMES = 5; // ~83ms once quiet
+    const NEAR_TOLERANCE = 0.015;
     let lastProgress = -1;
     let stable = 0;
     let snapping = false;
+    let lastInputAt = performance.now();
+
+    const cancelSnapIfRunning = () => {
+      if (!snapping) return;
+      const lenis = window.__lenis;
+      if (lenis?.scrollTo) {
+        // Snap to the current Lenis target so it stops mid-air without a
+        // visible jolt. Lenis treats `immediate: true` as "set position now,
+        // no animation" — perfect for cancellation.
+        lenis.scrollTo(window.scrollY, { immediate: true });
+      }
+      snapping = false;
+    };
+
+    const onUserInput = () => {
+      lastInputAt = performance.now();
+      stable = 0;
+      cancelSnapIfRunning();
+    };
+
+    window.addEventListener('wheel', onUserInput, { passive: true });
+    window.addEventListener('touchmove', onUserInput, { passive: true });
+    window.addEventListener('touchstart', onUserInput, { passive: true });
+    window.addEventListener('keydown', onUserInput);
 
     const snapTo = (p: number) => {
       const nearest = SNAP_POINTS.reduce((a, b) =>
@@ -132,7 +164,7 @@ export function WhyPatientsStay() {
       const lenis = window.__lenis;
       if (lenis?.scrollTo) {
         lenis.scrollTo(targetY, {
-          duration: 0.7,
+          duration: 0.65,
           easing: (t: number) => 1 - Math.pow(1 - t, 3),
           onComplete: () => {
             snapping = false;
@@ -140,10 +172,9 @@ export function WhyPatientsStay() {
         });
       } else {
         window.scrollTo({ top: targetY, behavior: 'smooth' });
-        // Fallback: assume snap completes in roughly 700ms.
         setTimeout(() => {
           snapping = false;
-        }, 800);
+        }, 700);
       }
     };
 
@@ -158,15 +189,15 @@ export function WhyPatientsStay() {
         const idx = p < 1 / 3 ? 0 : p < 2 / 3 ? 1 : 2;
         setActive(idx);
 
-        // Only snap when fully inside the pinned section (not at the very
-        // top approaching it, not past the bottom leaving it).
         const insidePinned = rect.top <= 0 && rect.top >= -total;
+        const quietMs = performance.now() - lastInputAt;
 
-        if (!snapping && insidePinned) {
+        if (!snapping && insidePinned && quietMs > SNAP_AFTER_QUIET_MS) {
           if (Math.abs(p - lastProgress) < 0.0005) {
             stable++;
             if (stable === STABLE_FRAMES) {
               snapTo(p);
+              stable = 0;
             }
           } else {
             stable = 0;
@@ -177,7 +208,14 @@ export function WhyPatientsStay() {
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('wheel', onUserInput);
+      window.removeEventListener('touchmove', onUserInput);
+      window.removeEventListener('touchstart', onUserInput);
+      window.removeEventListener('keydown', onUserInput);
+    };
   }, [reduced, progress]);
 
   // ─────── Reduced-motion fallback: stacked vertical panels ───────
