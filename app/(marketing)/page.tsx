@@ -10,21 +10,21 @@ import { cn } from '@/lib/cn';
 const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
   {
     eyebrow: 'Why patients stay',
-    title: 'Comfort, restored.',
-    italicize: [1],
-    body: "For sleep that finally rests you. For a jaw that isn't always bracing. For a tooth fixed once, then forgotten. Care that feels like care.",
+    title: 'The gentle dentist, still.',
+    italicize: [3],
+    body: "Twenty-five years on Kenyon Way. Dr. Brien Hsu earned the nickname his second year in practice, and a generation of Rancho Cucamonga families has stayed with him since. The office grew around them, never the other way around.",
   },
   {
     eyebrow: "What you're looking at",
-    title: 'Sleep apnea, manageable.',
-    italicize: [1],
-    body: 'A custom oral appliance, fitted to your bite. No mask, no machine, no white noise. Most patients adapt within two weeks, and most partners notice on the first night. This is what dental and medical care under one roof can do.',
+    title: 'Sleep apnea, TMJ. Both manageable.',
+    italicize: [3, 4],
+    body: 'These are the cases most general practices refer out. We treat sleep apnea with custom oral appliances — no mask, no machine. We treat TMJ with conservative splint therapy first, and surgery as a last resort. Most patients never need it. Both managed here, under one roof.',
   },
   {
     eyebrow: 'The team',
-    title: 'The gentle dentist, still.',
-    italicize: [3],
-    body: "Twenty-five years on Kenyon Way. Dr. Brien Hsu earned that nickname his second year in practice, and four colleagues have grown the office around him since — an oral surgeon, an endodontist, and two family dentists. We treat the children of the people we first treated thirty years ago.",
+    title: 'Same office, same family.',
+    italicize: [2, 3],
+    body: "Four doctors practice alongside Dr. Hsu — a board-certified oral surgeon, a board-certified endodontist, and two family dentists who've been here long enough to know your name. We treat the children of the people we first treated thirty years ago.",
   },
 ];
 
@@ -74,9 +74,8 @@ export default function HomePage() {
         ariaLabel="Comfort Care Dental — two practices, one roof"
         fallbackHeading={
           <>
-            Comfort,
-            <br />
-            <span className="italic">restored.</span>
+            The gentle dentist,{' '}
+            <span className="italic">still.</span>
           </>
         }
         cta={
