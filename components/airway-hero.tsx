@@ -292,8 +292,6 @@ export function AirwayHero({
             </motion.div>
           )}
 
-          <ScrollHint visible={!showPanel} variant="overlay" />
-
           <div className="absolute inset-x-0 bottom-0 px-5 pb-12 pointer-events-auto">
             <div className="mx-auto max-w-7xl w-full relative min-h-[40svh]">
               <AnimatePresence mode="wait" initial={false}>
@@ -339,7 +337,7 @@ export function AirwayHero({
               }}
             />
 
-            {/* Top row: brand eyebrow + scroll hint */}
+            {/* Top row: brand eyebrow */}
             <div>
               {topEyebrow && (
                 <motion.p
@@ -349,7 +347,6 @@ export function AirwayHero({
                   {topEyebrow}
                 </motion.p>
               )}
-              <ScrollHint visible={!showPanel} variant="column" />
             </div>
 
             {/* Center row: vertically centered active panel */}
@@ -393,6 +390,9 @@ export function AirwayHero({
           {/* Bottom vignette on video side */}
           <div className="absolute inset-y-0 left-[40%] right-0 pointer-events-none bg-[linear-gradient(to_top,rgba(2,6,15,0.5)_0%,transparent_35%)]" />
         </div>
+
+        {/* ─────────── Centered scroll affordance (top-level overlay) ─────────── */}
+        <ScrollHint visible={!showPanel} />
       </div>
     </section>
   );
@@ -434,42 +434,32 @@ function VideoLayer({
 
 /* --- Scroll hint with subtle pulse --------------------------------------- */
 
-function ScrollHint({
-  visible,
-  variant,
-}: {
-  visible: boolean;
-  variant: 'overlay' | 'column';
-}) {
-  const positionClass =
-    variant === 'overlay'
-      ? 'absolute top-32 left-1/2 -translate-x-1/2'
-      : 'mt-10 flex items-center gap-3';
-
+/**
+ * Centered, viewport-bottom scroll affordance shown on initial load. Pulsing
+ * vertical bar above an uppercase 'Scroll' label, fades out the moment the
+ * user starts scrolling (driven by the `visible` prop, which is wired to
+ * `!showPanel`).
+ */
+function ScrollHint({ visible }: { visible: boolean }) {
   return (
     <motion.div
-      animate={{ opacity: visible ? 0.7 : 0 }}
+      animate={{ opacity: visible ? 0.92 : 0, y: visible ? 0 : 8 }}
       transition={{ duration: 0.6, ease: EASE_PREMIUM }}
-      className={`${positionClass} text-stone-400`}
+      className="absolute bottom-10 md:bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-none"
     >
-      {variant === 'column' ? (
-        <>
-          <motion.div
-            animate={{ scaleY: [0.4, 1, 0.4] }}
-            transition={{
-              duration: 2.4,
-              repeat: Infinity,
-              ease: [0.45, 0.05, 0.55, 0.95],
-            }}
-            className="block w-px h-8 bg-stone-300/60 origin-top"
-          />
-          <span className="text-[10px] xl:text-xs uppercase tracking-[0.4em] text-stone-300/80">
-            Scroll
-          </span>
-        </>
-      ) : (
-        <span className="text-[9px] uppercase tracking-[0.4em]">Scroll &nbsp;↓</span>
-      )}
+      <motion.span
+        animate={{ scaleY: [0.3, 1, 0.3] }}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          ease: [0.45, 0.05, 0.55, 0.95],
+        }}
+        className="block w-[2px] h-12 md:h-14 bg-stone-50/75 origin-top rounded-full"
+        aria-hidden="true"
+      />
+      <span className="text-xs md:text-sm uppercase tracking-[0.42em] text-stone-100/90">
+        Scroll
+      </span>
     </motion.div>
   );
 }
