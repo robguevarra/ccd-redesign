@@ -59,7 +59,7 @@ Dr. Huang earned her B.S. in Biological Sciences from UC Irvine and her Doctorat
     slug: 'dr-amandeep-singh',
     name: 'Dr. Amandeep Singh',
     title: 'DMD · Periodontal Specialist',
-    portrait: { src: '/images/doctors/dr-amandeep-singh.png', alt: 'Dr. Amandeep Singh', objectPosition: '38% center' },
+    portrait: { src: '/images/doctors/dr-amandeep-singh.png', alt: 'Dr. Amandeep Singh', objectPosition: '50% center' },
     short:
       'Focused on dental hygiene and periodontal care since 2006, bringing both expertise and a gentle touch to every patient interaction.',
     bio: `Dr. Singh earned his B.S. in Biology from UC Irvine and his Doctorate of Dental Medicine from the University of Pennsylvania.
@@ -77,7 +77,7 @@ With a focus on dental hygiene and periodontal care since 2006, he brings both e
     slug: 'dr-rachel-lim',
     name: 'Dr. Rachel Lim',
     title: 'DMD · Endodontist',
-    portrait: { src: '/images/doctors/dr-rachel-lim.png', alt: 'Dr. Rachel Lim', objectPosition: '50% center' },
+    portrait: { src: '/images/doctors/dr-rachel-lim.png', alt: 'Dr. Rachel Lim', objectPosition: '58% center' },
     short:
       'Board-certified endodontist. DMD from Western University, endodontic specialty at Columbia University. Co-founder of the American Association of Women Dentists.',
     bio: `Dr. Rachel Lim is a board-certified endodontist who earned her DMD from Western University of Health Sciences and completed her specialty training in Endodontics at Columbia University.
