@@ -104,6 +104,49 @@ export function WhyPatientsStay() {
     const section = sectionRef.current;
     if (!section) return;
 
+    // Scroll-end snap state: when progress stops changing for ~150ms while
+    // the user is mid-section, smoothly pull to the nearest panel boundary
+    // (0, 0.5, or 1). Mirrors Apple/Stripe's "magnet" feel without fighting
+    // active scroll input.
+    const SNAP_POINTS = [0, 0.5, 1] as const;
+    const STABLE_FRAMES = 10; // ~167ms at 60fps
+    const NEAR_TOLERANCE = 0.02; // already snapped
+    let lastProgress = -1;
+    let stable = 0;
+    let snapping = false;
+
+    const snapTo = (p: number) => {
+      const nearest = SNAP_POINTS.reduce((a, b) =>
+        Math.abs(b - p) < Math.abs(a - p) ? b : a,
+      );
+      if (Math.abs(nearest - p) < NEAR_TOLERANCE) return;
+
+      const rect = section.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+
+      const sectionTopAbsolute = rect.top + window.scrollY;
+      const targetY = sectionTopAbsolute + total * nearest;
+
+      snapping = true;
+      const lenis = window.__lenis;
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(targetY, {
+          duration: 0.7,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          onComplete: () => {
+            snapping = false;
+          },
+        });
+      } else {
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        // Fallback: assume snap completes in roughly 700ms.
+        setTimeout(() => {
+          snapping = false;
+        }, 800);
+      }
+    };
+
     let raf = 0;
     const tick = () => {
       const rect = section.getBoundingClientRect();
@@ -111,9 +154,25 @@ export function WhyPatientsStay() {
       if (total > 0) {
         const p = Math.max(0, Math.min(1, -rect.top / total));
         progress.set(p);
-        // Active panel: 0..0.33 → 0; 0.33..0.66 → 1; 0.66..1 → 2
+
         const idx = p < 1 / 3 ? 0 : p < 2 / 3 ? 1 : 2;
         setActive(idx);
+
+        // Only snap when fully inside the pinned section (not at the very
+        // top approaching it, not past the bottom leaving it).
+        const insidePinned = rect.top <= 0 && rect.top >= -total;
+
+        if (!snapping && insidePinned) {
+          if (Math.abs(p - lastProgress) < 0.0005) {
+            stable++;
+            if (stable === STABLE_FRAMES) {
+              snapTo(p);
+            }
+          } else {
+            stable = 0;
+          }
+        }
+        lastProgress = p;
       }
       raf = requestAnimationFrame(tick);
     };

@@ -4,6 +4,12 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 /**
  * Lenis smooth-scroll. Mounts a single global instance, hands the RAF loop to
  * Lenis, and respects prefers-reduced-motion (no smoothing, native scroll).
@@ -30,6 +36,9 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       touchMultiplier: 1.5,
     });
     lenisRef.current = lenis;
+    // Expose for components that need to programmatically scroll without
+    // fighting the RAF loop (e.g. the pinned-scroll snap in WhyPatientsStay).
+    window.__lenis = lenis;
 
     let raf: number;
     function loop(time: number) {
@@ -42,6 +51,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       cancelAnimationFrame(raf);
       lenis.destroy();
       lenisRef.current = null;
+      window.__lenis = undefined;
     };
   }, []);
 
