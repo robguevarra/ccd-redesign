@@ -45,6 +45,8 @@ export default function DoctorsPage() {
                       alt={portrait.alt}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
+                      placeholder={portrait.blurDataURL ? 'blur' : 'empty'}
+                      blurDataURL={portrait.blurDataURL}
                       style={{ objectPosition: portrait.objectPosition ?? 'center' }}
                       className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700 ease-out"
                     />

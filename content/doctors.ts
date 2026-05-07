@@ -1,4 +1,5 @@
 import type { Doctor } from './schemas';
+import { portraitBlurMap } from './doctors-blur';
 
 /**
  * Doctor team. Bios extracted from `source/pages/doctors-dr-*.md` (scraped
@@ -14,7 +15,7 @@ export const doctors: Doctor[] = [
     slug: 'dr-brien-hsu',
     name: 'Dr. Brien Hsu',
     title: 'DDS, MS · Lead Clinician',
-    portrait: { src: '/images/doctors/dr-brien-hsu.webp', alt: 'Dr. Brien Hsu', objectPosition: '30% center' },
+    portrait: { src: '/images/doctors/dr-brien-hsu.webp', alt: 'Dr. Brien Hsu', objectPosition: '30% center', blurDataURL: portraitBlurMap['dr-brien-hsu'] },
     short:
       'Lead clinician since 1999. USC DDS and Master of Science in Orofacial Pain, Oral Medicine, and Sleep Disorders. Known throughout the Inland Empire as "the gentle dentist."',
     bio: `After graduating Valedictorian of his high school class, Dr. Hsu was selected as one of the few in the nation to attend the Accelerated Dental Advanced Placement Tract at USC. He became one of the youngest doctors in his class to earn the Doctor of Dental Surgery degree — in fact one of the youngest in USC Dental School history.
@@ -40,7 +41,7 @@ Outside of clinical practice, Dr. Hsu has won numerous awards for his portrait a
     slug: 'dr-angela-huang',
     name: 'Dr. Angela Huang',
     title: 'DMD',
-    portrait: { src: '/images/doctors/dr-angela-huang.webp', alt: 'Dr. Angela Huang', objectPosition: '25% center' },
+    portrait: { src: '/images/doctors/dr-angela-huang.webp', alt: 'Dr. Angela Huang', objectPosition: '25% center', blurDataURL: portraitBlurMap['dr-angela-huang'] },
     short:
       'A highly skilled general dentist known for her exceptional work in cosmetic and restorative dentistry, with a gentle touch and a warm, personable approach.',
     bio: `Dr. Angela Huang is a highly skilled general dentist known for her exceptional work in cosmetic and restorative dentistry. With a gentle touch and a warm, personable approach, she makes every patient feel at ease.
@@ -59,7 +60,7 @@ Dr. Huang earned her B.S. in Biological Sciences from UC Irvine and her Doctorat
     slug: 'dr-amandeep-singh',
     name: 'Dr. Amandeep Singh',
     title: 'DMD · Periodontal Specialist',
-    portrait: { src: '/images/doctors/dr-amandeep-singh.webp', alt: 'Dr. Amandeep Singh', objectPosition: '50% center' },
+    portrait: { src: '/images/doctors/dr-amandeep-singh.webp', alt: 'Dr. Amandeep Singh', objectPosition: '50% center', blurDataURL: portraitBlurMap['dr-amandeep-singh'] },
     short:
       'Focused on dental hygiene and periodontal care since 2006, bringing both expertise and a gentle touch to every patient interaction.',
     bio: `Dr. Singh earned his B.S. in Biology from UC Irvine and his Doctorate of Dental Medicine from the University of Pennsylvania.
@@ -77,7 +78,7 @@ With a focus on dental hygiene and periodontal care since 2006, he brings both e
     slug: 'dr-rachel-lim',
     name: 'Dr. Rachel Lim',
     title: 'DMD · Endodontist',
-    portrait: { src: '/images/doctors/dr-rachel-lim.webp', alt: 'Dr. Rachel Lim', objectPosition: '65% center' },
+    portrait: { src: '/images/doctors/dr-rachel-lim.webp', alt: 'Dr. Rachel Lim', objectPosition: '65% center', blurDataURL: portraitBlurMap['dr-rachel-lim'] },
     short:
       'Board-certified endodontist. DMD from Western University, endodontic specialty at Columbia University. Co-founder of the American Association of Women Dentists.',
     bio: `Dr. Rachel Lim is a board-certified endodontist who earned her DMD from Western University of Health Sciences and completed her specialty training in Endodontics at Columbia University.
@@ -95,7 +96,7 @@ She has received multiple honors, including the Outstanding Resident Award, and 
     slug: 'dr-robert-sharobiem',
     name: 'Dr. Robert Sharobiem',
     title: 'DDS · Oral & Maxillofacial Surgeon',
-    portrait: { src: '/images/doctors/dr-robert-sharobiem.webp', alt: 'Dr. Robert Sharobiem', objectPosition: '30% center' },
+    portrait: { src: '/images/doctors/dr-robert-sharobiem.webp', alt: 'Dr. Robert Sharobiem', objectPosition: '30% center', blurDataURL: portraitBlurMap['dr-robert-sharobiem'] },
     short:
       'Board-certified oral and maxillofacial surgeon. UCLA DDS and Mount Sinai NY surgical training in facial trauma, oral surgery, and reconstruction.',
     bio: `Dr. Robert Sharobiem is a board-certified oral and maxillofacial surgeon who earned his DDS from UCLA. He completed advanced surgical training at Mount Sinai Hospital in New York, where he specialized in facial trauma, oral surgery, and reconstruction.

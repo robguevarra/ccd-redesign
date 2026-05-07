@@ -211,6 +211,8 @@ export default function HomePage() {
                       alt={d.portrait.alt}
                       fill
                       sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 45vw"
+                      placeholder={d.portrait.blurDataURL ? 'blur' : 'empty'}
+                      blurDataURL={d.portrait.blurDataURL}
                       style={{
                         objectPosition: d.portrait.objectPosition ?? 'center',
                       }}

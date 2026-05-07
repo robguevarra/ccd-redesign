@@ -46,6 +46,8 @@ export default async function DoctorDetailPage({
           fill
           priority
           sizes="100vw"
+          placeholder={portrait.blurDataURL ? 'blur' : 'empty'}
+          blurDataURL={portrait.blurDataURL}
           style={{ objectPosition: portrait.objectPosition ?? 'center' }}
           className="object-cover opacity-65"
         />
