@@ -5,6 +5,7 @@ import { practiceInfo } from '@/content/practice-info';
 import { doctors } from '@/content/doctors';
 import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
+import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
 
 const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
@@ -97,36 +98,8 @@ export default function HomePage() {
         }
       />
 
-      {/* ─────────── Why patients stay (brand-broad editorial) ─────────── */}
-      <FadeUp as="section" className="bg-stone-50 py-32 md:py-48 border-y border-[var(--color-accent-200)]">
-        <div className="mx-auto max-w-5xl px-5 md:px-8">
-          <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-12">
-            Why patients stay
-          </p>
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter text-stone-900 leading-[0.92] font-light max-w-4xl">
-            The gentle dentist,{' '}
-            <span className="italic font-extralight">still.</span>
-          </h2>
-          <p className="mt-16 max-w-3xl text-stone-700 text-xl md:text-2xl leading-relaxed font-light">
-            Twenty-five years on Kenyon Way. Dr. Brien Hsu earned the
-            nickname his second year in practice, and a generation of Rancho
-            Cucamonga families has stayed with him since. The office grew
-            around them, never the other way around.
-          </p>
-          <p className="mt-8 max-w-3xl text-stone-600 text-lg leading-relaxed">
-            Same office, same family. We treat the children of the people we
-            first treated thirty years ago — alongside a board-certified oral
-            surgeon, a board-certified endodontist, and two family dentists
-            who&rsquo;ve been here long enough to know your name.
-          </p>
-          <Link
-            href="/about"
-            className="inline-flex items-center gap-2 mt-12 text-sm font-medium text-[var(--color-accent-600)] hover:text-[var(--color-accent-900)] transition-colors"
-          >
-            The story so far <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </FadeUp>
+      {/* ─────────── Why patients stay (3-panel horizontal carousel) ─────────── */}
+      <WhyPatientsStay />
 
       {/* ─────────── Services overview ─────────── */}
       <FadeUp as="section" className="bg-stone-100/60 py-24 md:py-32">
