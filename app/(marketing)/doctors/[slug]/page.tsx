@@ -87,14 +87,14 @@ export default async function DoctorDetailPage({
         </div>
 
         <div className="mt-16 border-t border-stone-200 pt-10">
-          <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-600)] mb-4">
             Specialties
           </p>
           <ul className="flex flex-wrap gap-2">
             {doctor.specialties.map((s) => (
               <li
                 key={s}
-                className="text-sm text-stone-700 bg-stone-100 rounded-full px-3 py-1.5"
+                className="text-sm text-[var(--color-accent-900)] bg-[var(--color-accent-50)] rounded-full px-3 py-1.5"
               >
                 {s}
               </li>

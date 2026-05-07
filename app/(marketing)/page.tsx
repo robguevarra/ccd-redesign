@@ -1,6 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
+import { doctors } from '@/content/doctors';
 import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 import { cn } from '@/lib/cn';
@@ -10,7 +12,7 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
     eyebrow: 'Why patients stay',
     title: 'Comfort, restored.',
     italicize: [1],
-    body: "For sleep that actually rests you. For a jaw that doesn't ache. For a tooth fixed once and left alone.",
+    body: "For sleep that finally rests you. For a jaw that isn't always bracing. For a tooth fixed once, then forgotten. Care that feels like care.",
   },
   {
     eyebrow: "What you're looking at",
@@ -62,7 +64,7 @@ const TECHNOLOGY_BULLETS = [
 ];
 
 export default function HomePage() {
-  const main = practiceInfo.phones[1] ?? practiceInfo.phones[0]!;
+  const main = practiceInfo.phones[0]!;
 
   return (
     <>
@@ -191,30 +193,73 @@ export default function HomePage() {
         </div>
       </FadeUp>
 
-      {/* ─────────── Doctors intro — uses the navy as accent ─────────── */}
+      {/* ─────────── Doctors intro + cards ─────────── */}
       <FadeUp as="section" className="bg-ink-950 text-stone-50 py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <p className="text-xs uppercase tracking-[0.22em] text-stone-400 mb-6">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-200)] mb-6">
             The team
           </p>
-          <div className="md:flex md:items-end md:justify-between mb-12">
+          <div className="md:flex md:items-end md:justify-between mb-14">
             <h2 className="font-serif text-4xl md:text-6xl tracking-tighter max-w-3xl">
               Five doctors,{' '}
-              <span className="italic font-light text-stone-300">trained at the practices that train other practices.</span>
+              <span className="italic font-light text-stone-300">
+                one office.
+              </span>
             </h2>
             <Link
               href="/doctors"
-              className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-stone-300 hover:text-stone-50"
+              className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-200)] hover:text-stone-50 transition-colors"
             >
               Meet the team <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <p className="max-w-2xl text-stone-300 leading-relaxed text-lg">
-            Dr. Brien Hsu has been seeing patients in {practiceInfo.address.city} since 1999.
-            Four additional doctors work alongside him today — board-certified specialists
-            in oral surgery, endodontics, and orofacial pain. Long tenure means we remember
-            your case, your kids, and how your bite has changed since 2007.
+          <p className="max-w-2xl text-stone-300 leading-relaxed text-lg mb-16">
+            Dr. Brien Hsu has been seeing patients in{' '}
+            {practiceInfo.address.city} since 1999. Four board-certified
+            specialists practice alongside him today, in oral surgery,
+            endodontics, periodontal care, and orofacial pain. Long tenure means
+            we remember your case, your kids, and how your bite has changed
+            since 2007.
           </p>
+
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            {doctors.map((d) => (
+              <li key={d.slug}>
+                <Link
+                  href={`/doctors/${d.slug}`}
+                  className="group block"
+                  aria-label={`${d.name} — read bio`}
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden bg-ink-800">
+                    <Image
+                      src={d.portrait.src}
+                      alt={d.portrait.alt}
+                      fill
+                      sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 45vw"
+                      style={{
+                        objectPosition: d.portrait.objectPosition ?? 'center',
+                      }}
+                      className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 to-transparent" />
+                  </div>
+                  <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-[var(--color-accent-200)]">
+                    {d.title.split('·')[0]?.trim()}
+                  </p>
+                  <p className="mt-1 font-serif text-lg md:text-xl text-stone-50 leading-tight">
+                    {d.name}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="/doctors"
+            className="md:hidden mt-10 inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-200)]"
+          >
+            Meet the team <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </FadeUp>
 

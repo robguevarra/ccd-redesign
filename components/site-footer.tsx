@@ -12,12 +12,15 @@ export function SiteFooter() {
         <div className="md:col-span-1">
           <Wordmark variant="dark" className="text-stone-50 h-9" />
           <p className="mt-6 text-sm text-stone-400 leading-relaxed">
-            Considered dentistry in {practiceInfo.address.city}, since 1999. Led by Dr. Brien Hsu, DDS.
+            Considered dentistry in {practiceInfo.address.city}, since 1999. Led
+            by Dr. Brien Hsu, DDS.
           </p>
         </div>
 
         <div>
-          <h3 className="text-xs uppercase tracking-[0.18em] text-stone-500">Visit</h3>
+          <h3 className="text-xs uppercase tracking-[0.18em] text-[var(--color-accent-200)]">
+            Visit
+          </h3>
           <address className="mt-4 not-italic text-sm leading-relaxed">
             {practiceInfo.address.street}
             <br />
@@ -27,7 +30,9 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h3 className="text-xs uppercase tracking-[0.18em] text-stone-500">Hours</h3>
+          <h3 className="text-xs uppercase tracking-[0.18em] text-[var(--color-accent-200)]">
+            Hours
+          </h3>
           <ul className="mt-4 text-sm leading-relaxed font-mono tabular-nums">
             {practiceInfo.hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-4">
@@ -41,12 +46,17 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h3 className="text-xs uppercase tracking-[0.18em] text-stone-500">Contact</h3>
+          <h3 className="text-xs uppercase tracking-[0.18em] text-[var(--color-accent-200)]">
+            Contact
+          </h3>
           <ul className="mt-4 text-sm leading-relaxed space-y-2">
             {primaryPhone && (
               <li>
                 <span className="text-stone-500">{primaryPhone.label} · </span>
-                <a href={`tel:${primaryPhone.tel}`} className="hover:text-white">
+                <a
+                  href={`tel:${primaryPhone.tel}`}
+                  className="hover:text-[var(--color-accent-200)] transition-colors"
+                >
                   {primaryPhone.number}
                 </a>
               </li>
@@ -55,7 +65,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={`mailto:${practiceInfo.email}`}
-                  className="text-stone-400 hover:text-white transition-colors"
+                  className="text-stone-300 hover:text-[var(--color-accent-200)] transition-colors"
                 >
                   {practiceInfo.email}
                 </a>
@@ -69,7 +79,7 @@ export function SiteFooter() {
                   href={practiceInfo.socials.facebook}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="text-stone-400 hover:text-white"
+                  className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
                 >
                   Facebook
                 </a>
@@ -81,7 +91,7 @@ export function SiteFooter() {
                   href={practiceInfo.socials.yelp}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="text-stone-400 hover:text-white"
+                  className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
                 >
                   Yelp
                 </a>
@@ -93,7 +103,7 @@ export function SiteFooter() {
                   href={practiceInfo.socials.twitter}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="text-stone-400 hover:text-white"
+                  className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
                 >
                   Twitter
                 </a>
@@ -106,22 +116,38 @@ export function SiteFooter() {
       <div className="border-t border-stone-800">
         <div className="mx-auto max-w-7xl px-5 md:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-stone-500">
           <p>
-            © {new Date().getFullYear()} {practiceInfo.brandName}. {practiceInfo.legalName}.
+            © {new Date().getFullYear()} {practiceInfo.brandName}.{' '}
+            {practiceInfo.legalName}.
           </p>
           <nav className="flex gap-5">
-            <Link href="/dental" className="hover:text-stone-300">
+            <Link
+              href="/dental"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
               Dental
             </Link>
-            <Link href="/medical" className="hover:text-stone-300">
+            <Link
+              href="/medical"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
               Medical
             </Link>
-            <Link href="/financing" className="hover:text-stone-300">
+            <Link
+              href="/financing"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
               Financing
             </Link>
-            <Link href="/contact" className="hover:text-stone-300">
+            <Link
+              href="/contact"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
               Accessibility statement
             </Link>
-            <Link href="/contact" className="hover:text-stone-300">
+            <Link
+              href="/contact"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
               Privacy
             </Link>
           </nav>

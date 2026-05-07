@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone } from 'lucide-react';
+import { Mail, Menu, Phone, X } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
@@ -35,6 +36,22 @@ export function SiteHeader({
   const pathname = usePathname();
   const resolvedSublabel = sublabel ?? getSublabel(pathname);
   const main = practiceInfo.phones[0]!;
+  const [open, setOpen] = useState(false);
+
+  // Close the drawer whenever the route changes (e.g. after tapping a link).
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll while the drawer is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   return (
     <header
@@ -90,7 +107,7 @@ export function SiteHeader({
           <a
             href={`tel:${main.tel}`}
             className={cn(
-              'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors',
+              'hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors',
               variant === 'light'
                 ? 'border-stone-900 hover:bg-stone-900 hover:text-stone-50'
                 : 'border-stone-100/50 hover:bg-stone-100 hover:text-ink-950',
@@ -98,9 +115,104 @@ export function SiteHeader({
             aria-label={`Call ${practiceInfo.brandName} at ${main.number}`}
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">{main.number}</span>
-            <span className="sm:hidden">Call</span>
+            <span>{main.number}</span>
           </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={cn(
+              'md:hidden inline-flex items-center justify-center rounded-full h-10 w-10 border transition-colors',
+              variant === 'light'
+                ? 'border-stone-300 hover:bg-stone-200/60'
+                : 'border-stone-100/40 hover:bg-stone-100/10',
+            )}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+          >
+            {open ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* ─────────── Mobile drawer ─────────── */}
+      <div
+        id="mobile-menu"
+        className={cn(
+          'md:hidden fixed inset-x-0 top-[68px] bg-stone-50 transition-[opacity,transform] duration-300 ease-out',
+          open
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-2 pointer-events-none',
+        )}
+        style={{ height: 'calc(100svh - 68px)' }}
+        aria-hidden={!open}
+      >
+        <div className="flex flex-col h-full overflow-y-auto px-5 pt-8 pb-12">
+          <nav className="flex flex-col gap-1">
+            {NAV_ITEMS.map((item) => {
+              const active =
+                item.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'font-serif text-3xl tracking-tight py-3 border-b border-stone-200 flex items-center justify-between',
+                    active
+                      ? 'text-[var(--color-accent-600)]'
+                      : 'text-stone-900',
+                  )}
+                >
+                  <span>{item.label}</span>
+                  {active && (
+                    <span className="text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent-600)]">
+                      Current
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="mt-10 flex flex-col gap-3">
+            <Link
+              href="/request-appointment"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-900 text-stone-50 px-6 py-4 text-base font-medium"
+            >
+              Request appointment
+            </Link>
+            <a
+              href={`tel:${main.tel}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-900 text-stone-900 px-6 py-4 text-base font-medium"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {main.number}
+            </a>
+            {practiceInfo.email && (
+              <a
+                href={`mailto:${practiceInfo.email}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 text-stone-700 px-6 py-4 text-base font-medium"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                {practiceInfo.email}
+              </a>
+            )}
+          </div>
+
+          <div className="mt-auto pt-10 text-xs text-stone-500 leading-relaxed">
+            <p className="uppercase tracking-[0.24em] mb-3">Visit</p>
+            <p>{practiceInfo.address.street}</p>
+            <p>
+              {practiceInfo.address.city}, {practiceInfo.address.state}{' '}
+              {practiceInfo.address.zip}
+            </p>
+          </div>
         </div>
       </div>
     </header>

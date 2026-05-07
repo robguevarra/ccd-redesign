@@ -15,7 +15,7 @@ export default function DoctorsPage() {
     <>
       <section className="bg-stone-100/60 py-24 md:py-36 border-b border-stone-200">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
-          <p className="text-xs uppercase tracking-[0.24em] text-stone-500 mb-8">
+          <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-8">
             The team
           </p>
           <h1 className="font-serif text-[clamp(3rem,9vw,8rem)] tracking-tighter text-stone-900 leading-[0.92] font-light">
