@@ -30,8 +30,8 @@ export default function MedicalLanePage() {
               The medical practice
             </p>
             <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter text-stone-900 leading-[0.95] font-light max-w-5xl">
-              Medical-grade dentistry,{' '}
-              <span className="italic font-extralight">in Rancho Cucamonga.</span>
+              Medicine and dentistry,{' '}
+              <span className="italic font-extralight">under one roof.</span>
             </h1>
             <p className="mt-10 max-w-2xl text-stone-700 text-lg md:text-xl leading-relaxed">
               The only practice in the area with a doctor specializing in Orofacial Pain.

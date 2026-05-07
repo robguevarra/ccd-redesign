@@ -16,7 +16,7 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
     eyebrow: "What you're looking at",
     title: 'Sleep apnea, treatable.',
     italicize: [1],
-    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks. This is what medical-grade dentistry looks like.',
+    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks. Where dental care meets medicine, under one roof.',
   },
   {
     eyebrow: 'Two practices, under one roof',
@@ -38,7 +38,7 @@ const PRACTICE_LANES = [
     label: 'Medical Practice',
     sublabel: 'Orofacial Pain & Oral Medicine',
     description:
-      'TMJ, sleep apnea, orofacial pain, oral pathology, biopsies, oral cancer screening — medical-grade dentistry led by a doctor with a USC Master\'s in Orofacial Pain, Oral Medicine, and Sleep Disorders.',
+      'TMJ, sleep apnea, orofacial pain, oral pathology, biopsies, oral cancer screening. The medical side of the practice, led by Dr. Hsu — USC Master\'s in Orofacial Pain, Oral Medicine, and Sleep Disorders.',
     href: '/medical',
   },
 ];
