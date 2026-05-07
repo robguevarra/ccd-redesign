@@ -77,7 +77,7 @@ With a focus on dental hygiene and periodontal care since 2006, he brings both e
     slug: 'dr-rachel-lim',
     name: 'Dr. Rachel Lim',
     title: 'DMD · Endodontist',
-    portrait: { src: '/images/doctors/dr-rachel-lim.png', alt: 'Dr. Rachel Lim', objectPosition: '58% center' },
+    portrait: { src: '/images/doctors/dr-rachel-lim.png', alt: 'Dr. Rachel Lim', objectPosition: '65% center' },
     short:
       'Board-certified endodontist. DMD from Western University, endodontic specialty at Columbia University. Co-founder of the American Association of Women Dentists.',
     bio: `Dr. Rachel Lim is a board-certified endodontist who earned her DMD from Western University of Health Sciences and completed her specialty training in Endodontics at Columbia University.
