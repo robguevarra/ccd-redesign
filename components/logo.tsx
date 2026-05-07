@@ -24,7 +24,7 @@ export function Logo({
 }: LogoProps) {
   return (
     <Image
-      src="/logo.png"
+      src="/logo.webp"
       alt={decorative ? '' : 'Comfort Care Dental'}
       width={size}
       height={size}
