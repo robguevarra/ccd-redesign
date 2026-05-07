@@ -27,12 +27,16 @@
   --color-ink-300: #7888a3;
 
   /* Accent — editorial apothecary teal (drawn from real practice flyer cyan
-     but desaturated for gallery-grade restraint). Used SPARINGLY: links,
-     small icons, medical-lane chrome. Dental lane stays warm stone. */
+     but desaturated for gallery-grade restraint). Used across links,
+     small chrome, eyebrows, and as a near-black on dark sections. */
   --color-accent-50: #e8f1f0;
   --color-accent-200: #a9c8c5;
   --color-accent-600: #356a66;   /* slightly darker for WCAG AA on stone-100 */
   --color-accent-900: #1f3d3b;
+  --color-accent-950: #0e2421;   /* near-black with teal undertone, for dark sections */
+
+  /* Convenience alias when a "black-teal" hue reads better than navy ink. */
+  --color-ink-teal: #0a2520;
 }
 
 html {

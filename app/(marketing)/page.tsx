@@ -16,15 +16,15 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
   },
   {
     eyebrow: "What you're looking at",
-    title: 'Sleep apnea, treatable.',
+    title: 'Sleep apnea, manageable.',
     italicize: [1],
-    body: 'A custom oral appliance opens the airway during sleep. No mask. No machine. Most patients adapt within two weeks. Where dental care meets medicine, under one roof.',
+    body: 'A custom oral appliance, fitted to your bite. No mask, no machine, no white noise. Most patients adapt within two weeks, and most partners notice on the first night. This is what dental and medical care under one roof can do.',
   },
   {
     eyebrow: 'Two practices, under one roof',
     title: 'Five doctors. Twenty-five years.',
     italicize: [3],
-    body: "A USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders. A board-certified oral surgeon. A board-certified endodontist. Sought after in Rancho Cucamonga since 1999.",
+    body: "Dr. Brien Hsu — USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders. Joined by a board-certified oral surgeon, a board-certified endodontist, and two general dentists who've watched a generation of Rancho Cucamonga families grow up. Same office, since 1999.",
   },
 ];
 
@@ -158,43 +158,8 @@ export default function HomePage() {
         </div>
       </FadeUp>
 
-      {/* ─────────── Technology / differentiator strip ─────────── */}
-      <FadeUp as="section" className="mx-auto max-w-7xl px-5 md:px-8 py-24 md:py-32">
-        <div className="grid md:grid-cols-3 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-1">
-            <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-4">
-              Technology
-            </p>
-            <h2 className="font-serif text-4xl md:text-5xl tracking-tighter text-stone-900">
-              We invested early so you'd <em className="font-light">save the tooth.</em>
-            </h2>
-            <Link
-              href="/technology"
-              className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-stone-700 hover:text-stone-900"
-            >
-              See the equipment <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <ul className="md:col-span-2 grid gap-8">
-            {TECHNOLOGY_BULLETS.map((b) => (
-              <li
-                key={b.label}
-                className="border-t border-stone-200 pt-6 grid sm:grid-cols-3 gap-4"
-              >
-                <div className="font-serif text-xl text-stone-900 sm:col-span-1">
-                  {b.label}
-                </div>
-                <p className="text-stone-600 leading-relaxed sm:col-span-2">
-                  {b.description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </FadeUp>
-
       {/* ─────────── Doctors intro + cards ─────────── */}
-      <FadeUp as="section" className="bg-ink-950 text-stone-50 py-24 md:py-32">
+      <FadeUp as="section" className="bg-[var(--color-ink-teal,#0a2520)] text-stone-50 py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-200)] mb-6">
             The team
@@ -230,7 +195,7 @@ export default function HomePage() {
                   className="group block"
                   aria-label={`${d.name} — read bio`}
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden bg-ink-800">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[var(--color-accent-900)]">
                     <Image
                       src={d.portrait.src}
                       alt={d.portrait.alt}
@@ -241,7 +206,7 @@ export default function HomePage() {
                       }}
                       className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-accent-950)]/80 to-transparent" />
                   </div>
                   <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-[var(--color-accent-200)]">
                     {d.title.split('·')[0]?.trim()}
@@ -260,6 +225,41 @@ export default function HomePage() {
           >
             Meet the team <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
+        </div>
+      </FadeUp>
+
+      {/* ─────────── Technology / differentiator strip ─────────── */}
+      <FadeUp as="section" className="mx-auto max-w-7xl px-5 md:px-8 py-24 md:py-32">
+        <div className="grid md:grid-cols-3 gap-12 md:gap-16 items-start">
+          <div className="md:col-span-1">
+            <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-600)] mb-4">
+              Technology
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl tracking-tighter text-stone-900">
+              We invested early so you'd <em className="font-light">save the tooth.</em>
+            </h2>
+            <Link
+              href="/technology"
+              className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-stone-700 hover:text-[var(--color-accent-600)] transition-colors"
+            >
+              See the equipment <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <ul className="md:col-span-2 grid gap-8">
+            {TECHNOLOGY_BULLETS.map((b) => (
+              <li
+                key={b.label}
+                className="border-t border-[var(--color-accent-200)] pt-6 grid sm:grid-cols-3 gap-4"
+              >
+                <div className="font-serif text-xl text-stone-900 sm:col-span-1">
+                  {b.label}
+                </div>
+                <p className="text-stone-600 leading-relaxed sm:col-span-2">
+                  {b.description}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
       </FadeUp>
 
