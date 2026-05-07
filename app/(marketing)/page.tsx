@@ -22,9 +22,9 @@ const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfram
   },
   {
     eyebrow: 'The team',
-    title: 'Five doctors. Twenty-five years.',
+    title: 'The gentle dentist, still.',
     italicize: [3],
-    body: "Same office on Kenyon Way since 1999. Dr. Brien Hsu — known around Rancho Cucamonga as the gentle dentist — practices alongside an oral surgeon, an endodontist, and two family dentists. We treat the children of the people we first treated thirty years ago.",
+    body: "Twenty-five years on Kenyon Way. Dr. Brien Hsu earned that nickname his second year in practice, and four colleagues have grown the office around him since — an oral surgeon, an endodontist, and two family dentists. We treat the children of the people we first treated thirty years ago.",
   },
 ];
 
