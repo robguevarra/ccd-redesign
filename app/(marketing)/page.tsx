@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, Star } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { doctors } from '@/content/doctors';
+import { featuredReviews } from '@/content/reviews';
 import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
+
+const SOURCE_LABEL: Record<string, string> = {
+  yelp: 'Yelp',
+  google: 'Google',
+  facebook: 'Facebook',
+};
 
 const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
   {
@@ -263,6 +270,65 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </FadeUp>
+
+      {/* ─────────── Reviews / social proof ─────────── */}
+      <FadeUp as="section" className="bg-stone-100/60 py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="md:flex md:items-end md:justify-between mb-14 md:mb-20">
+            <div className="max-w-2xl">
+              <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-600)] mb-4">
+                In patients&rsquo; words
+              </p>
+              <h2 className="font-serif text-4xl md:text-6xl tracking-tighter text-stone-900">
+                What people say,{' '}
+                <span className="italic font-light">unprompted.</span>
+              </h2>
+            </div>
+            <Link
+              href="/reviews"
+              className="hidden md:inline-flex items-center gap-2 mt-6 md:mt-0 text-sm font-medium text-[var(--color-accent-600)] hover:text-[var(--color-accent-900)] transition-colors"
+            >
+              Read more reviews{' '}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <ul className="grid gap-px md:grid-cols-3 bg-stone-300">
+            {featuredReviews.slice(0, 3).map((r) => (
+              <li key={r.id} className="bg-stone-50 p-8 md:p-10 flex flex-col">
+                <div
+                  className="flex gap-1 mb-6"
+                  aria-label={`${r.rating} out of 5 stars`}
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="h-3.5 w-3.5 fill-[var(--color-accent-600)] text-[var(--color-accent-600)]"
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <blockquote className="font-serif text-lg md:text-xl leading-[1.45] text-stone-900 mb-8 flex-1 line-clamp-[10]">
+                  &ldquo;{r.body}&rdquo;
+                </blockquote>
+                <footer className="text-sm text-stone-600 border-t border-stone-200 pt-5">
+                  <p className="font-medium text-stone-900">{r.authorName}</p>
+                  <p className="text-stone-500 text-xs uppercase tracking-[0.18em] mt-1">
+                    via {SOURCE_LABEL[r.source] ?? r.source}
+                  </p>
+                </footer>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="/reviews"
+            className="md:hidden mt-10 inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-600)]"
+          >
+            Read more reviews <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </FadeUp>
 
