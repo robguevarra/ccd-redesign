@@ -3,10 +3,11 @@ import './globals.css';
 import { practiceInfo } from '@/content/practice-info';
 import { fontSerif, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/cn';
+import { SITE_URL } from '@/lib/site';
 import { LenisProvider } from '@/components/lenis-provider';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dentisthsu-redesign.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1999`,
     template: `%s — ${practiceInfo.brandName}`,

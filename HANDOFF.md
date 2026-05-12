@@ -33,7 +33,7 @@ A **pitch website** built to win an engagement with the practice owner of dentis
 | Email | **advancedcare@dentisthsu.com** |
 | Hours | **Mon/Tues/Thurs 9–6 · Wed 8–5 · Closed Fri/Sat/Sun** |
 | Domain (existing) | dentisthsu.com |
-| Pitch URL (target) | `dentisthsu-redesign.vercel.app` |
+| Pitch URL | `ccd-redesign.vercel.app` (canonical URL lives in [lib/site.ts](lib/site.ts)) |
 | Existing PMS | Weave + OpenDental (no API access — deferred to v2) |
 
 These were corrected in the audit pass from the practice's actual marketing flyers. The original HANDOFF guesses (zip 91730, three phone numbers, Mon–Sat hours, no email) are all wrong — do not regress them.
@@ -545,7 +545,7 @@ The master spec [§3 phases P3–P5](docs/superpowers/specs/2026-05-05-dentisths
 - Real iPhone testing of AirwayHero scroll-scrub mechanics
 
 ### Domain migration (week 6)
-- `dentisthsu-redesign.vercel.app` → `dentisthsu.com`
+- `ccd-redesign.vercel.app` → `dentisthsu.com`
 - Activate all 130+ redirects in `content/redirects.ts`
 - DNS cutover with maintenance window
 - Old WordPress site put behind redirect-only proxy

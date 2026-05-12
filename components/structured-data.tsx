@@ -1,7 +1,6 @@
 import { practiceInfo } from '@/content/practice-info';
 import { doctors } from '@/content/doctors';
-
-const BASE = 'https://dentisthsu-redesign.vercel.app';
+import { SITE_URL as BASE } from '@/lib/site';
 
 /**
  * schema.org `Dentist` JSON-LD for the practice. Rendered on every public page

@@ -2,8 +2,7 @@ import type { MetadataRoute } from 'next';
 import { doctors } from '@/content/doctors';
 import { services } from '@/content/services';
 import { listPublishedPosts } from '@/lib/supabase/queries';
-
-const BASE = 'https://dentisthsu-redesign.vercel.app';
+import { SITE_URL as BASE } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await listPublishedPosts();

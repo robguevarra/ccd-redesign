@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { practiceInfo } from '@/content/practice-info';
+import { SITE_HOST } from '@/lib/site';
 
 export const alt = `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1999`;
 export const size = { width: 1200, height: 630 };
@@ -98,7 +99,7 @@ export default async function OpengraphImage() {
                 background: ACCENT_200,
               }}
             />
-            <span>dentisthsu-redesign.vercel.app</span>
+            <span>{SITE_HOST}</span>
           </div>
           <div>Five doctors · One roof</div>
         </div>
