@@ -21,6 +21,7 @@ export interface AirwayHeroKeyframe {
 
 interface AirwayHeroProps {
   videoSrc?: string;
+  videoSrcMobile?: string;
   topEyebrow?: ReactNode;
   keyframes: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe];
   cta?: ReactNode;
@@ -49,6 +50,7 @@ const FRAME_B_END = 0.72;
  */
 export function AirwayHero({
   videoSrc = '/videos/sleep-apnea-airway-scrub.mp4',
+  videoSrcMobile = '/videos/sleep-apnea-airway-scrub-mobile.mp4',
   topEyebrow,
   keyframes,
   cta,
@@ -62,6 +64,10 @@ export function AirwayHero({
   const [activeFrame, setActiveFrame] = useState(0);
   const [showPanel, setShowPanel] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  // Tracks viewport ≥ lg breakpoint (1024px). Below lg we skip the
+  // scale/translate transforms on the video — mobile GPUs don't have budget
+  // to spare compositing a full-bleed video on top of seek work.
+  const [isLg, setIsLg] = useState(false);
 
   // Single source of truth for scroll progress — written from a manual rAF
   // loop that reads getBoundingClientRect each frame. Bypasses scroll events
@@ -95,11 +101,24 @@ export function AirwayHero({
     [0.45, 0.9],
   );
 
+  // Track lg breakpoint so the rAF tick can pick a coarser seek threshold on
+  // mobile (fewer currentTime writes) and so the video wrapper can skip the
+  // scale/y transforms below lg.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsLg(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   useEffect(() => {
     if (reduced) return;
     const section = sectionRef.current;
     const video = videoRef.current;
     if (!section || !video) return;
+
+    const mqLg = window.matchMedia('(min-width: 1024px)');
 
     let raf = 0;
     let lastFrame = -1;
@@ -170,10 +189,13 @@ export function AirwayHero({
 
         displayTime += (targetTime - displayTime) * 0.18;
 
+        // Coarser threshold on mobile: roughly halves the currentTime writes,
+        // which is the main mobile-Safari bottleneck during scroll-scrub.
+        const seekThreshold = mqLg.matches ? 0.04 : 0.08;
         if (
           Number.isFinite(video.duration) &&
           video.duration > 0 &&
-          Math.abs(displayTime - lastSeekTime) > 0.04
+          Math.abs(displayTime - lastSeekTime) > seekThreshold
         ) {
           video.currentTime = displayTime;
           lastSeekTime = displayTime;
@@ -254,12 +276,13 @@ export function AirwayHero({
         {/* On mobile: full-bleed. On desktop: shifted right so the left 40% sits
             behind the opaque copy column (cleaner than two videos). */}
         <motion.div
-          style={{ scale, y: yShift }}
-          className="absolute inset-0 lg:left-[40%] xl:left-[40%] will-change-transform"
+          style={isLg ? { scale, y: yShift } : undefined}
+          className={`absolute inset-0 lg:left-[40%] xl:left-[40%] ${
+            isLg ? 'will-change-transform' : ''
+          }`}
         >
           <video
             ref={videoRef}
-            src={videoSrc}
             muted
             playsInline
             autoPlay
@@ -269,7 +292,13 @@ export function AirwayHero({
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
               videoReady ? 'opacity-100' : 'opacity-0'
             }`}
-          />
+          >
+            {/* Browser picks the first matching <source>. ≤1024px gets the
+                ~3.6MB all-intra mobile encode; wider viewports fall through to
+                the full 1080p file. */}
+            <source src={videoSrcMobile} media="(max-width: 1024px)" type="video/mp4" />
+            <source src={videoSrc} type="video/mp4" />
+          </video>
         </motion.div>
 
         {/* Atmospheric darkening overlay over the video region */}
@@ -445,7 +474,7 @@ function ScrollHint({ visible }: { visible: boolean }) {
     <motion.div
       animate={{ opacity: visible ? 0.92 : 0, y: visible ? 0 : 8 }}
       transition={{ duration: 0.6, ease: EASE_PREMIUM }}
-      className="absolute bottom-10 md:bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-none"
+      className="absolute bottom-28 sm:bottom-24 md:bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-none"
     >
       <motion.span
         animate={{ scaleY: [0.3, 1, 0.3] }}
