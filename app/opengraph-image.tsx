@@ -101,7 +101,17 @@ export default async function OpengraphImage() {
             />
             <span>{SITE_HOST}</span>
           </div>
-          <div>Five doctors · One roof</div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              color: STONE_50,
+            }}
+          >
+            <span>Request appointment</span>
+            <span style={{ fontSize: 26, lineHeight: 1 }}>→</span>
+          </div>
         </div>
       </div>
     ),

@@ -8,11 +8,15 @@ import { LenisProvider } from '@/components/lenis-provider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  // Default title is the OG card title — kept under 60 chars so it doesn't
+  // truncate in link previews. Page-specific titles slot into the template.
   title: {
-    default: `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1999`,
+    default: `${practiceInfo.brandName} — TMJ & dental care, ${practiceInfo.address.city}`,
     template: `%s — ${practiceInfo.brandName}`,
   },
-  description: `Comfort Care Dental — a five-doctor hybrid medical and dental practice in Rancho Cucamonga since 1999. Family dentistry, restorative care, plus medical-grade orofacial pain, TMJ, and sleep apnea treatment under one roof.`,
+  // OG/Twitter card description — kept in the 110–160 char sweet spot so it
+  // doesn't get clipped by Slack/iMessage/Twitter previews.
+  description: `Rancho Cucamonga's five-doctor hybrid dental & medical practice. Family care, TMJ, sleep apnea, and orofacial pain — under one roof since 1999.`,
   openGraph: {
     type: 'website',
     siteName: practiceInfo.brandName,
