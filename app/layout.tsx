@@ -17,9 +17,19 @@ export const metadata: Metadata = {
     siteName: practiceInfo.brandName,
     locale: 'en_US',
   },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  // Pitch site: do not index. See app/robots.ts for the matching rule and
+  // the rationale. Flip both back together when promoting to production.
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
   },
 };
 
