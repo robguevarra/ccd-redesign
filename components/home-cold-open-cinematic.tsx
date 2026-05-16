@@ -16,7 +16,7 @@ const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
 // Cycling questions in Phase 1.
 const PHASE_1_QUESTIONS = ['Dental issue?', 'Medical issue?'] as const;
-const PHASE_1_CYCLE_MS = 1500;
+const PHASE_1_CYCLE_MS = 1300;
 
 // Phase boundaries on scroll progress.
 const PHASE_1_END = 0.1;
@@ -50,12 +50,12 @@ const HALVES: readonly [DiptychHalf, DiptychHalf] = [
 
 /**
  * Home page primary cinematic. Three-phase pinned scroll section:
- *   Phase 1 (0 → 30%): auto-looping grayscaled video, cycling text overlay
- *     ("Dental issue?" ⇄ "Medical issue?" on 2.5s timer)
- *   Phase 2 (30 → 60%): text transitions to "Either way." over the video
- *   Phase 3 (60 → 100%): video splits horizontally — two clipped halves
- *     translate apart, revealing the dental + medical diptych content
- *     positioned behind.
+ *   Phase 1 (0 → 10%): auto-looping video, cycling text overlay
+ *     ("Dental issue?" ⇄ "Medical issue?" on 1.3s timer)
+ *   Phase 2 (13 → 48%): text transitions to "We do both." over the video
+ *   Phase 3 (42 → 100%): video splits — two clipped halves translate apart,
+ *     revealing the dental + medical diptych content positioned behind.
+ *     Desktop: horizontal split. Mobile: vertical split.
  *
  * Total scroll budget: heightVh × 100svh. Default 3 → 300svh of scroll for
  * the entire cinematic. After section releases, normal page flow resumes.
@@ -67,6 +67,16 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
   const videoRightRef = useRef<HTMLVideoElement>(null);
   const progressMV = useMotionValue(0);
   const [questionIdx, setQuestionIdx] = useState(0);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = () => setIsMobile(mql.matches);
+    onChange();
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
 
   // Manual rAF loop reading getBoundingClientRect each frame — same pattern
   // AirwayHero uses, bypasses scroll event coalescing.
@@ -110,29 +120,22 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
   }, []);
 
   // Phase 3 split — translate the two video halves apart.
-  // At progress 0.6 → 1.0, translateX goes from 0 → ±60% of viewport width.
   const splitProgress = useTransform(progressMV, [PHASE_2_END, 1], [0, 1]);
-  const leftTranslate = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
-  const rightTranslate = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
-  // Phase 1 → 2 text fade.
-  const phase1TextOpacity = useTransform(
-    progressMV,
-    [0, PHASE_1_END, PHASE_2_END],
-    [1, 1, 0],
-  );
-  const phase2TextOpacity = useTransform(
-    progressMV,
-    [PHASE_1_END, (PHASE_1_END + PHASE_2_END) / 2, PHASE_2_END],
-    [0, 1, 1],
-  );
+  // Desktop: horizontal split — left translates left, right translates right.
+  const xLeft = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
+  const xRight = useTransform(splitProgress, [0, 1], ['0%', '100%']);
+  // Mobile: vertical split — top translates up, bottom translates down.
+  const yTop = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
+  const yBottom = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
-  // Diptych reveal opacity in Phase 3.
-  const diptychOpacity = useTransform(
-    progressMV,
-    [PHASE_2_END, (PHASE_2_END + 1) / 2],
-    [0, 1],
-  );
+  // Phase 1 cycling questions: fully visible 0-10%, fades out 10-13%, gone after.
+  const phase1TextOpacity = useTransform(progressMV, [0, 0.10, 0.13], [1, 1, 0]);
+  // Phase 2 unified statement: enters 13-18%, stays until 42%, exits 42-48%.
+  const phase2TextOpacity = useTransform(progressMV, [0.13, 0.18, 0.42, 0.48], [0, 1, 1, 0]);
+
+  // Diptych fades in starting at 42% (as Phase 2 exits), fully visible by 68%.
+  const diptychOpacity = useTransform(progressMV, [0.42, 0.68], [0, 1]);
 
   // Reduced-motion fallback: static video, static text, no split.
   if (reduced) {
@@ -149,22 +152,22 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
           playsInline
           preload="auto"
           className="absolute inset-0 h-full w-full object-cover"
-          style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
+          style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
         />
-        <div className="absolute inset-0 bg-white/35" />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-50/20 via-transparent to-stone-950/55" />
+        {/* ─────────── Vignette for text legibility ─────────── */}
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-950/15 via-stone-950/20 to-stone-950/50" />
         <div className="relative z-10 text-center px-4 md:px-6 max-w-3xl mx-auto">
           <h1
-            className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
-            style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
+            className="font-serif text-7xl md:text-[10rem] tracking-tight text-stone-50"
+            style={{ textShadow: '0 2px 28px rgba(0,0,0,0.5), 0 0 80px rgba(0,0,0,0.25)' }}
           >
             {PHASE_1_QUESTIONS[0]}
           </h1>
-          <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
+          <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-100/85">
             Dental issue or medical issue — Comfort Care does both
           </p>
         </div>
-        <div className="absolute inset-x-0 bottom-0 grid grid-cols-2">
+        <div className="absolute inset-x-0 bottom-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1">
           {HALVES.map((half) => (
             <Link
               key={half.lane}
@@ -207,7 +210,7 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
         {/* ─────────── Diptych behind the video (revealed by split) ─────────── */}
         <motion.div
           style={{ opacity: diptychOpacity }}
-          className="absolute inset-0 grid grid-cols-2 z-0"
+          className="absolute inset-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 z-0"
         >
           {HALVES.map((half) => (
             <Link
@@ -239,9 +242,13 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
           ))}
         </motion.div>
 
-        {/* ─────────── Left video half (clipped to left, translates left in Phase 3) ─────────── */}
+        {/* ─────────── Left video half (clipped; desktop: left half / mobile: top half) ─────────── */}
         <motion.div
-          style={{ x: leftTranslate, clipPath: 'inset(0 50% 0 0)' }}
+          style={{
+            x: isMobile ? 0 : xLeft,
+            y: isMobile ? yTop : 0,
+            clipPath: isMobile ? 'inset(0 0 50% 0)' : 'inset(0 50% 0 0)',
+          }}
           className="absolute inset-0 z-10"
         >
           <video
@@ -253,13 +260,17 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             playsInline
             preload="auto"
             className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
+            style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
           />
         </motion.div>
 
-        {/* ─────────── Right video half (clipped to right, translates right in Phase 3) ─────────── */}
+        {/* ─────────── Right video half (clipped; desktop: right half / mobile: bottom half) ─────────── */}
         <motion.div
-          style={{ x: rightTranslate, clipPath: 'inset(0 0 0 50%)' }}
+          style={{
+            x: isMobile ? 0 : xRight,
+            y: isMobile ? yBottom : 0,
+            clipPath: isMobile ? 'inset(50% 0 0 0)' : 'inset(0 0 0 50%)',
+          }}
           className="absolute inset-0 z-10"
         >
           <video
@@ -271,15 +282,12 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             playsInline
             preload="auto"
             className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
+            style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
           />
         </motion.div>
 
-        {/* ─────────── White wash above the grayscale video so black type reads ─────────── */}
-        <div className="absolute inset-0 z-[15] pointer-events-none bg-white/35" />
-
-        {/* ─────────── Stronger atmospheric vignette ─────────── */}
-        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-stone-50/20 via-transparent to-stone-950/55" />
+        {/* ─────────── Vignette for text legibility ─────────── */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-stone-950/15 via-stone-950/20 to-stone-950/50" />
 
         {/* ─────────── Phase 1 + 2 text overlay (centered, layered above video) ─────────── */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
@@ -293,13 +301,13 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, ease: EASE_PREMIUM }}
-                  className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
-                  style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
+                  className="font-serif text-7xl md:text-[10rem] tracking-tight text-stone-50"
+                  style={{ textShadow: '0 2px 28px rgba(0,0,0,0.5), 0 0 80px rgba(0,0,0,0.25)' }}
                 >
                   {PHASE_1_QUESTIONS[questionIdx]}
                 </motion.h1>
               </AnimatePresence>
-              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
+              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-100/85">
                 Scroll to see what we do
               </p>
             </motion.div>
@@ -310,13 +318,13 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
               <h2
-                className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
-                style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
+                className="font-serif text-7xl md:text-[10rem] tracking-tight text-stone-50"
+                style={{ textShadow: '0 2px 28px rgba(0,0,0,0.5), 0 0 80px rgba(0,0,0,0.25)' }}
               >
-                Either way.
+                We do both.
               </h2>
-              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
-                Comfort Care does both
+              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-100/85">
+                Comfort Care · dental and medical
               </p>
             </motion.div>
           </div>
