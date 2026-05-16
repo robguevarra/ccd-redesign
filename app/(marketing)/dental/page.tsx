@@ -53,6 +53,8 @@ export default function DentalLanePage() {
         pingPong
         heightVh={3}
         variant="light-centered"
+        snapPoints={[0, 0.388, 0.48, 0.9]}
+        autoFinishAfterLastSnap
         debug
         fallbackHeading={
           <>

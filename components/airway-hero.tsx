@@ -51,6 +51,13 @@ interface AirwayHeroProps {
    * If undefined or empty, no snap behavior.
    */
   snapPoints?: readonly number[];
+  /**
+   * When true, after the user lands on the LAST snap point in `snapPoints`,
+   * the cinematic auto-advances to progress 1.0 (releasing the pin) over
+   * ~1.5s following a ~1.2s linger. Cancelled instantly on any user input.
+   * Useful for "settle, read, then carry the user to the next section".
+   */
+  autoFinishAfterLastSnap?: boolean;
   /** Render a fixed corner debug overlay with progress + video time + active frame. */
   debug?: boolean;
 }
@@ -82,6 +89,7 @@ export function AirwayHero({
   pingPong = false,
   variant = 'dark-split',
   snapPoints,
+  autoFinishAfterLastSnap = false,
   debug = false,
 }: AirwayHeroProps) {
   const reduced = useReducedMotion();
@@ -279,8 +287,13 @@ export function AirwayHero({
     let stable = 0;
     let snapping = false;
     let lastInputAt = performance.now();
+    let autoFinishTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const cancelSnapIfRunning = () => {
+      if (autoFinishTimeoutId !== null) {
+        clearTimeout(autoFinishTimeoutId);
+        autoFinishTimeoutId = null;
+      }
       if (!snapping) return;
       const lenis = (window as Window & { __lenis?: { scrollTo: (target: number | string, opts?: Record<string, unknown>) => void } }).__lenis;
       if (lenis?.scrollTo) {
@@ -315,6 +328,10 @@ export function AirwayHero({
       const targetY = sectionTopAbsolute + total * nearest;
 
       snapping = true;
+      const isLastSnap =
+        autoFinishAfterLastSnap &&
+        Math.abs(nearest - snapPoints[snapPoints.length - 1]!) < 0.001;
+
       const lenis = (window as Window & { __lenis?: { scrollTo: (target: number | string, opts?: Record<string, unknown>) => void } }).__lenis;
       if (lenis?.scrollTo) {
         lenis.scrollTo(targetY, {
@@ -322,6 +339,25 @@ export function AirwayHero({
           easing: (t: number) => 1 - Math.pow(1 - t, 3),
           onComplete: () => {
             snapping = false;
+            // After landing on the LAST snap point, linger ~1.2s then slowly
+            // ease the page past the cinematic so the next section comes into
+            // view. Cancelled by any user input via cancelSnapIfRunning.
+            if (isLastSnap && autoFinishTimeoutId === null) {
+              autoFinishTimeoutId = setTimeout(() => {
+                autoFinishTimeoutId = null;
+                const r2 = section.getBoundingClientRect();
+                const total2 = r2.height - window.innerHeight;
+                if (total2 <= 0) return;
+                const finishY =
+                  r2.top + window.scrollY + total2 + window.innerHeight * 0.4;
+                snapping = true;
+                lenis.scrollTo(finishY, {
+                  duration: 1.5,
+                  easing: (t: number) => 1 - Math.pow(1 - t, 3),
+                  onComplete: () => { snapping = false; },
+                });
+              }, 1200);
+            }
           },
         });
       } else {
@@ -359,12 +395,15 @@ export function AirwayHero({
 
     return () => {
       cancelAnimationFrame(raf);
+      if (autoFinishTimeoutId !== null) {
+        clearTimeout(autoFinishTimeoutId);
+      }
       window.removeEventListener('wheel', onUserInput);
       window.removeEventListener('touchmove', onUserInput);
       window.removeEventListener('touchstart', onUserInput);
       window.removeEventListener('keydown', onUserInput);
     };
-  }, [reduced, progressMV, snapPoints]);
+  }, [reduced, progressMV, snapPoints, autoFinishAfterLastSnap]);
 
   // ─────── Reduced-motion fallback ───────
   if (reduced) {
