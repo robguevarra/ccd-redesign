@@ -50,14 +50,14 @@ A 1px hairline divides the halves vertically. Each half is a real `<Link>` to `/
 
 Vertical stack. Dental half top, medical half bottom. Both reach the 44px tap-target minimum on every interactive element. Both halves above the fold on iPhone 13+ (target: 50svh per half, 100svh total with header consuming ~12svh).
 
-**Copy (locked):**
+**Copy (provisional — will be revised before pitch):**
 
 | Half | Eyebrow | Title | Body | CTA |
 |---|---|---|---|---|
-| Dental | `FAMILY · RESTORATIVE · COSMETIC` | "For the family you bring back every six months." | (none — title carries it) | "Enter dental →" |
-| Medical | `OROFACIAL PAIN · ORAL MEDICINE` | "For pain everyone told you was permanent." | (none — title carries it) | "Enter medical →" |
+| Dental | `FAMILY · RESTORATIVE · COSMETIC` | _(placeholder: "For the family you bring back every six months.")_ | (none — title carries it) | "Enter dental →" |
+| Medical | `OROFACIAL PAIN · ORAL MEDICINE` | _(placeholder: "For pain everyone told you was permanent.")_ | (none — title carries it) | "Enter medical →" |
 
-The titles are deliberately patient-direct. Italic on the second clause where the editorial register suits it (`every six months.` and `permanent.`), matching the existing Fraunces treatment elsewhere on the site.
+The current titles are placeholders flagged as too dramatic; final copy will be drafted closer to pitch. The eyebrows and CTAs are locked. The italic-on-second-clause Fraunces treatment (matching existing patterns on the site) is also locked as the typographic system.
 
 **Background treatment:** dental half uses warm-stone gradient (`#f5f3ee → #ede4d4`), medical half uses ink-teal gradient (`#0a2520 → #06231f`). Existing `--color-ink-teal` and `--color-stone-50/200` tokens are reused; no new palette additions required.
 
