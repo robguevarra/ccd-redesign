@@ -133,7 +133,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     // Lock released only after GESTURE_QUIET_MS of no input. Every input
     // event during the lock extends the cooldown. Effect: one trackpad
     // gesture (including inertia) = one snap, no matter how long it lasts.
-    const GESTURE_QUIET_MS = 350;
+    const GESTURE_QUIET_MS = 180;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
@@ -192,22 +192,13 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
       }
     };
 
-    const blockEvent = (event?: Event) => {
-      // preventDefault stops native scrolling; stopImmediatePropagation
-      // stops Lenis (also listening on window) from feeding the wheel into
-      // its smooth-scroll target. Both required on macOS so trackpad inertia
-      // can't drag the page past our snap target.
-      event?.preventDefault();
-      event?.stopImmediatePropagation();
-    };
-
     const handleDirection = (dir: 1 | -1, event?: Event) => {
       const now = performance.now();
       if (now < cooldownUntil) {
-        // Lock active — block AND extend cooldown by another gesture-quiet
-        // window. One trackpad gesture (with all its inertia events) = one
-        // snap, even if the gesture lasts seconds.
-        blockEvent(event);
+        // Lock active — preventDefault AND extend cooldown by another
+        // gesture-quiet window. One trackpad gesture (with all its inertia
+        // events) = one snap, even if the gesture lasts seconds.
+        event?.preventDefault();
         cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
@@ -218,7 +209,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
         // At boundary — let the page scroll naturally to escape the cinematic.
         return;
       }
-      blockEvent(event);
+      event?.preventDefault();
       jumpTo(nextIdx);
     };
 
