@@ -118,70 +118,65 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   // Reveal y-entry — slides up softly with the fade-in.
   const revealY = useTransform(progressMV, [0.78, 0.92], [24, 0]);
 
-  // ─────── Magnet snap between cinematic phases ────────────────────────────
-  // Two snap points: top (Phase 1) and Phase 2 settled (~middle of Phase 2's window).
-  // Bypassed under prefers-reduced-motion.
+  // ─────── Strict scroll-jack between cinematic phases ────────────────────
+  // Each wheel tick / swipe / arrow key jumps exactly one snap point forward
+  // or backward — no in-between scroll positions reachable. At boundaries,
+  // additional scroll in the boundary direction releases the pin so the user
+  // can exit the cinematic naturally. Bypassed under prefers-reduced-motion.
   useEffect(() => {
     if (reduced) return;
     const section = sectionRef.current;
     if (!section) return;
 
-    // Snap points in [0,1] scroll progress: top, Phase 2 settled, reveal settled.
     const SNAP_POINTS = [0, 0.40, 0.92] as const;
-    const SNAP_AFTER_QUIET_MS = 450;
-    const STABLE_FRAMES = 5; // ~83ms at 60fps
-    const NEAR_TOLERANCE = 0.015; // don't re-snap if already within 1.5%
-    const SNAP_ATTRACTION = 0.12; // only pull if within 12% of a snap point
+    const ANIMATION_MS = 700;
+    const COOLDOWN_MS = ANIMATION_MS + 60;
+    const TOUCH_THRESHOLD_PX = 28;
+    const PINNED_TOP_FUDGE_PX = 6;
 
-    let lastProgress = -1;
-    let stable = 0;
+    let cooldownUntil = 0;
     let snapping = false;
-    let lastInputAt = performance.now();
-    let snapRafId = 0;
 
-    const cancelSnapIfRunning = () => {
-      if (!snapping) return;
-      const lenis = window.__lenis;
-      if (lenis?.scrollTo) {
-        lenis.scrollTo(window.scrollY, { immediate: true });
-      }
-      snapping = false;
-    };
+    const points = [...SNAP_POINTS];
 
-    const onUserInput = () => {
-      lastInputAt = performance.now();
-      stable = 0;
-      cancelSnapIfRunning();
-    };
-
-    window.addEventListener('wheel', onUserInput, { passive: true });
-    window.addEventListener('touchmove', onUserInput, { passive: true });
-    window.addEventListener('touchstart', onUserInput, { passive: true });
-    window.addEventListener('keydown', onUserInput);
-
-    const snapTo = (p: number) => {
-      // Find nearest snap point
-      const nearest = SNAP_POINTS.reduce((a, b) =>
-        Math.abs(b - p) < Math.abs(a - p) ? b : a,
-      );
-
-      // Skip if already close enough
-      if (Math.abs(nearest - p) < NEAR_TOLERANCE) return;
-      // Skip if not within attraction radius of any snap point
-      if (Math.abs(nearest - p) > SNAP_ATTRACTION) return;
-
+    const getRectInfo = () => {
       const rect = section.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
+      return { rect, total };
+    };
+
+    const getCurrentIndex = () => {
+      const { rect, total } = getRectInfo();
+      if (total <= 0) return 0;
+      const p = Math.max(0, Math.min(1, -rect.top / total));
+      let bestIdx = 0;
+      let bestDist = Math.abs(points[0]! - p);
+      for (let i = 1; i < points.length; i++) {
+        const d = Math.abs(points[i]! - p);
+        if (d < bestDist) {
+          bestIdx = i;
+          bestDist = d;
+        }
+      }
+      return bestIdx;
+    };
+
+    const insidePinned = () => {
+      const { rect, total } = getRectInfo();
+      return total > 0 && rect.top <= PINNED_TOP_FUDGE_PX && rect.top >= -total - PINNED_TOP_FUDGE_PX;
+    };
+
+    const jumpTo = (idx: number) => {
+      const { rect, total } = getRectInfo();
       if (total <= 0) return;
-
-      const sectionTopAbsolute = rect.top + window.scrollY;
-      const targetY = sectionTopAbsolute + total * nearest;
-
-      snapping = true;
+      const targetProgress = points[idx]!;
+      const targetY = rect.top + window.scrollY + total * targetProgress;
       const lenis = window.__lenis;
+      cooldownUntil = performance.now() + COOLDOWN_MS;
       if (lenis?.scrollTo) {
+        snapping = true;
         lenis.scrollTo(targetY, {
-          duration: 0.65,
+          duration: ANIMATION_MS / 1000,
           easing: (t: number) => 1 - Math.pow(1 - t, 3),
           onComplete: () => {
             snapping = false;
@@ -189,44 +184,68 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
         });
       } else {
         window.scrollTo({ top: targetY, behavior: 'smooth' });
-        setTimeout(() => {
-          snapping = false;
-        }, 700);
       }
     };
 
-    const tick = () => {
-      const rect = section.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      if (total > 0) {
-        const p = Math.max(0, Math.min(1, -rect.top / total));
-
-        const insidePinned = rect.top <= 0 && rect.top >= -total;
-        const quietMs = performance.now() - lastInputAt;
-
-        if (!snapping && insidePinned && quietMs > SNAP_AFTER_QUIET_MS) {
-          if (Math.abs(p - lastProgress) < 0.0005) {
-            stable++;
-            if (stable === STABLE_FRAMES) {
-              snapTo(p);
-              stable = 0;
-            }
-          } else {
-            stable = 0;
-          }
-        }
-        lastProgress = p;
+    const handleDirection = (dir: 1 | -1, event?: Event) => {
+      if (performance.now() < cooldownUntil) {
+        event?.preventDefault();
+        return;
       }
-      snapRafId = requestAnimationFrame(tick);
+      if (!insidePinned()) return;
+      const currentIdx = getCurrentIndex();
+      const nextIdx = currentIdx + dir;
+      if (nextIdx < 0 || nextIdx >= points.length) {
+        // At boundary — let the page scroll naturally to escape the cinematic.
+        return;
+      }
+      event?.preventDefault();
+      jumpTo(nextIdx);
     };
-    snapRafId = requestAnimationFrame(tick);
+
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 1) return;
+      handleDirection(e.deltaY > 0 ? 1 : -1, e);
+    };
+
+    let touchStartY = 0;
+    let touchAccumulated = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? 0;
+      touchAccumulated = 0;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0]?.clientY ?? 0;
+      const delta = touchStartY - currentY;
+      touchAccumulated = delta;
+      if (Math.abs(touchAccumulated) >= TOUCH_THRESHOLD_PX) {
+        handleDirection(touchAccumulated > 0 ? 1 : -1, e);
+        touchStartY = currentY;
+        touchAccumulated = 0;
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        handleDirection(1, e);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        handleDirection(-1, e);
+      }
+    };
+
+    // Suppress unused-var warning — snapping flag is reserved for future cancel logic
+    void snapping;
+
+    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+    window.addEventListener('keydown', onKeyDown);
 
     return () => {
-      cancelAnimationFrame(snapRafId);
-      window.removeEventListener('wheel', onUserInput);
-      window.removeEventListener('touchmove', onUserInput);
-      window.removeEventListener('touchstart', onUserInput);
-      window.removeEventListener('keydown', onUserInput);
+      window.removeEventListener('wheel', onWheel, { capture: true } as EventListenerOptions);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove, { capture: true } as EventListenerOptions);
+      window.removeEventListener('keydown', onKeyDown);
     };
   }, [reduced]);
 

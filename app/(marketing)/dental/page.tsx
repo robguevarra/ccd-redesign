@@ -56,7 +56,6 @@ export default function DentalLanePage() {
         snapPoints={[0, 0.388, 0.48, 0.9]}
         snapMode="strict"
         autoFinishAfterLastSnap
-        debug
         fallbackHeading={
           <>
             Family dentistry, <span className="italic">done thoroughly.</span>
