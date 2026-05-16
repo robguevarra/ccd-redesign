@@ -8,7 +8,6 @@ import { FadeUp } from '@/components/motion/fade-up';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
 import { HomeColdOpenCinematic } from '@/components/home-cold-open-cinematic';
-import { TwinMarkColdOpen } from '@/components/twin-mark-cold-open';
 
 const SOURCE_LABEL: Record<string, string> = {
   yelp: 'Yelp',
@@ -56,8 +55,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HomeColdOpenCinematic heightVh={1.6} />
-      <TwinMarkColdOpen />
+      <HomeColdOpenCinematic heightVh={1.8} />
 
       {/* ─────────── Why patients stay (3-panel horizontal carousel) ─────────── */}
       <WhyPatientsStay />
