@@ -77,6 +77,16 @@
   --color-surface:    #e8f1f0;
 }
 
+/* Header height — used for negative-margin compensation on full-bleed pinned sections. */
+:root {
+  --header-h: 80px;
+}
+@media (max-width: 767px) {
+  :root {
+    --header-h: 132px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
