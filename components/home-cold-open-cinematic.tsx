@@ -130,7 +130,10 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
 
     const SNAP_POINTS = [0, 0.40, 0.92] as const;
     const ANIMATION_MS = 700;
-    const COOLDOWN_MS = ANIMATION_MS + 60;
+    // Lock released only after GESTURE_QUIET_MS of no input. Every input
+    // event during the lock extends the cooldown. Effect: one trackpad
+    // gesture (including inertia) = one snap, no matter how long it lasts.
+    const GESTURE_QUIET_MS = 180;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
@@ -172,7 +175,9 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
       const targetProgress = points[idx]!;
       const targetY = rect.top + window.scrollY + total * targetProgress;
       const lenis = window.__lenis;
-      cooldownUntil = performance.now() + COOLDOWN_MS;
+      // Cooldown = animation + quiet window. Inputs during this window
+      // extend the cooldown in handleDirection.
+      cooldownUntil = performance.now() + ANIMATION_MS + GESTURE_QUIET_MS;
       if (lenis?.scrollTo) {
         snapping = true;
         lenis.scrollTo(targetY, {
@@ -188,8 +193,13 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     };
 
     const handleDirection = (dir: 1 | -1, event?: Event) => {
-      if (performance.now() < cooldownUntil) {
+      const now = performance.now();
+      if (now < cooldownUntil) {
+        // Lock active — preventDefault AND extend cooldown by another
+        // gesture-quiet window. One trackpad gesture (with all its inertia
+        // events) = one snap, even if the gesture lasts seconds.
         event?.preventDefault();
+        cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
       if (!insidePinned()) return;

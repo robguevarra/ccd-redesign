@@ -431,7 +431,12 @@ export function AirwayHero({
     if (!section) return;
 
     const ANIMATION_MS = 700;
-    const COOLDOWN_MS = ANIMATION_MS + 60;
+    // Lock released only after GESTURE_QUIET_MS of no input. Every input
+    // event during the lock extends the lock by another GESTURE_QUIET_MS.
+    // Effect: one continuous gesture (trackpad swipe + inertia, autorepeat
+    // arrow hold, sustained wheel) advances exactly one snap point — even if
+    // the gesture lasts seconds.
+    const GESTURE_QUIET_MS = 180;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
@@ -506,7 +511,11 @@ export function AirwayHero({
       const targetProgress = points[idx]!;
       const targetY = rect.top + window.scrollY + total * targetProgress;
       const lenis = lenisRef();
-      cooldownUntil = performance.now() + COOLDOWN_MS;
+      // Initial cooldown = animation duration + the gesture-quiet window.
+      // Inputs arriving during this window will EXTEND the cooldown (in
+      // handleDirection) so the lock only releases after the user stops
+      // scrolling for GESTURE_QUIET_MS.
+      cooldownUntil = performance.now() + ANIMATION_MS + GESTURE_QUIET_MS;
       cancelAutoFinish();
       if (lenis?.scrollTo) {
         snapping = true;
@@ -534,9 +543,15 @@ export function AirwayHero({
     };
 
     const handleDirection = (dir: 1 | -1, event?: Event) => {
-      lastInputAt = performance.now();
-      if (performance.now() < cooldownUntil) {
+      const now = performance.now();
+      lastInputAt = now;
+      if (now < cooldownUntil) {
+        // Lock active — preventDefault AND extend the cooldown by another
+        // gesture-quiet window. As long as inputs keep arriving the lock
+        // stays in the future; one continuous gesture = one snap, no matter
+        // how long the gesture lasts (trackpad inertia, autorepeat key hold).
         event?.preventDefault();
+        cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
       if (!insidePinned()) return;
