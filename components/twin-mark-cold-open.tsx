@@ -43,7 +43,7 @@ const HALVES: readonly [ColdOpenHalf, ColdOpenHalf] = [
     },
     cta: 'Enter medical',
     photo: {
-      src: 'https://images.unsplash.com/photo-1551601651-2f51c8d76f8a?w=1200&q=75&auto=format',
+      src: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=75&auto=format',
       alt: '',
     },
   },
