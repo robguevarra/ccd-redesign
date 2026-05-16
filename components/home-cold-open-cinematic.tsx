@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import {
   motion,
   useMotionValue,
@@ -10,7 +8,6 @@ import {
   useTransform,
   AnimatePresence,
 } from 'framer-motion';
-import { Logo } from './logo';
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
@@ -19,48 +16,22 @@ const PHASE_1_QUESTIONS = ['Dental issue?', 'Medical issue?'] as const;
 const PHASE_1_CYCLE_MS = 1300;
 
 // Phase boundaries on scroll progress.
-const PHASE_1_END = 0.1;
-const PHASE_2_END = 0.4;
-// Phase 3 = 0.4 → 1.0 (split open + diptych reveal)
-
-interface DiptychHalf {
-  lane: 'dental' | 'medical';
-  href: string;
-  eyebrow: string;
-  title: { lead: string; emphasis: string };
-  cta: string;
-}
-
-const HALVES: readonly [DiptychHalf, DiptychHalf] = [
-  {
-    lane: 'dental',
-    href: '/dental',
-    eyebrow: 'FAMILY · RESTORATIVE · COSMETIC',
-    title: { lead: 'For the family you bring back', emphasis: 'every six months.' },
-    cta: 'Enter dental',
-  },
-  {
-    lane: 'medical',
-    href: '/medical',
-    eyebrow: 'OROFACIAL PAIN · ORAL MEDICINE',
-    title: { lead: 'For pain everyone told you was', emphasis: 'permanent.' },
-    cta: 'Enter medical',
-  },
-];
+const PHASE_1_END = 0.25;
+const PHASE_2_END = 0.70;
+// Exit = 0.70 → 1.0 (video halves split apart, cinematic fades out)
 
 /**
- * Home page primary cinematic. Three-phase pinned scroll section:
- *   Phase 1 (0 → 10%): auto-looping video, cycling text overlay
+ * Home page primary cinematic. Two-phase pinned scroll section:
+ *   Phase 1 (0 → 25%): auto-looping video, cycling text overlay
  *     ("Dental issue?" ⇄ "Medical issue?" on 1.3s timer)
- *   Phase 2 (13 → 48%): text transitions to "We do both." over the video
- *   Phase 3 (42 → 100%): video splits — two clipped halves translate apart,
- *     revealing the dental + medical diptych content positioned behind.
- *     Desktop: horizontal split. Mobile: vertical split.
+ *   Phase 2 (25 → 70%): text transitions to "We do both." over the video
+ *   Exit (70 → 100%): video halves slide apart, whole cinematic fades out,
+ *     releasing into TwinMarkColdOpen below as a natural-flow section.
  *
- * Total scroll budget: heightVh × 100svh. Default 3 → 300svh of scroll for
- * the entire cinematic. After section releases, normal page flow resumes.
+ * Total scroll budget: heightVh × 100svh. Default 1.6 → 160svh of scroll.
+ * After section releases, normal page flow resumes.
  */
-export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
+export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number }) {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoLeftRef = useRef<HTMLVideoElement>(null);
@@ -119,8 +90,8 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
     return () => left.removeEventListener('timeupdate', onTimeUpdate);
   }, []);
 
-  // Phase 3 split — translate the two video halves apart (60% → 90%).
-  const splitProgress = useTransform(progressMV, [0.60, 0.90], [0, 1]);
+  // Quick exit split: video halves slide apart 80-100%, the cinematic releases on out.
+  const splitProgress = useTransform(progressMV, [0.80, 1.0], [0, 1]);
 
   // Desktop: horizontal split — left translates left, right translates right.
   const xLeft = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
@@ -129,31 +100,29 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
   const yTop = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
   const yBottom = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
-  // Phase 1 cycling questions: visible 0-15%, fades 15-22%.
-  const phase1TextOpacity = useTransform(progressMV, [0, 0.15, 0.22], [1, 1, 0]);
-  // Phase 2 unified statement: enters 22-30%, stays until 60%, exits 60-72%.
-  const phase2TextOpacity = useTransform(progressMV, [0.22, 0.30, 0.60, 0.72], [0, 1, 1, 0]);
-  // Phase 2 entry — scale up + translate up so the headline LANDS rather than just fades.
-  const phase2Scale = useTransform(progressMV, [0.22, 0.30], [0.92, 1]);
-  const phase2Y = useTransform(progressMV, [0.22, 0.30], [28, 0]);
-  // White glow plate behind Phase 2 text — fades in with Phase 2 and out with it.
-  const phase2GlowOpacity = useTransform(progressMV, [0.22, 0.30, 0.60, 0.72], [0, 1, 1, 0]);
+  // Phase 1 cycling questions: visible 0-22%, fades 22-28%.
+  const phase1TextOpacity = useTransform(progressMV, [0, 0.22, 0.28], [1, 1, 0]);
+  // Phase 2 unified statement: enters 28-40%, stays until 75%, exits 75-85%.
+  const phase2TextOpacity = useTransform(progressMV, [0.28, 0.40, 0.75, 0.85], [0, 1, 1, 0]);
+  // Phase 2 entry — scale + translate so the headline lands.
+  const phase2Scale = useTransform(progressMV, [0.28, 0.40], [0.92, 1]);
+  const phase2Y = useTransform(progressMV, [0.28, 0.40], [28, 0]);
+  // White glow plate behind Phase 2.
+  const phase2GlowOpacity = useTransform(progressMV, [0.28, 0.40, 0.75, 0.85], [0, 1, 1, 0]);
 
-  // Diptych fades in slightly trailing Phase 2 exit, fully visible by 88%.
-  const diptychOpacity = useTransform(progressMV, [0.65, 0.88], [0, 1]);
+  // Whole-cinematic exit fade — the video + text fade out as we approach release.
+  const cinematicExitOpacity = useTransform(progressMV, [0.85, 1.0], [1, 0]);
 
   // ─────── Magnet snap between cinematic phases ────────────────────────────
-  // Adapted from components/why-patients-stay.tsx. Pulls to discrete snap
-  // points when user input is quiet AND progress is stable, so each scroll
-  // gesture lands cleanly on: top, "We do both." midpoint, split-complete.
+  // Two snap points: top (Phase 1) and Phase 2 settled (~middle of Phase 2's window).
   // Bypassed under prefers-reduced-motion.
   useEffect(() => {
     if (reduced) return;
     const section = sectionRef.current;
     if (!section) return;
 
-    // Snap points in [0,1] scroll progress: top, Phase 2 settled, diptych fully revealed.
-    const SNAP_POINTS = [0, 0.30, 0.85] as const;
+    // Snap points in [0,1] scroll progress: top, Phase 2 settled.
+    const SNAP_POINTS = [0, 0.45] as const;
     const SNAP_AFTER_QUIET_MS = 450;
     const STABLE_FRAMES = 5; // ~83ms at 60fps
     const NEAR_TOLERANCE = 0.015; // don't re-snap if already within 1.5%
@@ -286,34 +255,6 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             Dental issue or medical issue — Comfort Care does both
           </p>
         </div>
-        <div className="absolute inset-x-0 bottom-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1">
-          {HALVES.map((half) => (
-            <Link
-              key={half.lane}
-              href={half.href}
-              className={`group flex flex-col justify-between p-8 md:p-14 ${
-                half.lane === 'dental'
-                  ? 'bg-stone-100 text-stone-900'
-                  : 'bg-[var(--color-ink-teal)] text-stone-50'
-              }`}
-            >
-              <div>
-                <Logo lane={half.lane} size={48} mobileSize={32} decorative />
-                <p className="mt-6 text-[10px] tracking-[0.24em] uppercase opacity-75">
-                  {half.eyebrow}
-                </p>
-                <h2 className="mt-3 font-serif text-2xl md:text-5xl leading-[1.05] tracking-tight max-w-[18ch]">
-                  {half.title.lead}{' '}
-                  <span className="italic font-light">{half.title.emphasis}</span>
-                </h2>
-              </div>
-              <span className="mt-8 inline-flex items-center gap-2 text-sm md:text-base font-medium">
-                {half.cta}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </span>
-            </Link>
-          ))}
-        </div>
       </section>
     );
   }
@@ -322,45 +263,13 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
     <section
       ref={sectionRef}
       aria-label="Comfort Care Dental — two practices, one cinematic"
-      className="relative w-full"
+      className="relative isolate w-full"
       style={{ height: `${heightVh * 100}svh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950">
-        {/* ─────────── Diptych behind the video (revealed by split) ─────────── */}
-        <motion.div
-          style={{ opacity: diptychOpacity }}
-          className="absolute inset-0 grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 z-0"
-        >
-          {HALVES.map((half) => (
-            <Link
-              key={half.lane}
-              href={half.href}
-              className={`group relative flex flex-col justify-between p-8 md:p-14 pt-32 md:pt-28 pb-10 md:pb-14 overflow-hidden ${
-                half.lane === 'dental'
-                  ? 'bg-stone-100 text-stone-900'
-                  : 'bg-[var(--color-ink-teal)] text-stone-50'
-              }`}
-            >
-              <div className="relative z-10">
-                <Logo lane={half.lane} size={48} mobileSize={32} decorative />
-                <p className="mt-6 text-[10px] tracking-[0.24em] uppercase opacity-75">
-                  {half.eyebrow}
-                </p>
-                <h2 className="mt-3 font-serif text-2xl md:text-5xl leading-[1.05] tracking-tight max-w-[18ch]">
-                  {half.title.lead}{' '}
-                  <span className="italic font-light">{half.title.emphasis}</span>
-                </h2>
-              </div>
-              <div className="relative z-10">
-                <span className="inline-flex items-center gap-2 text-sm md:text-base font-medium">
-                  {half.cta}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </motion.div>
-
+      <motion.div
+        style={{ opacity: cinematicExitOpacity }}
+        className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950"
+      >
         {/* ─────────── Left video half (clipped; desktop: left half / mobile: top half) ─────────── */}
         <motion.div
           style={{
@@ -460,7 +369,7 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
