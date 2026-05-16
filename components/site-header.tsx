@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Mail, Menu, Phone, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
@@ -13,8 +14,6 @@ import { Logo } from './logo';
 import { Wordmark } from './wordmark';
 
 const NAV_ITEMS = [
-  { href: '/dental', label: 'Dental' },
-  { href: '/medical', label: 'Medical' },
   { href: '/doctors', label: 'Doctors' },
   { href: '/technology', label: 'Technology' },
   { href: '/reviews', label: 'Reviews' },
@@ -62,50 +61,66 @@ export function SiteHeader({
       data-lane={lane}
       className={cn(
         'sticky top-0 z-40 w-full border-b backdrop-blur-md',
+        'transition-colors duration-500 ease-out',
         variant === 'light'
-          ? 'bg-stone-50/85 border-stone-200/60 text-stone-900'
+          ? 'bg-[color-mix(in_oklab,var(--color-surface)_88%,transparent)] border-stone-200/60 text-stone-900'
           : 'bg-ink-950/60 border-ink-700/40 text-stone-100',
         className,
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 md:px-8 md:py-5">
-        <Link
-          href="/"
-          className="flex items-center gap-3"
-          aria-label={`${practiceInfo.brandName} home`}
-        >
-          <Logo size={28} mobileSize={24} decorative lane={lane} />
-          <span className="flex flex-col">
-            <Wordmark variant={variant} />
-            {resolvedSublabel && (
-              <span className="mt-0.5 text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
-                {resolvedSublabel}
+      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-4 md:px-8 md:py-5">
+        {/* LEFT — Brand */}
+        <div className="md:flex-1 flex items-center justify-start">
+          <Link
+            href="/"
+            className="flex items-center gap-3"
+            aria-label={`${practiceInfo.brandName} home`}
+          >
+            <Logo size={28} mobileSize={24} decorative lane={lane} />
+            <span className="flex flex-col">
+              <Wordmark variant={variant} />
+              <span className="relative mt-0.5 block h-3 md:h-3.5 overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
+                <AnimatePresence mode="wait" initial={false}>
+                  {resolvedSublabel && (
+                    <motion.span
+                      key={resolvedSublabel}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
+                      className="absolute inset-x-0 top-0 whitespace-nowrap"
+                    >
+                      {resolvedSublabel}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </span>
-            )}
-          </span>
-        </Link>
+            </span>
+          </Link>
+        </div>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="opacity-80 hover:opacity-100 transition-opacity"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        {/* CENTER — LaneToggle (desktop only) */}
+        <div className="hidden md:flex md:flex-1 items-center justify-center">
+          <LaneToggle variant={variant} />
+        </div>
 
-        <div className="flex items-center gap-3">
-          <LaneToggle
-            variant={variant}
-            className="hidden md:inline-flex"
-          />
+        {/* RIGHT — Nav + CTAs + Hamburger */}
+        <div className="md:flex-1 flex items-center justify-end gap-5">
+          <nav className="hidden md:flex items-center gap-5 text-xs">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="opacity-80 hover:opacity-100 transition-opacity"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
           <Link
             href="/request-appointment"
             className={cn(
-              'hidden sm:inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors',
+              'hidden sm:inline-flex shrink-0 items-center rounded-full px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap',
               variant === 'light'
                 ? 'bg-stone-900 text-stone-50 hover:bg-stone-700'
                 : 'bg-stone-100 text-ink-950 hover:bg-stone-50',
@@ -116,7 +131,7 @@ export function SiteHeader({
           <a
             href={`tel:${main.tel}`}
             className={cn(
-              'hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors',
+              'hidden sm:inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors whitespace-nowrap',
               variant === 'light'
                 ? 'border-stone-900 hover:bg-stone-900 hover:text-stone-50'
                 : 'border-stone-100/50 hover:bg-stone-100 hover:text-ink-950',
