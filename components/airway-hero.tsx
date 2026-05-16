@@ -436,7 +436,7 @@ export function AirwayHero({
     // Effect: one continuous gesture (trackpad swipe + inertia, autorepeat
     // arrow hold, sustained wheel) advances exactly one snap point — even if
     // the gesture lasts seconds.
-    const GESTURE_QUIET_MS = 180;
+    const GESTURE_QUIET_MS = 350;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
@@ -542,15 +542,25 @@ export function AirwayHero({
       return total > 0 && rect.top <= PINNED_TOP_FUDGE_PX && rect.top >= -total - PINNED_TOP_FUDGE_PX;
     };
 
+    const blockEvent = (event?: Event) => {
+      // preventDefault stops native scrolling; stopImmediatePropagation
+      // stops Lenis (which listens on the same window event) from also
+      // consuming the wheel/touch event into its smooth-scroll target.
+      // Both are necessary on macOS to prevent Lenis from animating past
+      // our snap target during trackpad inertia.
+      event?.preventDefault();
+      event?.stopImmediatePropagation();
+    };
+
     const handleDirection = (dir: 1 | -1, event?: Event) => {
       const now = performance.now();
       lastInputAt = now;
       if (now < cooldownUntil) {
-        // Lock active — preventDefault AND extend the cooldown by another
-        // gesture-quiet window. As long as inputs keep arriving the lock
-        // stays in the future; one continuous gesture = one snap, no matter
-        // how long the gesture lasts (trackpad inertia, autorepeat key hold).
-        event?.preventDefault();
+        // Lock active — block AND extend the cooldown by another gesture-
+        // quiet window. As long as inputs keep arriving the lock stays in
+        // the future; one continuous gesture = one snap, no matter how long
+        // the gesture lasts (trackpad inertia, autorepeat key hold).
+        blockEvent(event);
         cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
@@ -561,7 +571,7 @@ export function AirwayHero({
         // At boundary — let the page scroll naturally to escape the cinematic.
         return;
       }
-      event?.preventDefault();
+      blockEvent(event);
       jumpTo(nextIdx);
     };
 
