@@ -9,12 +9,34 @@ import {
   SERVICE_SUBCATEGORY_LABELS,
 } from '@/content/services';
 import { FadeUp } from '@/components/motion/fade-up';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 export const metadata: Metadata = {
   title: 'Dental Practice — Comfort Care Dental',
   description:
     'Family, restorative, and cosmetic dentistry in Rancho Cucamonga. Cleanings, fillings, crowns and bridges, veneers, whitening, root canals, implants, periodontal care.',
 };
+
+const DENTAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'What we see',
+    title: 'When a tooth is at risk.',
+    italicize: [5],
+    body: 'CBCT, microscope, careful measurement. We map the issue before we begin — and most of what we find can be restored without crowns or extraction. Conservative diagnosis is the start of conservative dentistry.',
+  },
+  {
+    eyebrow: 'What we do',
+    title: 'Conservative, by design.',
+    italicize: [1, 2],
+    body: 'Composite before crowns when the tooth allows it. The least invasive treatment that works. Our restorations are designed around how a smile actually moves and reads — not around the cheapest path through the chair.',
+  },
+  {
+    eyebrow: 'What stays',
+    title: 'Saved, not replaced.',
+    italicize: [2, 3],
+    body: 'Twenty-five years of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2007. The tooth we restore today is the same tooth you keep for the next forty years.',
+  },
+];
 
 export default function DentalLanePage() {
   const main = practiceInfo.phones[0]!;
@@ -23,27 +45,17 @@ export default function DentalLanePage() {
 
   return (
     <>
-      {/* TODO: Replace with tooth-restoration scroll-scrub cinematic when video asset ready.
-         Same pattern as <AirwayHero /> — see components/airway-hero.tsx. */}
-      <section
-        aria-label="Family dentistry, done thoroughly"
-        className="relative min-h-[100svh] flex flex-col justify-center px-5 md:px-8 py-24 bg-[var(--color-accent-50)]"
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--color-accent-600)] mb-6">
-            Dental Practice
-          </p>
-          <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] tracking-tight text-stone-900 mb-8">
-            Family dentistry,{' '}
-            <span className="italic font-light">done thoroughly.</span>
-          </h1>
-          <p className="text-stone-700 leading-relaxed max-w-xl mx-auto">
-            Cleanings calibrated to your risk profile. Restorations meant to last.
-            Cosmetic work designed around how a smile actually moves and reads.
-            Twenty-five years of family dentistry, under one roof with our medical practice.
-          </p>
-        </div>
-      </section>
+      <AirwayHero
+        videoSrc="/videos/teeth-restoration.mp4"
+        videoSrcMobile="/videos/teeth-restoration.mp4"
+        keyframes={DENTAL_KEYFRAMES}
+        ariaLabel="Comfort Care Dental — family dentistry, done thoroughly"
+        fallbackHeading={
+          <>
+            Family dentistry, <span className="italic">done thoroughly.</span>
+          </>
+        }
+      />
 
       <FadeUp>
         <section className="bg-stone-50 py-24 md:py-36">
