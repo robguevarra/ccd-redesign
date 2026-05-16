@@ -73,15 +73,15 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
             title={opt.hoverHint}
             className={cn(
               'inline-flex flex-1 justify-center items-center gap-2 rounded-full px-4 min-h-10 text-sm font-medium',
-              'transition-colors transition-transform duration-200',
+              'transition-[background-color,color,transform] duration-300 ease-out',
               'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
               variant === 'light'
                 ? 'focus-visible:outline-stone-900'
                 : 'focus-visible:outline-stone-50',
               active
                 ? variant === 'light'
-                  ? 'bg-[var(--color-accent-600)] text-stone-50 font-semibold'
-                  : 'bg-stone-50 text-stone-900 font-semibold'
+                  ? 'bg-[var(--color-accent-600)] text-stone-50 font-semibold scale-105'
+                  : 'bg-stone-50 text-stone-900 font-semibold scale-105'
                 : variant === 'light'
                 ? 'text-stone-600 hover:text-stone-900'
                 : 'text-stone-300 hover:text-stone-50',

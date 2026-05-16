@@ -79,15 +79,15 @@ export function SiteHeader({
             <Logo size={28} mobileSize={24} decorative lane={lane} />
             <span className="flex flex-col">
               <Wordmark variant={variant} />
-              <span className="relative mt-0.5 block h-3 md:h-3.5 overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
+              <span className="relative mt-0.5 block h-4 md:h-[18px] overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
                 <AnimatePresence mode="wait" initial={false}>
                   {resolvedSublabel && (
                     <motion.span
                       key={resolvedSublabel}
-                      initial={{ opacity: 0, y: 4 }}
+                      initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.25, ease: 'easeOut' }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                       className="absolute inset-x-0 top-0 whitespace-nowrap"
                     >
                       {resolvedSublabel}
