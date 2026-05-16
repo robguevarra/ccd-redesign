@@ -89,3 +89,16 @@ body {
     transition-duration: 0ms !important;
   }
 }
+
+/* Scroll cue pulse for the Frame 0 cold open. */
+@keyframes cold-open-cue-pulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%      { opacity: 0.9; transform: scaleY(1.15); }
+}
+.cold-open-scroll-cue {
+  animation: cold-open-cue-pulse 3s ease-in-out infinite;
+  transform-origin: top center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cold-open-scroll-cue { animation: none; opacity: 0.6; }
+}

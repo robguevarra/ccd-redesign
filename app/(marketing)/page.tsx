@@ -6,6 +6,7 @@ import { doctors } from '@/content/doctors';
 import { featuredReviews } from '@/content/reviews';
 import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
+import { TwinMarkColdOpen } from '@/components/twin-mark-cold-open';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
 
@@ -76,6 +77,7 @@ export default function HomePage() {
 
   return (
     <>
+      <TwinMarkColdOpen />
       <AirwayHero
         topEyebrow={<>Comfort Care Dental &middot; Dental + Medical &middot; Since 1999</>}
         keyframes={HOME_KEYFRAMES}
