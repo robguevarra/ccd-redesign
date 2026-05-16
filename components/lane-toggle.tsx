@@ -80,7 +80,7 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
                 : 'focus-visible:outline-stone-50',
               active
                 ? variant === 'light'
-                  ? 'bg-stone-900 text-stone-50 font-semibold'
+                  ? 'bg-[var(--color-accent-600)] text-stone-50 font-semibold'
                   : 'bg-stone-50 text-stone-900 font-semibold'
                 : variant === 'light'
                 ? 'text-stone-600 hover:text-stone-900'
@@ -93,7 +93,7 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
                 'inline-flex items-center justify-center w-5 h-5 rounded text-[10px] font-bold',
                 active
                   ? variant === 'light'
-                    ? 'bg-stone-50 text-stone-900'
+                    ? 'bg-stone-50 text-[var(--color-accent-600)]'
                     : 'bg-stone-900 text-stone-50'
                   : 'bg-transparent border border-current',
               )}
