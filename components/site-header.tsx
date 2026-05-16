@@ -7,6 +7,7 @@ import { Mail, Menu, Phone, X } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
+import { getLane } from '@/lib/lane';
 import { Logo } from './logo';
 import { Wordmark } from './wordmark';
 
@@ -36,6 +37,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const pathname = usePathname();
   const resolvedSublabel = sublabel ?? getSublabel(pathname);
+  const lane = getLane(pathname);
   const main = practiceInfo.phones[0]!;
   const [open, setOpen] = useState(false);
 
@@ -56,6 +58,7 @@ export function SiteHeader({
 
   return (
     <header
+      data-lane={lane}
       className={cn(
         'sticky top-0 z-40 w-full border-b backdrop-blur-md',
         variant === 'light'
