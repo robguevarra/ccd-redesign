@@ -39,6 +39,37 @@
   --color-ink-teal: #0a2520;
 }
 
+/* ─────────── Lane-scoped accent palettes ───────────
+ * Drives the dual-identity re-theme. The neutral lane (home, about, doctors,
+ * blog, contact, admin, etc.) uses the @theme defaults above — apothecary
+ * teal. The /dental route segment swaps to warm-stone accents; /medical
+ * stays on teal but is set explicitly here so any future divergence has
+ * a clean place to live.
+ *
+ * Applied via wrapper divs in app/(marketing)/dental/layout.tsx and
+ * app/(marketing)/medical/layout.tsx, and via the data-lane attribute set
+ * on <SiteHeader> and <SiteFooter> roots from usePathname().
+ *
+ * See: docs/superpowers/specs/2026-05-16-dentisthsu-dual-identity-system.md §2.4
+ */
+[data-lane="dental"] {
+  --color-accent-50:  #f5ede1;
+  --color-accent-200: #d8c4a4;
+  --color-accent-600: #7a5628;
+  --color-accent-900: #4a3920;
+  --color-accent-950: #2a2010;
+}
+
+[data-lane="medical"] {
+  /* Explicit teal — matches @theme defaults but locked here so a future
+     medical-side palette tuning has one place to land. */
+  --color-accent-50:  #e8f1f0;
+  --color-accent-200: #a9c8c5;
+  --color-accent-600: #356a66;
+  --color-accent-900: #1f3d3b;
+  --color-accent-950: #0e2421;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -57,4 +88,17 @@ body {
     animation-duration: 0ms !important;
     transition-duration: 0ms !important;
   }
+}
+
+/* Scroll cue pulse for the Frame 0 cold open. */
+@keyframes cold-open-cue-pulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%      { opacity: 0.9; transform: scaleY(1.15); }
+}
+.cold-open-scroll-cue {
+  animation: cold-open-cue-pulse 3s ease-in-out infinite;
+  transform-origin: top center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cold-open-scroll-cue { animation: none; opacity: 0.6; }
 }

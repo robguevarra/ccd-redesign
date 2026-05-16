@@ -7,6 +7,8 @@ import { Mail, Menu, Phone, X } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
+import { getLane } from '@/lib/lane';
+import { LaneToggle } from './lane-toggle';
 import { Logo } from './logo';
 import { Wordmark } from './wordmark';
 
@@ -36,6 +38,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const pathname = usePathname();
   const resolvedSublabel = sublabel ?? getSublabel(pathname);
+  const lane = getLane(pathname);
   const main = practiceInfo.phones[0]!;
   const [open, setOpen] = useState(false);
 
@@ -56,6 +59,7 @@ export function SiteHeader({
 
   return (
     <header
+      data-lane={lane}
       className={cn(
         'sticky top-0 z-40 w-full border-b backdrop-blur-md',
         variant === 'light'
@@ -70,7 +74,7 @@ export function SiteHeader({
           className="flex items-center gap-3"
           aria-label={`${practiceInfo.brandName} home`}
         >
-          <Logo size={28} mobileSize={24} decorative />
+          <Logo size={28} mobileSize={24} decorative lane={lane} />
           <span className="flex flex-col">
             <Wordmark variant={variant} />
             {resolvedSublabel && (
@@ -94,6 +98,10 @@ export function SiteHeader({
         </nav>
 
         <div className="flex items-center gap-3">
+          <LaneToggle
+            variant={variant}
+            className="hidden md:inline-flex"
+          />
           <Link
             href="/request-appointment"
             className={cn(
@@ -140,16 +148,28 @@ export function SiteHeader({
         </div>
       </div>
 
+      {/* ─────────── Mobile toggle row (md hidden) ─────────── */}
+      <div
+        className={cn(
+          'md:hidden border-t flex items-stretch',
+          variant === 'light'
+            ? 'border-stone-200/60'
+            : 'border-ink-700/40',
+        )}
+      >
+        <LaneToggle variant={variant} className="m-2 flex-1 justify-center" />
+      </div>
+
       {/* ─────────── Mobile drawer ─────────── */}
       <div
         id="mobile-menu"
         className={cn(
-          'md:hidden fixed inset-x-0 top-[68px] bg-stone-50 transition-[opacity,transform] duration-300 ease-out',
+          'md:hidden fixed inset-x-0 top-[124px] bg-stone-50 transition-[opacity,transform] duration-300 ease-out',
           open
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-2 pointer-events-none',
         )}
-        style={{ height: 'calc(100svh - 68px)' }}
+        style={{ height: 'calc(100svh - 124px)' }}
         aria-hidden={!open}
       >
         <div className="flex flex-col h-full overflow-y-auto px-5 pt-8 pb-12">

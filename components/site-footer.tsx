@@ -1,13 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { practiceInfo } from '@/content/practice-info';
+import { getLane } from '@/lib/lane';
 import { Wordmark } from './wordmark';
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  const lane = getLane(pathname);
   const dayLabel = (day: string) => day.slice(0, 3);
   const primaryPhone = practiceInfo.phones[0];
 
   return (
-    <footer className="bg-stone-900 text-stone-200 mt-32">
+    <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
           <Wordmark variant="dark" className="text-stone-50 h-9" />
