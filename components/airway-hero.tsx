@@ -431,20 +431,16 @@ export function AirwayHero({
     if (!section) return;
 
     const ANIMATION_MS = 700;
-    // Inputs during the lock extend cooldownUntil. Effect: one continuous
-    // gesture (trackpad swipe + inertia, autorepeat key hold) = one snap.
-    const GESTURE_QUIET_MS = 200;
-    // Hard ceiling on lock duration. macOS trackpad inertia can fire wheel
-    // events for 2+ seconds; without a cap, the page would feel frozen.
-    // After this, the next input can trigger another snap even if inertia is
-    // still going. Aggressive Mac flicks may therefore land 2 snaps; normal
-    // swipes still land exactly 1.
-    const MAX_LOCK_FROM_JUMP_MS = 1200;
+    // Lock released only after GESTURE_QUIET_MS of no input. Every input
+    // event during the lock extends the lock by another GESTURE_QUIET_MS.
+    // Effect: one continuous gesture (trackpad swipe + inertia, autorepeat
+    // arrow hold, sustained wheel) advances exactly one snap point — even if
+    // the gesture lasts seconds.
+    const GESTURE_QUIET_MS = 350;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
     let cooldownUntil = 0;
-    let lockHardCeiling = 0;
     let lastInputAt = performance.now();
     let snapping = false;
     let autoFinishTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -517,11 +513,9 @@ export function AirwayHero({
       const lenis = lenisRef();
       // Initial cooldown = animation duration + the gesture-quiet window.
       // Inputs arriving during this window will EXTEND the cooldown (in
-      // handleDirection), but extension is capped at lockHardCeiling so
-      // long Mac trackpad inertia tails can't lock the page indefinitely.
-      const startNow = performance.now();
-      cooldownUntil = startNow + ANIMATION_MS + GESTURE_QUIET_MS;
-      lockHardCeiling = startNow + MAX_LOCK_FROM_JUMP_MS;
+      // handleDirection) so the lock only releases after the user stops
+      // scrolling for GESTURE_QUIET_MS.
+      cooldownUntil = performance.now() + ANIMATION_MS + GESTURE_QUIET_MS;
       cancelAutoFinish();
       if (lenis?.scrollTo) {
         snapping = true;
@@ -562,14 +556,12 @@ export function AirwayHero({
       const now = performance.now();
       lastInputAt = now;
       if (now < cooldownUntil) {
-        // Lock active — block AND extend cooldown by another gesture-quiet
-        // window, but cap at lockHardCeiling so trackpad inertia can't lock
-        // the page indefinitely.
+        // Lock active — block AND extend the cooldown by another gesture-
+        // quiet window. As long as inputs keep arriving the lock stays in
+        // the future; one continuous gesture = one snap, no matter how long
+        // the gesture lasts (trackpad inertia, autorepeat key hold).
         blockEvent(event);
-        cooldownUntil = Math.min(
-          lockHardCeiling,
-          Math.max(cooldownUntil, now + GESTURE_QUIET_MS),
-        );
+        cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
       if (!insidePinned()) return;

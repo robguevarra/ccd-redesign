@@ -130,17 +130,14 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
 
     const SNAP_POINTS = [0, 0.40, 0.92] as const;
     const ANIMATION_MS = 700;
-    // Inputs during the lock extend cooldownUntil. One continuous gesture
-    // = one snap. Cap at MAX_LOCK_FROM_JUMP_MS so Mac trackpad inertia
-    // tails can't lock the page indefinitely; aggressive flicks may land 2
-    // snaps, normal swipes land 1.
-    const GESTURE_QUIET_MS = 200;
-    const MAX_LOCK_FROM_JUMP_MS = 1200;
+    // Lock released only after GESTURE_QUIET_MS of no input. Every input
+    // event during the lock extends the cooldown. Effect: one trackpad
+    // gesture (including inertia) = one snap, no matter how long it lasts.
+    const GESTURE_QUIET_MS = 350;
     const TOUCH_THRESHOLD_PX = 28;
     const PINNED_TOP_FUDGE_PX = 6;
 
     let cooldownUntil = 0;
-    let lockHardCeiling = 0;
     let snapping = false;
 
     const points = [...SNAP_POINTS];
@@ -179,10 +176,8 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
       const targetY = rect.top + window.scrollY + total * targetProgress;
       const lenis = window.__lenis;
       // Cooldown = animation + quiet window. Inputs during this window
-      // extend the cooldown in handleDirection, capped at lockHardCeiling.
-      const startNow = performance.now();
-      cooldownUntil = startNow + ANIMATION_MS + GESTURE_QUIET_MS;
-      lockHardCeiling = startNow + MAX_LOCK_FROM_JUMP_MS;
+      // extend the cooldown in handleDirection.
+      cooldownUntil = performance.now() + ANIMATION_MS + GESTURE_QUIET_MS;
       if (lenis?.scrollTo) {
         snapping = true;
         lenis.scrollTo(targetY, {
@@ -209,13 +204,11 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     const handleDirection = (dir: 1 | -1, event?: Event) => {
       const now = performance.now();
       if (now < cooldownUntil) {
-        // Lock active — block AND extend cooldown, capped at lockHardCeiling
-        // so trackpad inertia can't lock the page indefinitely.
+        // Lock active — block AND extend cooldown by another gesture-quiet
+        // window. One trackpad gesture (with all its inertia events) = one
+        // snap, even if the gesture lasts seconds.
         blockEvent(event);
-        cooldownUntil = Math.min(
-          lockHardCeiling,
-          Math.max(cooldownUntil, now + GESTURE_QUIET_MS),
-        );
+        cooldownUntil = Math.max(cooldownUntil, now + GESTURE_QUIET_MS);
         return;
       }
       if (!insidePinned()) return;
