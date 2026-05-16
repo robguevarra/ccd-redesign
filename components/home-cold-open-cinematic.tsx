@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import {
   motion,
   useMotionValue,
@@ -15,20 +16,22 @@ const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 const PHASE_1_QUESTIONS = ['Dental issue?', 'Medical issue?'] as const;
 const PHASE_1_CYCLE_MS = 1300;
 
-// Phase boundaries on scroll progress.
-const PHASE_1_END = 0.25;
-const PHASE_2_END = 0.70;
-// Exit = 0.70 → 1.0 (video halves split apart, cinematic fades out)
+// Phase boundaries (for documentation — actual values inlined in useTransform calls below):
+// Phase 1: 0 → 20%, fade 20–26%
+// Phase 2: 26–38% enter, 68–78% exit
+// Split: 75–92%, Reveal: 78–92%, releases at 100%
 
 /**
- * Home page primary cinematic. Two-phase pinned scroll section:
- *   Phase 1 (0 → 25%): auto-looping video, cycling text overlay
+ * Home page primary cinematic. Three-phase pinned scroll section:
+ *   Phase 1 (0 → 20%): auto-looping video, cycling text overlay
  *     ("Dental issue?" ⇄ "Medical issue?" on 1.3s timer)
- *   Phase 2 (25 → 70%): text transitions to "We do both." over the video
- *   Exit (70 → 100%): video halves slide apart, whole cinematic fades out,
- *     releasing into TwinMarkColdOpen below as a natural-flow section.
+ *   Phase 2 (26 → 68%): text transitions to "We do both." over the video
+ *   Exit (75 → 92%): video halves slide apart, revealing embedded
+ *     "Two practices, under one roof." content below at z-0.
  *
- * Total scroll budget: heightVh × 100svh. Default 1.6 → 160svh of scroll.
+ * Total scroll budget: heightVh × 100svh. Default 1.8 → 180svh of scroll.
+ * The outer section uses -mt-[var(--header-h)] to pull under the sticky
+ * header so the pin engages from scroll-y 0 (no pre-pin drift).
  * After section releases, normal page flow resumes.
  */
 export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number }) {
@@ -90,8 +93,8 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     return () => left.removeEventListener('timeupdate', onTimeUpdate);
   }, []);
 
-  // Quick exit split: video halves slide apart 80-100%, the cinematic releases on out.
-  const splitProgress = useTransform(progressMV, [0.80, 1.0], [0, 1]);
+  // Split: video halves slide apart 75% → 92%, fully off-screen by reveal-settled.
+  const splitProgress = useTransform(progressMV, [0.75, 0.92], [0, 1]);
 
   // Desktop: horizontal split — left translates left, right translates right.
   const xLeft = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
@@ -100,18 +103,20 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   const yTop = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
   const yBottom = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
-  // Phase 1 cycling questions: visible 0-22%, fades 22-28%.
-  const phase1TextOpacity = useTransform(progressMV, [0, 0.22, 0.28], [1, 1, 0]);
-  // Phase 2 unified statement: enters 28-40%, stays until 75%, exits 75-85%.
-  const phase2TextOpacity = useTransform(progressMV, [0.28, 0.40, 0.75, 0.85], [0, 1, 1, 0]);
+  // Phase 1 cycling questions: visible 0-20%, fades 20-26%.
+  const phase1TextOpacity = useTransform(progressMV, [0, 0.20, 0.26], [1, 1, 0]);
+  // Phase 2 unified statement: enters 26-38%, stays until 68%, exits 68-78%.
+  const phase2TextOpacity = useTransform(progressMV, [0.26, 0.38, 0.68, 0.78], [0, 1, 1, 0]);
   // Phase 2 entry — scale + translate so the headline lands.
-  const phase2Scale = useTransform(progressMV, [0.28, 0.40], [0.92, 1]);
-  const phase2Y = useTransform(progressMV, [0.28, 0.40], [28, 0]);
+  const phase2Scale = useTransform(progressMV, [0.26, 0.38], [0.92, 1]);
+  const phase2Y = useTransform(progressMV, [0.26, 0.38], [28, 0]);
   // White glow plate behind Phase 2.
-  const phase2GlowOpacity = useTransform(progressMV, [0.28, 0.40, 0.75, 0.85], [0, 1, 1, 0]);
+  const phase2GlowOpacity = useTransform(progressMV, [0.26, 0.38, 0.68, 0.78], [0, 1, 1, 0]);
 
-  // Whole-cinematic exit fade — the video + text fade out as we approach release.
-  const cinematicExitOpacity = useTransform(progressMV, [0.85, 1.0], [1, 0]);
+  // "Two practices, under one roof" reveal — fades in as the split opens (0.78 → 0.92).
+  const revealOpacity = useTransform(progressMV, [0.78, 0.92], [0, 1]);
+  // Reveal y-entry — slides up softly with the fade-in.
+  const revealY = useTransform(progressMV, [0.78, 0.92], [24, 0]);
 
   // ─────── Magnet snap between cinematic phases ────────────────────────────
   // Two snap points: top (Phase 1) and Phase 2 settled (~middle of Phase 2's window).
@@ -121,8 +126,8 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     const section = sectionRef.current;
     if (!section) return;
 
-    // Snap points in [0,1] scroll progress: top, Phase 2 settled.
-    const SNAP_POINTS = [0, 0.45] as const;
+    // Snap points in [0,1] scroll progress: top, Phase 2 settled, reveal settled.
+    const SNAP_POINTS = [0, 0.40, 0.92] as const;
     const SNAP_AFTER_QUIET_MS = 450;
     const STABLE_FRAMES = 5; // ~83ms at 60fps
     const NEAR_TOLERANCE = 0.015; // don't re-snap if already within 1.5%
@@ -263,13 +268,47 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     <section
       ref={sectionRef}
       aria-label="Comfort Care Dental — two practices, one cinematic"
-      className="relative isolate w-full"
+      className="relative isolate w-full -mt-[var(--header-h)]"
       style={{ height: `${heightVh * 100}svh` }}
     >
-      <motion.div
-        style={{ opacity: cinematicExitOpacity }}
-        className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950"
-      >
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950">
+        {/* Embedded reveal: Two practices, under one roof. Sits at z-0 behind the video.
+            Becomes visible as the video halves split apart (Phase 3, 0.78 → 0.92). */}
+        <motion.div
+          style={{ opacity: revealOpacity, y: revealY }}
+          className="absolute inset-0 flex flex-col items-center justify-center z-0 px-6 pt-[var(--header-h)] pointer-events-none"
+        >
+          <div className="text-center max-w-5xl pointer-events-auto">
+            <p className="text-xs uppercase tracking-[0.28em] text-stone-300/80 mb-6 md:mb-8">
+              Comfort Care · est. 1999
+            </p>
+            <h2 className="font-serif text-6xl md:text-[10rem] leading-[0.95] tracking-tight text-stone-50">
+              Two practices,{' '}
+              <span className="italic font-light">under one roof.</span>
+            </h2>
+            <p className="mt-8 md:mt-10 text-base md:text-lg text-stone-300/85 max-w-xl mx-auto leading-relaxed">
+              Family dentistry and complex orofacial pain care, in the same office,
+              with the same team, since 1999.
+            </p>
+            <div className="mt-10 md:mt-14 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Link
+                href="/dental"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-50 text-stone-950 px-8 py-4 text-sm md:text-base font-medium hover:bg-stone-200 transition-colors min-h-12"
+              >
+                Enter dental
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link
+                href="/medical"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-50/60 text-stone-50 px-8 py-4 text-sm md:text-base font-medium hover:bg-stone-50/10 transition-colors min-h-12"
+              >
+                Enter medical
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
         {/* ─────────── Left video half (clipped; desktop: left half / mobile: top half) ─────────── */}
         <motion.div
           style={{
@@ -369,7 +408,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
             </motion.div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
