@@ -8,6 +8,7 @@ import { FadeUp } from '@/components/motion/fade-up';
 import { TwinMarkColdOpen } from '@/components/twin-mark-cold-open';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 const SOURCE_LABEL: Record<string, string> = {
   yelp: 'Yelp',
@@ -50,11 +51,44 @@ const TECHNOLOGY_BULLETS = [
   },
 ];
 
+const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'The question',
+    title: 'Dental issue?',
+    italicize: [1],
+    body: 'Cleanings, fillings, crowns. The work that keeps a family healthy.',
+  },
+  {
+    eyebrow: 'Or maybe',
+    title: 'Medical issue?',
+    italicize: [1],
+    body: 'TMJ, sleep apnea, orofacial pain. The cases other practices send away.',
+  },
+  {
+    eyebrow: 'Either way',
+    title: 'We serve both.',
+    italicize: [2, 3],
+    body: "Same office, same team. Pain doesn't read the signs — but we do.",
+  },
+];
+
 export default function HomePage() {
   const main = practiceInfo.phones[0]!;
 
   return (
     <>
+      <AirwayHero
+        videoSrc="/videos/home-cold-open.mp4"
+        videoSrcMobile="/videos/home-cold-open.mp4"
+        keyframes={HOME_KEYFRAMES}
+        ariaLabel="Comfort Care Dental — two practices, one roof"
+        fallbackHeading={
+          <>
+            Dental issue, or medical issue?{' '}
+            <span className="italic">We serve both.</span>
+          </>
+        }
+      />
       <TwinMarkColdOpen />
 
       {/* ─────────── Why patients stay (3-panel horizontal carousel) ─────────── */}
