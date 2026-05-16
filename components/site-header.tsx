@@ -74,7 +74,7 @@ export function SiteHeader({
           className="flex items-center gap-3"
           aria-label={`${practiceInfo.brandName} home`}
         >
-          <Logo size={28} mobileSize={24} decorative />
+          <Logo size={28} mobileSize={24} decorative lane={lane} />
           <span className="flex flex-col">
             <Wordmark variant={variant} />
             {resolvedSublabel && (
