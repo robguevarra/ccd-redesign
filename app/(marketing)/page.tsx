@@ -58,7 +58,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HomeColdOpenCinematic />
+      <HomeColdOpenCinematic heightVh={2} />
 
       {/* ─────────── Why patients stay (3-panel horizontal carousel) ─────────── */}
       <WhyPatientsStay />
