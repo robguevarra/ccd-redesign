@@ -14,7 +14,7 @@ export default function MedicalLaneLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div data-lane="medical" className="bg-[var(--color-surface)] min-h-screen">
+    <div data-lane="medical" className="contents">
       {children}
     </div>
   );

@@ -14,7 +14,7 @@ export default function DentalLaneLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div data-lane="dental" className="bg-[var(--color-surface)] min-h-screen">
+    <div data-lane="dental" className="contents">
       {children}
     </div>
   );
