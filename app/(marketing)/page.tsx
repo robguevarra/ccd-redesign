@@ -79,7 +79,6 @@ export default function HomePage() {
     <>
       <TwinMarkColdOpen />
       <AirwayHero
-        topEyebrow={<>Comfort Care Dental &middot; Dental + Medical &middot; Since 1999</>}
         keyframes={HOME_KEYFRAMES}
         ariaLabel="Comfort Care Dental — two practices, one roof"
         fallbackHeading={
