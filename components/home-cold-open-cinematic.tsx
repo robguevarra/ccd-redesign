@@ -268,8 +268,11 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     <section
       ref={sectionRef}
       aria-label="Comfort Care Dental — two practices, one cinematic"
-      className="relative isolate w-full -mt-[var(--header-h)]"
-      style={{ height: `${heightVh * 100}svh` }}
+      className="relative isolate w-full"
+      style={{
+        height: `${heightVh * 100}svh`,
+        marginTop: 'calc(var(--header-h) * -1)',
+      }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950">
         {/* Embedded reveal: Two practices, under one roof. Sits at z-0 behind the video.
