@@ -16,12 +16,12 @@ const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
 // Cycling questions in Phase 1.
 const PHASE_1_QUESTIONS = ['Dental issue?', 'Medical issue?'] as const;
-const PHASE_1_CYCLE_MS = 2500;
+const PHASE_1_CYCLE_MS = 1500;
 
 // Phase boundaries on scroll progress.
-const PHASE_1_END = 0.3;
-const PHASE_2_END = 0.6;
-// Phase 3 = 0.6 → 1.0 (split open + diptych reveal)
+const PHASE_1_END = 0.1;
+const PHASE_2_END = 0.4;
+// Phase 3 = 0.4 → 1.0 (split open + diptych reveal)
 
 interface DiptychHalf {
   lane: 'dental' | 'medical';
@@ -112,8 +112,8 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
   // Phase 3 split — translate the two video halves apart.
   // At progress 0.6 → 1.0, translateX goes from 0 → ±60% of viewport width.
   const splitProgress = useTransform(progressMV, [PHASE_2_END, 1], [0, 1]);
-  const leftTranslate = useTransform(splitProgress, [0, 1], ['0%', '-60%']);
-  const rightTranslate = useTransform(splitProgress, [0, 1], ['0%', '60%']);
+  const leftTranslate = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
+  const rightTranslate = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
   // Phase 1 → 2 text fade.
   const phase1TextOpacity = useTransform(
@@ -149,14 +149,18 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
           playsInline
           preload="auto"
           className="absolute inset-0 h-full w-full object-cover"
-          style={{ filter: 'grayscale(0.55) contrast(1.05)' }}
+          style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-stone-950/15 to-stone-950/40" />
-        <div className="relative z-10 text-center px-6 max-w-3xl">
-          <h1 className="font-serif text-5xl md:text-8xl tracking-tight text-stone-50">
+        <div className="absolute inset-0 bg-white/35" />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-50/20 via-transparent to-stone-950/55" />
+        <div className="relative z-10 text-center px-4 md:px-6 max-w-3xl mx-auto">
+          <h1
+            className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
+            style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
+          >
             {PHASE_1_QUESTIONS[0]}
           </h1>
-          <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-200/80">
+          <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
             Dental issue or medical issue — Comfort Care does both
           </p>
         </div>
@@ -249,7 +253,7 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             playsInline
             preload="auto"
             className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(0.55) contrast(1.05)' }}
+            style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
           />
         </motion.div>
 
@@ -267,16 +271,19 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             playsInline
             preload="auto"
             className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(0.55) contrast(1.05)' }}
+            style={{ filter: 'grayscale(1) brightness(1.12) contrast(0.92)' }}
           />
         </motion.div>
 
-        {/* ─────────── Subtle vignette so text reads ─────────── */}
-        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-transparent via-stone-950/15 to-stone-950/40" />
+        {/* ─────────── White wash above the grayscale video so black type reads ─────────── */}
+        <div className="absolute inset-0 z-[15] pointer-events-none bg-white/35" />
+
+        {/* ─────────── Stronger atmospheric vignette ─────────── */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-stone-50/20 via-transparent to-stone-950/55" />
 
         {/* ─────────── Phase 1 + 2 text overlay (centered, layered above video) ─────────── */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-          <div className="text-center px-6 max-w-3xl">
+          <div className="text-center px-4 md:px-6 max-w-3xl mx-auto">
             {/* Phase 1: cycling questions */}
             <motion.div style={{ opacity: phase1TextOpacity }}>
               <AnimatePresence mode="wait">
@@ -285,13 +292,14 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.5, ease: EASE_PREMIUM }}
-                  className="font-serif text-5xl md:text-8xl tracking-tight text-stone-50"
+                  transition={{ duration: 0.4, ease: EASE_PREMIUM }}
+                  className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
+                  style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
                 >
                   {PHASE_1_QUESTIONS[questionIdx]}
                 </motion.h1>
               </AnimatePresence>
-              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-200/80">
+              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
                 Scroll to see what we do
               </p>
             </motion.div>
@@ -301,10 +309,13 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
               style={{ opacity: phase2TextOpacity }}
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
-              <h2 className="font-serif text-5xl md:text-8xl tracking-tight text-stone-50">
+              <h2
+                className="font-serif text-6xl md:text-9xl tracking-tight text-stone-950 font-medium"
+                style={{ textShadow: '0 2px 30px rgba(255,255,255,0.5)' }}
+              >
                 Either way.
               </h2>
-              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-200/80">
+              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-700">
                 Comfort Care does both
               </p>
             </motion.div>
