@@ -42,7 +42,7 @@ const OPTIONS: ReadonlyArray<LaneOption> = [
  * + weight + aria-current — three independent channels so color-blind and
  * older-patient users still read the active lane unambiguously.
  *
- * Tap targets: 40px high minimum (meets WCAG 2.1 AAA target size).
+ * Tap targets: 40px minimum height (meets WCAG 2.2 AA SC 2.5.8; 4px shy of AAA SC 2.5.5 44px).
  * Focus ring: 2px solid outline at offset 3px, visible on keyboard tab.
  *
  * See: docs/superpowers/specs/2026-05-16-dentisthsu-dual-identity-system.md §2.2
