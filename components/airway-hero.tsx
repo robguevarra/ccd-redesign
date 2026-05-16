@@ -30,16 +30,21 @@ interface AirwayHeroProps {
   heightVh?: number;
   /** Reduced-motion fallback heading shown above the stacked text frames. */
   fallbackHeading: ReactNode;
+  /**
+   * If true, scroll progress 0 → 0.5 scrubs video time from 0 → duration,
+   * and progress 0.5 → 1.0 reverses it back to 0. Creates a ping-pong
+   * loop within a single scroll budget. Default false (linear scrub).
+   */
+  pingPong?: boolean;
 }
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
-// ─────── Scroll narrative — earned, not given ──────────────────────────
-//   0.00 → 0.15  Reveal zone — overlay fades, no caption yet
-//   0.15 → 0.42  Frame A — "Sleep apnea is treatable"
-//   0.42 → 0.72  Frame B — "And often, it's dental"
-//   0.72 → 1.00  Frame C — "We solve this..."
-const REVEAL_END = 0.15;
+// ─────── Scroll narrative — first frame shows on arrival ───────────────
+//   0.00 → 0.42  Frame A — visible from page entry
+//   0.42 → 0.72  Frame B
+//   0.72 → 1.00  Frame C
+const REVEAL_END = 0;
 const FRAME_A_END = 0.42;
 const FRAME_B_END = 0.72;
 
@@ -57,12 +62,16 @@ export function AirwayHero({
   ariaLabel = 'Airway resolution sequence',
   heightVh = 4,
   fallbackHeading,
+  pingPong = false,
 }: AirwayHeroProps) {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeFrame, setActiveFrame] = useState(0);
-  const [showPanel, setShowPanel] = useState(false);
+  // REVEAL_END = 0 means the panel is visible at scroll progress 0 (page entry).
+  // Initialize true so the caption appears immediately on mount, before the
+  // rAF tick fires and confirms progress >= REVEAL_END.
+  const [showPanel, setShowPanel] = useState(REVEAL_END === 0);
   const [videoReady, setVideoReady] = useState(false);
   // Tracks viewport ≥ lg breakpoint (1024px). Below lg we skip the
   // scale/translate transforms on the video — mobile GPUs don't have budget
@@ -177,14 +186,20 @@ export function AirwayHero({
         const progress = Math.max(0, Math.min(1, -rect.top / total));
         progressMV.set(progress);
 
-        // Reveal zone: video locked at 0. After: linear scrub.
+        // Linear scrub from post-reveal progress. With pingPong, progress
+        // 0 → 0.5 maps forward 0 → 1 and 0.5 → 1.0 maps back 1 → 0.
         let targetTime = 0;
         if (Number.isFinite(video.duration) && video.duration > 0) {
-          const videoProgress =
+          const linearProgress =
             progress < REVEAL_END
               ? 0
               : (progress - REVEAL_END) / (1 - REVEAL_END);
-          targetTime = videoProgress * video.duration;
+          const scrubProgress = pingPong
+            ? linearProgress < 0.5
+              ? linearProgress * 2
+              : (1 - linearProgress) * 2
+            : linearProgress;
+          targetTime = scrubProgress * video.duration;
         }
 
         displayTime += (targetTime - displayTime) * 0.18;
@@ -227,7 +242,7 @@ export function AirwayHero({
       window.removeEventListener('pointerdown', onFirstTouch);
       cancelAnimationFrame(raf);
     };
-  }, [reduced, progressMV]);
+  }, [reduced, progressMV, pingPong]);
 
   // ─────── Reduced-motion fallback ───────
   if (reduced) {
