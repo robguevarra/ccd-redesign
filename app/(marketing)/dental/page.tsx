@@ -54,6 +54,7 @@ export default function DentalLanePage() {
         heightVh={3}
         variant="light-centered"
         snapPoints={[0, 0.388, 0.48, 0.9]}
+        snapMode="strict"
         autoFinishAfterLastSnap
         debug
         fallbackHeading={

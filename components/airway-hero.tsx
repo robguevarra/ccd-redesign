@@ -52,6 +52,17 @@ interface AirwayHeroProps {
    */
   snapPoints?: readonly number[];
   /**
+   * Snap behavior mode:
+   *   'magnet' (default) — user can free-scroll between snap points; we pull
+   *     them to the nearest after input quiets.
+   *   'strict' — scroll-jack. Each wheel tick / swipe / arrow key jumps the
+   *     user to the next or previous snap point. No in-between states are
+   *     reachable. At the first/last snap point, additional scroll in the
+   *     boundary direction releases the pin so the user can leave the
+   *     cinematic naturally.
+   */
+  snapMode?: 'magnet' | 'strict';
+  /**
    * When true, after the user lands on the LAST snap point in `snapPoints`,
    * the cinematic auto-advances to progress 1.0 (releasing the pin) over
    * ~1.5s following a ~1.2s linger. Cancelled instantly on any user input.
@@ -89,6 +100,7 @@ export function AirwayHero({
   pingPong = false,
   variant = 'dark-split',
   snapPoints,
+  snapMode = 'magnet',
   autoFinishAfterLastSnap = false,
   debug = false,
 }: AirwayHeroProps) {
@@ -276,6 +288,7 @@ export function AirwayHero({
   useEffect(() => {
     if (reduced) return;
     if (!snapPoints || snapPoints.length === 0) return;
+    if (snapMode !== 'magnet') return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -403,7 +416,183 @@ export function AirwayHero({
       window.removeEventListener('touchstart', onUserInput);
       window.removeEventListener('keydown', onUserInput);
     };
-  }, [reduced, progressMV, snapPoints, autoFinishAfterLastSnap]);
+  }, [reduced, progressMV, snapPoints, snapMode, autoFinishAfterLastSnap]);
+
+  // ─────── Strict scroll-jack to snapPoints ───────
+  // Hijacks wheel/touch/keyboard within the pinned range. Each input jumps
+  // exactly one snap point forward or backward. At the boundaries, additional
+  // scroll in the boundary direction releases the pin so the user can exit
+  // the cinematic naturally.
+  useEffect(() => {
+    if (reduced) return;
+    if (!snapPoints || snapPoints.length === 0) return;
+    if (snapMode !== 'strict') return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ANIMATION_MS = 700;
+    const COOLDOWN_MS = ANIMATION_MS + 60;
+    const TOUCH_THRESHOLD_PX = 28;
+    const PINNED_TOP_FUDGE_PX = 6;
+
+    let cooldownUntil = 0;
+    let lastInputAt = performance.now();
+    let snapping = false;
+    let autoFinishTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const points = [...snapPoints];
+
+    const getRectInfo = () => {
+      const rect = section.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      return { rect, total };
+    };
+
+    const getCurrentIndex = () => {
+      const { rect, total } = getRectInfo();
+      if (total <= 0) return 0;
+      const p = Math.max(0, Math.min(1, -rect.top / total));
+      let bestIdx = 0;
+      let bestDist = Math.abs(points[0]! - p);
+      for (let i = 1; i < points.length; i++) {
+        const d = Math.abs(points[i]! - p);
+        if (d < bestDist) {
+          bestIdx = i;
+          bestDist = d;
+        }
+      }
+      return bestIdx;
+    };
+
+    const lenisRef = () =>
+      (window as Window & {
+        __lenis?: {
+          scrollTo: (target: number | string, opts?: Record<string, unknown>) => void;
+        };
+      }).__lenis;
+
+    const cancelAutoFinish = () => {
+      if (autoFinishTimeoutId !== null) {
+        clearTimeout(autoFinishTimeoutId);
+        autoFinishTimeoutId = null;
+      }
+    };
+
+    const scheduleAutoFinish = () => {
+      if (!autoFinishAfterLastSnap) return;
+      cancelAutoFinish();
+      autoFinishTimeoutId = setTimeout(() => {
+        autoFinishTimeoutId = null;
+        const { rect, total } = getRectInfo();
+        if (total <= 0) return;
+        const finishY = rect.top + window.scrollY + total + window.innerHeight * 0.4;
+        const lenis = lenisRef();
+        if (!lenis?.scrollTo) return;
+        snapping = true;
+        cooldownUntil = performance.now() + 1500 + 60;
+        lenis.scrollTo(finishY, {
+          duration: 1.5,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          onComplete: () => {
+            snapping = false;
+          },
+        });
+      }, 1200);
+    };
+
+    const jumpTo = (idx: number) => {
+      const { rect, total } = getRectInfo();
+      if (total <= 0) return;
+      const targetProgress = points[idx]!;
+      const targetY = rect.top + window.scrollY + total * targetProgress;
+      const lenis = lenisRef();
+      cooldownUntil = performance.now() + COOLDOWN_MS;
+      cancelAutoFinish();
+      if (lenis?.scrollTo) {
+        snapping = true;
+        lenis.scrollTo(targetY, {
+          duration: ANIMATION_MS / 1000,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          onComplete: () => {
+            snapping = false;
+            if (idx === points.length - 1) {
+              scheduleAutoFinish();
+            }
+          },
+        });
+      } else {
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        setTimeout(() => {
+          if (idx === points.length - 1) scheduleAutoFinish();
+        }, ANIMATION_MS);
+      }
+    };
+
+    const insidePinned = () => {
+      const { rect, total } = getRectInfo();
+      return total > 0 && rect.top <= PINNED_TOP_FUDGE_PX && rect.top >= -total - PINNED_TOP_FUDGE_PX;
+    };
+
+    const handleDirection = (dir: 1 | -1, event?: Event) => {
+      lastInputAt = performance.now();
+      if (performance.now() < cooldownUntil) {
+        event?.preventDefault();
+        return;
+      }
+      if (!insidePinned()) return;
+      const currentIdx = getCurrentIndex();
+      const nextIdx = currentIdx + dir;
+      if (nextIdx < 0 || nextIdx >= points.length) {
+        // At boundary — let the page scroll naturally to escape the cinematic.
+        return;
+      }
+      event?.preventDefault();
+      jumpTo(nextIdx);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 1) return;
+      handleDirection(e.deltaY > 0 ? 1 : -1, e);
+    };
+
+    let touchStartY = 0;
+    let touchAccumulated = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? 0;
+      touchAccumulated = 0;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0]?.clientY ?? 0;
+      const delta = touchStartY - currentY;
+      touchAccumulated = delta;
+      if (Math.abs(touchAccumulated) >= TOUCH_THRESHOLD_PX) {
+        handleDirection(touchAccumulated > 0 ? 1 : -1, e);
+        touchStartY = currentY;
+        touchAccumulated = 0;
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        handleDirection(1, e);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        handleDirection(-1, e);
+      }
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      cancelAutoFinish();
+      window.removeEventListener('wheel', onWheel, { capture: true } as EventListenerOptions);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove, { capture: true } as EventListenerOptions);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [reduced, snapPoints, snapMode, autoFinishAfterLastSnap]);
 
   // ─────── Reduced-motion fallback ───────
   if (reduced) {
