@@ -5,7 +5,6 @@ import { practiceInfo } from '@/content/practice-info';
 import { doctors } from '@/content/doctors';
 import { featuredReviews } from '@/content/reviews';
 import { FadeUp } from '@/components/motion/fade-up';
-import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 import { TwinMarkColdOpen } from '@/components/twin-mark-cold-open';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
@@ -15,27 +14,6 @@ const SOURCE_LABEL: Record<string, string> = {
   google: 'Google',
   facebook: 'Facebook',
 };
-
-const HOME_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
-  {
-    eyebrow: 'Why people drive in',
-    title: 'Pain you thought was permanent.',
-    italicize: [4],
-    body: 'TMJ. Sleep apnea. Headaches the GP couldn\'t explain. Jaw clicks that everyone said were "just stress." These are the cases most dental offices send away. Comfort Care Dental is one of the few practices that takes them on.',
-  },
-  {
-    eyebrow: "What you're looking at",
-    title: 'Sleep apnea, TMJ. Both manageable.',
-    italicize: [3, 4],
-    body: 'We treat sleep apnea with custom oral appliances — no mask, no machine, no white noise. We treat TMJ with conservative splint therapy first, and surgery as a last resort. Most patients never need it. Both managed here, under one roof.',
-  },
-  {
-    eyebrow: 'Where this work happens',
-    title: 'Twenty-five years on Kenyon Way.',
-    italicize: [3, 4],
-    body: "Dr. Brien Hsu has been managing complex orofacial pain cases at this office since the late 1990s. He earned his USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders, then brought that work into a practice the neighborhood already knew. This is still the only office in Rancho Cucamonga where this medical work happens.",
-  },
-];
 
 const PRACTICE_LANES = [
   {
@@ -78,33 +56,6 @@ export default function HomePage() {
   return (
     <>
       <TwinMarkColdOpen />
-      <AirwayHero
-        keyframes={HOME_KEYFRAMES}
-        ariaLabel="Comfort Care Dental — two practices, one roof"
-        fallbackHeading={
-          <>
-            Pain you thought was{' '}
-            <span className="italic">permanent.</span>
-          </>
-        }
-        cta={
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href="/request-appointment"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-50 text-stone-950 px-6 py-3 text-sm font-medium hover:bg-stone-200 transition-colors"
-            >
-              Request appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a
-              href={`tel:${main.tel}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-50/70 text-stone-50 px-6 py-3 text-sm font-medium hover:bg-stone-50 hover:text-stone-950 transition-colors"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              {main.number}
-            </a>
-          </div>
-        }
-      />
 
       {/* ─────────── Why patients stay (3-panel horizontal carousel) ─────────── */}
       <WhyPatientsStay />

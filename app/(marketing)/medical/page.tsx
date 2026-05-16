@@ -9,12 +9,34 @@ import {
   SERVICE_SUBCATEGORY_LABELS,
 } from '@/content/services';
 import { FadeUp } from '@/components/motion/fade-up';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 export const metadata: Metadata = {
   title: 'Medical Practice — Comfort Care Dental',
   description:
     'Orofacial pain, oral medicine, sleep apnea, TMJ, oral pathology in Rancho Cucamonga. Led by Dr. Brien Hsu — board-certified in Orofacial Pain and Dental Sleep Medicine.',
 };
+
+const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'Why people drive in',
+    title: 'Pain you thought was permanent.',
+    italicize: [4],
+    body: 'TMJ. Sleep apnea. Headaches the GP couldn\'t explain. Jaw clicks that everyone said were "just stress." These are the cases most dental offices send away. Comfort Care Dental is one of the few practices that takes them on.',
+  },
+  {
+    eyebrow: "What you're looking at",
+    title: 'Sleep apnea, TMJ. Both manageable.',
+    italicize: [3, 4],
+    body: 'We treat sleep apnea with custom oral appliances — no mask, no machine, no white noise. We treat TMJ with conservative splint therapy first, and surgery as a last resort. Most patients never need it. Both managed here, under one roof.',
+  },
+  {
+    eyebrow: 'Where this work happens',
+    title: 'Twenty-five years on Kenyon Way.',
+    italicize: [3, 4],
+    body: "Dr. Brien Hsu has been managing complex orofacial pain cases at this office since the late 1990s. He earned his USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders, then brought that work into a practice the neighborhood already knew. This is still the only office in Rancho Cucamonga where this medical work happens.",
+  },
+];
 
 export default function MedicalLanePage() {
   const main = practiceInfo.phones[0]!;
@@ -23,6 +45,17 @@ export default function MedicalLanePage() {
 
   return (
     <>
+      <AirwayHero
+        keyframes={MEDICAL_KEYFRAMES}
+        ariaLabel="Comfort Care Medical — orofacial pain, TMJ, sleep apnea"
+        fallbackHeading={
+          <>
+            Pain you thought was{' '}
+            <span className="italic">permanent.</span>
+          </>
+        }
+      />
+
       <FadeUp>
         <section className="bg-stone-50 py-24 md:py-36 border-b border-[var(--color-accent-200)]">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
