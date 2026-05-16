@@ -98,9 +98,10 @@ export function TwinMarkColdOpen() {
           className={cn(
             'group relative flex flex-col justify-between p-8 md:p-14 min-h-[50svh] md:min-h-[100svh] overflow-hidden',
             'transition-transform duration-300 ease-out motion-safe:hover:scale-[1.015] motion-safe:focus-within:scale-[1.015]',
+            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-8px]',
             half.lane === 'dental'
-              ? 'bg-stone-100 text-stone-900'
-              : 'bg-[var(--color-ink-teal)] text-stone-50',
+              ? 'bg-stone-100 text-stone-900 focus-visible:outline-stone-900'
+              : 'bg-[var(--color-ink-teal)] text-stone-50 focus-visible:outline-stone-50',
             // Hairline divider: top border on second half (mobile only).
             i === 0
               ? ''
