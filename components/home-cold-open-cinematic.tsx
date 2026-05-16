@@ -264,6 +264,10 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     );
   }
 
+  // Header height for the negative-margin trick + safe-area padding.
+  // Desktop: ~80px (brand row). Mobile: ~132px (brand row + lane toggle row).
+  const headerH = isMobile ? 132 : 80;
+
   return (
     <section
       ref={sectionRef}
@@ -271,15 +275,15 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
       className="relative isolate w-full"
       style={{
         height: `${heightVh * 100}svh`,
-        marginTop: 'calc(var(--header-h) * -1)',
+        marginTop: `-${headerH}px`,
       }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-stone-950">
         {/* Embedded reveal: Two practices, under one roof. Sits at z-0 behind the video.
             Becomes visible as the video halves split apart (Phase 3, 0.78 → 0.92). */}
         <motion.div
-          style={{ opacity: revealOpacity, y: revealY }}
-          className="absolute inset-0 flex flex-col items-center justify-center z-0 px-6 pt-[var(--header-h)] pointer-events-none"
+          style={{ opacity: revealOpacity, y: revealY, paddingTop: `${headerH}px` }}
+          className="absolute inset-0 flex flex-col items-center justify-center z-0 px-6 pointer-events-none"
         >
           <div className="text-center max-w-5xl pointer-events-auto">
             <p className="text-xs uppercase tracking-[0.28em] text-stone-300/80 mb-6 md:mb-8">
