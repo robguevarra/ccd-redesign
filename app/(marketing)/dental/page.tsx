@@ -46,8 +46,8 @@ export default function DentalLanePage() {
   return (
     <>
       <AirwayHero
-        videoSrc="/videos/teeth-restoration.mp4"
-        videoSrcMobile="/videos/teeth-restoration.mp4"
+        videoSrc="/videos/teeth-restoration-scrub.mp4"
+        videoSrcMobile="/videos/teeth-restoration-mobile.mp4"
         keyframes={DENTAL_KEYFRAMES}
         ariaLabel="Comfort Care Dental — family dentistry, done thoroughly"
         heightVh={3}
