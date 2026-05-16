@@ -50,8 +50,10 @@ export default function DentalLanePage() {
         videoSrcMobile="/videos/teeth-restoration-mobile.mp4"
         keyframes={DENTAL_KEYFRAMES}
         ariaLabel="Comfort Care Dental — family dentistry, done thoroughly"
-        heightVh={3}
         pingPong
+        heightVh={3}
+        variant="light-centered"
+        debug
         fallbackHeading={
           <>
             Family dentistry, <span className="italic">done thoroughly.</span>
