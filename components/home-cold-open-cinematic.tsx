@@ -119,8 +119,8 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
     return () => left.removeEventListener('timeupdate', onTimeUpdate);
   }, []);
 
-  // Phase 3 split — translate the two video halves apart.
-  const splitProgress = useTransform(progressMV, [PHASE_2_END, 1], [0, 1]);
+  // Phase 3 split — translate the two video halves apart (60% → 90%).
+  const splitProgress = useTransform(progressMV, [0.60, 0.90], [0, 1]);
 
   // Desktop: horizontal split — left translates left, right translates right.
   const xLeft = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
@@ -129,13 +129,132 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
   const yTop = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
   const yBottom = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
-  // Phase 1 cycling questions: fully visible 0-10%, fades out 10-13%, gone after.
-  const phase1TextOpacity = useTransform(progressMV, [0, 0.10, 0.13], [1, 1, 0]);
-  // Phase 2 unified statement: enters 13-18%, stays until 42%, exits 42-48%.
-  const phase2TextOpacity = useTransform(progressMV, [0.13, 0.18, 0.42, 0.48], [0, 1, 1, 0]);
+  // Phase 1 cycling questions: visible 0-15%, fades 15-22%.
+  const phase1TextOpacity = useTransform(progressMV, [0, 0.15, 0.22], [1, 1, 0]);
+  // Phase 2 unified statement: enters 22-30%, stays until 60%, exits 60-72%.
+  const phase2TextOpacity = useTransform(progressMV, [0.22, 0.30, 0.60, 0.72], [0, 1, 1, 0]);
+  // Phase 2 entry — scale up + translate up so the headline LANDS rather than just fades.
+  const phase2Scale = useTransform(progressMV, [0.22, 0.30], [0.92, 1]);
+  const phase2Y = useTransform(progressMV, [0.22, 0.30], [28, 0]);
+  // White glow plate behind Phase 2 text — fades in with Phase 2 and out with it.
+  const phase2GlowOpacity = useTransform(progressMV, [0.22, 0.30, 0.60, 0.72], [0, 1, 1, 0]);
 
-  // Diptych fades in starting at 42% (as Phase 2 exits), fully visible by 68%.
-  const diptychOpacity = useTransform(progressMV, [0.42, 0.68], [0, 1]);
+  // Diptych fades in slightly trailing Phase 2 exit, fully visible by 88%.
+  const diptychOpacity = useTransform(progressMV, [0.65, 0.88], [0, 1]);
+
+  // ─────── Magnet snap between cinematic phases ────────────────────────────
+  // Adapted from components/why-patients-stay.tsx. Pulls to discrete snap
+  // points when user input is quiet AND progress is stable, so each scroll
+  // gesture lands cleanly on: top, "We do both." midpoint, split-complete.
+  // Bypassed under prefers-reduced-motion.
+  useEffect(() => {
+    if (reduced) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    // Snap points in [0,1] scroll progress: top, Phase 2 settled, diptych fully revealed.
+    const SNAP_POINTS = [0, 0.30, 0.85] as const;
+    const SNAP_AFTER_QUIET_MS = 450;
+    const STABLE_FRAMES = 5; // ~83ms at 60fps
+    const NEAR_TOLERANCE = 0.015; // don't re-snap if already within 1.5%
+    const SNAP_ATTRACTION = 0.12; // only pull if within 12% of a snap point
+
+    let lastProgress = -1;
+    let stable = 0;
+    let snapping = false;
+    let lastInputAt = performance.now();
+    let snapRafId = 0;
+
+    const cancelSnapIfRunning = () => {
+      if (!snapping) return;
+      const lenis = window.__lenis;
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(window.scrollY, { immediate: true });
+      }
+      snapping = false;
+    };
+
+    const onUserInput = () => {
+      lastInputAt = performance.now();
+      stable = 0;
+      cancelSnapIfRunning();
+    };
+
+    window.addEventListener('wheel', onUserInput, { passive: true });
+    window.addEventListener('touchmove', onUserInput, { passive: true });
+    window.addEventListener('touchstart', onUserInput, { passive: true });
+    window.addEventListener('keydown', onUserInput);
+
+    const snapTo = (p: number) => {
+      // Find nearest snap point
+      const nearest = SNAP_POINTS.reduce((a, b) =>
+        Math.abs(b - p) < Math.abs(a - p) ? b : a,
+      );
+
+      // Skip if already close enough
+      if (Math.abs(nearest - p) < NEAR_TOLERANCE) return;
+      // Skip if not within attraction radius of any snap point
+      if (Math.abs(nearest - p) > SNAP_ATTRACTION) return;
+
+      const rect = section.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+
+      const sectionTopAbsolute = rect.top + window.scrollY;
+      const targetY = sectionTopAbsolute + total * nearest;
+
+      snapping = true;
+      const lenis = window.__lenis;
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(targetY, {
+          duration: 0.65,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          onComplete: () => {
+            snapping = false;
+          },
+        });
+      } else {
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        setTimeout(() => {
+          snapping = false;
+        }, 700);
+      }
+    };
+
+    const tick = () => {
+      const rect = section.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      if (total > 0) {
+        const p = Math.max(0, Math.min(1, -rect.top / total));
+
+        const insidePinned = rect.top <= 0 && rect.top >= -total;
+        const quietMs = performance.now() - lastInputAt;
+
+        if (!snapping && insidePinned && quietMs > SNAP_AFTER_QUIET_MS) {
+          if (Math.abs(p - lastProgress) < 0.0005) {
+            stable++;
+            if (stable === STABLE_FRAMES) {
+              snapTo(p);
+              stable = 0;
+            }
+          } else {
+            stable = 0;
+          }
+        }
+        lastProgress = p;
+      }
+      snapRafId = requestAnimationFrame(tick);
+    };
+    snapRafId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(snapRafId);
+      window.removeEventListener('wheel', onUserInput);
+      window.removeEventListener('touchmove', onUserInput);
+      window.removeEventListener('touchstart', onUserInput);
+      window.removeEventListener('keydown', onUserInput);
+    };
+  }, [reduced]);
 
   // Reduced-motion fallback: static video, static text, no split.
   if (reduced) {
@@ -216,7 +335,7 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
             <Link
               key={half.lane}
               href={half.href}
-              className={`group relative flex flex-col justify-between p-8 md:p-14 overflow-hidden ${
+              className={`group relative flex flex-col justify-between p-8 md:p-14 pt-32 md:pt-28 pb-10 md:pb-14 overflow-hidden ${
                 half.lane === 'dental'
                   ? 'bg-stone-100 text-stone-900'
                   : 'bg-[var(--color-ink-teal)] text-stone-50'
@@ -312,20 +431,32 @@ export function HomeColdOpenCinematic({ heightVh = 3 }: { heightVh?: number }) {
               </p>
             </motion.div>
 
+            {/* Phase 2 white glow plate — gives black headline contrast against the video */}
+            <motion.div
+              aria-hidden="true"
+              style={{ opacity: phase2GlowOpacity }}
+              className="absolute inset-0 pointer-events-none flex items-center justify-center z-[28]"
+            >
+              <div className="w-[150%] h-[55%] bg-white/45 blur-3xl rounded-full" />
+            </motion.div>
+
             {/* Phase 2: unified statement */}
             <motion.div
               style={{ opacity: phase2TextOpacity }}
-              className="absolute inset-0 flex flex-col items-center justify-center"
+              className="absolute inset-0 flex flex-col items-center justify-center z-30"
             >
-              <h2
-                className="font-serif text-7xl md:text-[10rem] tracking-tight text-stone-50"
-                style={{ textShadow: '0 2px 28px rgba(0,0,0,0.5), 0 0 80px rgba(0,0,0,0.25)' }}
+              <motion.h2
+                style={{ scale: phase2Scale, y: phase2Y }}
+                className="font-serif text-8xl md:text-[13rem] tracking-tight text-stone-950 font-medium leading-[0.95]"
               >
                 We do both.
-              </h2>
-              <p className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-100/85">
+              </motion.h2>
+              <motion.p
+                style={{ scale: phase2Scale, y: phase2Y }}
+                className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-800"
+              >
                 Comfort Care · dental and medical
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </div>
