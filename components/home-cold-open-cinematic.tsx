@@ -265,8 +265,9 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   }
 
   // Header height for the negative-margin trick + safe-area padding.
-  // Desktop: ~80px (brand row). Mobile: ~132px (brand row + lane toggle row).
-  const headerH = isMobile ? 132 : 80;
+  // Measured from the live header: ~93px desktop (brand row + py-5 + border),
+  // ~132px mobile (brand row + toggle row + borders).
+  const headerH = isMobile ? 132 : 96;
 
   return (
     <section
