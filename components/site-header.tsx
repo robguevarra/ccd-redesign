@@ -22,6 +22,12 @@ const NAV_ITEMS = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const SURFACE_FOR_LANE: Record<'dental' | 'medical' | 'neutral', string> = {
+  dental: '#f5ede1',
+  medical: '#e8f1f0',
+  neutral: '#faf9f7',
+};
+
 interface SiteHeaderProps {
   /** When true, renders dark-on-transparent — for use on the wow-zone hero. */
   variant?: 'light' | 'dark';
@@ -68,7 +74,26 @@ export function SiteHeader({
         className,
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-4 md:px-8 md:py-5">
+      {/* Wipe overlay — paints the new lane's surface color across the bar on lane change.
+          Keyed by lane so it re-mounts; AnimatePresence handles the fade-out of the previous wipe. */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={`wipe-${lane}`}
+          aria-hidden="true"
+          className="absolute inset-0 origin-left pointer-events-none"
+          style={{
+            backgroundColor: variant === 'light' ? SURFACE_FOR_LANE[lane] : 'transparent',
+          }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            scaleX: { duration: 0.65, ease: [0.45, 0, 0.55, 1] },
+            opacity: { duration: 0.35, ease: 'easeOut' },
+          }}
+        />
+      </AnimatePresence>
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center gap-6 px-5 py-4 md:px-8 md:py-5">
         {/* LEFT — Brand */}
         <div className="md:flex-1 flex items-center justify-start">
           <Link
@@ -166,7 +191,7 @@ export function SiteHeader({
       {/* ─────────── Mobile toggle row (md hidden) ─────────── */}
       <div
         className={cn(
-          'md:hidden border-t flex items-stretch',
+          'relative z-10 md:hidden border-t flex items-stretch',
           variant === 'light'
             ? 'border-stone-200/60'
             : 'border-ink-700/40',
