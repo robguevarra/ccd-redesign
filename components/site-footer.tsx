@@ -13,7 +13,7 @@ export function SiteFooter() {
   const primaryPhone = practiceInfo.phones[0];
 
   return (
-    <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32">
+    <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
           <Wordmark variant="dark" className="text-stone-50 h-9" />

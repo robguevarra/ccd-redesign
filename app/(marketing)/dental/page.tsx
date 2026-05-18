@@ -9,12 +9,34 @@ import {
   SERVICE_SUBCATEGORY_LABELS,
 } from '@/content/services';
 import { FadeUp } from '@/components/motion/fade-up';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 export const metadata: Metadata = {
   title: 'Dental Practice — Comfort Care Dental',
   description:
     'Family, restorative, and cosmetic dentistry in Rancho Cucamonga. Cleanings, fillings, crowns and bridges, veneers, whitening, root canals, implants, periodontal care.',
 };
+
+const DENTAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'What we see',
+    title: 'When a tooth is at risk.',
+    italicize: [5],
+    body: 'CBCT, microscope, careful measurement. We map the issue before we begin — and most of what we find can be restored without crowns or extraction. Conservative diagnosis is the start of conservative dentistry.',
+  },
+  {
+    eyebrow: 'What we do',
+    title: 'Conservative, by design.',
+    italicize: [1, 2],
+    body: 'Composite before crowns when the tooth allows it. The least invasive treatment that works. Our restorations are designed around how a smile actually moves and reads — not around the cheapest path through the chair.',
+  },
+  {
+    eyebrow: 'What stays',
+    title: 'Saved, not replaced.',
+    italicize: [2, 3],
+    body: 'Twenty-five years of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2007. The tooth we restore today is the same tooth you keep for the next forty years.',
+  },
+];
 
 export default function DentalLanePage() {
   const main = practiceInfo.phones[0]!;
@@ -23,6 +45,24 @@ export default function DentalLanePage() {
 
   return (
     <>
+      <AirwayHero
+        videoSrc="/videos/teeth-restoration-scrub.mp4"
+        videoSrcMobile="/videos/teeth-restoration-mobile.mp4"
+        keyframes={DENTAL_KEYFRAMES}
+        ariaLabel="Comfort Care Dental — family dentistry, done thoroughly"
+        pingPong
+        heightVh={3}
+        variant="light-centered"
+        snapPoints={[0, 0.388, 0.48, 0.9]}
+        snapMode="strict"
+        autoFinishAfterLastSnap
+        fallbackHeading={
+          <>
+            Family dentistry, <span className="italic">done thoroughly.</span>
+          </>
+        }
+      />
+
       <FadeUp>
         <section className="bg-stone-50 py-24 md:py-36">
           <div className="mx-auto max-w-7xl px-5 md:px-8">

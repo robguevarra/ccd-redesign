@@ -39,6 +39,11 @@
   --color-ink-teal: #0a2520;
 }
 
+/* Page surface tint — neutral by default, flips per lane via data-lane scope. */
+:root {
+  --color-surface: var(--color-stone-50);
+}
+
 /* ─────────── Lane-scoped accent palettes ───────────
  * Drives the dual-identity re-theme. The neutral lane (home, about, doctors,
  * blog, contact, admin, etc.) uses the @theme defaults above — apothecary
@@ -58,6 +63,7 @@
   --color-accent-600: #7a5628;
   --color-accent-900: #4a3920;
   --color-accent-950: #2a2010;
+  --color-surface:    #f5ede1;
 }
 
 [data-lane="medical"] {
@@ -68,6 +74,17 @@
   --color-accent-600: #356a66;
   --color-accent-900: #1f3d3b;
   --color-accent-950: #0e2421;
+  --color-surface:    #e8f1f0;
+}
+
+/* Header height — used for negative-margin compensation on full-bleed pinned sections. */
+:root {
+  --header-h: 80px;
+}
+@media (max-width: 767px) {
+  :root {
+    --header-h: 132px;
+  }
 }
 
 html {

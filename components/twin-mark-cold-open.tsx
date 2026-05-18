@@ -96,7 +96,7 @@ export function TwinMarkColdOpen() {
           href={half.href}
           data-lane={half.lane}
           className={cn(
-            'group relative flex flex-col justify-between p-8 md:p-14 min-h-[50svh] md:min-h-[100svh] overflow-hidden',
+            'group relative flex flex-col justify-between p-5 md:p-14 min-h-[44svh] md:min-h-[100svh] overflow-hidden',
             'transition-transform duration-300 ease-out motion-safe:hover:scale-[1.015] motion-safe:focus-within:scale-[1.015]',
             'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-8px]',
             half.lane === 'dental'
@@ -115,18 +115,18 @@ export function TwinMarkColdOpen() {
             animate={fadeUp.animate}
             transition={{ ...fadeUp.transition, delay: reduced ? 0 : i * 0.2 }}
           >
-            <Logo lane={half.lane} size={48} mobileSize={40} decorative />
+            <Logo lane={half.lane} size={48} mobileSize={32} decorative />
             <p className="mt-6 text-[10px] tracking-[0.24em] uppercase opacity-75">
               {half.eyebrow}
             </p>
-            <h2 className="mt-4 font-serif text-3xl md:text-5xl leading-[1.05] tracking-tight max-w-[18ch]">
+            <h2 className="mt-3 font-serif text-2xl md:text-5xl leading-[1.05] tracking-tight max-w-[18ch]">
               {half.title.lead}{' '}
               <span className="italic font-light">{half.title.emphasis}</span>
             </h2>
           </motion.div>
 
           {/* Middle: editorial photo */}
-          <div className="relative my-8 md:my-12 aspect-[4/3] md:aspect-auto md:flex-1 overflow-hidden bg-stone-200/30">
+          <div className="relative my-4 md:my-12 h-24 md:h-auto md:flex-1 aspect-auto md:aspect-auto overflow-hidden bg-stone-200/30">
             <Image
               src={half.photo.src}
               alt={half.photo.alt}
