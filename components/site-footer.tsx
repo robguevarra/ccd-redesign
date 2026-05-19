@@ -145,6 +145,12 @@ export function SiteFooter() {
               Blog
             </Link>
             <Link
+              href="/patient-forms"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
+              Patient Forms
+            </Link>
+            <Link
               href="/financing"
               className="hover:text-[var(--color-accent-200)] transition-colors"
             >
