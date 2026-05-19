@@ -97,7 +97,7 @@ export function SiteHeader({
           }}
         />
       </AnimatePresence>
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center gap-6 px-5 py-4 md:px-8 md:py-5">
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between md:justify-start gap-6 px-5 py-4 md:px-8 md:py-5">
         {/* LEFT — Brand */}
         <div className="md:flex-1 flex items-center justify-start">
           <Link
