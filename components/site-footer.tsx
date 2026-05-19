@@ -168,6 +168,13 @@ export function SiteFooter() {
             >
               Privacy
             </Link>
+            <Link
+              href="/admin/login"
+              className="text-stone-600 hover:text-[var(--color-accent-200)] transition-colors"
+              aria-label="Staff admin sign in"
+            >
+              Admin
+            </Link>
           </nav>
         </div>
       </div>
