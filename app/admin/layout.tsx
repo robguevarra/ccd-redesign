@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { practiceInfo } from '@/content/practice-info';
+import { getCurrentStaffUser } from '@/lib/supabase/queries';
 import { AdminNav } from './_components/admin-nav';
 
 export const metadata = {
@@ -10,14 +11,13 @@ export const metadata = {
   },
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // role wiring: Stage 2 (multi-user auth) replaces `null` here with a
-  // resolved staff_users.role lookup. For Stage 1 the Users tab is hidden.
-  const role: 'owner' | 'editor' | null = null;
+  const me = await getCurrentStaffUser();
+  const role = me?.role ?? null;
 
   return (
     <div className="min-h-screen bg-stone-50">
