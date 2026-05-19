@@ -70,21 +70,18 @@ export default async function InquiriesPage({
             <li key={i.id} className="px-5 py-4">
               <Link
                 href={`/admin/inquiries/${i.id}`}
-                className="flex items-center justify-between gap-4 group"
+                className="flex items-start justify-between gap-3 group"
               >
-                <div className="min-w-0">
-                  <p className="font-medium text-stone-900 group-hover:underline underline-offset-4">
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium text-stone-900 group-hover:underline underline-offset-4 truncate">
                     {i.name}
                   </p>
-                  <p className="text-sm text-stone-600 font-mono tabular-nums">
+                  <p className="text-sm text-stone-600 font-mono tabular-nums truncate">
                     {i.phone}
-                    {i.email && (
-                      <>
-                        <span className="text-stone-400"> · </span>
-                        <span className="font-sans">{i.email}</span>
-                      </>
-                    )}
                   </p>
+                  {i.email && (
+                    <p className="text-sm text-stone-600 truncate">{i.email}</p>
+                  )}
                 </div>
                 <div className="text-right shrink-0">
                   <span className={cn(
