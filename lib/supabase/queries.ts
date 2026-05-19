@@ -1,7 +1,8 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
 import { createClient } from './server';
-import type { BlogPost, AppointmentRequest, AppointmentStatus } from '@/content/schemas';
+import type { BlogPost, AppointmentRequest, AppointmentStatus, Doctor, Image } from '@/content/schemas';
+import { publicUrlFor } from './storage';
 
 /**
  * Database row → typed BlogPost mapping.
@@ -232,4 +233,94 @@ export async function getPatientForm(id: string): Promise<PatientForm | null> {
   const { data } = await supabase
     .from('patient_forms').select('*').eq('id', id).maybeSingle();
   return data ? rowToPatientForm(data) : null;
+}
+
+/* ---- doctors --------------------------------------------------------- */
+
+async function rowToDoctor(row: any): Promise<Doctor> {
+  let portrait: Image;
+  if (row.portrait_path) {
+    const src = await publicUrlFor('doctor-portraits', row.portrait_path);
+    portrait = {
+      src,
+      alt: row.portrait_alt ?? row.name,
+      objectPosition: row.portrait_object_position ?? 'center center',
+    };
+  } else {
+    portrait = {
+      src: `/images/doctors/${row.slug}.webp`,
+      alt: row.portrait_alt ?? row.name,
+      objectPosition: row.portrait_object_position ?? 'center center',
+    };
+  }
+  return {
+    slug: row.slug,
+    name: row.name,
+    title: row.title,
+    portrait,
+    short: row.short,
+    bio: row.bio,
+    specialties: row.specialties ?? [],
+    joinedYear: row.joined_year,
+    isLead: row.is_lead,
+  };
+}
+
+export async function listDoctors(opts: { activeOnly?: boolean } = { activeOnly: true }): Promise<Doctor[]> {
+  const supabase = await createClient();
+  let q = supabase
+    .from('doctors')
+    .select('*')
+    .order('display_order', { ascending: true });
+  if (opts.activeOnly !== false) q = q.eq('active', true);
+  const { data } = await q;
+  if (!data) return [];
+  return Promise.all(data.map(rowToDoctor));
+}
+
+export async function getDoctorBySlug(slug: string): Promise<Doctor | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('doctors').select('*').eq('slug', slug).maybeSingle();
+  return data ? rowToDoctor(data) : null;
+}
+
+export interface DoctorRow extends Doctor {
+  id: string;
+  displayOrder: number;
+  active: boolean;
+  portraitPath: string | null;
+}
+
+export async function listDoctorRows(): Promise<DoctorRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('doctors').select('*').order('display_order', { ascending: true });
+  if (!data) return [];
+  const docs = await Promise.all(data.map(async (row) => {
+    const d = await rowToDoctor(row);
+    return {
+      ...d,
+      id: row.id,
+      displayOrder: row.display_order,
+      active: row.active,
+      portraitPath: row.portrait_path,
+    };
+  }));
+  return docs;
+}
+
+export async function getDoctorRow(slug: string): Promise<DoctorRow | null> {
+  const supabase = await createClient();
+  const { data: row } = await supabase
+    .from('doctors').select('*').eq('slug', slug).maybeSingle();
+  if (!row) return null;
+  const d = await rowToDoctor(row);
+  return {
+    ...d,
+    id: row.id,
+    displayOrder: row.display_order,
+    active: row.active,
+    portraitPath: row.portrait_path,
+  };
 }
