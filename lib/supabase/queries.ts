@@ -189,3 +189,47 @@ export async function getStaffUserById(userId: string): Promise<StaffUser | null
   if (error || !data) return null;
   return rowToStaff(data);
 }
+
+/* ---- patient_forms ----------------------------------------------------- */
+
+export interface PatientForm {
+  id: string;
+  label: string;
+  description: string | null;
+  filePath: string;
+  fileSizeBytes: number | null;
+  displayOrder: number;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+function rowToPatientForm(row: any): PatientForm {
+  return {
+    id: row.id,
+    label: row.label,
+    description: row.description,
+    filePath: row.file_path,
+    fileSizeBytes: row.file_size_bytes,
+    displayOrder: row.display_order,
+    active: row.active,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+export async function listPatientForms(opts: { activeOnly?: boolean } = {}): Promise<PatientForm[]> {
+  const supabase = await createClient();
+  let q = supabase
+    .from('patient_forms').select('*').order('display_order', { ascending: true });
+  if (opts.activeOnly) q = q.eq('active', true);
+  const { data } = await q;
+  return (data ?? []).map(rowToPatientForm);
+}
+
+export async function getPatientForm(id: string): Promise<PatientForm | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('patient_forms').select('*').eq('id', id).maybeSingle();
+  return data ? rowToPatientForm(data) : null;
+}
