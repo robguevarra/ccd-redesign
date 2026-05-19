@@ -17,9 +17,13 @@ export default function InviteUserPage() {
       >
         <ArrowLeft className="h-4 w-4" /> Users
       </Link>
-      <h1 className="font-serif text-3xl md:text-4xl text-stone-900 mb-10">
-        Invite a teammate
+      <h1 className="font-serif text-3xl md:text-4xl text-stone-900 mb-2">
+        Add a teammate
       </h1>
+      <p className="text-stone-600 text-sm mb-10">
+        Create their account with a password. They can change it after signing in
+        via &quot;Forgot your password?&quot; on the login page.
+      </p>
 
       <form
         action={async (formData) => {
@@ -39,6 +43,22 @@ export default function InviteUserPage() {
             required
             className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors"
           />
+        </Field>
+        <Field label="Password" id="password" required>
+          <input
+            id="password"
+            name="password"
+            type="text"
+            required
+            minLength={8}
+            maxLength={72}
+            placeholder="Hand them this password directly. No email is sent."
+            className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono"
+          />
+          <p className="mt-1 text-xs text-stone-500">
+            At least 8 characters. Shown as text so you can confirm typing — copy and share
+            with the teammate via a secure channel.
+          </p>
         </Field>
         <Field label="Display name" id="displayName" required>
           <input
@@ -80,7 +100,7 @@ export default function InviteUserPage() {
           disabled={pending}
           className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-6 py-3 text-sm font-medium hover:bg-stone-700 disabled:opacity-50 transition-colors"
         >
-          {pending ? 'Sending…' : 'Send invite'}
+          {pending ? 'Creating…' : 'Create account'}
         </button>
 
         {result && !result.ok && (

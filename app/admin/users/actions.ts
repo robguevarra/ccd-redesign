@@ -19,6 +19,7 @@ async function requireOwner(): Promise<{ ok: true; userId: string } | UserAction
 
 const inviteSchema = z.object({
   email: z.string().email('Enter a valid email.'),
+  password: z.string().min(8, 'Password must be at least 8 characters.').max(72),
   displayName: z.string().min(1, 'Name required.').max(120),
   role: z.enum(['owner', 'editor']),
   doctorSlug: z.string().optional().or(z.literal('')),
@@ -30,6 +31,7 @@ export async function inviteUser(formData: FormData): Promise<UserActionResult> 
 
   const parsed = inviteSchema.safeParse({
     email: formData.get('email'),
+    password: formData.get('password'),
     displayName: formData.get('displayName'),
     role: formData.get('role'),
     doctorSlug: formData.get('doctorSlug') ?? '',
@@ -47,15 +49,26 @@ export async function inviteUser(formData: FormData): Promise<UserActionResult> 
 
   let userId: string;
   if (existing) {
+    // Existing auth user — update their password to the new one.
+    const { error: updErr } = await admin.auth.admin.updateUserById(existing.id, {
+      password: parsed.data.password,
+    });
+    if (updErr) return { ok: false, error: updErr.message };
     userId = existing.id;
   } else {
-    const { data: invited, error: invErr } =
-      await admin.auth.admin.inviteUserByEmail(parsed.data.email, {
-        data: { display_name: parsed.data.displayName, role: parsed.data.role },
+    const { data: created, error: createErr } =
+      await admin.auth.admin.createUser({
+        email: parsed.data.email,
+        password: parsed.data.password,
+        email_confirm: true,
+        user_metadata: {
+          display_name: parsed.data.displayName,
+          role: parsed.data.role,
+        },
       });
-    if (invErr) return { ok: false, error: invErr.message };
-    if (!invited.user) return { ok: false, error: 'Failed to create auth user.' };
-    userId = invited.user.id;
+    if (createErr) return { ok: false, error: createErr.message };
+    if (!created.user) return { ok: false, error: 'Failed to create auth user.' };
+    userId = created.user.id;
   }
 
   const { error: insErr } = await admin.from('staff_users').upsert({
@@ -78,7 +91,7 @@ const updateSchema = z.object({
   displayName: z.string().min(1).max(120),
   role: z.enum(['owner', 'editor']),
   doctorSlug: z.string().optional().or(z.literal('')),
-  active: z.enum(['true', 'false']).transform((v) => v === 'true'),
+  active: z.boolean(),
 });
 
 export async function updateUser(
@@ -92,7 +105,7 @@ export async function updateUser(
     displayName: formData.get('displayName'),
     role: formData.get('role'),
     doctorSlug: formData.get('doctorSlug') ?? '',
-    active: formData.get('active') ?? 'true',
+    active: formData.has('active'),
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid input.' };

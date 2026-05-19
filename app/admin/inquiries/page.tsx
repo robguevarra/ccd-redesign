@@ -104,6 +104,30 @@ export default async function InquiriesPage({
                   </p>
                 </div>
               </Link>
+              {(i.notes || i.internalNotes) && (
+                <div className="mt-3 pt-3 border-t border-stone-100 space-y-2">
+                  {i.notes && (
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-stone-500 mb-1">
+                        From the patient
+                      </p>
+                      <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-line line-clamp-3">
+                        {i.notes}
+                      </p>
+                    </div>
+                  )}
+                  {i.internalNotes && (
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-stone-500 mb-1">
+                        Internal
+                      </p>
+                      <p className="text-sm text-stone-600 leading-relaxed whitespace-pre-line line-clamp-2">
+                        {i.internalNotes}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </li>
           ))}
         </ul>

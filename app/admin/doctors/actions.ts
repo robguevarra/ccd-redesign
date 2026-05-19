@@ -22,10 +22,10 @@ const inputSchema = z.object({
   bio: z.string().min(1).max(20000),
   specialties: z.string().optional(),
   joinedYear: z.coerce.number().int().min(1900).max(2100),
-  isLead: z.enum(['true', 'false']).transform((v) => v === 'true').optional(),
+  isLead: z.boolean(),
   portraitAlt: z.string().max(300).optional(),
   portraitObjectPosition: z.string().max(40).optional(),
-  active: z.enum(['true', 'false']).transform((v) => v === 'true'),
+  active: z.boolean(),
 });
 
 function parseSpecialties(raw: string | undefined | null): string[] {
@@ -51,10 +51,10 @@ export async function createDoctor(formData: FormData): Promise<DoctorActionResu
     bio: formData.get('bio'),
     specialties: formData.get('specialties') ?? '',
     joinedYear: formData.get('joinedYear'),
-    isLead: formData.get('isLead') ?? 'false',
+    isLead: formData.has('isLead'),
     portraitAlt: formData.get('portraitAlt') ?? '',
     portraitObjectPosition: formData.get('portraitObjectPosition') ?? 'center center',
-    active: formData.get('active') ?? 'true',
+    active: formData.has('active'),
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid input.' };
@@ -85,7 +85,7 @@ export async function createDoctor(formData: FormData): Promise<DoctorActionResu
     bio: parsed.data.bio,
     specialties: parseSpecialties(parsed.data.specialties),
     joined_year: parsed.data.joinedYear,
-    is_lead: parsed.data.isLead ?? false,
+    is_lead: parsed.data.isLead,
     portrait_path: portraitPath,
     portrait_alt: parsed.data.portraitAlt ?? parsed.data.name,
     portrait_object_position: parsed.data.portraitObjectPosition ?? 'center center',
@@ -114,10 +114,10 @@ export async function updateDoctor(
     bio: formData.get('bio'),
     specialties: formData.get('specialties') ?? '',
     joinedYear: formData.get('joinedYear'),
-    isLead: formData.get('isLead') ?? 'false',
+    isLead: formData.has('isLead'),
     portraitAlt: formData.get('portraitAlt') ?? '',
     portraitObjectPosition: formData.get('portraitObjectPosition') ?? 'center center',
-    active: formData.get('active') ?? 'true',
+    active: formData.has('active'),
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid input.' };
@@ -135,7 +135,7 @@ export async function updateDoctor(
     bio: parsed.data.bio,
     specialties: parseSpecialties(parsed.data.specialties),
     joined_year: parsed.data.joinedYear,
-    is_lead: parsed.data.isLead ?? false,
+    is_lead: parsed.data.isLead,
     portrait_alt: parsed.data.portraitAlt ?? parsed.data.name,
     portrait_object_position: parsed.data.portraitObjectPosition ?? 'center center',
     active: parsed.data.active,
