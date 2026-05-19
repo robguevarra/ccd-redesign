@@ -125,7 +125,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {practiceInfo.brandName}.{' '}
             {practiceInfo.legalName}.
           </p>
-          <nav className="flex gap-5">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2">
             <Link
               href="/dental"
               className="hover:text-[var(--color-accent-200)] transition-colors"
