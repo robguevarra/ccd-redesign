@@ -39,7 +39,6 @@ export function PatientFormEditor({ form }: { form?: PatientForm }) {
           setPending(false);
           if (r && !r.ok) setResult(r);
         }}
-        encType="multipart/form-data"
         className="space-y-6"
       >
         <Field label="Label" id="label" required>

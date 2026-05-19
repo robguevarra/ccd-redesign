@@ -170,13 +170,19 @@ function Toolbar({
       <Btn
         onClick={() => {
           const prev = editor.getAttributes('link').href ?? '';
-          const url = window.prompt('URL', prev);
-          if (url === null) return;
+          const raw = window.prompt('URL', prev);
+          if (raw === null) return;
+          const url = raw.trim();
           if (url === '') {
             editor.chain().focus().unsetMark('link').run();
-          } else {
-            editor.chain().focus().setMark('link', { href: url }).run();
+            return;
           }
+          const safe = /^(https?:\/\/|mailto:|tel:|\/)/i.test(url);
+          if (!safe) {
+            window.alert('Link URL must start with http://, https://, mailto:, tel:, or "/" (relative path).');
+            return;
+          }
+          editor.chain().focus().setMark('link', { href: url }).run();
         }}
         active={editor.isActive('link')}
         label="Link"
