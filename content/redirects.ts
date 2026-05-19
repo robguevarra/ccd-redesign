@@ -96,7 +96,6 @@ export const redirects: Redirect[] = [
   // Contact
   { from: '/contact-directions-html', to: '/contact', status: 301 },
   { from: '/contact-patientforms-html', to: '/contact', status: 301 },
-  { from: '/patient-forms', to: '/contact', status: 301 },
   { from: '/appointments', to: '/request-appointment', status: 301 },
 
   // Technology consolidation
