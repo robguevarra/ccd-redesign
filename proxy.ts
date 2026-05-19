@@ -36,29 +36,28 @@ export async function proxy(request: NextRequest) {
   );
 
   // Critical: refresh the session token on every request.
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  // TEMP (explore mode): /admin/* auth gate disabled so the dentist and
-  // engagement owner can click through the admin UI without logging in
-  // during CMS-expansion design review. Restore by reinstating the two
-  // redirect blocks below before pitch day.
-  //
-  // if (
-  //   request.nextUrl.pathname.startsWith('/admin') &&
-  //   !request.nextUrl.pathname.startsWith('/admin/login') &&
-  //   !user
-  // ) {
-  //   const url = request.nextUrl.clone();
-  //   url.pathname = '/admin/login';
-  //   url.searchParams.set('next', request.nextUrl.pathname);
-  //   return NextResponse.redirect(url);
-  // }
-  //
-  // if (request.nextUrl.pathname === '/admin/login' && user) {
-  //   const url = request.nextUrl.clone();
-  //   url.pathname = '/admin/dashboard';
-  //   return NextResponse.redirect(url);
-  // }
+  // Gate /admin/* (except /admin/login) behind authentication.
+  if (
+    request.nextUrl.pathname.startsWith('/admin') &&
+    !request.nextUrl.pathname.startsWith('/admin/login') &&
+    !user
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/admin/login';
+    url.searchParams.set('next', request.nextUrl.pathname);
+    return NextResponse.redirect(url);
+  }
+
+  // Redirect authenticated users away from /admin/login to dashboard.
+  if (request.nextUrl.pathname === '/admin/login' && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/admin/dashboard';
+    return NextResponse.redirect(url);
+  }
 
   return response;
 }
