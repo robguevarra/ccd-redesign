@@ -21,9 +21,13 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Experimental: enable Turbopack for dev (faster) and PPR for streaming SSR (P4 perf).
+  // Server Actions: lift body limit to match our largest Storage upload cap
+  // (patient-forms PDFs at 10MB). Default is 1MB which truncates real PDFs.
   experimental: {
     // ppr: 'incremental', // re-enable when we have explicit ppr boundaries
+    serverActions: {
+      bodySizeLimit: '12mb',
+    },
   },
 };
 
