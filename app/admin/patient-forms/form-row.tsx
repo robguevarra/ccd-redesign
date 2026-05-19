@@ -27,33 +27,14 @@ export function FormRow({ form, isFirst, isLast }: {
   }
 
   return (
-    <li className="px-5 py-4 flex items-center gap-4">
-      <div className="flex flex-col gap-0.5 shrink-0">
-        <button
-          type="button"
-          onClick={() => move('up')}
-          disabled={pending || isFirst}
-          aria-label="Move up"
-          className="inline-flex items-center justify-center h-6 w-6 rounded hover:bg-stone-100 disabled:opacity-30"
-        >
-          <ArrowUp className="h-3.5 w-3.5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => move('down')}
-          disabled={pending || isLast}
-          aria-label="Move down"
-          className="inline-flex items-center justify-center h-6 w-6 rounded hover:bg-stone-100 disabled:opacity-30"
-        >
-          <ArrowDown className="h-3.5 w-3.5" />
-        </button>
-      </div>
+    <li className="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+      {/* Content link — full-width on mobile, flex-1 on desktop */}
       <Link
         href={`/admin/patient-forms/${form.id}`}
-        className="flex-1 flex items-center gap-3 group min-w-0"
+        className="flex items-center gap-3 group min-w-0 sm:flex-1 order-1"
       >
         <FileText className="h-5 w-5 text-stone-400 shrink-0" />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="font-medium text-stone-900 group-hover:underline underline-offset-4 truncate">
             {form.label}
           </p>
@@ -65,11 +46,35 @@ export function FormRow({ form, isFirst, isLast }: {
           </p>
         </div>
       </Link>
-      <span className={`shrink-0 text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded-full ${
-        form.active ? 'bg-stone-900 text-stone-50' : 'bg-stone-200 text-stone-600'
-      }`}>
-        {form.active ? 'Live' : 'Hidden'}
-      </span>
+
+      {/* Controls row — below content on mobile, before content on sm+ */}
+      <div className="flex items-center gap-3 order-2 sm:order-none">
+        <div className="flex flex-col gap-0.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => move('up')}
+            disabled={pending || isFirst}
+            aria-label="Move up"
+            className="inline-flex items-center justify-center h-6 w-6 rounded hover:bg-stone-100 disabled:opacity-30"
+          >
+            <ArrowUp className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => move('down')}
+            disabled={pending || isLast}
+            aria-label="Move down"
+            className="inline-flex items-center justify-center h-6 w-6 rounded hover:bg-stone-100 disabled:opacity-30"
+          >
+            <ArrowDown className="h-3.5 w-3.5" />
+          </button>
+        </div>
+        <span className={`shrink-0 text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded-full ${
+          form.active ? 'bg-stone-900 text-stone-50' : 'bg-stone-200 text-stone-600'
+        }`}>
+          {form.active ? 'Live' : 'Hidden'}
+        </span>
+      </div>
     </li>
   );
 }
