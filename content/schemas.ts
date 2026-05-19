@@ -141,6 +141,7 @@ export interface AppointmentRequest {
   email: string | null;
   preferredTime: AppointmentPreferredTime;
   notes: string | null;
+  internalNotes: string | null;
   status: AppointmentStatus;
   createdAt: string;
 }
