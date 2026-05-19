@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useToast, Toast } from '@/components/admin/toast';
 
 function slugify(input: string): string {
   return input
@@ -26,6 +27,7 @@ interface Props {
 export function DoctorEditor({ doctor }: Props) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<DoctorActionResult | null>(null);
+  const { state: toastState, showToast } = useToast();
   const [bio, setBio] = useState(doctor?.bio ?? '');
   const [name, setName] = useState(doctor?.name ?? '');
   const [slug, setSlug] = useState(doctor?.slug ?? '');
@@ -84,6 +86,7 @@ export function DoctorEditor({ doctor }: Props) {
             : await createDoctor(formData);
           setPending(false);
           if (r && !r.ok) setResult(r);
+          else if (r && r.ok) showToast(doctor ? 'Doctor updated.' : 'Doctor created.');
         }}
         className="space-y-8"
       >
@@ -225,6 +228,7 @@ export function DoctorEditor({ doctor }: Props) {
           </p>
         )}
       </form>
+      <Toast state={toastState} />
     </div>
   );
 }
