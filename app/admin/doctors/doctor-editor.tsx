@@ -1,6 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/&/g, '-and-')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 120);
+}
 import Link from 'next/link';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import { RichTextEditor } from '@/components/admin/rich-text-editor';
@@ -16,6 +27,9 @@ export function DoctorEditor({ doctor }: Props) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<DoctorActionResult | null>(null);
   const [bio, setBio] = useState(doctor?.bio ?? '');
+  const [name, setName] = useState(doctor?.name ?? '');
+  const [slug, setSlug] = useState(doctor?.slug ?? '');
+  const [slugDirty, setSlugDirty] = useState(!!doctor);
   const [objectPosition, setObjectPosition] = useState(
     doctor?.portrait.objectPosition ?? 'center center',
   );
@@ -44,9 +58,22 @@ export function DoctorEditor({ doctor }: Props) {
       >
         <ArrowLeft className="h-4 w-4" /> Doctors
       </Link>
-      <h1 className="font-serif text-3xl md:text-4xl text-stone-900 mb-10">
+      <h1 className="font-serif text-3xl md:text-4xl text-stone-900 mb-4">
         {doctor ? doctor.name : 'New doctor'}
       </h1>
+
+      {doctor && (
+        <div className="mb-8">
+          <Link
+            href={`/doctors/${doctor.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-stone-600 hover:text-stone-900"
+          >
+            View public page →
+          </Link>
+        </div>
+      )}
 
       <form
         action={async (formData) => {
@@ -66,13 +93,24 @@ export function DoctorEditor({ doctor }: Props) {
         <div className="grid md:grid-cols-2 gap-8">
           <Field label="Name" id="name" required>
             <input id="name" name="name" type="text" required maxLength={120}
-              defaultValue={doctor?.name}
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (!slugDirty) setSlug(slugify(e.target.value));
+              }}
               className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-serif" />
           </Field>
           <Field label="Slug" id="slug" required>
             <input id="slug" name="slug" type="text" required pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
-              defaultValue={doctor?.slug}
+              value={slug}
+              onChange={(e) => {
+                setSlug(e.target.value);
+                setSlugDirty(true);
+              }}
               className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono" />
+            <p className="mt-1 text-xs text-stone-500">
+              Auto-filled from the name. The page will live at <span className="font-mono">/doctors/{slug || '<slug>'}</span>.
+            </p>
           </Field>
         </div>
 
@@ -142,20 +180,22 @@ export function DoctorEditor({ doctor }: Props) {
           )}
         </fieldset>
 
-        <fieldset className="flex items-center gap-6 pt-6 border-t border-stone-200">
-          <input type="hidden" name="isLead" value="false" />
+        <fieldset className="space-y-3 pt-6 border-t border-stone-200">
+          <legend className="text-sm font-medium text-stone-900 mb-2">Visibility</legend>
           <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="isLead" value="true"
+            <input type="checkbox" name="isLead"
               defaultChecked={doctor?.isLead ?? false}
               className="accent-stone-900" />
             <span className="text-sm font-medium">Lead clinician</span>
+            <span className="text-xs text-stone-500 ml-2">(at most one across the practice)</span>
           </label>
-          <input type="hidden" name="active" value="false" />
+          <br />
           <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="active" value="true"
+            <input type="checkbox" name="active"
               defaultChecked={doctor?.active !== false}
               className="accent-stone-900" />
             <span className="text-sm">Visible on site</span>
+            <span className="text-xs text-stone-500 ml-2">(uncheck to hide without deleting)</span>
           </label>
         </fieldset>
 
