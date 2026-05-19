@@ -28,23 +28,20 @@ export function AdminNav({ role }: AdminNavProps) {
       aria-label="Admin sections"
       className="border-b border-stone-200 bg-white"
     >
-      <ul
-        className={cn(
-          'mx-auto max-w-7xl px-5 md:px-8 flex gap-1 -mb-px',
-          // Single row at every width — scroll horizontally if needed.
-          // Hides the scrollbar to keep the editorial look while preserving
-          // touch + trackpad scroll affordance.
-          'overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-        )}
-      >
+      {/*
+        Wraps to multiple rows on narrow viewports (mobile / small tablet)
+        so every tab is visible without horizontal scrolling. Single row at
+        wider widths since all 6 items fit comfortably.
+      */}
+      <ul className="mx-auto max-w-7xl px-5 md:px-8 flex flex-wrap gap-x-1 gap-y-0 -mb-px">
         {items.map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + '/');
           return (
-            <li key={item.href} className="shrink-0">
+            <li key={item.href}>
               <Link
                 href={item.href}
                 className={cn(
-                  'inline-flex items-center px-3 py-2.5 text-sm border-b-2',
+                  'inline-flex items-center px-3 py-3 text-sm border-b-2 min-h-[44px]',
                   active
                     ? 'border-stone-900 text-stone-900 font-medium'
                     : 'border-transparent text-stone-600 hover:text-stone-900',
