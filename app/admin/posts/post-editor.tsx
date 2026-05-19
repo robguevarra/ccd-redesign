@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useToast, Toast } from '@/components/admin/toast';
 
 function slugify(input: string): string {
   return input
@@ -27,7 +28,7 @@ interface PostEditorProps {
 export function PostEditor({ post, doctors }: PostEditorProps) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<PostActionResult | null>(null);
-  const [savedToast, setSavedToast] = useState<string | null>(null);
+  const { state: toastState, showToast } = useToast();
   const [body, setBody] = useState(post?.bodyMdx ?? '');
   const [title, setTitle] = useState(post?.title ?? '');
   const [slug, setSlug] = useState(post?.slug ?? '');
@@ -44,12 +45,11 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
     setPending(false);
     if (r && !r.ok) setResult(r);
     else {
-      setSavedToast(
+      showToast(
         formData.get('status') === 'published'
           ? 'Published. Live within seconds.'
           : 'Saved as draft.',
       );
-      setTimeout(() => setSavedToast(null), 3500);
     }
   }
 
@@ -227,11 +227,7 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
         )}
       </form>
 
-      {savedToast && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-50 rounded-full px-6 py-3 text-sm font-medium shadow-lg">
-          {savedToast}
-        </div>
-      )}
+      <Toast state={toastState} />
     </div>
   );
 }
