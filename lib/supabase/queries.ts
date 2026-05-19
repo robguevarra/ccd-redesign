@@ -164,31 +164,62 @@ export async function getCurrentStaffUser(): Promise<StaffUser | null> {
   return rowToStaff(data);
 }
 
-/** Lists all staff_users joined with auth.users.last_sign_in_at. */
+/**
+ * Lists all staff_users joined with auth.users.last_sign_in_at.
+ *
+ * Tries the service-role client first (so the auth.users join works).
+ * Falls back to the standard authenticated client if SUPABASE_SERVICE_ROLE_KEY
+ * isn't set — the is_active_owner() RLS policy lets owners read all rows,
+ * but lastSignInAt will be null since the auth.users table is unreachable
+ * from a normal client.
+ */
 export async function listStaffUsers(): Promise<
   Array<StaffUser & { lastSignInAt: string | null }>
 > {
-  const { createServiceRoleClient } = await import('./service-role');
-  const admin = createServiceRoleClient();
-  const { data: staff } = await admin
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const { createServiceRoleClient } = await import('./service-role');
+      const admin = createServiceRoleClient();
+      const { data: staff } = await admin
+        .from('staff_users').select('*').order('created_at', { ascending: false });
+      const { data: authList } = await admin.auth.admin.listUsers();
+      const byId = new Map(
+        (authList?.users ?? []).map((u) => [u.id, u.last_sign_in_at ?? null]),
+      );
+      return (staff ?? []).map((row) => ({
+        ...rowToStaff(row),
+        lastSignInAt: byId.get(row.user_id) ?? null,
+      }));
+    } catch {
+      // fall through to standard client
+    }
+  }
+  const supabase = await createClient();
+  const { data } = await supabase
     .from('staff_users').select('*').order('created_at', { ascending: false });
-  const { data: authList } = await admin.auth.admin.listUsers();
-  const byId = new Map(
-    (authList?.users ?? []).map((u) => [u.id, u.last_sign_in_at ?? null]),
-  );
-  return (staff ?? []).map((row) => ({
+  return (data ?? []).map((row) => ({
     ...rowToStaff(row),
-    lastSignInAt: byId.get(row.user_id) ?? null,
+    lastSignInAt: null,
   }));
 }
 
 export async function getStaffUserById(userId: string): Promise<StaffUser | null> {
-  const { createServiceRoleClient } = await import('./service-role');
-  const admin = createServiceRoleClient();
-  const { data, error } = await admin
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const { createServiceRoleClient } = await import('./service-role');
+      const admin = createServiceRoleClient();
+      const { data, error } = await admin
+        .from('staff_users').select('*').eq('user_id', userId).maybeSingle();
+      if (error || !data) return null;
+      return rowToStaff(data);
+    } catch {
+      // fall through to standard client
+    }
+  }
+  const supabase = await createClient();
+  const { data } = await supabase
     .from('staff_users').select('*').eq('user_id', userId).maybeSingle();
-  if (error || !data) return null;
-  return rowToStaff(data);
+  return data ? rowToStaff(data) : null;
 }
 
 /* ---- patient_forms ----------------------------------------------------- */

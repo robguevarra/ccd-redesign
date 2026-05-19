@@ -58,7 +58,6 @@ export function DoctorEditor({ doctor }: Props) {
           setPending(false);
           if (r && !r.ok) setResult(r);
         }}
-        encType="multipart/form-data"
         className="space-y-8"
       >
         <input type="hidden" name="bio" value={bio} />
