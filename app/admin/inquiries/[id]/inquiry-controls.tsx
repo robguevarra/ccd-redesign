@@ -4,20 +4,21 @@ import { useState, useTransition } from 'react';
 import type { AppointmentRequest, AppointmentStatus } from '@/content/schemas';
 import { updateInquiryStatus, updateInquiryNotes } from '../actions';
 import { cn } from '@/lib/cn';
+import { useToast, Toast } from '@/components/admin/toast';
 
 const STATUSES: AppointmentStatus[] = ['new', 'contacted', 'closed'];
 
 export function InquiryControls({ inquiry }: { inquiry: AppointmentRequest }) {
   const [status, setStatus] = useState<AppointmentStatus>(inquiry.status);
   const [notes, setNotes] = useState(inquiry.internalNotes ?? '');
-  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const { state: toastState, showToast } = useToast();
   const [pending, startTransition] = useTransition();
 
   function handleStatusChange(next: AppointmentStatus) {
     setStatus(next);
     startTransition(async () => {
       const r = await updateInquiryStatus(inquiry.id, next);
-      if (r.ok) setSavedAt(new Date());
+      if (r.ok) showToast('Status updated.');
     });
   }
 
@@ -25,7 +26,7 @@ export function InquiryControls({ inquiry }: { inquiry: AppointmentRequest }) {
     if (notes === (inquiry.internalNotes ?? '')) return;
     startTransition(async () => {
       const r = await updateInquiryNotes(inquiry.id, notes);
-      if (r.ok) setSavedAt(new Date());
+      if (r.ok) showToast('Notes saved.');
     });
   }
 
@@ -67,13 +68,10 @@ export function InquiryControls({ inquiry }: { inquiry: AppointmentRequest }) {
           className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors resize-y leading-relaxed"
         />
         <p className="mt-2 text-xs text-stone-500">
-          {pending
-            ? 'Saving…'
-            : savedAt
-              ? `Saved at ${savedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
-              : 'Auto-saves on focus loss.'}
+          {pending ? 'Saving…' : 'Auto-saves on focus loss.'}
         </p>
       </section>
+      <Toast state={toastState} />
     </>
   );
 }
