@@ -27,6 +27,7 @@ This spec expands the CMS to cover all three content surfaces, swaps the editor,
 | # | Decision | Choice |
 |---|---|---|
 | 1 | Patient Forms route | Restore `/patient-forms` as a real public page. Drop the `/patient-forms → /contact` 301 redirect. |
+| 1a | Patient Forms nav placement | **No desktop top-nav slot** (existing nav already at 6-item density limit). Discoverability via: (i) mobile drawer, (ii) site footer, (iii) prominent card on `/contact`, (iv) post-submit confirmation on `/request-appointment`. |
 | 2 | Patient Forms model | One row per PDF in a `patient_forms` table. PDFs in Supabase Storage. Admin uploads, reorders, deactivates. |
 | 3 | Inquiry Inbox | Sortable list + detail view; status toggle (`new`/`contacted`/`closed`); internal notes field added to `appointment_requests`; CSV export route. Defer Kanban; defer email forwarding integration. |
 | 4 | Doctor CMS storage model | **Supabase-only.** Public pages read from the `doctors` table. The existing TS file ([content/doctors.ts](../../../content/doctors.ts)) becomes the seed/fallback — its data is inserted once into Supabase via a one-shot script. The TS file stays on disk as typed reference. |
@@ -219,8 +220,10 @@ Owner-only routes (`/admin/users/*`) are double-gated: middleware blocks non-own
 | [app/(marketing)/doctors/page.tsx](../../../app/(marketing)/doctors/page.tsx) | Read from Supabase via `listDoctors()`. ISR via `revalidateTag('doctors')`. |
 | [app/(marketing)/doctors/[slug]/page.tsx](../../../app/(marketing)/doctors/[slug]/page.tsx) | Read from Supabase via `getDoctorBySlug(slug)`. Remove `generateStaticParams`; add `export const revalidate = 60` + `dynamicParams = true` (same pattern as blog). |
 | [app/(marketing)/page.tsx](../../../app/(marketing)/page.tsx) | Home's doctor strip queries Supabase. Pluralize the heading dynamically: `${count} doctors, one office.` |
-| [components/site-header.tsx](../../../components/site-header.tsx) | Add "Patient Forms" link to desktop nav and mobile drawer. |
+| [components/site-header.tsx](../../../components/site-header.tsx) | Add "Patient Forms" to the **mobile drawer only**. Desktop top nav is already at the 6-item density limit; do not add a 7th slot. |
 | [components/site-footer.tsx](../../../components/site-footer.tsx) | Add "Patient Forms" link in the bottom nav row. |
+| [app/(marketing)/contact/page.tsx](../../../app/(marketing)/contact/page.tsx) | Add a prominent "Patient Forms" card linking to `/patient-forms`. This is the primary desktop discoverability path. Two lines max: label + 1-sentence helper. |
+| [app/(marketing)/request-appointment/page.tsx](../../../app/(marketing)/request-appointment/page.tsx) | After successful submission, surface a "Before your visit, please fill out these forms →" link to `/patient-forms` on the success state. Optional polish; bundle with the patient-forms PR. |
 | [content/redirects.ts](../../../content/redirects.ts) | Remove the `{ from: '/patient-forms', to: '/contact', status: 301 }` rule. |
 | [app/admin/layout.tsx](../../../app/admin/layout.tsx) | Slot the new `<AdminNav />` component below the header bar. |
 | [app/admin/posts/post-editor.tsx](../../../app/admin/posts/post-editor.tsx) | Replace the body textarea with `<RichTextEditor allowImages />`. |
