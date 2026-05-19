@@ -22,6 +22,10 @@ const NAV_ITEMS = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const MOBILE_EXTRA_ITEMS = [
+  { href: '/patient-forms', label: 'Patient Forms' },
+];
+
 const SURFACE_FOR_LANE: Record<'dental' | 'medical' | 'neutral', string> = {
   dental: '#f5ede1',
   medical: '#e8f1f0',
@@ -214,7 +218,7 @@ export function SiteHeader({
       >
         <div className="flex flex-col h-full overflow-y-auto px-5 pt-8 pb-12">
           <nav className="flex flex-col gap-1">
-            {NAV_ITEMS.map((item) => {
+            {[...NAV_ITEMS, ...MOBILE_EXTRA_ITEMS].map((item) => {
               const active =
                 item.href === '/'
                   ? pathname === '/'
