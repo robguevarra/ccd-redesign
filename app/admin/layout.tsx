@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { practiceInfo } from '@/content/practice-info';
+import { AdminNav } from './_components/admin-nav';
 
 export const metadata = {
   title: 'Admin',
@@ -14,6 +15,10 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // role wiring: Stage 2 (multi-user auth) replaces `null` here with a
+  // resolved staff_users.role lookup. For Stage 1 the Users tab is hidden.
+  const role: 'owner' | 'editor' | null = null;
+
   return (
     <div className="min-h-screen bg-stone-50">
       <header className="border-b border-stone-200 bg-white">
@@ -32,6 +37,7 @@ export default function AdminLayout({
           </Link>
         </div>
       </header>
+      <AdminNav role={role} />
       {children}
     </div>
   );
