@@ -21,16 +21,18 @@ interface LogoProps {
   lane?: Lane;
 }
 
-const MORPH_TRANSITION = {
-  duration: 0.35,
+const FLIP_TRANSITION = {
+  duration: 0.55,
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
 /**
  * Comfort Care practice mark. Two real SVG assets — `public/logos/dental.svg`
  * (used for neutral + dental lanes) and `public/logos/medical.svg` (used for
- * the medical lane). The swap animates as a cross-fade + subtle scale; the
- * `key` on the inner motion.span drives Framer's enter/exit.
+ * the medical lane). The swap animates as a Y-axis coin flip: the outgoing
+ * mark rotates 90° forward and fades, while the new one rotates 90° in from
+ * the back and fades up. Combined effect reads like a coin face turning
+ * around to reveal the other side.
  *
  * See: docs/superpowers/specs/2026-05-16-dentisthsu-dual-identity-system.md §2.3
  */
@@ -48,16 +50,17 @@ export function Logo({
   return (
     <span
       className={cn('relative inline-block select-none', className)}
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, perspective: 600 }}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={isMedical ? 'medical' : 'dental'}
-          initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
-          animate={reduced ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-          exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
-          transition={reduced ? { duration: 0 } : MORPH_TRANSITION}
+          initial={reduced ? { opacity: 0 } : { rotateY: -180, opacity: 0 }}
+          animate={reduced ? { opacity: 1 } : { rotateY: 0, opacity: 1 }}
+          exit={reduced ? { opacity: 0 } : { rotateY: 180, opacity: 0 }}
+          transition={reduced ? { duration: 0 } : FLIP_TRANSITION}
           className="absolute inset-0"
+          style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
         >
           <Image
             src={src}
