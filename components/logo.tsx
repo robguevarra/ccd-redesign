@@ -60,7 +60,7 @@ export function Logo({
           exit={reduced ? { opacity: 0 } : { rotateY: 180, opacity: 0 }}
           transition={reduced ? { duration: 0 } : FLIP_TRANSITION}
           className="absolute inset-0"
-          style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
+          style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
         >
           <Image
             src={src}
