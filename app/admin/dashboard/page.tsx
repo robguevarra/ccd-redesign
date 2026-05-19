@@ -70,10 +70,10 @@ export default async function AdminDashboard() {
                     </div>
                     <div className="text-right">
                       <p className="text-xs uppercase tracking-[0.18em] text-stone-500 capitalize">
-                        {r.preferred_time}
+                        {r.preferredTime}
                       </p>
                       <p className="text-xs text-stone-500 mt-1">
-                        {new Date(r.created_at).toLocaleDateString('en-US', {
+                        {new Date(r.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                         })}

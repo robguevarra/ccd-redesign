@@ -1,7 +1,7 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
 import { createClient } from './server';
-import type { BlogPost } from '@/content/schemas';
+import type { BlogPost, AppointmentRequest, AppointmentStatus } from '@/content/schemas';
 
 /**
  * Database row → typed BlogPost mapping.
@@ -80,14 +80,45 @@ export async function getPost(id: string): Promise<BlogPost | null> {
   return data ? rowToPost(data) : null;
 }
 
-export async function listAppointmentRequests(limit = 10) {
+function rowToInquiry(row: any): AppointmentRequest {
+  return {
+    id: row.id,
+    name: row.name,
+    phone: row.phone,
+    email: row.email,
+    preferredTime: row.preferred_time,
+    notes: row.notes,
+    internalNotes: row.internal_notes,
+    status: row.status,
+    createdAt: row.created_at,
+  };
+}
+
+export async function listAppointmentRequests(limit = 10): Promise<AppointmentRequest[]> {
   const supabase = await createClient();
   const { data } = await supabase
     .from('appointment_requests')
     .select('*')
     .order('created_at', { ascending: false })
     .limit(limit);
-  return data ?? [];
+  return (data ?? []).map(rowToInquiry);
+}
+
+export async function listAllAppointmentRequests(
+  status?: AppointmentStatus | 'all',
+): Promise<AppointmentRequest[]> {
+  const supabase = await createClient();
+  let q = supabase.from('appointment_requests').select('*').order('created_at', { ascending: false });
+  if (status && status !== 'all') q = q.eq('status', status);
+  const { data } = await q;
+  return (data ?? []).map(rowToInquiry);
+}
+
+export async function getAppointmentRequest(id: string): Promise<AppointmentRequest | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('appointment_requests').select('*').eq('id', id).maybeSingle();
+  return data ? rowToInquiry(data) : null;
 }
 
 /* ---- staff_users (auth allowlist) ----------------------------------- */
