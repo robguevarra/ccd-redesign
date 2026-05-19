@@ -18,8 +18,8 @@ export default async function UsersPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-8 py-12">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="font-serif text-3xl md:text-4xl text-stone-900">Users</h1>
+      <div className="flex items-center justify-between gap-3 mb-10">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900">Users</h1>
         <Link
           href="/admin/users/invite"
           className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-4 py-2 text-sm font-medium hover:bg-stone-700 transition-colors"
@@ -36,12 +36,12 @@ export default async function UsersPage() {
               className="flex items-center justify-between gap-4 group"
             >
               <div className="min-w-0">
-                <p className="font-medium text-stone-900 group-hover:underline underline-offset-4">
+                <p className="font-medium text-stone-900 group-hover:underline underline-offset-4 truncate">
                   {u.displayName}
                 </p>
-                <p className="text-sm text-stone-500">{u.email}</p>
+                <p className="text-sm text-stone-500 truncate">{u.email}</p>
                 {u.doctorSlug && (
-                  <p className="text-xs text-stone-500 mt-1">
+                  <p className="text-xs text-stone-500 mt-1 truncate">
                     Bound to doctor: <span className="font-mono">{u.doctorSlug}</span>
                   </p>
                 )}

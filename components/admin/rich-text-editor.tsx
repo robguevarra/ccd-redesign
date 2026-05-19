@@ -135,7 +135,7 @@ function Toolbar({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-1 px-2 py-1.5 border-b border-stone-200 bg-stone-50">
+    <div className="flex items-center gap-1 px-2 py-1.5 border-b border-stone-200 bg-stone-50 overflow-x-auto scrollbar-thin">
       <Btn onClick={() => editor.chain().focus().toggleBold().run()}
            active={editor.isActive('bold')} label="Bold">
         <Bold className="h-4 w-4" />

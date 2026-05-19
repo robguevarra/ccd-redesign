@@ -30,8 +30,8 @@ export default async function InquiriesPage({
 
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-8 py-12">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-serif text-3xl md:text-4xl text-stone-900">Inquiries</h1>
+      <div className="flex items-center justify-between gap-3 mb-8">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900">Inquiries</h1>
         <Link
           href={`/admin/inquiries/export${filter !== 'all' ? `?status=${filter}` : ''}`}
           className="inline-flex items-center gap-2 rounded-full border border-stone-300 text-stone-700 px-4 py-2 text-sm font-medium hover:bg-stone-100 transition-colors"
@@ -40,7 +40,7 @@ export default async function InquiriesPage({
         </Link>
       </div>
 
-      <nav className="flex gap-2 mb-8" aria-label="Filter inquiries">
+      <nav className="flex flex-wrap gap-2 mb-8" aria-label="Filter inquiries">
         {FILTERS.map((f) => {
           const active = filter === f.key;
           return (
