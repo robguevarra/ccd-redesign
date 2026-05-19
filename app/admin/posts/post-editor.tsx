@@ -2,6 +2,17 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/&/g, '-and-')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 120);
+}
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import type { BlogPost } from '@/content/schemas';
 import { createPost, updatePost, deletePost, type PostActionResult } from './actions';
@@ -18,6 +29,11 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
   const [result, setResult] = useState<PostActionResult | null>(null);
   const [savedToast, setSavedToast] = useState<string | null>(null);
   const [body, setBody] = useState(post?.bodyMdx ?? '');
+  const [title, setTitle] = useState(post?.title ?? '');
+  const [slug, setSlug] = useState(post?.slug ?? '');
+  // When editing an existing post, manual edits to slug are the default.
+  // When creating new, slug auto-syncs to title until user manually edits it.
+  const [slugDirty, setSlugDirty] = useState(!!post);
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
@@ -57,14 +73,15 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
         <h1 className="font-serif text-3xl md:text-4xl text-stone-900">
           {post ? 'Edit post' : 'New post'}
         </h1>
-        {post && post.status === 'published' && (
+        {post && (
           <Link
             href={`/blog/${post.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-stone-600 hover:text-stone-900"
           >
-            View published →
+            {/* Draft preview will 404 until published — acceptable for v1; v2 can add a ?preview token. */}
+            {post.status === 'published' ? 'View published →' : 'Preview draft →'}
           </Link>
         )}
       </div>
@@ -74,7 +91,11 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
           <input
             id="title"
             name="title"
-            defaultValue={post?.title}
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (!slugDirty) setSlug(slugify(e.target.value));
+            }}
             required
             className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-lg bg-white focus:border-stone-900 focus:outline-none transition-colors font-serif"
           />
@@ -85,11 +106,18 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
             <input
               id="slug"
               name="slug"
-              defaultValue={post?.slug}
+              value={slug}
+              onChange={(e) => {
+                setSlug(e.target.value);
+                setSlugDirty(true);
+              }}
               required
               pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
               className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono"
             />
+            <p className="mt-1 text-xs text-stone-500">
+              Auto-filled from the title. The post will live at <span className="font-mono">/blog/{slug || '<slug>'}</span>.
+            </p>
           </Field>
           <Field label="Author" id="authorDoctorSlug">
             <select
