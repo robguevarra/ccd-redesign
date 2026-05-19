@@ -129,6 +129,31 @@ export default function ContactPage() {
           and we will be happy to assist you.
         </p>
       </section>
+
+      <section className="border-t border-stone-200 bg-stone-100/40">
+        <div className="mx-auto max-w-7xl px-5 md:px-8 py-12 md:py-16">
+          <div className="md:flex md:items-center md:justify-between gap-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-10">
+            <div className="md:max-w-2xl">
+              <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-3">
+                Before your visit
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl text-stone-900 mb-3">
+                Patient forms
+              </h2>
+              <p className="text-stone-600 leading-relaxed">
+                Save time at the front desk. Download our dental and medical patient
+                forms — fill them out at home and bring them to your appointment.
+              </p>
+            </div>
+            <Link
+              href="/patient-forms"
+              className="mt-6 md:mt-0 inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-5 py-3 text-sm font-medium hover:bg-stone-700 transition-colors shrink-0"
+            >
+              Open patient forms →
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -46,6 +46,12 @@ export default async function AdminDashboard() {
         <section>
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-2xl text-stone-900">Recent appointment requests</h2>
+            <Link
+              href="/admin/inquiries"
+              className="text-sm text-stone-600 hover:text-stone-900"
+            >
+              View all →
+            </Link>
           </div>
           {requests.length === 0 ? (
             <div className="rounded-2xl border border-stone-200 bg-white p-8 text-stone-600 text-sm">
@@ -70,10 +76,10 @@ export default async function AdminDashboard() {
                     </div>
                     <div className="text-right">
                       <p className="text-xs uppercase tracking-[0.18em] text-stone-500 capitalize">
-                        {r.preferred_time}
+                        {r.preferredTime}
                       </p>
                       <p className="text-xs text-stone-500 mt-1">
-                        {new Date(r.created_at).toLocaleDateString('en-US', {
+                        {new Date(r.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                         })}

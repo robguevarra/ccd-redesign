@@ -4,17 +4,20 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import type { BlogPost } from '@/content/schemas';
-import { doctors } from '@/content/doctors';
 import { createPost, updatePost, deletePost, type PostActionResult } from './actions';
+import { RichTextEditor } from '@/components/admin/rich-text-editor';
+import { uploadBlogImage } from './actions';
 
 interface PostEditorProps {
   post?: BlogPost;
+  doctors: Array<{ slug: string; name: string }>;
 }
 
-export function PostEditor({ post }: PostEditorProps) {
+export function PostEditor({ post, doctors }: PostEditorProps) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<PostActionResult | null>(null);
   const [savedToast, setSavedToast] = useState<string | null>(null);
+  const [body, setBody] = useState(post?.bodyMdx ?? '');
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
@@ -115,19 +118,18 @@ export function PostEditor({ post }: PostEditorProps) {
           />
         </Field>
 
-        <Field label="Body (Markdown)" id="bodyMdx" required>
-          <textarea
-            id="bodyMdx"
-            name="bodyMdx"
-            defaultValue={post?.bodyMdx ?? ''}
-            required
-            rows={18}
-            className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors resize-y font-mono leading-relaxed"
-            placeholder={`## Heading\n\nBody copy as Markdown. **Bold**, _italic_, [link](https://example.com), lists, and quotes all supported.`}
+        <Field label="Body" id="bodyMdx" required>
+          <input type="hidden" name="bodyMdx" value={body} />
+          <RichTextEditor
+            value={body}
+            onChange={setBody}
+            placeholder="Heading, paragraphs, bold and italic, lists, links, images — all here."
+            allowImages
+            onUploadImage={uploadBlogImage}
+            minHeight={420}
           />
           <p className="mt-1 text-xs text-stone-500">
-            Markdown rendered on the public page. Supports headings, bold, italic,
-            links, lists, and blockquotes.
+            Use the toolbar for formatting. Markdown is saved automatically.
           </p>
         </Field>
 

@@ -2,12 +2,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Phone } from 'lucide-react';
-import { doctors, getDoctor } from '@/content/doctors';
+import ReactMarkdown from 'react-markdown';
+import { getDoctorBySlug, listDoctors } from '@/lib/supabase/queries';
 import { practiceInfo } from '@/content/practice-info';
 import { FadeUp } from '@/components/motion/fade-up';
 
-export function generateStaticParams() {
-  return doctors.map((d) => ({ slug: d.slug }));
+export const revalidate = 60;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  // generateStaticParams runs at build time without an HTTP request,
+  // so we must not call cookies(). Use a cookie-free public client instead.
+  const { createClient: createPublicClient } = await import('@supabase/supabase-js');
+  const supabase = createPublicClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+  const { data } = await supabase.from('doctors').select('slug').eq('active', true);
+  return (data ?? []).map((d: { slug: string }) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata({
@@ -16,7 +28,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const doctor = getDoctor(slug);
+  const doctor = await getDoctorBySlug(slug);
   if (!doctor) return {};
   return {
     title: doctor.name,
@@ -30,7 +42,7 @@ export default async function DoctorDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const doctor = getDoctor(slug);
+  const doctor = await getDoctorBySlug(slug);
   if (!doctor) notFound();
 
   const main = practiceInfo.phones[0]!;
@@ -84,8 +96,8 @@ export default async function DoctorDetailPage({
 
       {/* Bio body */}
       <FadeUp as="section" className="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-32">
-        <div className="space-y-6 text-stone-700 text-lg leading-[1.75] whitespace-pre-line">
-          {doctor.bio}
+        <div className="prose prose-stone prose-lg max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-p:leading-[1.75]">
+          <ReactMarkdown>{doctor.bio}</ReactMarkdown>
         </div>
 
         <div className="mt-16 border-t border-stone-200 pt-10">

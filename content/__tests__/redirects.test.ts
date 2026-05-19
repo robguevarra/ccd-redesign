@@ -35,4 +35,11 @@ describe('redirects', () => {
     expect(map['/services/oral-hygiene']).toBe(true);
     expect(map['/doctors/dr-serena-hsu']).toBe(true);
   });
+
+  test('patient-forms is no longer redirected to /contact', () => {
+    const map = Object.fromEntries(
+      redirects.filter((r) => r.status === 301).map((r) => [r.from, r.to]),
+    );
+    expect(map['/patient-forms']).toBeUndefined();
+  });
 });

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone, Star } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
-import { doctors } from '@/content/doctors';
+import { listDoctors } from '@/lib/supabase/queries';
 import { featuredReviews } from '@/content/reviews';
 import { FadeUp } from '@/components/motion/fade-up';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
@@ -51,8 +51,11 @@ const TECHNOLOGY_BULLETS = [
   },
 ];
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
   const main = practiceInfo.phones[0]!;
+  const doctors = await listDoctors();
 
   return (
     <>
@@ -130,7 +133,7 @@ export default function HomePage() {
           </p>
           <div className="md:flex md:items-end md:justify-between mb-14">
             <h2 className="font-serif text-4xl md:text-6xl tracking-tighter max-w-3xl">
-              Five doctors,{' '}
+              {doctors.length === 5 ? 'Five' : doctors.length} doctors,{' '}
               <span className="italic font-light text-stone-300">
                 one office.
               </span>

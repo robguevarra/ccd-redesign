@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
+import { uploadToBucket } from '@/lib/supabase/storage';
 
 const slugRe = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -161,4 +162,9 @@ export async function deletePost(id: string): Promise<PostActionResult> {
   }
 
   redirect('/admin/dashboard');
+}
+
+export async function uploadBlogImage(file: File): Promise<string | null> {
+  const r = await uploadToBucket('blog-images', file);
+  return r.ok ? r.publicUrl ?? null : null;
 }
