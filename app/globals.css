@@ -119,3 +119,22 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cold-open-scroll-cue { animation: none; opacity: 0.6; }
 }
+
+/* iOS Safari shows a centered play-button overlay on <video> elements
+ * until autoplay actually begins — even when the element has no controls
+ * attribute set. These rules suppress the native overlay so autoplay
+ * loops (cinematic hero, scroll-scrub videos) read as background imagery
+ * from first paint. preload="auto" + autoplay + muted + playsInline still
+ * do the work of actually starting the video; this only hides the
+ * pre-playback UI chrome. */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  opacity: 0;
+  pointer-events: none;
+}
