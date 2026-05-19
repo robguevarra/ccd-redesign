@@ -13,10 +13,21 @@ export function AppointmentForm() {
       <div className="rounded-2xl border border-stone-200 bg-stone-50 p-10 text-center">
         <CheckCircle2 className="h-12 w-12 mx-auto text-stone-900 mb-6" aria-hidden="true" />
         <h2 className="font-serif text-3xl text-stone-900 mb-3">Request received.</h2>
-        <p className="text-stone-600 max-w-md mx-auto">
+        <p className="text-stone-600 max-w-md mx-auto mb-8">
           We'll call you back the same business day. If it's outside of office
           hours, we'll reach out first thing in the morning.
         </p>
+        <div className="pt-6 border-t border-stone-200 max-w-md mx-auto">
+          <p className="text-sm text-stone-600 mb-3">
+            Before your visit, you can fill out paperwork in advance:
+          </p>
+          <a
+            href="/patient-forms"
+            className="inline-flex items-center gap-2 text-sm font-medium text-stone-900 underline underline-offset-4 hover:text-stone-700"
+          >
+            Open patient forms →
+          </a>
+        </div>
       </div>
     );
   }
