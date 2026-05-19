@@ -53,9 +53,8 @@ export function UserEditor({ user }: { user: StaffUser }) {
         />
       </Field>
       <Field label="Active" id="active">
-        <input type="hidden" name="active" value="false" />
         <label className="inline-flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" name="active" value="true" defaultChecked={user.active} className="accent-stone-900" />
+          <input type="checkbox" name="active" defaultChecked={user.active} className="accent-stone-900" />
           <span className="text-sm">Allow this user to sign in</span>
         </label>
       </Field>

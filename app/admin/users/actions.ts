@@ -78,7 +78,7 @@ const updateSchema = z.object({
   displayName: z.string().min(1).max(120),
   role: z.enum(['owner', 'editor']),
   doctorSlug: z.string().optional().or(z.literal('')),
-  active: z.enum(['true', 'false']).transform((v) => v === 'true'),
+  active: z.boolean(),
 });
 
 export async function updateUser(
@@ -92,7 +92,7 @@ export async function updateUser(
     displayName: formData.get('displayName'),
     role: formData.get('role'),
     doctorSlug: formData.get('doctorSlug') ?? '',
-    active: formData.get('active') ?? 'true',
+    active: formData.has('active'),
   });
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? 'Invalid input.' };
