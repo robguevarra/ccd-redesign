@@ -28,11 +28,19 @@ export function AdminNav({ role }: AdminNavProps) {
       aria-label="Admin sections"
       className="border-b border-stone-200 bg-white"
     >
-      <ul className="mx-auto max-w-7xl px-5 md:px-8 flex flex-wrap gap-1 -mb-px">
+      <ul
+        className={cn(
+          'mx-auto max-w-7xl px-5 md:px-8 flex gap-1 -mb-px',
+          // Single row at every width — scroll horizontally if needed.
+          // Hides the scrollbar to keep the editorial look while preserving
+          // touch + trackpad scroll affordance.
+          'overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        )}
+      >
         {items.map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + '/');
           return (
-            <li key={item.href}>
+            <li key={item.href} className="shrink-0">
               <Link
                 href={item.href}
                 className={cn(
