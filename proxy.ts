@@ -3,7 +3,7 @@ import { createServerClient } from '@supabase/ssr';
 
 /**
  * Refresh the Supabase auth session on every request and gate /admin/* routes
- * behind authentication. Per Supabase SSR best practices.
+ * behind authentication AND active staff_users membership.
  *
  * In Next 16+ the file/export convention is `proxy` (was `middleware`).
  */
@@ -40,16 +40,40 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Gate /admin/* (except /admin/login) behind authentication.
-  if (
-    request.nextUrl.pathname.startsWith('/admin') &&
-    !request.nextUrl.pathname.startsWith('/admin/login') &&
-    !user
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/admin/login';
-    url.searchParams.set('next', request.nextUrl.pathname);
-    return NextResponse.redirect(url);
+  // Gate /admin/* (except /admin/login + /admin/access-denied) behind both
+  // authentication AND active staff_users membership.
+  const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
+  const isExempt =
+    request.nextUrl.pathname.startsWith('/admin/login') ||
+    request.nextUrl.pathname.startsWith('/admin/access-denied');
+
+  if (isAdminPath && !isExempt) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      url.searchParams.set('next', request.nextUrl.pathname);
+      return NextResponse.redirect(url);
+    }
+    const { data: staff } = await supabase
+      .from('staff_users')
+      .select('role, active')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (!staff || !staff.active) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/access-denied';
+      return NextResponse.redirect(url);
+    }
+    // Owner-only path guard for /admin/users/*.
+    if (
+      request.nextUrl.pathname.startsWith('/admin/users') &&
+      staff.role !== 'owner'
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/dashboard';
+      return NextResponse.redirect(url);
+    }
   }
 
   // Redirect authenticated users away from /admin/login to dashboard.
