@@ -30,11 +30,11 @@ A **pitch website** — a live, deployed reimagining of [dentisthsu.com](https:/
 | **Phase 2 detail spec** | **✅ Written, approved 2026-05-05** — [P2 spec](docs/superpowers/specs/2026-05-05-dentisthsu-phase-2-ia-content-strategy.md) |
 | **Phase 2 implementation plan** | **✅ Written 2026-05-05** — [P2 plan](docs/superpowers/plans/2026-05-05-phase-2-ia-content-strategy.md) |
 | **Phase 2 execution** | **✅ Shipped 2026-05-05** — [`docs/ia/`](docs/ia/), [`content/`](content/) |
-| Phase 3 — Visual & Brand Direction | ⏳ Next. **Invoke `ui-ux-pro-max` skill** when starting (see decisions log). |
-| Phase 4–5 detail specs | ⛔ Not started |
-| Code (Next.js front-end) | ⛔ Not started — begins in P4 |
-| Vercel project | ⛔ Not created yet — created in P4 |
-| Supabase project | ⛔ Not created yet — created in P4 |
+| Phase 3 — Visual & Brand Direction | ✅ Shipped via P3.5 pre-pitch audit pass (see HANDOFF.md §5a). |
+| Phase 4 — Code build-out | ✅ Shipped. Next.js 16 App Router + Supabase + Vercel + Tailwind v4. |
+| **Phase 5 — Admin CMS expansion** | **✅ Shipped 2026-05-19** — patient forms, inquiry inbox, doctor CMS, multi-user staff auth, Tiptap WYSIWYG editor, password-reset flow. [P5 spec](docs/superpowers/specs/2026-05-19-admin-cms-expansion-design.md), [P5 plan](docs/superpowers/plans/2026-05-19-admin-cms-expansion.md). |
+| Vercel project | ✅ Auto-deploys from `main` |
+| Supabase project | ✅ `qxicorwwknphfzvyjngz` — 5 tables, 3 storage buckets, RLS in place |
 | Firecrawl API key | ✅ In `.env.local` (gitignored) |
 | Discovery pipeline | ✅ `scripts/p1-discovery/` — 7 cache-aware steps + run-all + teardown-captures |
 | Content schemas | ✅ `content/schemas.ts` — 8 typed contracts (Service, Doctor, BlogPost, …, Redirect) |

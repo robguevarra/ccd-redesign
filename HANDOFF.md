@@ -1,11 +1,10 @@
 # Comfort Care Dental — Pitch Site Handoff
 
-**Date:** 2026-05-07
+**Date:** 2026-05-19 (admin CMS expansion shipped)
 **Engagement owner:** Rob Guevarra · `robneil@gmail.com`
 **Project root:** `/Users/robguevarra/Documents/Coding Projects/ccd/ccd2`
-**Active worktree:** `/Users/robguevarra/Documents/Coding Projects/ccd2/vigorous-curie-fee25e`
-**Current branch:** `main` (all P3.5 audit-pass + v2 polish work merged)
-**Last commit:** `068a284`
+**Active worktree (P5):** `/Users/robguevarra/Documents/Coding Projects/ccd2/thirsty-chatelet-b97848`
+**Current branch:** `main` (Phase 5 admin CMS expansion merged 2026-05-19)
 **Repo:** [github.com/robguevarra/ccd-redesign](https://github.com/robguevarra/ccd-redesign)
 
 This document is the single source of truth for finishing the pitch deployment, demoing to the dentist, and continuing the engagement if signed. Read it top to bottom before doing anything.
@@ -77,9 +76,11 @@ Set these on Vercel **before deploying**. They exist locally in `.env.local` (gi
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://qxicorwwknphfzvyjngz.supabase.co` | Vercel project → Settings → Environment Variables → Production + Preview |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `sb_publishable_yhMRhZ3ehFfh3Si7ep2oJw_tgxdXvC3` | Same |
+| **`SUPABASE_SERVICE_ROLE_KEY`** | Get from Supabase Dashboard → Settings → API → `service_role` (secret) | **Required since 2026-05-19.** Server-only. Backs the "Add a teammate" flow at `/admin/users/invite` (calls `auth.admin.createUser`). Without it the page throws. Set on Vercel Production + Preview. |
+| `SEED_OWNER_EMAIL` | `robneil@gmail.com` | Only needed once, locally, to run `scripts/seed-owner.ts`. Don't set on Vercel. |
 | `FIRECRAWL_API_KEY` | `fc-a0b8efe9eae44e228da057e9a8553ddd` | **Not needed for production** — only used by P1 discovery scripts. Don't set on Vercel. |
 
-The two public Supabase vars are safe to expose — that's their design.
+The two public Supabase vars are safe to expose — that's their design. The service-role key is NOT — never prefix with `NEXT_PUBLIC_`. The codebase enforces this via `'server-only'` imports in [lib/supabase/service-role.ts](lib/supabase/service-role.ts).
 
 ---
 
@@ -175,6 +176,46 @@ These all came from the client's annotations on the deployed site:
 - **Direct Composite Veneers** — added as a new service (was missing)
 - **Porcelain Veneers** — summary now says "with minimal reduction of the underlying teeth" (was incorrectly "without changing")
 - **"Medical-grade dentistry"** — phrase removed everywhere (the practice doesn't use it); replaced with warmer phrasings like "dental and medical care under one roof"
+
+### 5d. Phase 5 — Admin CMS expansion (2026-05-19)
+
+The biggest delivery since the pitch baseline. Spec: [docs/superpowers/specs/2026-05-19-admin-cms-expansion-design.md](docs/superpowers/specs/2026-05-19-admin-cms-expansion-design.md). Plan: [docs/superpowers/plans/2026-05-19-admin-cms-expansion.md](docs/superpowers/plans/2026-05-19-admin-cms-expansion.md). Decisions-log entry at the top of [docs/superpowers/decisions.md](docs/superpowers/decisions.md).
+
+The locked-in P2 scope was "blog only" — Phase 5 extends the admin to cover patient forms, the inquiry inbox, doctor profiles, and multi-user staff auth. Same Next.js + Supabase stack, no new vendors.
+
+| Domain | Routes | Notes |
+|---|---|---|
+| **Multi-user staff auth** | `/admin/users`, `/admin/users/invite`, `/admin/users/[user_id]` (owner-only) | `staff_users` allowlist gates `/admin/*` via middleware. Two roles: `owner` (can manage users) and `editor`. **Invite flow creates email + password directly** — no magic-link email. Owner hands the password to the teammate. |
+| **Login flow** | `/admin/login`, `/admin/forgot-password`, `/admin/auth/callback`, `/admin/reset-password` | Public sign-up dropped. "Forgot your password?" link → Supabase magic link → PKCE callback → set new password. Branded email template at [docs/supabase-email-templates/password-reset.html](docs/supabase-email-templates/password-reset.html) (paste manually into Supabase Studio). |
+| **Inquiry inbox** | `/admin/inquiries`, `/admin/inquiries/[id]`, `/admin/inquiries/export` | All `appointment_requests` with filter chips, inline patient notes + internal notes preview on list rows, status pills (new/contacted/closed), auto-saving internal notes, CSV export Route Handler. |
+| **Patient Forms** | `/admin/patient-forms`, `/admin/patient-forms/new`, `/admin/patient-forms/[id]`, public `/patient-forms` | PDF upload to Supabase Storage. Reorder with up/down arrows. Hide without delete. Public page on `/patient-forms` (the old 301 → /contact dropped). Discoverable via footer, mobile drawer, /contact card, /request-appointment success state — **not** on desktop top nav (kept the 6-item density). |
+| **Doctor CMS** | `/admin/doctors`, `/admin/doctors/new`, `/admin/doctors/[slug]` | Full CRUD with portrait upload + click-to-set focal-point picker, multi-paragraph Tiptap bio editor, reorder, lead-clinician exclusive toggle. The 5 existing doctors were seeded into the new `doctors` Supabase table; [content/doctors.ts](content/doctors.ts) stays on disk as seed/typed-fallback reference. All public consumers (home, /doctors, /doctors/[slug], /blog author byline, sitemap, structured-data) now query Supabase. |
+| **WYSIWYG editor** | Used in blog post body + doctor bio | Tiptap + `tiptap-markdown` extension. Round-trips to Markdown so `blog_posts.body_mdx` schema is unchanged and the 5 seeded posts open without diff. Toolbar: bold, italic, H2, H3, lists, blockquote, link (URL validated), image (blog only — uploads to `blog-images` bucket). |
+| **Admin shell polish** | `app/admin/_components/admin-nav.tsx`, `components/admin/toast.tsx` | Horizontal sub-nav (Dashboard · Posts · Doctors · Patient Forms · Inquiries · Users). Unified save toasts across every editor (3s auto-dismiss). Auto-slug on post + doctor editors. Staff-only blog draft preview via `?preview=1`. |
+
+**Database delta (5 migrations in [supabase/migrations/](supabase/migrations/)):**
+
+- `doctors` (NEW) — CMS-managed; partial unique index on `is_lead`.
+- `patient_forms` (NEW) — PDFs in Storage bucket `patient-forms`.
+- `staff_users` (NEW) — auth allowlist + role + optional `doctor_slug` binding.
+- `appointment_requests.internal_notes` (NEW column).
+- 3 Storage buckets: `doctor-portraits` (5 MB), `patient-forms` (10 MB), `blog-images` (8 MB).
+- RLS: `is_active_owner()` + `is_active_staff()` SECURITY DEFINER functions; all writes on admin-managed tables and bucket mutations gated through `is_active_staff()`.
+- `blog_posts.author_doctor_slug` FK → `doctors.slug` (ON DELETE SET NULL).
+
+**Tests:** 48/48 passing. Includes new smoke test for `getDoctorBySlug` mapping.
+
+**Pre-pitch manual steps (do BEFORE pushing to prod):**
+
+1. **Set `SUPABASE_SERVICE_ROLE_KEY` on Vercel** (Production + Preview). Without it, `/admin/users/invite` and all owner-only flows throw.
+2. **Paste the password-reset email template into Supabase Studio** at https://supabase.com/dashboard/project/qxicorwwknphfzvyjngz/auth/templates → "Reset Password". Template source: [docs/supabase-email-templates/password-reset.html](docs/supabase-email-templates/password-reset.html).
+3. **Test the full admin flow on the live URL** before the pitch — sign in as `robneil@gmail.com` (already seeded), invite a teammate, create a test doctor, upload a test PDF, change an inquiry's status. Confirm toasts appear and the public pages reflect the changes within ~10s of save.
+
+**Seeded admin credentials (live in Supabase):**
+
+- Email: `robneil@gmail.com`
+- Password: `testpass123` (change via `/admin/forgot-password` or `/admin/reset-password` once signed in)
+- Role: `owner`
 
 ---
 

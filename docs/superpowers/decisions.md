@@ -4,6 +4,34 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 
 ---
 
+## 2026-05-19 — Admin CMS scope expansion + multi-user auth + WYSIWYG editor
+
+**Scope:** Admin/CMS surface area; P5 polish phase.
+
+**Decision:** Extended the previously-locked "blog only" CMS scope (this file, entry below from 2026-05-05) to also cover **patient forms**, the **appointment-request inbox**, and **doctor profiles**. Added **multi-user staff auth** with two roles (`owner`, `editor`) and an invite-only signup flow gated by a `staff_users` allowlist table. Replaced the plain Markdown textarea in the blog editor with a **Tiptap WYSIWYG editor** that round-trips to Markdown so the existing schema and renderer remain unchanged. Dropped the `/patient-forms → /contact` 301 redirect and restored `/patient-forms` as a real public page (discoverable via mobile drawer, footer, contact-page card, and the request-appointment success state — no desktop top-nav slot).
+
+**Mid-flight refinements before pitch:**
+
+- **Invite-via-email** replaced with **owner sets the password directly** at `/admin/users/invite`. No email is sent — the owner shares the password with the teammate via a secure channel. Backed by `auth.admin.createUser({ email_confirm: true, ... })`.
+- **Forgot password** flow added: `/admin/login` → `/admin/forgot-password` → Supabase magic link → `/admin/auth/callback` (PKCE) → `/admin/reset-password`. Branded email template at [docs/supabase-email-templates/password-reset.html](../supabase-email-templates/password-reset.html); pasted manually into Supabase Studio.
+- **Auto-slug** on post + doctor editors (auto-syncs from title/name; locks once user types in the slug field manually).
+- **Draft preview** for blog posts: `?preview=1` query bypasses the published-only filter when the caller is an active staff member; rendered with a "Draft preview" banner. Public requests still 404 on drafts.
+- **Unified save toasts** across all admin editors (`components/admin/toast.tsx`).
+- **RLS hardening**: `is_active_staff()` SECURITY DEFINER gates all writes to `doctors`, `patient_forms`, `blog_posts`, and Storage object mutations. Middleware is the primary gate; this is defense in depth.
+- **Bug fix**: checkbox+hidden form pattern was broken (FormData.get returns FIRST value). Replaced with single-checkbox + `formData.has()` server-side.
+
+**Out of scope (deferred):** Online fillable patient forms; per-staff write restrictions; approval workflow; edit-history audit log; tables/code blocks/in-bio image upload in the editor; drag-and-drop reordering; blur-data-URL generation for admin-uploaded portraits.
+
+**Pre-push manual steps for the engagement owner:**
+
+1. Set `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` + Vercel (Production + Preview).
+2. Paste [docs/supabase-email-templates/password-reset.html](../supabase-email-templates/password-reset.html) into Supabase Studio → Authentication → Email Templates → "Reset Password".
+3. Sign in to `/admin/login` as `robneil@gmail.com` (seeded owner) and exercise: invite a teammate, edit a doctor, upload a patient form, change an inquiry's status, preview a draft post.
+
+**Reference:** [Design spec](specs/2026-05-19-admin-cms-expansion-design.md), [Implementation plan](plans/2026-05-19-admin-cms-expansion.md). Implementation across ~85 commits between `f78ab1e` (pre-work `main`) and the head at merge time.
+
+---
+
 ## 2026-05-05 — P2 deliverables shipped
 
 **Scope:** Phase 2 (IA + Content Strategy) acceptance.
