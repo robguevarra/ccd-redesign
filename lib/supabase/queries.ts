@@ -81,6 +81,22 @@ export async function getPost(id: string): Promise<BlogPost | null> {
   return data ? rowToPost(data) : null;
 }
 
+/**
+ * Returns a post by slug regardless of status. Only call this from contexts
+ * where you've already verified the caller is an active staff member, or
+ * the post will leak unpublished content.
+ */
+export async function getPostBySlugAnyStatus(slug: string): Promise<BlogPost | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('slug', slug)
+    .maybeSingle();
+  if (error) return null;
+  return data ? rowToPost(data) : null;
+}
+
 function rowToInquiry(row: any): AppointmentRequest {
   return {
     id: row.id,

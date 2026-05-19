@@ -75,12 +75,15 @@ export function PostEditor({ post, doctors }: PostEditorProps) {
         </h1>
         {post && (
           <Link
-            href={`/blog/${post.slug}`}
+            href={
+              post.status === 'published'
+                ? `/blog/${post.slug}`
+                : `/blog/${post.slug}?preview=1`
+            }
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-stone-600 hover:text-stone-900"
           >
-            {/* Draft preview will 404 until published — acceptable for v1; v2 can add a ?preview token. */}
             {post.status === 'published' ? 'View published →' : 'Preview draft →'}
           </Link>
         )}
