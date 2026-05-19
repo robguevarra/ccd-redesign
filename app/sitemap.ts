@@ -1,11 +1,10 @@
 import type { MetadataRoute } from 'next';
-import { doctors } from '@/content/doctors';
 import { services } from '@/content/services';
-import { listPublishedPosts } from '@/lib/supabase/queries';
+import { listPublishedPosts, listDoctors } from '@/lib/supabase/queries';
 import { SITE_URL as BASE } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await listPublishedPosts();
+  const [posts, doctors] = await Promise.all([listPublishedPosts(), listDoctors()]);
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [

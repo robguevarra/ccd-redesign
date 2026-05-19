@@ -1,5 +1,5 @@
 import { practiceInfo } from '@/content/practice-info';
-import { doctors } from '@/content/doctors';
+import { listDoctors } from '@/lib/supabase/queries';
 import { SITE_URL as BASE } from '@/lib/site';
 
 /**
@@ -8,7 +8,8 @@ import { SITE_URL as BASE } from '@/lib/site';
  * social links — everything Google needs to populate a rich Knowledge Panel
  * and improve Local SEO.
  */
-export function PracticeStructuredData() {
+export async function PracticeStructuredData() {
+  const doctors = await listDoctors();
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Dentist',

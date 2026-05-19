@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { getPublishedPost } from '@/lib/supabase/queries';
-import { getDoctor } from '@/content/doctors';
+import { getPublishedPost, getDoctorBySlug } from '@/lib/supabase/queries';
 
 // Posts are Supabase-driven — render on-demand with ISR via revalidatePath
 // triggered from the admin publish action.
@@ -33,7 +32,7 @@ export default async function BlogPostPage({
   const post = await getPublishedPost(slug);
   if (!post) notFound();
 
-  const author = getDoctor(post.authorDoctorSlug);
+  const author = await getDoctorBySlug(post.authorDoctorSlug);
 
   return (
     <article>
