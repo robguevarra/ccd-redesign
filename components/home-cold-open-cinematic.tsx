@@ -9,6 +9,7 @@ import {
   useTransform,
   AnimatePresence,
 } from 'framer-motion';
+import { markVideoReady } from '@/lib/video-ready';
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
@@ -99,9 +100,6 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   // Desktop: horizontal split — left translates left, right translates right.
   const xLeft = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
   const xRight = useTransform(splitProgress, [0, 1], ['0%', '100%']);
-  // Mobile: vertical split — top translates up, bottom translates down.
-  const yTop = useTransform(splitProgress, [0, 1], ['0%', '-100%']);
-  const yBottom = useTransform(splitProgress, [0, 1], ['0%', '100%']);
 
   // Phase 1 cycling questions: visible 0-20%, fades 20-26%.
   const phase1TextOpacity = useTransform(progressMV, [0, 0.20, 0.26], [1, 1, 0]);
@@ -117,6 +115,29 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   const revealOpacity = useTransform(progressMV, [0.78, 0.92], [0, 1]);
   // Reveal y-entry — slides up softly with the fade-in.
   const revealY = useTransform(progressMV, [0.78, 0.92], [24, 0]);
+
+  // Mobile: single video fades out 75% → 92% as the reveal content fades in.
+  // Replaces the two-video split mechanic on mobile to avoid GPU decoder desync.
+  const mobileVideoOpacity = useTransform(progressMV, [0.75, 0.92], [1, 0]);
+
+  // Signal the LoadingScreen when the home video is ready to play.
+  useEffect(() => {
+    const left = videoLeftRef.current;
+    if (!left) return;
+    const onReady = () => markVideoReady();
+    if (left.readyState >= 4) {
+      // Already buffered (fast cache hit) — mark ready immediately.
+      onReady();
+      return;
+    }
+    // loadeddata fires at readyState 2 — enough to start playback.
+    left.addEventListener('canplaythrough', onReady);
+    left.addEventListener('loadeddata', onReady);
+    return () => {
+      left.removeEventListener('canplaythrough', onReady);
+      left.removeEventListener('loadeddata', onReady);
+    };
+  }, []);
 
   // ─────── Strict scroll-jack between cinematic phases ────────────────────
   // Each wheel tick / swipe / arrow key jumps exactly one snap point forward
@@ -312,7 +333,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
         {/* Embedded reveal: Two practices, under one roof. Sits at z-0 behind the video.
             Becomes visible as the video halves split apart (Phase 3, 0.78 → 0.92). */}
         <motion.div
-          style={{ opacity: revealOpacity, y: revealY, paddingTop: `${headerH}px` }}
+          style={{ opacity: revealOpacity, y: revealY, paddingTop: `${headerH}px`, willChange: 'transform, opacity' }}
           className="absolute inset-0 flex flex-col items-center justify-center z-0 px-6 pointer-events-none"
         >
           <div className="text-center max-w-5xl pointer-events-auto">
@@ -346,49 +367,76 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
           </div>
         </motion.div>
 
-        {/* ─────────── Left video half (clipped; desktop: left half / mobile: top half) ─────────── */}
-        <motion.div
-          style={{
-            x: isMobile ? 0 : xLeft,
-            y: isMobile ? yTop : 0,
-            clipPath: isMobile ? 'inset(0 0 50% 0)' : 'inset(0 50% 0 0)',
-          }}
-          className="absolute inset-0 z-10"
-        >
-          <video
-            ref={videoLeftRef}
-            src={isMobile ? '/videos/home-cold-open-mobile.mp4' : '/videos/home-cold-open-web.mp4'}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
-          />
-        </motion.div>
+        {isMobile ? (
+          /* ─────────── Mobile: single full-bleed video, opacity-fade exit ─────────── */
+          /* One decoder instead of two eliminates the seam caused by GPU desync on iOS. */
+          /* Phase 3 "split" becomes a simple opacity fade (mobileVideoOpacity). */
+          <motion.div
+            style={{
+              opacity: mobileVideoOpacity,
+              willChange: 'transform, opacity',
+            }}
+            className="absolute inset-0 z-10"
+          >
+            <video
+              ref={videoLeftRef}
+              src="/videos/home-cold-open-mobile.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="h-full w-full object-cover"
+              style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
+            />
+          </motion.div>
+        ) : (
+          <>
+            {/* ─────────── Desktop: left video half (clip-path: right 50%) ─────────── */}
+            <motion.div
+              style={{
+                x: xLeft,
+                clipPath: 'inset(0 50% 0 0)',
+                willChange: 'transform, opacity',
+              }}
+              className="absolute inset-0 z-10"
+            >
+              <video
+                ref={videoLeftRef}
+                src="/videos/home-cold-open-web.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="h-full w-full object-cover"
+                style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
+              />
+            </motion.div>
 
-        {/* ─────────── Right video half (clipped; desktop: right half / mobile: bottom half) ─────────── */}
-        <motion.div
-          style={{
-            x: isMobile ? 0 : xRight,
-            y: isMobile ? yBottom : 0,
-            clipPath: isMobile ? 'inset(50% 0 0 0)' : 'inset(0 0 0 50%)',
-          }}
-          className="absolute inset-0 z-10"
-        >
-          <video
-            ref={videoRightRef}
-            src={isMobile ? '/videos/home-cold-open-mobile.mp4' : '/videos/home-cold-open-web.mp4'}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="h-full w-full object-cover"
-            style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
-          />
-        </motion.div>
+            {/* ─────────── Desktop: right video half (clip-path: left 50%) ─────────── */}
+            <motion.div
+              style={{
+                x: xRight,
+                clipPath: 'inset(0 0 0 50%)',
+                willChange: 'transform, opacity',
+              }}
+              className="absolute inset-0 z-10"
+            >
+              <video
+                ref={videoRightRef}
+                src="/videos/home-cold-open-web.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="h-full w-full object-cover"
+                style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
+              />
+            </motion.div>
+          </>
+        )}
 
         {/* ─────────── Vignette for text legibility ─────────── */}
         <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-stone-950/15 via-stone-950/20 to-stone-950/50" />
