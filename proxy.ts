@@ -45,7 +45,9 @@ export async function proxy(request: NextRequest) {
   const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
   const isExempt =
     request.nextUrl.pathname.startsWith('/admin/login') ||
-    request.nextUrl.pathname.startsWith('/admin/access-denied');
+    request.nextUrl.pathname.startsWith('/admin/access-denied') ||
+    request.nextUrl.pathname.startsWith('/admin/forgot-password') ||
+    request.nextUrl.pathname.startsWith('/admin/auth/callback');
 
   if (isAdminPath && !isExempt) {
     if (!user) {
