@@ -43,12 +43,12 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-serif text-2xl text-stone-900">Recent appointment requests</h2>
+        <section className="min-w-0">
+          <div className="flex items-start justify-between gap-3 mb-6">
+            <h2 className="font-serif text-xl sm:text-2xl text-stone-900 min-w-0 leading-snug">Recent appointment requests</h2>
             <Link
               href="/admin/inquiries"
-              className="text-sm text-stone-600 hover:text-stone-900"
+              className="text-sm text-stone-600 hover:text-stone-900 shrink-0 whitespace-nowrap"
             >
               View all →
             </Link>
@@ -92,12 +92,12 @@ export default async function AdminDashboard() {
           )}
         </section>
 
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-serif text-2xl text-stone-900">Posts</h2>
+        <section className="min-w-0">
+          <div className="flex items-center justify-between gap-3 mb-6">
+            <h2 className="font-serif text-xl sm:text-2xl text-stone-900 min-w-0 leading-snug">Posts</h2>
             <Link
               href="/admin/posts/new"
-              className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-4 py-2 text-sm font-medium hover:bg-stone-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-4 py-2 text-sm font-medium hover:bg-stone-700 transition-colors shrink-0 whitespace-nowrap"
             >
               <Plus className="h-4 w-4" /> New post
             </Link>
