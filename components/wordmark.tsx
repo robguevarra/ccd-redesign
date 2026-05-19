@@ -1,50 +1,83 @@
+'use client';
+
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import type { Lane } from '@/lib/lane';
 import { cn } from '@/lib/cn';
 
 interface WordmarkProps {
   className?: string;
-  ariaLabel?: string;
   variant?: 'light' | 'dark';
+  /**
+   * Which brand identity to render. Defaults to 'neutral' = the practice
+   * brand ("Comfort Care Dental"). Medical lane swaps to the doctor's
+   * professional credentials ("Brien Hsu, DDS MS & Associates"), which is
+   * the legal entity for the medical side of the practice.
+   */
+  lane?: Lane;
 }
 
+const TRANSITION = {
+  duration: 0.4,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
 /**
- * SVG wordmark for Comfort Care Dental. Inline SVG so it scales crisply at
- * any size and inherits color via CSS — no PNG raster, no font fallback flash.
+ * Lane-aware brand wordmark. Renders one of two identities and cross-fades
+ * between them when the lane changes — driven by AnimatePresence keyed on
+ * the lane string.
  *
- * Composed using explicit tspan x positioning so the layout is deterministic
- * and never truncates, regardless of font availability.
+ *   neutral / dental  →  "Comfort Care Dental"
+ *   medical           →  "Brien Hsu, DDS MS & Associates"
+ *
+ * Composed in HTML + Tailwind (not SVG text) so the layout adapts naturally
+ * to variable string widths. Uses the Fraunces serif via --font-serif.
  */
 export function Wordmark({
   className,
-  ariaLabel = 'Comfort Care Dental',
   variant = 'light',
+  lane = 'neutral',
 }: WordmarkProps) {
-  const fill = variant === 'light' ? 'currentColor' : '#fafaf9';
+  const reduced = useReducedMotion();
+  const isMedical = lane === 'medical';
+  const color = variant === 'light' ? 'text-current' : 'text-stone-50';
 
   return (
-    <svg
-      viewBox="0 0 360 44"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label={ariaLabel}
-      role="img"
-      className={cn('inline-block h-7 md:h-8 w-auto select-none', className)}
-      fill="none"
+    <span
+      aria-label={isMedical ? 'Brien Hsu, DDS MS & Associates' : 'Comfort Care Dental'}
+      className={cn(
+        'relative inline-block font-serif whitespace-nowrap leading-none',
+        color,
+        className,
+      )}
     >
-      <g
-        fontFamily="var(--font-serif), Georgia, serif"
-        fontSize="32"
-        letterSpacing="-0.02em"
-        fill={fill}
-      >
-        <text x="0" y="32" fontWeight="400">
-          Comfort
-        </text>
-        <text x="125" y="32" fontWeight="300" fontStyle="italic">
-          Care
-        </text>
-        <text x="200" y="32" fontWeight="400">
-          Dental
-        </text>
-      </g>
-    </svg>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={isMedical ? 'medical' : 'dental'}
+          initial={reduced ? { opacity: 0 } : { opacity: 0, y: 6 }}
+          animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, y: -6 }}
+          transition={reduced ? { duration: 0 } : TRANSITION}
+          className="inline-flex items-baseline gap-[0.22em] tracking-[-0.02em]"
+        >
+          {isMedical ? (
+            <>
+              <span className="font-normal text-[1.15rem] md:text-[1.3rem]">Brien</span>
+              <span className="font-light italic text-[1.15rem] md:text-[1.3rem]">
+                Hsu,
+              </span>
+              <span className="font-normal text-[0.7rem] md:text-[0.78rem] tracking-[0.06em] uppercase opacity-80">
+                DDS MS &amp; Associates
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="font-normal text-[1.4rem] md:text-[1.6rem]">Comfort</span>
+              <span className="font-light italic text-[1.4rem] md:text-[1.6rem]">Care</span>
+              <span className="font-normal text-[1.4rem] md:text-[1.6rem]">Dental</span>
+            </>
+          )}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
