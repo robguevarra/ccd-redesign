@@ -54,7 +54,18 @@ export async function createPatientForm(formData: FormData): Promise<FormActionR
     active: parsed.data.active,
   }).select('id').single();
 
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    if (upload.path) {
+      await deleteFromBucket('patient-forms', upload.path);
+    }
+    return { ok: false, error: error.message };
+  }
+  if (!data) {
+    if (upload.path) {
+      await deleteFromBucket('patient-forms', upload.path);
+    }
+    return { ok: false, error: 'Insert returned no id.' };
+  }
 
   revalidatePublic();
   redirect(`/admin/patient-forms/${data.id}`);
@@ -93,7 +104,12 @@ export async function updatePatientForm(
   }
 
   const { error } = await supabase.from('patient_forms').update(updates).eq('id', id);
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    if (typeof updates.file_path === 'string' && updates.file_path) {
+      await deleteFromBucket('patient-forms', updates.file_path);
+    }
+    return { ok: false, error: error.message };
+  }
 
   revalidatePublic();
   return { ok: true };

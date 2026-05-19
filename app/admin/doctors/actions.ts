@@ -92,7 +92,12 @@ export async function createDoctor(formData: FormData): Promise<DoctorActionResu
     display_order: nextOrder,
     active: parsed.data.active,
   });
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    if (portraitPath) {
+      await deleteFromBucket('doctor-portraits', portraitPath);
+    }
+    return { ok: false, error: error.message };
+  }
 
   revalidateAll(parsed.data.slug);
   redirect(`/admin/doctors/${parsed.data.slug}`);
@@ -152,7 +157,12 @@ export async function updateDoctor(
   }
 
   const { error } = await supabase.from('doctors').update(updates).eq('slug', slug);
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    if (typeof updates.portrait_path === 'string' && updates.portrait_path) {
+      await deleteFromBucket('doctor-portraits', updates.portrait_path);
+    }
+    return { ok: false, error: error.message };
+  }
 
   revalidateAll(parsed.data.slug);
   return { ok: true, slug: parsed.data.slug };
