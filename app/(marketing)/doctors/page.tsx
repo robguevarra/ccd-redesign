@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { doctors } from '@/content/doctors';
+import { listDoctors } from '@/lib/supabase/queries';
 import { FadeUp } from '@/components/motion/fade-up';
+
+export const revalidate = 60;
 
 export const metadata = {
   title: 'Doctors',
@@ -10,7 +12,8 @@ export const metadata = {
     'Five doctors. Twenty-five years of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
 };
 
-export default function DoctorsPage() {
+export default async function DoctorsPage() {
+  const doctors = await listDoctors();
   return (
     <>
       <section className="bg-stone-100/60 py-24 md:py-36 border-b border-stone-200">
@@ -19,7 +22,7 @@ export default function DoctorsPage() {
             The team
           </p>
           <h1 className="font-serif text-[clamp(3rem,9vw,8rem)] tracking-tighter text-stone-900 leading-[0.92] font-light">
-            Five doctors,
+            {numberWord(doctors.length)} doctors,
             <br />
             <span className="italic">one office.</span>
           </h1>
@@ -71,4 +74,12 @@ export default function DoctorsPage() {
       </section>
     </>
   );
+}
+
+function numberWord(n: number): string {
+  const words: Record<number, string> = {
+    1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five',
+    6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine', 10: 'Ten',
+  };
+  return words[n] ?? String(n);
 }
