@@ -24,12 +24,12 @@ export default async function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-8 py-12">
-      <div className="flex items-center justify-between mb-12">
-        <h1 className="font-serif text-3xl md:text-4xl text-stone-900">Dashboard</h1>
+      <div className="flex items-center justify-between gap-4 mb-12">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900">Dashboard</h1>
         <form action={signOut}>
           <button
             type="submit"
-            className="text-sm text-stone-600 hover:text-stone-900"
+            className="text-sm text-stone-600 hover:text-stone-900 whitespace-nowrap"
           >
             Sign out
           </button>
