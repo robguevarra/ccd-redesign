@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useToast, Toast } from '@/components/admin/toast';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import type { PatientForm } from '@/lib/supabase/queries';
 import { createPatientForm, updatePatientForm, deletePatientForm, type FormActionResult } from './actions';
@@ -9,6 +10,7 @@ import { createPatientForm, updatePatientForm, deletePatientForm, type FormActio
 export function PatientFormEditor({ form }: { form?: PatientForm }) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<FormActionResult | null>(null);
+  const { state: toastState, showToast } = useToast();
 
   async function handleDelete() {
     if (!form) return;
@@ -38,6 +40,7 @@ export function PatientFormEditor({ form }: { form?: PatientForm }) {
             : await createPatientForm(formData);
           setPending(false);
           if (r && !r.ok) setResult(r);
+          else if (r && r.ok) showToast(form ? 'Form updated.' : 'Form uploaded.');
         }}
         className="space-y-6"
       >
@@ -110,6 +113,7 @@ export function PatientFormEditor({ form }: { form?: PatientForm }) {
           </p>
         )}
       </form>
+      <Toast state={toastState} />
     </div>
   );
 }
