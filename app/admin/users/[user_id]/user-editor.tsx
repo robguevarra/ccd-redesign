@@ -3,17 +3,20 @@
 import { useState } from 'react';
 import type { StaffUser } from '@/lib/supabase/queries';
 import { updateUser, deactivateUser, type UserActionResult } from '../actions';
+import { useToast, Toast } from '@/components/admin/toast';
 
 export function UserEditor({ user }: { user: StaffUser }) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<UserActionResult | null>(null);
+  const { state: toastState, showToast } = useToast();
 
   async function handleDeactivate() {
     if (!confirm(`Deactivate ${user.displayName}? They will lose admin access.`)) return;
     setPending(true);
     const r = await deactivateUser(user.userId);
     setPending(false);
-    setResult(r);
+    if (r.ok) showToast('User deactivated.');
+    else setResult(r);
   }
 
   return (
@@ -23,7 +26,8 @@ export function UserEditor({ user }: { user: StaffUser }) {
         setResult(null);
         const r = await updateUser(user.userId, formData);
         setPending(false);
-        setResult(r);
+        if (r.ok) showToast('User updated.');
+        else setResult(r);
       }}
       className="space-y-6"
     >
@@ -77,15 +81,12 @@ export function UserEditor({ user }: { user: StaffUser }) {
         </button>
       </div>
 
-      {result && (
-        <p className={`text-sm rounded-lg px-4 py-3 ${
-          result.ok
-            ? 'text-green-800 bg-green-50 border border-green-200'
-            : 'text-red-700 bg-red-50 border border-red-200'
-        }`}>
-          {result.ok ? 'Saved.' : result.error}
+      {result && !result.ok && (
+        <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+          {result.error}
         </p>
       )}
+      <Toast state={toastState} />
     </form>
   );
 }
