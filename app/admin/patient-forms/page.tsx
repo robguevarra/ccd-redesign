@@ -15,8 +15,8 @@ export default async function PatientFormsAdminPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-8 py-12">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="font-serif text-3xl md:text-4xl text-stone-900">Patient Forms</h1>
+      <div className="flex items-center justify-between gap-3 mb-10">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900">Patient Forms</h1>
         <Link
           href="/admin/patient-forms/new"
           className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-stone-50 px-4 py-2 text-sm font-medium hover:bg-stone-700 transition-colors"
