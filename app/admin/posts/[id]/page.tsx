@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPost } from '@/lib/supabase/queries';
+import { getPost, listDoctors } from '@/lib/supabase/queries';
 import { PostEditor } from '../post-editor';
 
 export const metadata = {
@@ -15,7 +15,7 @@ export default async function EditPostPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const post = await getPost(id);
+  const [post, doctors] = await Promise.all([getPost(id), listDoctors()]);
   if (!post) notFound();
-  return <PostEditor post={post} />;
+  return <PostEditor post={post} doctors={doctors.map((d) => ({ slug: d.slug, name: d.name }))} />;
 }

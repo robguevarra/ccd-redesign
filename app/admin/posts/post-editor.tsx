@@ -4,16 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import type { BlogPost } from '@/content/schemas';
-import { doctors } from '@/content/doctors';
 import { createPost, updatePost, deletePost, type PostActionResult } from './actions';
 import { RichTextEditor } from '@/components/admin/rich-text-editor';
 import { uploadBlogImage } from './actions';
 
 interface PostEditorProps {
   post?: BlogPost;
+  doctors: Array<{ slug: string; name: string }>;
 }
 
-export function PostEditor({ post }: PostEditorProps) {
+export function PostEditor({ post, doctors }: PostEditorProps) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<PostActionResult | null>(null);
   const [savedToast, setSavedToast] = useState<string | null>(null);
