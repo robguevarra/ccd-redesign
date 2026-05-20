@@ -97,12 +97,12 @@ export function SiteHeader({
           }}
         />
       </AnimatePresence>
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between md:justify-start gap-6 px-5 py-4 md:px-8 md:py-5">
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between md:justify-start gap-[24px] px-[20px] py-[16px] md:px-[32px] md:py-[20px]">
         {/* LEFT — Brand */}
         <div className="md:flex-1 flex items-center justify-start">
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="flex items-center gap-[12px]"
             aria-label={`${practiceInfo.brandName} home`}
           >
             <Logo size={28} mobileSize={24} decorative lane={lane} />
@@ -134,7 +134,7 @@ export function SiteHeader({
         </div>
 
         {/* RIGHT — Nav + CTAs + Hamburger */}
-        <div className="md:flex-1 flex items-center justify-end gap-5">
+        <div className="md:flex-1 flex items-center justify-end gap-[20px]">
           <nav className="hidden md:flex items-center gap-[20px] text-[12px]">
             {NAV_ITEMS.map((item) => (
               <Link
