@@ -56,7 +56,7 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
       role="group"
       aria-label="Practice lane"
       className={cn(
-        'flex items-center gap-1 rounded-full p-1 border',
+        'flex items-center gap-[4px] rounded-full p-[4px] border',
         variant === 'light'
           ? 'bg-stone-100/80 border-stone-200'
           : 'bg-stone-100/10 border-stone-100/20',
@@ -72,7 +72,7 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
             aria-current={active ? 'page' : undefined}
             title={opt.hoverHint}
             className={cn(
-              'inline-flex flex-1 justify-center items-center gap-2 rounded-full px-4 min-h-10 text-sm font-medium',
+              'inline-flex flex-1 justify-center items-center gap-[8px] rounded-full px-[16px] min-h-[40px] text-[14px] font-medium',
               'transition-[background-color,color,transform] duration-300 ease-out',
               'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
               variant === 'light'
@@ -90,7 +90,7 @@ export function LaneToggle({ variant = 'light', className }: LaneToggleProps) {
             <span
               aria-hidden="true"
               className={cn(
-                'inline-flex items-center justify-center w-5 h-5 rounded text-[10px] font-bold',
+                'inline-flex items-center justify-center w-[20px] h-[20px] rounded text-[10px] font-bold',
                 active
                   ? variant === 'light'
                     ? 'bg-stone-50 text-[var(--color-accent-600)]'

@@ -120,12 +120,12 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-stone-800">
-        <div className="mx-auto max-w-7xl px-5 md:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-stone-500">
+        <div className="mx-auto max-w-7xl px-5 md:px-8 py-[24px] flex flex-col md:flex-row items-start md:items-center justify-between gap-[16px] text-[12px] text-stone-500">
           <p>
             © {new Date().getFullYear()} {practiceInfo.brandName}.{' '}
             {practiceInfo.legalName}.
           </p>
-          <nav className="flex flex-wrap gap-x-5 gap-y-2">
+          <nav className="flex flex-wrap gap-x-[20px] gap-y-[8px]">
             <Link
               href="/dental"
               className="hover:text-[var(--color-accent-200)] transition-colors"
