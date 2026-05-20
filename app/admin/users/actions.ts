@@ -17,6 +17,32 @@ async function requireOwner(): Promise<{ ok: true; userId: string } | UserAction
   return { ok: true, userId: me.userId };
 }
 
+/**
+ * Front office isn't a doctor, so force their binding to null. For other
+ * roles, if a slug was supplied, verify it actually exists in `doctors`
+ * before the insert — otherwise the FK error would bubble up as a raw
+ * Postgres message.
+ */
+async function resolveDoctorSlug(
+  role: 'owner' | 'editor' | 'front_office',
+  raw: string | undefined,
+): Promise<{ ok: true; slug: string | null } | { ok: false; error: string }> {
+  if (role === 'front_office') return { ok: true, slug: null };
+  const trimmed = (raw ?? '').trim();
+  if (trimmed === '') return { ok: true, slug: null };
+  const admin = createServiceRoleClient();
+  const { data, error } = await admin
+    .from('doctors').select('slug').eq('slug', trimmed).maybeSingle();
+  if (error) return { ok: false, error: error.message };
+  if (!data) {
+    return {
+      ok: false,
+      error: `No doctor exists with slug "${trimmed}". Pick one from the list, or leave the binding empty.`,
+    };
+  }
+  return { ok: true, slug: trimmed };
+}
+
 const inviteSchema = z.object({
   email: z.string().email('Enter a valid email.'),
   password: z.string().min(8, 'Password must be at least 8 characters.').max(72),
@@ -71,12 +97,15 @@ export async function inviteUser(formData: FormData): Promise<UserActionResult> 
     userId = created.user.id;
   }
 
+  const slugResult = await resolveDoctorSlug(parsed.data.role, parsed.data.doctorSlug);
+  if (!slugResult.ok) return slugResult;
+
   const { error: insErr } = await admin.from('staff_users').upsert({
     user_id: userId,
     email: parsed.data.email,
     display_name: parsed.data.displayName,
     role: parsed.data.role,
-    doctor_slug: parsed.data.doctorSlug || null,
+    doctor_slug: slugResult.slug,
     active: true,
     invited_by: auth.userId,
   }, { onConflict: 'user_id' });
@@ -132,10 +161,13 @@ export async function updateUser(
     }
   }
 
+  const slugResult = await resolveDoctorSlug(parsed.data.role, parsed.data.doctorSlug);
+  if (!slugResult.ok) return slugResult;
+
   const { error } = await admin.from('staff_users').update({
     display_name: parsed.data.displayName,
     role: parsed.data.role,
-    doctor_slug: parsed.data.doctorSlug || null,
+    doctor_slug: slugResult.slug,
     active: parsed.data.active,
   }).eq('user_id', userId);
 
