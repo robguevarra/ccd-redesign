@@ -50,9 +50,11 @@ export default async function UsersPage() {
                 <p className={`text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded-full inline-block ${
                   u.role === 'owner'
                     ? 'bg-stone-900 text-stone-50'
-                    : 'bg-stone-200 text-stone-700'
+                    : u.role === 'front_office'
+                      ? 'bg-[var(--color-accent-200)] text-[var(--color-accent-900)]'
+                      : 'bg-stone-200 text-stone-700'
                 }`}>
-                  {u.role}
+                  {u.role === 'front_office' ? 'Front Office' : u.role}
                 </p>
                 {!u.active && (
                   <p className="text-xs text-red-600 mt-1">Deactivated</p>
