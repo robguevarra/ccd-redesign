@@ -10,6 +10,7 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import { markVideoReady } from '@/lib/video-ready';
+import { Wordmark } from '@/components/wordmark';
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
@@ -484,12 +485,30 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
               >
                 We do both.
               </motion.h2>
-              <motion.p
+
+              {/* Two practice identities — matches the lane-aware wordmark
+                  in the site header so the names are consistent. */}
+              <motion.div
                 style={{ scale: phase2Scale, y: phase2Y }}
-                className="mt-6 text-xs md:text-sm uppercase tracking-[0.28em] text-stone-800"
+                className="mt-8 md:mt-10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-stone-900"
               >
-                Comfort Care · dental and medical
-              </motion.p>
+                <div className="flex flex-col items-center text-center">
+                  <p className="text-[10px] md:text-xs uppercase tracking-[0.28em] text-stone-700 mb-2">
+                    Dental Practice
+                  </p>
+                  <Wordmark variant="light" lane="dental" />
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="hidden md:block w-px h-10 bg-stone-400/60"
+                />
+                <div className="flex flex-col items-center text-center">
+                  <p className="text-[10px] md:text-xs uppercase tracking-[0.28em] text-stone-700 mb-2">
+                    Medical Practice
+                  </p>
+                  <Wordmark variant="light" lane="medical" />
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
