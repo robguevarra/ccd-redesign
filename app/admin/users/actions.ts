@@ -21,7 +21,7 @@ const inviteSchema = z.object({
   email: z.string().email('Enter a valid email.'),
   password: z.string().min(8, 'Password must be at least 8 characters.').max(72),
   displayName: z.string().min(1, 'Name required.').max(120),
-  role: z.enum(['owner', 'editor']),
+  role: z.enum(['owner', 'editor', 'front_office']),
   doctorSlug: z.string().optional().or(z.literal('')),
 });
 
@@ -89,7 +89,7 @@ export async function inviteUser(formData: FormData): Promise<UserActionResult> 
 
 const updateSchema = z.object({
   displayName: z.string().min(1).max(120),
-  role: z.enum(['owner', 'editor']),
+  role: z.enum(['owner', 'editor', 'front_office']),
   doctorSlug: z.string().optional().or(z.literal('')),
   active: z.boolean(),
 });

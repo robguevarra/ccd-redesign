@@ -140,7 +140,7 @@ export async function getAppointmentRequest(id: string): Promise<AppointmentRequ
 
 /* ---- staff_users (auth allowlist) ----------------------------------- */
 
-export type StaffRole = 'owner' | 'editor';
+export type StaffRole = 'owner' | 'editor' | 'front_office';
 
 export interface StaffUser {
   userId: string;
