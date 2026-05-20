@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { ArrowRight, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import {
   listAppointmentRequests,
   listAllPosts,
   getCurrentStaffUser,
 } from '@/lib/supabase/queries';
-import { signOut } from '../login/actions';
 
 export const metadata = {
   title: 'Dashboard',
@@ -31,17 +30,9 @@ export default async function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-8 py-12">
-      <div className="flex items-center justify-between gap-4 mb-12">
-        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900">Dashboard</h1>
-        <form action={signOut}>
-          <button
-            type="submit"
-            className="text-sm text-stone-600 hover:text-stone-900 whitespace-nowrap"
-          >
-            Sign out
-          </button>
-        </form>
-      </div>
+      <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900 mb-12">
+        Dashboard
+      </h1>
 
       <div className="grid sm:grid-cols-3 gap-4 mb-12">
         <Stat label="Published posts" value={publishedCount} />
