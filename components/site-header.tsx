@@ -135,7 +135,7 @@ export function SiteHeader({
 
         {/* RIGHT — Nav + CTAs + Hamburger */}
         <div className="md:flex-1 flex items-center justify-end gap-5">
-          <nav className="hidden md:flex items-center gap-5 text-xs">
+          <nav className="hidden md:flex items-center gap-[20px] text-[12px]">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -149,7 +149,7 @@ export function SiteHeader({
           <Link
             href="/request-appointment"
             className={cn(
-              'hidden sm:inline-flex shrink-0 items-center rounded-full px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap',
+              'hidden sm:inline-flex shrink-0 items-center rounded-full px-[16px] py-[8px] text-[14px] font-medium transition-colors whitespace-nowrap',
               variant === 'light'
                 ? 'bg-stone-900 text-stone-50 hover:bg-stone-700'
                 : 'bg-stone-100 text-ink-950 hover:bg-stone-50',
@@ -160,21 +160,21 @@ export function SiteHeader({
           <a
             href={`tel:${main.tel}`}
             className={cn(
-              'hidden sm:inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors whitespace-nowrap',
+              'hidden sm:inline-flex shrink-0 items-center gap-[8px] rounded-full px-[16px] py-[8px] text-[14px] font-medium border transition-colors whitespace-nowrap',
               variant === 'light'
                 ? 'border-stone-900 hover:bg-stone-900 hover:text-stone-50'
                 : 'border-stone-100/50 hover:bg-stone-100 hover:text-ink-950',
             )}
             aria-label={`Call ${practiceInfo.brandName} at ${main.number}`}
           >
-            <Phone className="h-4 w-4" aria-hidden="true" />
+            <Phone className="h-[16px] w-[16px]" aria-hidden="true" />
             <span>{main.number}</span>
           </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             className={cn(
-              'md:hidden inline-flex items-center justify-center rounded-full h-10 w-10 border transition-colors',
+              'md:hidden inline-flex items-center justify-center rounded-full h-[40px] w-[40px] border transition-colors',
               variant === 'light'
                 ? 'border-stone-300 hover:bg-stone-200/60'
                 : 'border-stone-100/40 hover:bg-stone-100/10',
@@ -184,9 +184,9 @@ export function SiteHeader({
             aria-controls="mobile-menu"
           >
             {open ? (
-              <X className="h-5 w-5" aria-hidden="true" />
+              <X className="h-[20px] w-[20px]" aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" aria-hidden="true" />
+              <Menu className="h-[20px] w-[20px]" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -201,7 +201,7 @@ export function SiteHeader({
             : 'border-ink-700/40',
         )}
       >
-        <LaneToggle variant={variant} className="m-2 flex-1 justify-center" />
+        <LaneToggle variant={variant} className="m-[8px] flex-1 justify-center" />
       </div>
 
       {/* ─────────── Mobile drawer ─────────── */}
