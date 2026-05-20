@@ -61,19 +61,19 @@ export function Wordmark({
         >
           {isMedical ? (
             <>
-              <span className="font-normal text-[1.15rem] md:text-[1.3rem]">Brien</span>
-              <span className="font-light italic text-[1.15rem] md:text-[1.3rem]">
+              <span className="font-normal text-[18px] md:text-[21px]">Brien</span>
+              <span className="font-light italic text-[18px] md:text-[21px]">
                 Hsu,
               </span>
-              <span className="font-normal text-[0.7rem] md:text-[0.78rem] tracking-[0.06em] uppercase opacity-80">
+              <span className="font-normal text-[11px] md:text-[12px] tracking-[0.06em] uppercase opacity-80">
                 DDS MS &amp; Associates
               </span>
             </>
           ) : (
             <>
-              <span className="font-normal text-[1.4rem] md:text-[1.6rem]">Comfort</span>
-              <span className="font-light italic text-[1.4rem] md:text-[1.6rem]">Care</span>
-              <span className="font-normal text-[1.4rem] md:text-[1.6rem]">Dental</span>
+              <span className="font-normal text-[22px] md:text-[26px]">Comfort</span>
+              <span className="font-light italic text-[22px] md:text-[26px]">Care</span>
+              <span className="font-normal text-[22px] md:text-[26px]">Dental</span>
             </>
           )}
         </motion.span>
