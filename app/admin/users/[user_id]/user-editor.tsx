@@ -1,14 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import type { StaffUser } from '@/lib/supabase/queries';
+import type { StaffUser, StaffRole } from '@/lib/supabase/queries';
 import { updateUser, deactivateUser, type UserActionResult } from '../actions';
 import { useToast, Toast } from '@/components/admin/toast';
 
-export function UserEditor({ user }: { user: StaffUser }) {
+interface UserEditorProps {
+  user: StaffUser;
+  doctors: Array<{ slug: string; name: string }>;
+}
+
+export function UserEditor({ user, doctors }: UserEditorProps) {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<UserActionResult | null>(null);
   const { state: toastState, showToast } = useToast();
+  const [role, setRole] = useState<StaffRole>(user.role);
+
+  // Front office staff aren't doctors and shouldn't be bound to one.
+  const showDoctorBinding = role !== 'front_office';
 
   async function handleDeactivate() {
     if (!confirm(`Deactivate ${user.displayName}? They will lose admin access.`)) return;
@@ -40,7 +49,9 @@ export function UserEditor({ user }: { user: StaffUser }) {
       </Field>
       <Field label="Role" id="role" required>
         <select
-          id="role" name="role" defaultValue={user.role}
+          id="role" name="role"
+          value={role}
+          onChange={(e) => setRole(e.target.value as StaffRole)}
           className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors"
         >
           <option value="editor">Editor</option>
@@ -48,15 +59,26 @@ export function UserEditor({ user }: { user: StaffUser }) {
           <option value="owner">Owner</option>
         </select>
       </Field>
-      <Field label="Doctor binding (optional)" id="doctorSlug">
-        <input
-          id="doctorSlug" name="doctorSlug" type="text"
-          defaultValue={user.doctorSlug ?? ''}
-          placeholder="dr-angela-huang"
-          pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
-          className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono"
-        />
-      </Field>
+      {showDoctorBinding && (
+        <Field label="Doctor binding (optional)" id="doctorSlug">
+          <select
+            id="doctorSlug" name="doctorSlug"
+            defaultValue={user.doctorSlug ?? ''}
+            className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors"
+          >
+            <option value="">— None —</option>
+            {doctors.map((d) => (
+              <option key={d.slug} value={d.slug}>
+                {d.name} ({d.slug})
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-stone-500">
+            If this user is one of the doctors, pick them so blog posts they
+            create default to their byline.
+          </p>
+        </Field>
+      )}
       <Field label="Active" id="active">
         <label className="inline-flex items-center gap-3 cursor-pointer">
           <input type="checkbox" name="active" defaultChecked={user.active} className="accent-stone-900" />

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { getStaffUserById } from '@/lib/supabase/queries';
+import { getStaffUserById, listDoctors } from '@/lib/supabase/queries';
 import { UserEditor } from './user-editor';
 
 export const metadata = {
@@ -17,7 +17,10 @@ export default async function EditUserPage({
   params: Promise<{ user_id: string }>;
 }) {
   const { user_id } = await params;
-  const user = await getStaffUserById(user_id);
+  const [user, doctors] = await Promise.all([
+    getStaffUserById(user_id),
+    listDoctors(),
+  ]);
   if (!user) notFound();
 
   return (
@@ -32,7 +35,10 @@ export default async function EditUserPage({
         {user.displayName}
       </h1>
       <p className="text-stone-500 text-sm mb-10">{user.email}</p>
-      <UserEditor user={user} />
+      <UserEditor
+        user={user}
+        doctors={doctors.map((d) => ({ slug: d.slug, name: d.name }))}
+      />
     </div>
   );
 }
