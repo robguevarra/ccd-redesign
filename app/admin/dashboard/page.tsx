@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { ArrowRight, Plus } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import {
   listAppointmentRequests,
   listAllPosts,
+  getCurrentStaffUser,
 } from '@/lib/supabase/queries';
 import { signOut } from '../login/actions';
 
@@ -14,6 +16,11 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
+  const me = await getCurrentStaffUser();
+  if (me?.role === 'front_office') {
+    redirect('/admin/inquiries');
+  }
+
   const [requests, posts] = await Promise.all([
     listAppointmentRequests(10),
     listAllPosts(),

@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
 
 interface AdminNavProps {
-  /** Pass through from server layout. When 'owner', the Users tab renders. */
-  role?: 'owner' | 'editor' | null;
+  /** Pass through from server layout. 'owner' adds Users tab; 'front_office' sees only Inquiries. */
+  role?: 'owner' | 'editor' | 'front_office' | null;
 }
 
 const BASE_ITEMS = [
@@ -17,11 +17,21 @@ const BASE_ITEMS = [
   { href: '/admin/inquiries', label: 'Inquiries' },
 ];
 
+const FRONT_OFFICE_ITEMS = [
+  { href: '/admin/inquiries', label: 'Inquiries' },
+];
+
 export function AdminNav({ role }: AdminNavProps) {
   const pathname = usePathname();
-  const items = role === 'owner'
-    ? [...BASE_ITEMS, { href: '/admin/users', label: 'Users' }]
-    : BASE_ITEMS;
+
+  let items: Array<{ href: string; label: string }>;
+  if (role === 'front_office') {
+    items = FRONT_OFFICE_ITEMS;
+  } else if (role === 'owner') {
+    items = [...BASE_ITEMS, { href: '/admin/users', label: 'Users' }];
+  } else {
+    items = BASE_ITEMS;
+  }
 
   return (
     <nav

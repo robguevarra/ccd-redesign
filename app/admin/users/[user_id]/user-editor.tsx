@@ -44,6 +44,7 @@ export function UserEditor({ user }: { user: StaffUser }) {
           className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors"
         >
           <option value="editor">Editor</option>
+          <option value="front_office">Front Office</option>
           <option value="owner">Owner</option>
         </select>
       </Field>

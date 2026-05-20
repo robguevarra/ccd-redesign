@@ -138,3 +138,67 @@ video::-webkit-media-controls-play-button {
   opacity: 0;
   pointer-events: none;
 }
+
+/* ──────────────────────────────────────────────────────────────────────
+   Accessibility widget — class hooks applied to <html> by useA11yPrefs
+   ────────────────────────────────────────────────────────────────────── */
+
+html.a11y-font-size-1 { font-size: 100%; }
+html.a11y-font-size-2 { font-size: 115%; }
+html.a11y-font-size-3 { font-size: 130%; }
+html.a11y-font-size-4 { font-size: 150%; }
+
+html.a11y-grayscale {
+  filter: grayscale(1);
+}
+
+html.a11y-high-contrast {
+  /* Boost body contrast — text near-black, surfaces near-white. */
+  --color-surface: #ffffff;
+}
+html.a11y-high-contrast body {
+  color: #000 !important;
+  background: #fff !important;
+}
+html.a11y-high-contrast .text-stone-600,
+html.a11y-high-contrast .text-stone-500,
+html.a11y-high-contrast .text-stone-400 {
+  color: #000 !important;
+}
+
+html.a11y-negative {
+  filter: invert(1) hue-rotate(180deg);
+}
+html.a11y-negative img,
+html.a11y-negative video,
+html.a11y-negative svg {
+  /* Invert media back so it doesn't look broken. */
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html.a11y-light-bg body,
+html.a11y-light-bg [data-lane],
+html.a11y-light-bg footer {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+html.a11y-light-bg footer * {
+  color: #1a1a1a !important;
+}
+html.a11y-light-bg [class*="bg-stone-900"],
+html.a11y-light-bg [class*="bg-stone-950"],
+html.a11y-light-bg [class*="bg-ink-"] {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+html.a11y-link-underline a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+html.a11y-readable-font,
+html.a11y-readable-font * {
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+  letter-spacing: 0.01em !important;
+}

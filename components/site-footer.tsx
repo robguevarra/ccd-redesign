@@ -157,10 +157,10 @@ export function SiteFooter() {
               Financing
             </Link>
             <Link
-              href="/contact"
+              href="/accessibility"
               className="hover:text-[var(--color-accent-200)] transition-colors"
             >
-              Accessibility statement
+              Accessibility
             </Link>
             <Link
               href="/contact"

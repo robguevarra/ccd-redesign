@@ -76,6 +76,19 @@ export async function proxy(request: NextRequest) {
       url.pathname = '/admin/dashboard';
       return NextResponse.redirect(url);
     }
+
+    // Front office: locked to /admin/inquiries* (and /admin/dashboard which
+    // redirects them to /admin/inquiries via the page itself).
+    if (staff.role === 'front_office') {
+      const allowed =
+        request.nextUrl.pathname === '/admin/dashboard' ||
+        request.nextUrl.pathname.startsWith('/admin/inquiries');
+      if (!allowed) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/admin/inquiries';
+        return NextResponse.redirect(url);
+      }
+    }
   }
 
   // Redirect authenticated users away from /admin/login to dashboard.
