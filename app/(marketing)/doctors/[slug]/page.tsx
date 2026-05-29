@@ -11,15 +11,24 @@ export const revalidate = 60;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  // generateStaticParams runs at build time without an HTTP request,
-  // so we must not call cookies(). Use a cookie-free public client instead.
-  const { createClient: createPublicClient } = await import('@supabase/supabase-js');
-  const supabase = createPublicClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  );
-  const { data } = await supabase.from('doctors').select('slug').eq('active', true);
-  return (data ?? []).map((d: { slug: string }) => ({ slug: d.slug }));
+  // generateStaticParams runs at build time without an HTTP request, so we must
+  // not call cookies(). Use a cookie-free public client instead.
+  //
+  // Guard the env + wrap in try/catch: builds without Supabase env (e.g. a
+  // preview deployment that hasn't been given the keys) must not crash here.
+  // With `dynamicParams = true`, returning [] just means doctor pages render
+  // on demand at runtime instead of being prerendered.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return [];
+  try {
+    const { createClient: createPublicClient } = await import('@supabase/supabase-js');
+    const supabase = createPublicClient(url, key);
+    const { data } = await supabase.from('doctors').select('slug').eq('active', true);
+    return (data ?? []).map((d: { slug: string }) => ({ slug: d.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
