@@ -4,9 +4,15 @@
 
 ## What this project is
 
-A **pitch website** — a live, deployed reimagining of [dentisthsu.com](https://dentisthsu.com/) — built to win an engagement with the practice owner. It is *not* a delivered production site. The deliverable is a Vercel demo URL + working `/admin` login + a leave-behind PDF + Loom walkthrough.
+> **🎉 Contract won — 2026-05-29.** This started as a pitch site; the practice
+> signed, so we are now building the **real production site**. Constraints that
+> existed only because it was a *demo* (e.g. "no third-party widget that brands
+> itself") no longer apply — we now integrate the practice's real tools (Weave,
+> etc.). Treat the framing below as historical context; the codebase is the
+> source of truth for what's shipped.
 
-**Engagement timeline:** 4–6 weeks to pitch day.
+A live, deployed reimagining of [dentisthsu.com](https://dentisthsu.com/). Originally built as a pitch website to win the engagement (Vercel demo URL + working `/admin` login + leave-behind PDF + Loom walkthrough). The pitch succeeded; it is now the production build for the practice.
+
 **Engagement owner:** Rob Guevarra (`robneil@gmail.com`).
 **Reference visual ceiling:** [aventuradentalarts.com](https://aventuradentalarts.com/), [tmjexpert.com](https://tmjexpert.com/gallery/tmj-cases/tmj-treatments/02/).
 
@@ -103,13 +109,17 @@ These come straight from the master spec — do not relitigate without explicit 
 
 ## What's intentionally out of scope (don't add these without asking)
 
-- Real PMS integration (OpenDental, Weave, Dentrix)
+> Several items below were *pitch-era* exclusions. Now that we're in production
+> (contract won 2026-05-29) some have flipped — Weave Text Connect and
+> multi-user staff auth are both shipped. Don't re-add the rest without asking.
+
+- Real PMS integration (OpenDental, Dentrix) — note: **Weave Text Connect is now integrated** (admin-toggled "Text us"; see `lib/weave.ts` + `/admin/settings`)
 - Live Google Places / Yelp API
-- Multi-user staff auth, roles, permissions
-- HIPAA-compliant patient data handling — no PHI on the pitch site
+- ~~Multi-user staff auth, roles, permissions~~ — **shipped in Phase 5** (owner/editor/front_office)
+- HIPAA-compliant patient data handling — no PHI on the site
 - Multi-language (English only)
-- E-commerce, live chat, SMS, patient portal
-- Any third-party widget that brands itself on the page
+- E-commerce, live chat, patient portal
+- ~~Any third-party widget that brands itself on the page~~ — **retired**: this was a demo guardrail; the production site now embeds the practice's real Weave widget
 
 ## How to resume in a new session
 

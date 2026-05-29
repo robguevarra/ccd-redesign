@@ -77,12 +77,14 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    // Front office: locked to /admin/inquiries* (and /admin/dashboard which
-    // redirects them to /admin/inquiries via the page itself).
+    // Front office: locked to /admin/inquiries* and /admin/settings* (they
+    // answer the Weave texts + manage office hours), plus /admin/dashboard
+    // which redirects them to /admin/inquiries via the page itself.
     if (staff.role === 'front_office') {
       const allowed =
         request.nextUrl.pathname === '/admin/dashboard' ||
-        request.nextUrl.pathname.startsWith('/admin/inquiries');
+        request.nextUrl.pathname.startsWith('/admin/inquiries') ||
+        request.nextUrl.pathname.startsWith('/admin/settings');
       if (!allowed) {
         const url = request.nextUrl.clone();
         url.pathname = '/admin/inquiries';

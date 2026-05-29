@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { Phone, MapPin, Clock } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
+import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
+import { formatDayHours } from '@/lib/office-hours';
+import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
 
 export const metadata = {
   title: 'Contact',
   description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[0]?.number}.`,
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [weave, hours] = await Promise.all([getWeaveConfig(), getOfficeHours()]);
   return (
     <>
       <section className="bg-stone-100/60 py-24 md:py-32 border-b border-stone-200">
@@ -75,6 +79,8 @@ export default function ContactPage() {
               </li>
             )}
           </ul>
+          {/* Weave Text Connect — renders only while staff are available to reply. */}
+          <WeaveTextConnect config={weave} hours={hours} fullWidth />
         </div>
 
         {/* Hours */}
@@ -84,12 +90,10 @@ export default function ContactPage() {
             <h2 className="font-serif text-2xl">Hours</h2>
           </div>
           <ul className="text-stone-700 leading-relaxed font-mono tabular-nums">
-            {practiceInfo.hours.map((h) => (
+            {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-4 py-1">
                 <span>{h.day}</span>
-                <span className="text-stone-500">
-                  {h.closed ? 'Closed' : `${h.open} – ${h.close}`}
-                </span>
+                <span className="text-stone-500">{formatDayHours(h)}</span>
               </li>
             ))}
           </ul>

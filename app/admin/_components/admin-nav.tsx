@@ -19,6 +19,8 @@ const BASE_ITEMS = [
 
 const FRONT_OFFICE_ITEMS = [
   { href: '/admin/inquiries', label: 'Inquiries' },
+  // Front office answer the Weave texts, so they can toggle/schedule it.
+  { href: '/admin/settings', label: 'Settings' },
 ];
 
 export function AdminNav({ role }: AdminNavProps) {
@@ -28,7 +30,11 @@ export function AdminNav({ role }: AdminNavProps) {
   if (role === 'front_office') {
     items = FRONT_OFFICE_ITEMS;
   } else if (role === 'owner') {
-    items = [...BASE_ITEMS, { href: '/admin/users', label: 'Users' }];
+    items = [
+      ...BASE_ITEMS,
+      { href: '/admin/users', label: 'Users' },
+      { href: '/admin/settings', label: 'Settings' },
+    ];
   } else {
     items = BASE_ITEMS;
   }

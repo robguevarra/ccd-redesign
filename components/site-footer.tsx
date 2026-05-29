@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { practiceInfo } from '@/content/practice-info';
+import type { BusinessHours } from '@/content/schemas';
+import { DEFAULT_OFFICE_HOURS } from '@/lib/office-hours';
 import { getLane } from '@/lib/lane';
 import { Wordmark } from './wordmark';
 
-export function SiteFooter() {
+export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessHours[] }) {
   const pathname = usePathname();
   const lane = getLane(pathname);
   const dayLabel = (day: string) => day.slice(0, 3);
@@ -40,11 +42,11 @@ export function SiteFooter() {
             Hours
           </h3>
           <ul className="mt-4 text-sm leading-relaxed font-mono tabular-nums">
-            {practiceInfo.hours.map((h) => (
+            {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-4">
                 <span>{dayLabel(h.day)}</span>
                 <span className="text-stone-400">
-                  {h.closed ? 'Closed' : `${h.open}–${h.close}`}
+                  {h.closed || !h.open || !h.close ? 'Closed' : `${h.open}–${h.close}`}
                 </span>
               </li>
             ))}

@@ -1,5 +1,5 @@
 import { practiceInfo } from '@/content/practice-info';
-import { listDoctors } from '@/lib/supabase/queries';
+import { listDoctors, getOfficeHours } from '@/lib/supabase/queries';
 import { SITE_URL as BASE } from '@/lib/site';
 
 /**
@@ -9,7 +9,7 @@ import { SITE_URL as BASE } from '@/lib/site';
  * and improve Local SEO.
  */
 export async function PracticeStructuredData() {
-  const doctors = await listDoctors();
+  const [doctors, hours] = await Promise.all([listDoctors(), getOfficeHours()]);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Dentist',
@@ -26,7 +26,7 @@ export async function PracticeStructuredData() {
       postalCode: practiceInfo.address.zip,
       addressCountry: 'US',
     },
-    openingHoursSpecification: practiceInfo.hours
+    openingHoursSpecification: hours
       .filter((h) => !h.closed && h.open && h.close)
       .map((h) => ({
         '@type': 'OpeningHoursSpecification',

@@ -151,3 +151,31 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 **Scope:** Booking surface.
 **Decision:** Ship a Server Action–backed request-appointment form that writes to Supabase + emails via Resend. No real Weave/OpenDental integration.
 **Rationale:** Practice uses Weave + OpenDental but APIs aren't accessible to us pre-engagement. Request form covers the conversion goal; real integration deferred to v2.
+
+---
+
+## 2026-05-29 — Contract won → production; Weave Text Connect integrated, admin-toggled
+
+**Scope:** Project framing + new feature (Weave Text Connect).
+**Decision:** The pitch succeeded and the practice signed. The site is now the production build. Integrated **Weave Text Connect** ("Text us") in two surfaces — the site-wide floating `widget.js` bubble and on-brand inline buttons on `/contact` and `/request-appointment` — both governed by a single admin setting. Added a `site_settings` singleton table + `/admin/settings` page (owner + front_office only) with: master on/off, per-surface toggles, a scheduler (`always` or `business_hours` derived from `practiceInfo.hours`), holiday/closure blackout dates, and an off-hours behavior (hide vs. swap to "Call us"). Schedule is evaluated client-side in the practice timezone so it flips without a redeploy. The earlier "no third-party widget that brands itself" and "no Weave integration" exclusions were **pitch-era guardrails and are now retired**.
+**Rationale:** It's the practice's own Weave account and their explicit request. The scheduler exists because Weave texts land in the front desk's inbox — auto-hiding "Text us" outside staffed hours stops patients texting into silence. Front office can manage it because they're the ones answering. Kept `/contact` and `/request-appointment` separate (the appointment form is the primary CTA, linked from ~12 places + the header); merging them would have cost a redirect + broad link churn for little gain.
+**Artifacts:** `lib/weave.ts` (+ tests), `components/weave/*`, `app/admin/settings/*`, `supabase/migrations/2026-05-29_create_site_settings.sql`, queries `getWeaveConfig` / `readWeaveConfigForAdmin`.
+
+---
+
+## 2026-05-29 — Weave v2: drop floating widget, embed Text Connect in a modal, simplify admin
+
+**Scope:** Weave Text Connect (refinement of the same-day decision above).
+**Decision:** Removed the site-wide floating `widget.js` bubble entirely (code + config + admin option) at the practice's request. The single surface is now an on-brand, prominent **"Text us" button** (solid dark pill) on `/contact` and `/request-appointment`. Clicking it opens an **in-page modal that embeds Weave's hosted Text Connect page via iframe** — patients complete the text flow without leaving the site. Verified Weave's page sets no `X-Frame-Options`/CSP frame restriction, so embedding works; a "Open in a new tab" fallback link is shown in case a browser ever blocks the embed. Simplified the admin `/admin/settings` page to three things: on/off, when-to-show (always / office hours), and days-off (blackout dates), with the widget ID tucked under "Advanced". Dropped per-surface toggles and the off-hours "show Call us" option (off-hours simply hides the button).
+**Rationale:** Owner found the original admin too complex and didn't want a self-branding floating bubble; the modal keeps patients on-site, which the floating widget already half-did but with extra chrome. Schedule gating is retained (same inbox-coverage rationale).
+**Config shape (simplified):** `{ enabled, widgetId, schedule:{mode, blackoutDates}, timezone }`. Migration `2026-05-29_simplify_weave_config.sql` trims the column default + existing row; `normalizeWeaveConfig` ignores legacy keys.
+**Note:** Front-office access to `/admin/settings` is correct in code (role check allows owner + front_office); an earlier "click does nothing" was a stale Next client-router cache — resolved by a hard refresh.
+
+---
+
+## 2026-05-29 — Office hours are now admin-editable (one source of truth)
+
+**Scope:** New "Office hours" section on `/admin/settings`.
+**Decision:** Moved office hours out of the hard-coded `content/practice-info.ts` const into the `site_settings` table (new `hours` jsonb column, migration `2026-05-29_add_office_hours.sql`, seeded from the old values). Owners + front office edit them via a 7-day editor on the settings page (each day: open/close time pickers + a "Closed" checkbox). One save updates **everywhere hours appear**: the site footer, the Contact page, the schema.org `OpeningHoursSpecification` (Google), and the Weave business-hours scheduler — which now reads the same DB hours instead of the static const. `content/practice-info.ts` remains the seed/fallback (`DEFAULT_OFFICE_HOURS`) when the row can't be read.
+**Rationale:** The practice asked to manage hours themselves and have it reflect site-wide. Keeping the scheduler on the same source avoids the footer/contact and the "Text us" availability drifting apart.
+**Artifacts:** `lib/office-hours.ts` (+ shared by `lib/weave.ts`), `getOfficeHours`/`readOfficeHoursForAdmin` queries, `updateOfficeHours` action, `app/admin/settings/office-hours-form.tsx`. `isWeaveLiveNow(config, now, hours)` gained an hours param (defaults to the seed).

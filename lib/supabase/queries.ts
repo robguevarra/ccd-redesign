@@ -1,8 +1,93 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { createClient } from './server';
 import type { BlogPost, AppointmentRequest, AppointmentStatus, Doctor, Image } from '@/content/schemas';
 import { publicUrlFor } from './storage';
+import { normalizeWeaveConfig, WEAVE_DEFAULTS, type WeaveConfig } from '@/lib/weave';
+import { normalizeOfficeHours, DEFAULT_OFFICE_HOURS } from '@/lib/office-hours';
+import type { BusinessHours } from '@/content/schemas';
+
+/* ---- site_settings (Weave Text Connect config) ---------------------- */
+
+/** Cache tag busted by the admin settings action on every save. */
+export const SITE_SETTINGS_TAG = 'site-settings';
+
+/**
+ * Reads the Weave config for the public marketing site. Cached and tagged so
+ * marketing pages stay static between admin saves; the admin action calls
+ * revalidateTag(SITE_SETTINGS_TAG) to bust it. Uses a cookie-less anon client
+ * (RLS allows anon read) so it's safe inside unstable_cache.
+ */
+export const getWeaveConfig = unstable_cache(
+  async (): Promise<WeaveConfig> => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return WEAVE_DEFAULTS;
+    const sb = createSupabaseClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data, error } = await sb
+      .from('site_settings')
+      .select('weave')
+      .eq('id', 1)
+      .maybeSingle();
+    if (error || !data) return WEAVE_DEFAULTS;
+    return normalizeWeaveConfig(data.weave);
+  },
+  ['site-settings-weave'],
+  { tags: [SITE_SETTINGS_TAG], revalidate: 300 },
+);
+
+/**
+ * Uncached read of the Weave config for the admin form, so it always reflects
+ * the latest saved value (no stale-cache window right after a save).
+ */
+export async function readWeaveConfigForAdmin(): Promise<WeaveConfig> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('site_settings')
+    .select('weave')
+    .eq('id', 1)
+    .maybeSingle();
+  return data ? normalizeWeaveConfig(data.weave) : WEAVE_DEFAULTS;
+}
+
+/**
+ * Public, cached office hours — the single source of truth read by the footer,
+ * contact page, schema.org data, and the Weave business-hours scheduler. Shares
+ * the SITE_SETTINGS_TAG so an admin save busts it. Cookie-less anon client.
+ */
+export const getOfficeHours = unstable_cache(
+  async (): Promise<BusinessHours[]> => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return DEFAULT_OFFICE_HOURS;
+    const sb = createSupabaseClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data, error } = await sb
+      .from('site_settings')
+      .select('hours')
+      .eq('id', 1)
+      .maybeSingle();
+    if (error || !data) return DEFAULT_OFFICE_HOURS;
+    return normalizeOfficeHours(data.hours);
+  },
+  ['site-settings-hours'],
+  { tags: [SITE_SETTINGS_TAG], revalidate: 300 },
+);
+
+/** Uncached office-hours read for the admin form (always latest saved value). */
+export async function readOfficeHoursForAdmin(): Promise<BusinessHours[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('site_settings')
+    .select('hours')
+    .eq('id', 1)
+    .maybeSingle();
+  return data ? normalizeOfficeHours(data.hours) : DEFAULT_OFFICE_HOURS;
+}
 
 /**
  * Database row → typed BlogPost mapping.

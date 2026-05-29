@@ -1,4 +1,6 @@
 import { practiceInfo } from '@/content/practice-info';
+import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
+import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
 import { AppointmentForm } from './appointment-form';
 
 export const metadata = {
@@ -6,8 +8,9 @@ export const metadata = {
   description: `Send an appointment request to ${practiceInfo.brandName}. We'll call back the same business day.`,
 };
 
-export default function RequestAppointmentPage() {
+export default async function RequestAppointmentPage() {
   const main = practiceInfo.phones[1] ?? practiceInfo.phones[0]!;
+  const [weave, hours] = await Promise.all([getWeaveConfig(), getOfficeHours()]);
 
   return (
     <>
@@ -29,6 +32,10 @@ export default function RequestAppointmentPage() {
             </a>
             .
           </p>
+          {/* Weave Text Connect — renders only while staff are available to reply. */}
+          <div className="mt-6">
+            <WeaveTextConnect config={weave} hours={hours} />
+          </div>
         </div>
       </section>
 
