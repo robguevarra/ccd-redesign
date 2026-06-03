@@ -633,3 +633,29 @@ export function getServicesByLane(lane: ServiceLane): Service[] {
 export function getServicesBySubcategory(sub: ServiceSubcategory): Service[] {
   return services.filter((s) => s.subcategory === sub);
 }
+
+export interface LaneServiceGroup {
+  subcategory: ServiceSubcategory;
+  label: string;
+  services: Service[];
+}
+
+/**
+ * A lane's services grouped by subcategory, in canonical subcategory order.
+ * Shared by the header services menu (desktop panel + mobile accordion) and the
+ * /services index page so they never drift. Empty subcategories are omitted.
+ */
+export function getLaneServiceGroups(lane: ServiceLane): LaneServiceGroup[] {
+  return SERVICE_SUBCATEGORY_BY_LANE[lane]
+    .map((subcategory) => ({
+      subcategory,
+      label: SERVICE_SUBCATEGORY_LABELS[subcategory],
+      services: getServicesBySubcategory(subcategory),
+    }))
+    .filter((group) => group.services.length > 0);
+}
+
+/** URL for a service detail page: /dental/<slug> or /medical/<slug>. */
+export function serviceHref(service: Service): string {
+  return `/${service.lane}/${service.slug}`;
+}

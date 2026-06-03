@@ -107,6 +107,14 @@ body {
   }
 }
 
+/* Header services-disclosure panel entrance. Animates ONLY the slide — never
+ * opacity — so the panel is always fully opaque/readable even if the animation
+ * is paused (backgrounded tab) or skipped (reduced motion). */
+@keyframes lane-panel-in {
+  from { transform: translateY(-8px); }
+  to   { transform: translateY(0); }
+}
+
 /* Scroll cue pulse for the Frame 0 cold open. */
 @keyframes cold-open-cue-pulse {
   0%, 100% { opacity: 0.4; transform: scaleY(1); }

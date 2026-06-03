@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Mail, Menu, Phone, X } from 'lucide-react';
@@ -10,6 +10,12 @@ import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
 import { getLane } from '@/lib/lane';
 import { LaneToggle } from './lane-toggle';
+import {
+  LaneServicesTrigger,
+  LaneServicesPanel,
+  type DisclosureLane,
+} from './lane-services-menu';
+import { MobileLaneAccordions } from './mobile-lane-accordions';
 import { Logo } from './logo';
 import { Wordmark } from './wordmark';
 
@@ -51,10 +57,45 @@ export function SiteHeader({
   const main = practiceInfo.phones[0]!;
   const [open, setOpen] = useState(false);
 
-  // Close the drawer whenever the route changes (e.g. after tapping a link).
+  // Desktop "services under Dental/Medical" disclosure panel.
+  const [servicesLane, setServicesLane] = useState<DisclosureLane | null>(null);
+  const caretRefs = useRef<Partial<Record<DisclosureLane, HTMLButtonElement | null>>>({});
+  const headerRef = useRef<HTMLElement | null>(null);
+  const toggleServices = (lane: DisclosureLane) =>
+    setServicesLane((cur) => (cur === lane ? null : lane));
+  const closeServices = () => setServicesLane(null);
+
+  // Close the drawer + services panel whenever the route changes.
   useEffect(() => {
     setOpen(false);
+    setServicesLane(null);
   }, [pathname]);
+
+  // Disclosure a11y: Escape closes + returns focus to the caret; clicking or
+  // moving focus outside the header closes the panel. (WAI-ARIA APG.)
+  useEffect(() => {
+    if (!servicesLane) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        const caret = caretRefs.current[servicesLane];
+        setServicesLane(null);
+        caret?.focus();
+      }
+    };
+    const onOutside = (e: Event) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setServicesLane(null);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onOutside);
+    document.addEventListener('focusin', onOutside);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onOutside);
+      document.removeEventListener('focusin', onOutside);
+    };
+  }, [servicesLane]);
 
   // Lock body scroll while the drawer is open.
   useEffect(() => {
@@ -68,6 +109,7 @@ export function SiteHeader({
 
   return (
     <header
+      ref={headerRef}
       data-lane={lane}
       className={cn(
         'sticky top-0 z-40 w-full border-b backdrop-blur-md',
@@ -128,9 +170,14 @@ export function SiteHeader({
           </Link>
         </div>
 
-        {/* CENTER — LaneToggle (desktop only) */}
+        {/* CENTER — Dental/Medical lanes with services disclosure (desktop only) */}
         <div className="hidden md:flex md:flex-1 items-center justify-center">
-          <LaneToggle variant={variant} />
+          <LaneServicesTrigger
+            variant={variant}
+            openLane={servicesLane}
+            onToggle={toggleServices}
+            caretRefs={caretRefs}
+          />
         </div>
 
         {/* RIGHT — Nav + CTAs + Hamburger */}
@@ -192,6 +239,16 @@ export function SiteHeader({
         </div>
       </div>
 
+      {/* ─────────── Desktop services disclosure panel ─────────── */}
+      {servicesLane && (
+        <LaneServicesPanel
+          key={servicesLane}
+          lane={servicesLane}
+          onClose={closeServices}
+          className="hidden md:block absolute inset-x-0 top-full z-30"
+        />
+      )}
+
       {/* ─────────── Mobile toggle row (md hidden) ─────────── */}
       <div
         className={cn(
@@ -217,7 +274,13 @@ export function SiteHeader({
         aria-hidden={!open}
       >
         <div className="flex flex-col h-full overflow-y-auto px-5 pt-8 pb-12">
-          <nav className="flex flex-col gap-1">
+          {/* Services, grouped under each lane */}
+          <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500 mb-2">
+            Services
+          </p>
+          <MobileLaneAccordions onNavigate={() => setOpen(false)} />
+
+          <nav className="flex flex-col gap-1 mt-8">
             {[...NAV_ITEMS, ...MOBILE_EXTRA_ITEMS].map((item) => {
               const active =
                 item.href === '/'

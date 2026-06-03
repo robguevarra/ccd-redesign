@@ -179,3 +179,16 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 **Decision:** Moved office hours out of the hard-coded `content/practice-info.ts` const into the `site_settings` table (new `hours` jsonb column, migration `2026-05-29_add_office_hours.sql`, seeded from the old values). Owners + front office edit them via a 7-day editor on the settings page (each day: open/close time pickers + a "Closed" checkbox). One save updates **everywhere hours appear**: the site footer, the Contact page, the schema.org `OpeningHoursSpecification` (Google), and the Weave business-hours scheduler — which now reads the same DB hours instead of the static const. `content/practice-info.ts` remains the seed/fallback (`DEFAULT_OFFICE_HOURS`) when the row can't be read.
 **Rationale:** The practice asked to manage hours themselves and have it reflect site-wide. Keeping the scheduler on the same source avoids the footer/contact and the "Text us" availability drifting apart.
 **Artifacts:** `lib/office-hours.ts` (+ shared by `lib/weave.ts`), `getOfficeHours`/`readOfficeHoursForAdmin` queries, `updateOfficeHours` action, `app/admin/settings/office-hours-form.tsx`. `isWeaveLiveNow(config, now, hours)` gained an hours param (defaults to the seed).
+
+---
+
+## 2026-06-03 — "See all services" navigation: disclosure panels under Dental/Medical + /services index
+
+**Scope:** Primary navigation / service discoverability (doctor request: "see all services at a glance").
+**Decision:** Built a research-backed hybrid (deep-research pass over NN/g, Baymard, W3C WAI-ARIA APG, WCAG 2.2):
+- **Header (desktop):** each lane (Dental, Medical) is now a link **plus a separate caret disclosure button** that opens a full-width panel of that lane's services, grouped by subcategory, with **"View all [Lane] services"** as the first link. This is the WAI-ARIA "disclosure navigation with top-level links" pattern — deliberately NOT a split button (a label that both navigates and opens a panel; NN/g flags that as confusing + touch-hostile). The lane link still navigates + re-themes; opening the panel does nothing thematic.
+- **Mobile:** Dental/Medical accordions in the drawer, same "View all" first, large tap targets.
+- **New `/services` page:** both lanes at a glance, grouped — the literal "see everything" view + SEO/findability win. Added to sitemap.
+- **A11y:** click/keyboard only (no hover), Esc closes + returns focus to the caret, click-outside / focus-out close, `aria-expanded`/`aria-controls`, disclosure (not `menu`) role. Panel entrance animates transform only (never opacity) so it can never render translucent if the animation is throttled/skipped; gated behind `prefers-reduced-motion`.
+**Rationale:** ~32 services across 2 lanes / 9 subcategories — too many for a linear dropdown; a 2-D grouped panel lets users see rather than remember (NN/g). The dedicated page backstops discoverability and SEO.
+**Artifacts:** `components/lane-services-menu.tsx`, `components/mobile-lane-accordions.tsx`, `content/services.ts` (getLaneServiceGroups/serviceHref), `app/(marketing)/services/page.tsx`, header wiring in `components/site-header.tsx`, `app/globals.css` keyframe.
