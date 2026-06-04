@@ -52,3 +52,14 @@ source/axe/
 .env*.local
 
 tsconfig.tsbuildinfo
+
+# Higgsfield image-generation skill tooling (local helpers, not website code)
+/.agents/
+/.claude/skills/
+/skills-lock.json
+
+# Service illustration backups + review scratch (kept local, not versioned)
+public/images/services/**/_*/
+/_review-*
+/_shot*
+/_verify_*

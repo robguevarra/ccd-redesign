@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
@@ -53,11 +54,19 @@ export function TmjSignature({ service }: TmjSignatureProps) {
           style={reduced ? undefined : { scale: heroScale, opacity: heroOpacity }}
           className="sticky top-0 h-screen w-full"
         >
-          {/* Editorial gradient — replaces photo placeholder until v2 shoot.
-              Two radial accents on near-black for depth without competing
-              with the typography. */}
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_30%,rgba(245,236,219,0.10),transparent_55%),radial-gradient(ellipse_at_15%_80%,rgba(184,85,58,0.10),transparent_60%)]" />
+          {/* Cinematic TMJ hero illustration (dark, jaw-joint anatomy) with a
+              bottom-up scrim so the headline stays legible over it. */}
           <div className="absolute inset-0 -z-10 bg-stone-950" />
+          <Image
+            src="/images/services/educational/tmj.png"
+            alt="Illustration of the temporomandibular joint where the lower jaw meets the skull"
+            fill
+            priority
+            sizes="100vw"
+            className="-z-10 object-cover object-center md:object-right opacity-90"
+          />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-stone-950 via-stone-950/70 to-stone-950/30" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-stone-950/80 via-transparent to-transparent" />
 
           <motion.div
             style={reduced ? undefined : { y: titleY }}
@@ -83,9 +92,26 @@ export function TmjSignature({ service }: TmjSignatureProps) {
       {/* ─────────── Lede ─────────── */}
       <section className="bg-stone-50 py-24 md:py-36">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
-          <p className="font-serif text-2xl md:text-4xl leading-[1.4] text-stone-900 tracking-tight">
-            {service.body}
-          </p>
+          {(() => {
+            const [opening, ...rest] = service.body
+              .split('\n\n')
+              .map((p) => p.trim())
+              .filter(Boolean);
+            return (
+              <>
+                <p className="font-serif text-2xl md:text-4xl leading-[1.35] text-stone-900 tracking-tight">
+                  {opening}
+                </p>
+                {rest.length > 0 && (
+                  <div className="mt-10 space-y-6 text-stone-700 text-lg md:text-xl leading-relaxed">
+                    {rest.map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </section>
 

@@ -10,6 +10,7 @@ import {
   services,
 } from '@/content/services';
 import { FadeUp } from '@/components/motion/fade-up';
+import { ServiceIllustration } from '@/components/services/service-illustration';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -64,6 +65,8 @@ export default async function DentalServiceDetail({ params }: PageProps) {
           </div>
         </section>
       </FadeUp>
+
+      <ServiceIllustration slug={service.slug} name={service.name} />
 
       <FadeUp as="section" className="bg-stone-100/60 py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 md:px-8">

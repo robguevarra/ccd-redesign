@@ -10,7 +10,35 @@ import {
   services,
 } from '@/content/services';
 import { FadeUp } from '@/components/motion/fade-up';
+import { ServiceIllustration } from '@/components/services/service-illustration';
 import { TmjSignature } from '@/components/tmj/tmj-signature';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
+
+// Sleep apnea reuses the /medical airway hero treatment (copied for now).
+const SLEEP_APNEA_KEYFRAMES: [
+  AirwayHeroKeyframe,
+  AirwayHeroKeyframe,
+  AirwayHeroKeyframe,
+] = [
+  {
+    eyebrow: 'Why it matters',
+    title: 'The tiredness has a cause.',
+    italicize: [4],
+    body: 'Waking up exhausted, snoring, gasping in the night — untreated sleep apnea quietly raises your risk for high blood pressure, heart disease, and more. It is treatable.',
+  },
+  {
+    eyebrow: 'A different option',
+    title: 'No mask. No machine.',
+    italicize: [3],
+    body: 'Many people cannot tolerate CPAP. A custom oral appliance, worn like a retainer at night, gently repositions the jaw to keep your airway open while you sleep.',
+  },
+  {
+    eyebrow: 'Who treats you',
+    title: 'A board-certified sleep dentist.',
+    italicize: [3],
+    body: 'Dr. Brien Hsu is a Diplomate of the American Board of Dental Sleep Medicine — a credential few dentists hold — and the first USC dentist published in the Journal of Clinical Sleep Medicine.',
+  },
+];
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,27 +77,45 @@ export default async function MedicalServiceDetail({ params }: PageProps) {
     (s) => s.slug !== service.slug,
   );
 
+  const isSleepApnea = service.slug === 'sleep-apnea';
+
   return (
     <>
-      <FadeUp>
-        <section className="bg-stone-50 py-24 md:py-36 border-b border-[var(--color-accent-200)]">
-          <div className="mx-auto max-w-5xl px-5 md:px-8">
-            <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-6">
-              <Link href="/medical" className="hover:opacity-80">
-                Medical Practice
-              </Link>
-              {' · '}
-              {SERVICE_SUBCATEGORY_LABELS[service.subcategory]}
-            </p>
-            <h1 className="font-serif text-5xl md:text-7xl tracking-tighter text-stone-900 leading-[0.95] font-light">
-              {service.name}
-            </h1>
-            <p className="mt-10 max-w-3xl text-stone-700 text-xl md:text-2xl leading-relaxed font-light">
-              {service.summary}
-            </p>
-          </div>
-        </section>
-      </FadeUp>
+      {isSleepApnea ? (
+        <AirwayHero
+          keyframes={SLEEP_APNEA_KEYFRAMES}
+          ariaLabel="Comfort Care — sleep apnea treatment"
+          fallbackHeading={
+            <>
+              The tiredness has a <span className="italic">cause.</span>
+            </>
+          }
+        />
+      ) : (
+        <FadeUp>
+          <section className="bg-stone-50 py-24 md:py-36 border-b border-[var(--color-accent-200)]">
+            <div className="mx-auto max-w-5xl px-5 md:px-8">
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-6">
+                <Link href="/medical" className="hover:opacity-80">
+                  Medical Practice
+                </Link>
+                {' · '}
+                {SERVICE_SUBCATEGORY_LABELS[service.subcategory]}
+              </p>
+              <h1 className="font-serif text-5xl md:text-7xl tracking-tighter text-stone-900 leading-[0.95] font-light">
+                {service.name}
+              </h1>
+              <p className="mt-10 max-w-3xl text-stone-700 text-xl md:text-2xl leading-relaxed font-light">
+                {service.summary}
+              </p>
+            </div>
+          </section>
+        </FadeUp>
+      )}
+
+      {!isSleepApnea && (
+        <ServiceIllustration slug={service.slug} name={service.name} />
+      )}
 
       <FadeUp as="section" className="bg-stone-100/60 py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
