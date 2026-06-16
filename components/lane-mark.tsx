@@ -1,9 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
-import { LogoFrames } from './logo-frames';
 import { cn } from '@/lib/cn';
 
 interface LaneMarkProps {
@@ -13,55 +10,46 @@ interface LaneMarkProps {
   className?: string;
 }
 
+const MARKS = ['dental', 'medical'] as const;
+
 /**
- * Header practice mark. At rest it shows the static lane logo (so the header
- * always reflects the current practice). When the lane changes — i.e. the user
- * toggles Dental ⇄ Medical — it plays the real logo animation once (the actual
- * mp4 frames via <LogoFrames>) as a flourish, then settles back to the new
- * lane's static mark. Honors prefers-reduced-motion (no flourish).
+ * Header practice mark. Both real logos are stacked; switching lane crossfades
+ * from one to the other and SETTLES on the destination logo — a dental ⇄
+ * medical morph (the shared moon stays put while the inner tooth ⇄ star + face
+ * swaps), not a play-then-snap. A slight scale on the outgoing/incoming mark
+ * gives the swap some depth. `motion-reduce` snaps with no transition.
+ *
+ * Note: the toggle is a morph between the two *logos* (not the supplied
+ * animationSample.mp4 — that clip is a dental-only flourish that loops back to
+ * dental and never reaches the medical logo, so it can't "stop on medical").
+ * The mp4 frames are used for the looping homepage-hero mark via <LogoFrames>.
  */
 export function LaneMark({ lane, size = 28, className }: LaneMarkProps) {
-  const reduced = useReducedMotion();
-  const [playToken, setPlayToken] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const prev = useRef(lane);
-
-  useEffect(() => {
-    if (prev.current === lane) return;
-    prev.current = lane;
-    if (reduced) return;
-    setPlayToken((t) => t + 1);
-    setPlaying(true);
-    const id = setTimeout(() => setPlaying(false), 2900); // matches the 2.9s sequence
-    return () => clearTimeout(id);
-  }, [lane, reduced]);
-
-  const src = lane === 'medical' ? '/logos/medical.png' : '/logos/dental.png';
-
   return (
     <span
       className={cn('relative inline-block select-none', className)}
       style={{ width: size, height: size }}
     >
-      <Image
-        src={src}
-        alt=""
-        width={size}
-        height={size}
-        priority
-        style={{ width: size, height: size }}
-        className={cn(
-          'absolute inset-0 transition-opacity duration-300',
-          playing ? 'opacity-0' : 'opacity-100',
-        )}
-      />
-      {playing && (
-        <LogoFrames
-          playKey={playToken}
-          size={size}
-          className="absolute inset-0"
-        />
-      )}
+      {MARKS.map((mark) => {
+        const active = lane === mark;
+        return (
+          <Image
+            key={mark}
+            src={`/logos/${mark}.png`}
+            alt=""
+            width={size}
+            height={size}
+            priority
+            className="absolute inset-0 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            style={{
+              width: size,
+              height: size,
+              opacity: active ? 1 : 0,
+              transform: active ? 'scale(1)' : 'scale(0.94)',
+            }}
+          />
+        );
+      })}
     </span>
   );
 }
