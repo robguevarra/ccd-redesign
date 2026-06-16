@@ -255,3 +255,11 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 - Removed the now-unused crossfade (`LogoMorph` + `content/logo-marks.ts`).
 
 **Verification:** `tsc` clean, tests pass. Confirmed in preview: hero mask animation steps through all frames in `currentColor`; header flourish fires on toggle and settles to the correct lane logo.
+
+---
+
+## 2026-06-16 — Toggle = logo morph (mp4 has no medical frame)
+
+**Finding:** Frame analysis of `animationSample.mp4` (DENTAL.png | f0 | f7 | f14 | f21 | f28 | MEDICAL.png comparison) shows the clip is a **dental-only flourish** — frame 0 and frame 28 are both the dental logo; a face profile + star emerge and recede but the **tooth is present throughout and the clean medical logo never appears**. So "play the mp4 frames and stop on the medical logo" is impossible from this asset.
+
+**Decision:** The Dental⇄Medical **toggle** now morphs between the two real logo PNGs (`components/lane-mark.tsx`): both stacked, crossfade + slight scale, settling on the destination mark (moon stays constant, inner tooth ⇄ star + face). The mp4 frames remain the **homepage-hero looping** mark (`<LogoFrames>`), where a dental-centric ambient loop is the right fit. If the practice wants the toggle to literally play to the medical logo, they'd need to supply a clip that actually morphs dental→medical.
