@@ -5,7 +5,6 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
-  useMotionValueEvent,
   useReducedMotion,
   useTransform,
   type MotionValue,
@@ -71,6 +70,13 @@ interface AirwayHeroProps {
   autoFinishAfterLastSnap?: boolean;
   /** Render a fixed corner debug overlay with progress + video time + active frame. */
   debug?: boolean;
+  /**
+   * Switch caption frames by VIDEO TIME (seconds) instead of scroll progress.
+   * `[bStart, cStart]` — Frame B begins at bStart seconds of video, Frame C at
+   * cStart seconds. Only meaningful for a linear (non-pingPong) scrub. When
+   * omitted, captions switch on the default scroll-progress thresholds.
+   */
+  captionTimecodes?: readonly [number, number];
 }
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
@@ -103,8 +109,11 @@ export function AirwayHero({
   snapMode = 'magnet',
   autoFinishAfterLastSnap = false,
   debug = false,
+  captionTimecodes,
 }: AirwayHeroProps) {
   const reduced = useReducedMotion();
+  const capB = captionTimecodes?.[0];
+  const capC = captionTimecodes?.[1];
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeFrame, setActiveFrame] = useState(0);
@@ -263,7 +272,20 @@ export function AirwayHero({
         }
 
         const next =
-          progress < FRAME_A_END ? 0 : progress < FRAME_B_END ? 1 : 2;
+          capB != null &&
+          capC != null &&
+          Number.isFinite(video.duration) &&
+          video.duration > 0
+            ? targetTime < capB
+              ? 0
+              : targetTime < capC
+              ? 1
+              : 2
+            : progress < FRAME_A_END
+            ? 0
+            : progress < FRAME_B_END
+            ? 1
+            : 2;
         if (next !== lastFrame) {
           lastFrame = next;
           setActiveFrame(next);
@@ -282,7 +304,7 @@ export function AirwayHero({
       window.removeEventListener('pointerdown', onFirstTouch);
       cancelAnimationFrame(raf);
     };
-  }, [reduced, progressMV, pingPong]);
+  }, [reduced, progressMV, pingPong, capB, capC]);
 
   // ─────── Magnet snap to snapPoints ───────
   useEffect(() => {
@@ -871,6 +893,7 @@ export function AirwayHero({
       <DebugOverlay
         progressMV={progressMV}
         videoRef={videoRef}
+        captionTimecodes={captionTimecodes}
       />
     )}
     </>
@@ -1142,28 +1165,54 @@ function RenderTitle({ title, italicize }: { title: string; italicize?: number[]
 function DebugOverlay({
   progressMV,
   videoRef,
+  captionTimecodes,
 }: {
   progressMV: MotionValue<number>;
   videoRef: React.RefObject<HTMLVideoElement | null>;
+  captionTimecodes?: readonly [number, number];
 }) {
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
 
-  useMotionValueEvent(progressMV, 'change', (v) => {
-    setProgress(v);
-    if (videoRef.current && Number.isFinite(videoRef.current.duration)) {
-      setTime(videoRef.current.currentTime);
-    }
-  });
+  // Poll live each frame so `time` reflects the ACTUAL scrubbed currentTime.
+  // (The seek happens in a separate rAF loop, so event-based sampling lagged
+  // and reported a stale 0.00.)
+  useEffect(() => {
+    let raf = 0;
+    const loop = () => {
+      setProgress(progressMV.get());
+      const v = videoRef.current;
+      if (v && Number.isFinite(v.currentTime)) setTime(v.currentTime);
+      if (v && Number.isFinite(v.duration)) setDuration(v.duration);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [progressMV, videoRef]);
 
-  const activeFrame =
-    progress < FRAME_A_END ? 'A' : progress < FRAME_B_END ? 'B' : 'C';
-  const frameRange =
-    activeFrame === 'A'
-      ? '0.00–0.42'
-      : activeFrame === 'B'
-      ? '0.42–0.72'
-      : '0.72–1.00';
+  let activeFrame: 'A' | 'B' | 'C';
+  let frameRange: string;
+  if (captionTimecodes) {
+    const [tB, tC] = captionTimecodes;
+    activeFrame = time < tB ? 'A' : time < tC ? 'B' : 'C';
+    const end = duration > 0 ? `${duration.toFixed(1)}s` : 'end';
+    frameRange =
+      activeFrame === 'A'
+        ? `0.0–${tB}s`
+        : activeFrame === 'B'
+        ? `${tB}–${tC}s`
+        : `${tC}–${end}`;
+  } else {
+    activeFrame =
+      progress < FRAME_A_END ? 'A' : progress < FRAME_B_END ? 'B' : 'C';
+    frameRange =
+      activeFrame === 'A'
+        ? '0.00–0.42'
+        : activeFrame === 'B'
+        ? '0.42–0.72'
+        : '0.72–1.00';
+  }
 
   return (
     <div className="fixed bottom-4 right-4 z-[1000] bg-stone-900/90 text-stone-50 font-mono text-[11px] leading-tight px-3 py-2 rounded-md backdrop-blur-sm pointer-events-none select-none">
