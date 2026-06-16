@@ -13,5 +13,6 @@ export const portraitBlurMap: Record<string, string> = {
   "dr-angela-huang": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkABABoJYwCsAC0vWVzAAD+Z8xgKFxtyyEIXik4Xlu9pmQAgAAA",
   "dr-brien-hsu": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoQAAkABABoJZQCsADyVfOAAP6zQ/K6+Y6QlfyrfjIAuIkiAAA=",
   "dr-rachel-lim": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoQAAkABABoJYwCdAEKnSdMAAD+1oTcIYprd1kYG3yV0gY4VW2gAA==",
-  "dr-robert-sharobiem": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkABABoJYwCdACEwr1cAAD+sVid4yYJkbBNfhoGACGkOqqbgAAA"
+  "dr-robert-sharobiem": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkABABoJYwCdACEwr1cAAD+sVid4yYJkbBNfhoGACGkOqqbgAAA",
+  "dr-serena-hsu": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoQAAkABABoJQBOgBUfdzEAAP7WrPDE+340Z+3APpRzlkBZF13SCAAA"
 };

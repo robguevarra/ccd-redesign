@@ -2,12 +2,12 @@ import { describe, expect, test } from 'vitest';
 import { doctors, getDoctor } from '../doctors';
 
 describe('doctor roster', () => {
-  test('total count is exactly 5', () => {
-    expect(doctors).toHaveLength(5);
+  test('total count is exactly 6', () => {
+    expect(doctors).toHaveLength(6);
   });
 
-  test('Serena Hsu is removed', () => {
-    expect(getDoctor('dr-serena-hsu')).toBeUndefined();
+  test('Serena Hsu is on the roster (re-added June 2026)', () => {
+    expect(getDoctor('dr-serena-hsu')).toBeDefined();
   });
 
   test('lead clinician is Dr. Brien Hsu', () => {
