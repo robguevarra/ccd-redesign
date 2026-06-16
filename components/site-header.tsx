@@ -21,6 +21,7 @@ import { Wordmark } from './wordmark';
 
 const NAV_ITEMS = [
   { href: '/doctors', label: 'Doctors' },
+  { href: '/before-after', label: 'Smile Gallery' },
   { href: '/technology', label: 'Technology' },
   { href: '/reviews', label: 'Reviews' },
   { href: '/blog', label: 'Blog' },
