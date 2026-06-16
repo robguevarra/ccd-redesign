@@ -1,11 +1,9 @@
 import type { Service, ServiceLane, ServiceSubcategory } from './schemas';
 
 /**
- * Service catalog. 32 services across 9 subcategories under 2 lanes
+ * Service catalog. 38 services across 9 subcategories under 2 lanes
  * (medical, dental). Source: docs/superpowers/specs/2026-05-06-dentisthsu-pre-pitch-audit-pass.md §5
- *
- * Body content for new stub services is intentionally short (50-80 words)
- * for the pitch. Full long-form bodies are P5/v2 work.
+ * plus the June 2026 client content update (new procedures + revised bodies).
  */
 
 export const SERVICE_LANE_LABELS: Record<ServiceLane, string> = {
@@ -50,10 +48,10 @@ export const SERVICE_SUBCATEGORY_BY_LANE: Record<ServiceLane, ServiceSubcategory
 
 export const services: Service[] = [
   // ═════════════════════════════════════════════════════════════════
-  // MEDICAL LANE (10 services across 4 subcategories)
+  // MEDICAL LANE (15 services across 4 subcategories)
   // ═════════════════════════════════════════════════════════════════
 
-  // ─────── TMJ & Orofacial Pain (4) ───────
+  // ─────── TMJ & Orofacial Pain (7) ───────
   {
     slug: 'tmj',
     name: 'TMJ Treatment',
@@ -63,13 +61,13 @@ export const services: Service[] = [
       'Comprehensive evaluation and treatment for temporomandibular joint disorders. Most cases are managed without surgery.',
     signature: true,
     technologyRefs: ['cbct'],
-    body: `If you have jaw pain, clicking, headaches, ear pressure, or limited opening, it's likely been misdiagnosed for years before someone connected it to bite mechanics. Most patients who find us have already seen a physician, a neurologist, or an ENT specialist, and nothing has resolved. The problem lives at the intersection of dentistry and medicine, and very few practices are equipped to evaluate both sides.
+    body: `If you have jaw pain, clicking, popping, headaches, ear pressure, or limited opening, it's likely been misdiagnosed for years before someone connected it to bite mechanics. Most patients who find us have already seen a physician, a neurologist, or an ENT specialist, and nothing has been resolved. The problem lives at the intersection of dentistry and medicine, and very few practices are equipped to evaluate both sides.
 
 We approach TMJ disorders the way a specialty clinic should: with a thorough history, a physical examination of the joint and masticatory muscles, and CBCT imaging that shows the joint in three dimensions. That imaging, taken with our iCAT FLX, reveals the bony architecture of the condyle, the degree of joint space narrowing, and any degenerative changes that would shift the treatment plan. What cannot be seen on a flat panoramic X-ray becomes visible. Decisions get better from there.
 
-Treatment is always conservative first. Splint therapy — a precision-fit occlusal appliance worn during sleep, during the day, or both — removes the joint from destructive load and gives the tissues a chance to recover. Where the bite is contributing to the dysfunction, bite-equilibration addresses the root mechanical problem rather than masking it. Physical therapy and trigger-point work are often part of the same episode of care.
+Treatment is always conservative first. Splint therapy — a precision-fit occlusal appliance worn during sleep, during the day, or both — reduces destructive joint loading and allows the tissues a chance to recover. Where the bite is contributing to the dysfunction, bite-equilibration addresses the root mechanical problem rather than masking it. Physical therapy and trigger-point work are often part of the same episode of care.
 
-Surgery is a last resort, one we discuss candidly when we reach the limits of conservative management, but something most patients never need. Our goal is pain relief, jaw mobility, and a lasting result, not a dependency on a device. If the case warrants a surgical consult, we have that relationship in-house.`,
+Surgery is a last resort, one we discuss candidly when we reach the limits of conservative management, but something most patients never need. Our goal is pain relief, jaw mobility, and a lasting result, not a dependency on a device.`,
   },
   {
     slug: 'orofacial-pain',
@@ -79,8 +77,6 @@ Surgery is a last resort, one we discuss candidly when we reach the limits of co
     summary:
       'Chronic facial pain syndromes: when the cause is dental, when it is not, and how to tell the difference.',
     body: `Facial pain is one of the hardest diagnostic problems in clinical medicine. Some of it is dental in origin: cracked teeth, occlusal interference, pulpal pathology. Much of it is not. Neuropathic pain, neurovascular pain, cervical musculoskeletal pain, and systemic conditions that manifest in the head and face all look similar to a patient describing where it hurts.
-
-Dr. Brien Hsu holds a master's degree in Orofacial Pain, Oral Medicine, and Sleep Disorders from USC and is board-certified by the American Board of Orofacial Pain — a credential that represents postgraduate specialty training most dentists do not pursue. We are the only dental or medical office in Rancho Cucamonga with that specialty on staff.
 
 What that means for a patient in pain: you get a thorough diagnostic workup. A detailed history, a review of prior imaging and lab work, sleep habit assessment, behavioral and occupational factors, and a systematic clinical examination, before any treatment is proposed. We do not presume the answer is a night guard. We figure out what is actually happening first.
 
@@ -99,7 +95,7 @@ We also serve as consultants to other dentists and physicians in the region when
 
 Trigger point injections deliver a small amount of local anesthetic directly into the hyperactive muscle band. The injection disrupts the self-sustaining spasm cycle, allows the muscle to fully relax, and gives the surrounding nerve endings a chance to reset. Relief is often immediate; the full effect unfolds over the following days. In some cases we pair the injection with PRF (platelet-rich fibrin concentrated from your own blood) to promote tissue healing at the injection site.
 
-The procedure is done entirely in-office and takes under thirty minutes, including the time needed to precisely locate the trigger point through palpation. Local anesthesia makes the injection itself comfortable. Soreness at the injection site is common for a day or two; serious complications are rare.
+The procedure is done entirely in-office. Local anesthesia makes the injection itself comfortable. Soreness at the injection site is common for a day or two; serious complications are rare.
 
 Trigger point injections are most effective as part of a broader treatment plan. They break the acute pain cycle and allow other therapies to take effect: splint therapy, bite equilibration, physical therapy, without the interference of constant muscle guarding. We do not offer them as a standalone substitute for addressing the underlying dysfunction.`,
   },
@@ -114,12 +110,86 @@ Trigger point injections are most effective as part of a broader treatment plan.
 
 The practical result is meaningful. Post-operative swelling is reduced. The inflammatory phase is shorter. Soft-tissue and bone regeneration begin sooner. For patients undergoing bone grafting before implant placement, the combination of graft material and PRF creates a more hospitable environment for new bone formation. For patients receiving trigger point injections for orofacial pain, PRF adds a tissue-healing dimension to what would otherwise be a purely analgesic procedure.
 
-PRF and PRP are autologous, derived entirely from your own blood, so there is no risk of allergic reaction or rejection. The preparation adds approximately fifteen minutes to a procedure. We use it selectively, for cases where the evidence supports the benefit, not as a routine add-on.
+PRF and PRP are autologous, derived entirely from your own blood, so there is no risk of allergic reaction or rejection. We use it selectively, for cases where the evidence supports the benefit, not as a routine add-on.
 
 This is not a cosmetic facial filler treatment. Our use of PRF and PRP is in the context of surgical and orofacial medicine: dental extractions, bone grafting, implant site preparation, and adjunctive orofacial pain management. Patients considering aesthetic facial applications for cosmetic rejuvenation purposes should consult a dermatologist or plastic surgeon.`,
   },
+  {
+    slug: 'arthrocentesis',
+    name: 'Arthrocentesis',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'A minimally invasive washout of the jaw joint to relieve TMJ pain, locking, and limited opening — optionally enhanced with PRF.',
+    body: `This procedure is essentially a gentle washout of the jaw joint. We place a small needle into the joint space and flush it with sterile fluid to help remove inflammation and reduce pressure. The goal is to help your jaw move better, decrease pain, and improve symptoms like locking or limited opening.
 
-  // ─────── Oral Medicine & Pathology (4) ───────
+During the procedure, the provider places a small needle into the jaw joint and gently flushes the joint with sterile fluid. This helps wash out inflammation, remove debris, and release pressure within the joint. In many cases, it can also help improve movement of the joint if it feels stuck or locked.
+
+This procedure is commonly recommended for patients who have:
+• Jaw pain
+• Limited mouth opening
+• Jaw locking or catching
+• Clicking or popping with pain
+• Inflammation inside the joint
+• Symptoms that have not improved with conservative treatment like medications, splints, or physical therapy
+
+The goals of the procedure are to:
+• Reduce pain and inflammation
+• Improve jaw movement
+• Decrease pressure inside the joint
+• Help restore more normal function
+
+Most patients experience soreness for a few days afterward, but recovery is usually much easier than open joint surgery. You may still need physical therapy, jaw exercises, a TMJ splint, or additional treatment afterward to maintain improvement.
+
+What makes our treatment different is that we may also use PRF (Platelet-Rich Fibrin). PRF is created using a small sample of your own blood, which is spun down to concentrate natural healing cells and growth factors. This material can then be placed into the joint to help support healing, reduce inflammation, and improve recovery. Because it comes from your own body, it is considered very safe and biocompatible.`,
+  },
+  {
+    slug: 'neuropathic-pain',
+    name: 'Neuropathic Pain',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'Evaluation and personalized management of chronic neuropathic (nerve) pain affecting the face and jaw.',
+    body: `Neuropathic pain is a complex, chronic condition caused by damage or disease affecting the network of neural structures responsible for the conscious perception of touch, pain, temperature, pressure, and body position. Rather than signaling a physical injury, damaged nerves send abnormal pain signals to the brain. Patients often describe neuropathic pain as burning, shooting, stabbing, or a persistent "pins and needles" sensation. Because the condition originates within the nervous system itself, it can be difficult to manage with traditional pain medications.
+
+Neuropathy may develop from a wide range of medical conditions and underlying factors, including:
+• Metabolic diseases: diabetes is the leading cause of peripheral neuropathy.
+• Viral infections: conditions such as shingles (postherpetic neuralgia) and HIV/AIDS.
+• Nerve compression: herniated discs, carpal tunnel syndrome, and spinal stenosis.
+• Toxins and deficiencies: chemotherapy, radiation therapy, excessive alcohol use, and severe vitamin deficiencies.
+• Autoimmune and neurological disorders: multiple sclerosis, Guillain-Barré syndrome, fibromyalgia, and others.
+• Trauma: facial trauma from surgeries, dental treatment, and physical contact.
+
+For Dr. Hsu, treatment begins with understanding the connection between the medical health history and the orofacial complex, including jaw alignment, jaw function, and the musculoskeletal and neurological systems. Every care plan is customized to the individual patient. Dr. Hsu is committed to developing personalized treatment strategies designed to address each patient's unique condition, symptoms, and long-term wellness goals.`,
+  },
+  {
+    slug: 'custom-orthotic-device',
+    name: 'Custom-Fit Orthotic Device',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'A precision-fitted TMJ orthotic that repositions the jaw to relieve joint and muscle strain from clenching and grinding.',
+    body: `A custom-fitted TMJ splint is a removable appliance custom-fabricated to fit over your teeth and help reduce stress on the temporomandibular joint (TMJ) and surrounding muscles.
+
+Unlike over-the-counter night guards, this splint is designed from impressions or a scan of your teeth and jaw after evaluation of imaging. The fit needs to be precise and will require additional appointments to adjust and relieve pressure on your TMJs and craniofacial muscles. The goal is to guide your jaw into a more relaxed, stable position and prevent clenching or grinding from overloading the joint and muscles.
+
+The appliance can help with:
+• Jaw pain or soreness
+• Headaches related to clenching or grinding
+• Clicking, popping, or locking of the jaw
+• Muscle tension in the face, neck, or temples
+• Tooth wear from grinding
+
+How it works:
+• It creates a protective barrier between the upper and lower teeth
+• It helps relax the jaw muscles by changing how your teeth come together
+• It can reduce pressure inside the TMJ and allow inflammation to settle
+• It encourages the jaw to rest in a more balanced position
+
+Patients typically wear the splint at night and sometimes during the day depending on the provider's recommendations. It may take a short adjustment period as the muscles and joints adapt. Don't worry — we are with you every step of the way, with routine follow-ups and adjustments to the orthotic device.`,
+  },
+
+  // ─────── Oral Medicine & Pathology (5) ───────
   {
     slug: 'oral-pathology',
     name: 'Oral Pathology',
@@ -144,15 +214,30 @@ We also see patients on referral from other dentists and physicians who encounte
     subcategory: 'oral-medicine-pathology',
     summary:
       'Soft-tissue and oral lesion biopsies, performed in-office with pathology turnaround in days.',
-    body: `When an oral lesion needs tissue diagnosis (and most do not), the path from discovery to answer should be direct. We perform biopsies in our office under local anesthesia, on the same day or at a short-notice follow-up appointment, and send the specimen to a board-certified oral pathologist for analysis. There is no referral to a separate facility, no scheduling delay across multiple practices, no gap between the clinician who found the lesion and the one who explains the result.
+    body: `Oral lesions are a general term we use to describe any abnormal area in the mouth. This can include changes in the tissue of the gums, tongue, cheeks, lips, or roof of the mouth.
 
-Incisional biopsy is used for larger lesions where only a sample is taken. Excisional biopsy removes the entire lesion, appropriate for smaller findings where complete removal is both diagnostic and curative. The technique and approach are determined by the size, location, and clinical appearance of the finding.
+These changes can look or feel different from normal tissue and may appear as:
+• Sores or ulcers that do not heal
+• White or red patches
+• Thickened or rough areas
+• Bumps, lumps, or growths
+• Areas of irritation, bleeding, or discoloration
 
-After the anesthetic, the procedure itself is brief. Soft-tissue biopsies heal quickly; most patients return to normal function within a few days. The specimen goes to the laboratory the same day.
+Oral lesions can happen for many reasons, including irritation (like biting or rubbing), infections (viral, bacterial, or fungal), immune-related conditions, medication effects, or in some cases, precancerous or cancerous changes. Due to this wide range of causes, it's important to properly evaluate any lesion that does not heal within 10–14 days.
 
-Pathology results typically return in three to five business days. We review the report with you directly: the findings, what they mean, and the treatment plan that follows. If the result warrants oncology referral or further treatment, we coordinate that immediately and stay involved in your care. You are never handed a report and left to interpret it alone.
+Evaluation may include a clinical exam, monitoring over time, and sometimes a biopsy. An oral biopsy is a small, routine procedure where we take a tiny sample of tissue from an area in the mouth so it can be examined under a microscope. The purpose is to find out exactly what the tissue change is, especially when something does not look normal or does not heal as expected.
 
-We biopsy appropriately, not reflexively. Not every lesion needs tissue diagnosis; some need monitoring, some have a clear clinical diagnosis, and some resolve on their own. We use clinical judgment to avoid unnecessary procedures while not missing the ones that matter.`,
+We recommend a biopsy when there is a lesion, sore, or area of concern that:
+• Has not healed within about 10–14 days
+• Looks unusual in color, texture, or shape
+• Is growing or changing over time
+• Cannot be clearly identified on exam
+
+During the procedure, the area is numbed with local anesthetic, so the patient stays comfortable. A small piece of tissue is then carefully removed. In most cases, stitches are placed to help the area heal. The sample is sent to a board-certified laboratory, where a pathologist examines it to determine the exact diagnosis.
+
+After the biopsy, patients may have mild soreness, swelling, or minor bleeding for a short period of time. Healing typically occurs within 3–5 business days of treatment if any is needed.
+
+What sets us apart? When it comes to oral lesions, we take them very seriously, and we make sure that all care within our scope can be done under our roof. No referrals to separate facilities, no scheduling delays across multiple practices, no gap between the clinician who found the lesion and the one who explains the results. We review the report with you directly: the findings, what they mean, and the treatment plan that follows. If the results warrant referrals to other specialties or further treatment, we coordinate and adapt to the change immediately and stay involved in your care. We know results can be scary, which is why we will be here with you every step of the way. You will never be handed a report and left to interpret it alone. Often we will also educate patients on the possible causes of their lesions and help guide them on methods to reduce or even avoid re-occurrence.`,
   },
   {
     slug: 'oral-cancer-screening',
@@ -173,23 +258,71 @@ You should not need to ask for this screen. We perform it automatically.`,
   },
   {
     slug: 'oral-cancer-shields',
-    name: 'Oral Cancer Shields',
+    name: 'Custom Radiation Shields',
     lane: 'medical',
     subcategory: 'oral-medicine-pathology',
     summary:
-      'Custom radiation shields for patients undergoing head and neck cancer treatment.',
-    body: `Radiation therapy for head and neck cancers is essential treatment, and it is hard on the surrounding tissues. Scatter radiation that reaches the teeth, salivary glands, and jaw bone causes complications that can persist long after treatment ends: rampant caries from xerostomia, compromised bone healing, mucositis, and trismus. Custom intraoral shields are designed to deflect radiation away from tissues that are not in the treatment field, reducing the dose those structures receive without interfering with the therapeutic target.
+      'Custom oral radiation shields and positioning stents that protect healthy tissue during head and neck radiation therapy.',
+    body: `Before radiation therapy, your radiation oncologist may recommend a custom oral radiation shield to wear during treatment.
 
-We fabricate the shields in close coordination with your radiation oncology team. The process begins with impressions or a digital scan of your mouth; the shield is then constructed from a lead-lined material formed to fit precisely over your teeth and palate in the treatment position. The fit matters because a shield that moves during treatment defeats its purpose.
+When radiation is directed near the mouth, some of the radiation can scatter inside the oral cavity. This may increase the risk of side effects such as:
+• Mouth sores
+• Mucositis (painful inflammation of the mouth tissues)
+• Dry mouth / xerostomia (reduced saliva production)
+• Osteoradionecrosis (bone damage caused by radiation)
 
-Timing is important. Ideally, a consultation happens before radiation begins — sometimes before surgery — so the shield is ready at the start of the treatment course. We work quickly; most patients are fitted within a week of a referral.
+Metal fillings, crowns, or other dental restorations may also become heated during treatment and irritate or burn nearby soft tissues.
 
-We also provide pre-radiation dental clearance evaluations for oncology patients, identifying teeth that should be extracted before radiation begins to prevent later extractions from a jaw with compromised bone healing capacity. This coordination between oncology and dentistry is a clinical relationship built over years, not a service offered in isolation.
+A custom oral radiation shield helps protect healthy areas of the mouth by:
+• Positioning the jaw to reduce the exposure of radiation
+• Absorbing some of the radiation
+• Reducing unnecessary radiation exposure to healthy tissues
+• Preventing soft tissues from directly contacting metal dental restorations during treatment
 
-If you or a family member is preparing for head or neck radiation, ask your oncologist for a dental consultation early in the treatment planning process.`,
+These stents are typically made from materials such as:
+• Polymethyl methacrylate (PMMA)
+• Tungsten
+• Silicone
+
+Although oral radiation shields and/or positioning stents cannot completely prevent side effects, they may help reduce the risk and severity of complications.
+
+Not every patient needs a custom oral radiation shield and/or positioning stent. Its use depends on factors such as:
+• The location of the radiation treatment
+• The radiation dose
+• The amount of tissue being treated
+
+Your radiation oncology team will determine whether a shield is appropriate for your treatment plan.`,
+  },
+  {
+    slug: 'osteonecrosis',
+    name: 'Osteonecrosis',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
+    summary:
+      'Less-invasive evaluation and management of osteonecrosis of the jaw (dead jaw bone), often linked to certain medications or prior radiation.',
+    body: `Osteonecrosis of the jaw — sometimes called "dead jaw bone" — occurs when a portion of the jawbone does not heal properly. Over time, this can cause the bone to weaken, become infected, and then necrotic (dead), usually resulting in exposed bone inside the mouth.
+
+This condition can happen for different reasons, but it is most associated with certain medications used to treat osteoporosis, cancer involving the bones, or following radiation therapy to the head and neck.
+
+Symptoms can include:
+• Pain or swelling in the jaw
+• Exposed bone that does not heal
+• Loose teeth
+• Drainage or infection
+• Difficulty chewing
+• Numbness or a heavy feeling in the jaw
+
+Treatment depends on how severe the condition is. The goal is to control pain and infection while preventing the area from worsening and helping the tissue heal as much as possible. A dentist will usually advise the following:
+• Antibiotics or antibacterial mouth rinses
+• Gentle cleaning of the area
+• Avoiding irritation or trauma to the jaw
+• Monitoring the area closely
+• In some cases, surgery to remove unhealthy bone
+
+Our medical practice specializes in less invasive treatment to slow the spread of osteonecrosis, reduce the risk of further complications, and potentially resolve the problem. If you feel that this applies to you, please contact the office so we can schedule a consultation for you. It is important to understand that healing can take time, and treatment is often focused on managing the condition and preventing progression.`,
   },
 
-  // ─────── Sleep & Airway (1) ───────
+  // ─────── Sleep & Airway (2) ───────
   {
     slug: 'sleep-apnea',
     name: 'Sleep Apnea Treatment',
@@ -208,26 +341,43 @@ The process begins with a review of your sleep study results. We work in coordin
 
 We do not diagnose sleep apnea in the dental chair. A qualified sleep physician performs that evaluation. Our role is the appliance therapy that follows.`,
   },
+  {
+    slug: 'tongue-tie-release',
+    name: 'Tongue-Tie Release',
+    lane: 'medical',
+    subcategory: 'sleep-airway',
+    summary:
+      'Laser release of a restrictive tongue-tie (lingual frenum) to improve tongue mobility, jaw development, and airway function.',
+    body: `A lingual frenectomy is a procedure that releases or removes the tight band of tissue underneath the tongue, called the lingual frenum. When this tissue is too tight or short, it can restrict tongue movement — a condition commonly known as a "tongue tie."
+
+A tongue tie can affect the way the jaw and mouth develop over time. When the tongue cannot rest properly on the roof of the mouth, it may contribute to a narrower upper jaw, crowding of the teeth, bite issues, or improper oral posture. The tongue plays an important role in guiding healthy jaw growth and supporting the airway.
+
+In some individuals, restricted tongue movement may also contribute to airway problems and sleep-disordered breathing, including snoring or obstructive sleep apnea. If the tongue sits lower in the mouth or falls backward during sleep, it can partially block the airway and make breathing more difficult at night. Releasing the tongue tie may help improve tongue posture and airway function, although additional treatment may still be needed depending on the severity of the airway restriction.
+
+During the procedure, the provider carefully releases the tight tissue to allow the tongue to move more freely. The procedure is usually quick and is commonly performed using a laser under local anesthesia.
+
+After the procedure, patients can expect some soreness and swelling for a few days. Stretching exercises may also be recommended to help retrain tongue movement and reduce the chance of the tissue tightening again during healing. Often, if the patient does not perform the exercises regularly, scar tissue will form around the area of the tongue tie and removal of this tissue will be needed at another visit.`,
+  },
 
   // ─────── Surgical & Regenerative — medical context (1) ───────
   {
-    slug: 'surgical-laser-therapy',
-    name: 'Surgical Laser Therapy',
+    slug: 'laser-photobiomodulation',
+    name: 'Laser Photobiomodulation & Muscle Therapy',
     lane: 'medical',
     subcategory: 'surgical-regenerative-medical',
     summary:
-      'Diode laser treatment for soft-tissue procedures, decontamination, and biostimulation.',
-    body: `Soft-tissue surgery has a reputation for bleeding, swelling, and slow recovery because that is the legacy of conventional scalpel techniques. Diode laser therapy changes the experience meaningfully: the laser seals blood vessels as it works, which means less intraoperative bleeding, less post-operative swelling, and faster tissue healing. Patients who have had traditional gum surgery before tend to be surprised at how uncomplicated the recovery is.
+      'Low-level therapeutic light to relieve nerve and muscle pain, support healing, and aid recovery of the orofacial region.',
+    body: `Our Laser Photobiomodulation and Orofacial Muscle Laser Therapy utilizes low-level therapeutic light to promote tissue healing, reduce pain, and enhance recovery of the nerves and muscles involved in jaw function.
 
-We use the diode laser for a range of procedures in the medical and dental practice: frenectomies, gingivectomies, gingival contouring, peri-implant tissue management, decontamination of infected pockets around implants, and biostimulation of surgical sites to promote healing. In the orofacial pain context, low-level laser energy at a surgical site accelerates tissue repair after injection procedures or minor oral surgery.
+Laser Photobiomodulation (PBM): This therapy is recommended for patients who have experienced significant trauma or injury to the jaw and orofacial region resulting in nerve pain, altered sensation, or numbness. Photobiomodulation delivers specific wavelengths of light energy that stimulate cellular repair, encourage nerve regeneration, and help restore normal nerve signaling pathways. By supporting the healing process, this treatment can improve sensation and reduce neuropathic discomfort over time.
 
-The procedure is performed under local anesthesia. The laser itself generates a characteristic sensation, but most patients describe the experience as significantly more comfortable than conventional scalpel surgery. Sutures are often unnecessary for smaller procedures. Post-operative instructions are minimal: soft diet for a few days, normal oral hygiene with gentle technique around the surgical site.
+Orofacial Muscle Red Light Laser Therapy: This treatment targets the muscles of the jaw, face, and surrounding structures to decrease inflammation, improve circulation, and promote muscle relaxation and healing. It is commonly used in conjunction with our custom orthotic appliance therapy to optimize muscle function and relieve tension associated with temporomandibular disorders (TMD). Additionally, it is frequently performed following PRP/PRF (Platelet-Rich Plasma/Platelet-Rich Fibrin) injections to enhance the body's natural healing response, accelerate recovery, and support regeneration of the treated muscles and soft tissues.
 
-Laser therapy is not appropriate for every soft-tissue procedure. Anatomy, lesion size, and access all influence whether laser is the right tool. For procedures requiring deep tissue access or bony involvement, conventional surgical instruments remain the standard. We recommend laser where the evidence and the clinical situation support it, not uniformly.`,
+Together, these non-invasive laser therapies are designed to reduce pain, improve function, and promote long-term healing of both the nerves and muscles of the orofacial region.`,
   },
 
   // ═════════════════════════════════════════════════════════════════
-  // DENTAL LANE (22 services across 5 subcategories)
+  // DENTAL LANE (23 services across 5 subcategories)
   // ═════════════════════════════════════════════════════════════════
 
   // ─────── Preventive Dentistry (5) ───────
@@ -265,7 +415,7 @@ We also evaluate your bite, look for signs of grinding or clenching, and check e
 
 The consultation that follows is not a sales presentation. We explain what we found, what it means, and what your options are, including doing nothing when that is a reasonable choice. A treatment plan is built with you, not handed to you.
 
-We recommend a comprehensive re-evaluation each year. Your mouth changes, and the baseline needs to keep pace.`,
+We recommend a comprehensive re-evaluation each year.`,
   },
   {
     slug: 'scaling-root-planing',
@@ -278,11 +428,9 @@ We recommend a comprehensive re-evaluation each year. Your mouth changes, and th
 
 The procedure removes calculus, plaque, and bacterial toxins from the root surfaces both above and below the gum margin. The root planing component smooths the root surface, which discourages future bacterial adhesion and allows the gum tissue to reattach and form a healthier, shallower pocket. After the procedure, a medicated solution is often irrigated into the treated pockets to address any remaining bacterial burden.
 
-We complete the procedure one quadrant at a time under local anesthesia, which means each session is comfortable and focused. Most patients need two appointments to cover the full mouth; some cases with less severe involvement can be addressed in one visit. We schedule a re-evaluation at four to six weeks post-treatment to re-probe and assess the tissue response. Pockets that have not responded adequately may need additional intervention.
+We complete the procedure 2 quadrants at a time, typically one side of the mouth first, under local anesthesia, which means each session is comfortable and focused. We schedule a re-evaluation 1 month post-treatment to re-probe and assess the tissue response. Pockets that have not responded adequately may need additional intervention.
 
-The indication for scaling and root planing is clinical, not cosmetic. If your probe readings are in the healthy range at your annual exam, you do not need this procedure. If they are not, continuing with routine cleanings does not address the underlying disease. We screen proactively at every hygiene visit and recommend deep cleaning when the measurements support it, not as a default.
-
-Dr. Singh, our periodontist with a focus on periodontal disease since 2006, is available for cases that require more advanced surgical management when scaling alone is insufficient.`,
+The indication for scaling and root planing is clinical, not cosmetic. If your probe readings are in the healthy range at your annual exam, you do not need this procedure. If they are not, continuing with routine cleanings does not address the underlying disease. We screen proactively at every hygiene visit and recommend deep cleaning when the measurements support it, not as a default.`,
   },
   {
     slug: 'fluoride-sealants',
@@ -297,9 +445,7 @@ Fluoride works at the chemistry level. Tooth enamel is composed of hydroxyapatit
 
 Sealants address a different vulnerability: the deep pits and fissures in the biting surfaces of back teeth, where toothbrush bristles cannot reach and where a significant portion of childhood and adolescent decay originates. A sealant is a thin resin material flowed into those grooves and light-cured to form a physical barrier against bacteria and food debris. Applied correctly and maintained over time, they last years and prevent the cavities that would otherwise form.
 
-We recommend fluoride for patients across all ages with elevated decay risk: those with dry mouth from medications, orthodontic patients, people with a history of frequent cavities, and patients with exposed root surfaces from recession. Sealants are most valuable on newly erupted permanent molars in children and adolescents, but we also place them on adult patients whose molar anatomy creates ongoing risk.
-
-Both are included as part of routine hygiene visits when indicated. We do not wait to be asked.`,
+We recommend fluoride for patients across all ages with elevated decay risk: those with dry mouth from medications, orthodontic patients, people with a history of frequent cavities, and patients with exposed root surfaces from recession. Sealants are most valuable on newly erupted permanent molars in children and adolescents, but we also place them on adult patients whose molar anatomy creates ongoing risk.`,
   },
   {
     slug: 'occlusal-splints',
@@ -310,16 +456,14 @@ Both are included as part of routine hygiene visits when indicated. We do not wa
       'Custom-fitted night guards for bruxism, clenching, and bite-force protection.',
     body: `Grinding and clenching is one of the most common and least noticed sources of dental damage. Most people who do it are entirely unaware, because it happens during sleep. The signs accumulate over years: worn enamel, chipped cusp tips, cracked teeth, morning jaw soreness, headaches on waking, and increasing fracture risk in back teeth that have already been restored. By the time patients notice, the damage is already significant.
 
-A custom occlusal splint distributes bite forces across the full arch, removing concentrated load from individual teeth and reducing the compressive force transmitted to the temporomandibular joint. It does not stop the bruxism itself (the neurological drive to grind persists), but it intercepts the damage pathway. Worn enamel does not grow back; protecting what remains is the whole point.
+A custom occlusal splint protects your teeth at night from the wear that happens when you clench and grind. It does not stop the bruxism itself, as this is a normal neurological response, but it intercepts the damage pathway. Worn enamel does not grow back; protecting what remains is the whole point.
 
-We fabricate splints from digital scans or conventional impressions. The splint is fit and adjusted at a follow-up appointment, with particular attention to the way it sits in your bite. A poorly fitting splint can create new bite problems, so the fit appointment is not optional. We adjust and refine over time as the appliance wears and as your bite changes.
+We fabricate splints from digital scans or conventional impressions. The splint is fit and adjusted at a follow-up appointment, with particular attention to the way it sits in your bite. We adjust and refine over time as the appliance wears and as your bite changes.
 
-An occlusal splint for bruxism is a distinct device from a sleep apnea oral appliance, even though both are worn during sleep. Sleep apnea appliances are designed to reposition the mandible forward to maintain the airway; they work against the bite and should not double as bruxism protection. If you have both conditions, we address them with the appropriate appliances for each.
-
-We also place splints for patients with active TMJ symptoms, where reducing joint load is part of the treatment plan. The overlap between bruxism, bite mechanics, and TMJ health is real, and the splint prescription reflects that context.`,
+An occlusal splint for bruxism is a distinct device from a TMJ oral appliance, even though both are worn during sleep. TMJ appliances are designed with specific measurements to unload and protect the TMJ joints from further wear when sleeping. If you have both conditions, we address them with the appropriate appliances for each.`,
   },
 
-  // ─────── Restorative Dentistry (6) ───────
+  // ─────── Restorative Dentistry (7) ───────
   {
     slug: 'composite-fillings',
     name: 'Composite Fillings',
@@ -338,21 +482,35 @@ What to expect: the appointment is completed in a single visit with local anesth
 We do not claim a composite filling lasts forever. With proper home care and regular maintenance visits, a decade or more of service is a realistic expectation. Fillings at high-stress sites, molar contacts and areas subject to heavy bite force, are monitored at every hygiene visit.`,
   },
   {
+    slug: 'onlays',
+    name: 'Onlays',
+    lane: 'dental',
+    subcategory: 'restorative',
+    summary:
+      'Custom "partial crown" restorations that rebuild damaged cusps and protect the tooth while preserving healthy structure.',
+    technologyRefs: ['trios'],
+    body: `When a tooth has more damage than a filling can reliably restore, but not so much that it needs a full crown, an onlay is the conservative answer. An onlay is a custom-made restoration that rebuilds one or more of the chewing cusps of a back tooth, bonded into place to restore the tooth's original strength and shape while preserving the healthy structure a crown would otherwise remove.
+
+The distinction matters. A large direct filling at a high-stress site can flex and leak over time, and eventually crack the tooth it was meant to save. A crown solves the strength problem but requires reducing the entire tooth. An onlay sits in between: it covers and protects the vulnerable cusps without sacrificing sound tooth structure, which is why it is often called a "partial crown."
+
+We design onlays from a digital scan with our 3Shape Trios scanner — no putty impression trays — and the restoration is fabricated from tooth-colored ceramic or composite that matches the surrounding enamel. Because the bond seals the margin against bacteria, a well-placed onlay both restores function and protects the tooth from further decay.
+
+Onlays are indicated for teeth with large failing fillings, fractured cusps, or decay too extensive for a direct restoration, but where enough healthy tooth remains to avoid a crown. The procedure typically takes two visits — one to prepare and scan the tooth, one to bond the finished restoration — with a temporary in between. (An inlay is the same idea for damage that sits within the cusps rather than across them; we choose between the two based on exactly what the tooth needs.)`,
+  },
+  {
     slug: 'direct-composite-veneers',
     name: 'Direct Composite Veneers',
     lane: 'dental',
     subcategory: 'restorative',
     summary:
       'Esthetic-focused composite veneers placed in a single visit. Conservative and reversible.',
-    body: `Some smile transformations do not require a laboratory, a two-week wait, or irreversible tooth preparation. Direct composite veneers are sculpted chairside in a single appointment: composite resin shaped and polished directly on the tooth surface to correct shape, color, or proportion. No impressions sent to a lab, no temporaries, no second appointment.
+    body: `Some smile transformations do not require a laboratory, a two-week wait, or irreversible tooth preparation. Direct composite veneers are sculpted chairside in a single appointment: composite resin shaped and polished directly on the tooth surface to correct shape, color, or proportion. No impressions sent to a lab, no temporaries, no second appointment. Very minimal enamel is removed, or none at all.
 
 The range of problems they address is broader than many patients expect. Direct veneers can close a gap between the front teeth, build out a tooth that is too narrow, repair a chipped or worn edge, cover discoloration that does not respond to whitening, and reshape teeth with irregular contour. Cases involving multiple front teeth can often be completed in one visit.
 
-The technique is exacting. Building tooth form in resin requires an understanding of dental anatomy, light behavior, and color characterization — the same skills that drive good direct composite work across the rest of the mouth, applied at a higher level of esthetic demand. We mock up the proposed changes before bonding anything permanently, so you see the result before we commit.
+The technique is exacting. Building tooth form in resin requires an understanding of dental anatomy, light behavior, and color characterization — the same skills that drive good direct composite work across the rest of the mouth, applied at a higher level of esthetic demand.
 
-The trade-offs are honest. Direct composite does not have the translucency or strength of a laboratory-fabricated porcelain veneer. A typical lifespan is five to seven years, after which the composite may need touch-up or replacement. Polishability is good but not identical to glazed ceramic. For patients with heavy bite forces or prominent bruxism habits, composite at the front teeth carries more risk of chipping.
-
-No enamel is removed in most direct veneer cases, so the procedure is reversible. For patients who want to see a smile change before committing to the cost and irreversibility of porcelain veneers, direct composite is the right first step.`,
+The trade-offs are honest. Direct composite does not have the translucency or strength of a laboratory-fabricated porcelain veneer. A typical lifespan is five to seven years, after which the composite may need touch-up or replacement. Polishability is good but not identical to glazed ceramic. For patients with heavy bite forces or prominent bruxism habits, composite at the front teeth carries more risk of chipping.`,
   },
   {
     slug: 'porcelain-veneers',
@@ -440,9 +598,7 @@ The procedure has a reputation for discomfort that belongs to an older era of de
 
 An access opening is made through the crown of the tooth. The pulp, nerve tissue, and bacteria are removed using a series of files, and the canal system is shaped to receive the permanent filling material. Irrigation with disinfecting solutions throughout the procedure addresses the bacterial load that instruments alone cannot reach. The cleaned canals are then sealed with a material called gutta-percha, which prevents reinfection.
 
-Most cases are completed in a single appointment; multi-rooted teeth or cases with more complex anatomy may require a second visit. After root canal treatment, the tooth needs a permanent restoration — most posterior teeth require a crown to protect against fracture, since the treated tooth becomes more brittle without its vital tissue.
-
-Dr. Rachel Lim is a board-certified endodontist with training at Western University and Columbia University. She handles the complex endodontic cases in our practice: multiple canals, calcified canals, retreatments, and cases referred from other practices in the region.`,
+Most cases are completed in a single appointment; multi-rooted teeth or cases with more complex anatomy may require a second visit. After root canal treatment, the tooth needs a permanent restoration — most posterior teeth require a crown to protect against fracture, since the treated tooth becomes more brittle without its vital tissue.`,
   },
   {
     slug: 'apicoectomy',
@@ -457,9 +613,7 @@ An apicoectomy (surgical endodontic treatment) removes the tip of the root and t
 
 The procedure is done under local anesthesia in our office. Post-operative swelling and some discomfort for a few days are typical; most patients are comfortable with over-the-counter analgesics and return to normal activity quickly. Sutures are removed at a follow-up appointment within a week to ten days.
 
-Dr. Lim performs apicoectomies for cases where the evidence supports a surgical approach rather than orthograde retreatment. Not all failing root canals are best managed surgically. Retreatment through the tooth remains the better option in many cases. We evaluate the anatomy with imaging before recommending a direction, and we do not default to surgery when retreatment is a more conservative and equally appropriate choice.
-
-Saving a tooth with an apicoectomy is almost always preferable to extraction followed by implant, particularly when the tooth is otherwise sound and the surrounding bone is adequate.`,
+Not all failing root canals are best managed surgically. Retreatment through the tooth remains the better option in many cases. We evaluate the anatomy with imaging before recommending a direction, and we do not default to surgery when retreatment is a more conservative and equally appropriate choice.`,
   },
   {
     slug: 'root-canal-retreatment',
@@ -473,8 +627,6 @@ Saving a tooth with an apicoectomy is almost always preferable to extraction fol
 Root canal retreatment re-enters the tooth through the crown, removes the prior filling material, re-cleans and re-shapes the canal system, and re-seals it. This is technically more demanding than an initial root canal: the existing gutta-percha must be dissolved or mechanically removed, posts may need to be taken out, and calcified canals that were challenging the first time must be navigated again.
 
 Before recommending retreatment, we evaluate the tooth carefully: the existing crown or restoration, the quality of the original treatment, the bone levels around the root, and whether there are signs of fracture that would make the tooth unrestorable regardless of the endodontic outcome. Retreatment is the right choice when the tooth is structurally sound and the source of the problem is addressable through the canal.
-
-Dr. Lim handles retreatment cases in our practice. The complexity of retreatment — particularly when posts are involved or when the original canal preparation was incomplete — benefits from the clinical experience and specialized training that an endodontist brings to the procedure.
 
 If retreatment is not viable because of fracture, anatomy, or the condition of the surrounding bone, we discuss the surgical alternative (apicoectomy) or, when the tooth genuinely cannot be saved, the extraction-and-replacement pathway.`,
   },
@@ -493,9 +645,7 @@ Most extractions can be done in our office under local anesthesia without a hosp
 
 Before any surgical extraction, we capture a CBCT scan when the anatomy warrants it. The three-dimensional image from our iCAT FLX shows us the relationship between the roots and adjacent structures — the inferior alveolar nerve in the lower jaw, the maxillary sinus in the upper jaw, root curvature that a flat X-ray would underrepresent. That information changes the surgical approach and prevents avoidable complications.
 
-Dr. Robert Sharobiem is a board-certified oral and maxillofacial surgeon with training from UCLA and Mount Sinai, a member of AAOMS, and a recipient of the AAOMS Humanitarian Award. He handles the complex surgical extractions: deeply impacted third molars, teeth with challenging root anatomy, cases where the surgical approach requires the level of training that an OMFS brings.
-
-Post-operative instructions are provided in writing at the appointment. When bone grafting to preserve the site for future use is indicated, we discuss it before the extraction. Placing a graft at the time of extraction is significantly simpler and more effective than attempting augmentation later.`,
+When bone grafting to preserve the site for future use is indicated, we discuss it before the extraction. Placing a graft at the time of extraction is significantly simpler and more effective than attempting augmentation later. Post-operative instructions are provided in writing at the appointment.`,
     technologyRefs: ['cbct'],
   },
   {
@@ -511,9 +661,7 @@ A socket preservation graft placed at the time of extraction substantially reduc
 
 Grafting at extraction is considerably simpler than attempting ridge augmentation later. The socket is already prepared, the surrounding bone walls are intact, and the healing starts immediately. Waiting until bone loss has already occurred means a more complex surgical procedure, a longer treatment timeline, and a less predictable outcome.
 
-We also perform more extensive ridge augmentation procedures for patients who present with bone deficiency from previous extractions, severe periodontal bone loss, or trauma — cases where the extraction socket has long closed and the grafting must be done as a separate surgical procedure.
-
-Dr. Sharobiem performs complex grafting cases in our practice. For straightforward socket preservation at a single-tooth extraction, this is often completed at the same appointment as the extraction under the same local anesthesia.`,
+We also perform more extensive ridge augmentation procedures for patients who present with bone deficiency from previous extractions, severe periodontal bone loss, or trauma — cases where the extraction socket has long closed and the grafting must be done as a separate surgical procedure.`,
   },
   {
     slug: 'implants',
@@ -528,9 +676,7 @@ The difference between an implant and the alternatives matters clinically. A bri
 
 Planning is the most important phase of the procedure. We use our iCAT FLX CBCT scanner to capture the three-dimensional anatomy of the site: bone volume and density, distance to the inferior alveolar nerve in the lower jaw, proximity to the sinus in the upper jaw, and the spatial relationship between the implant position and the planned crown. Placement without this level of spatial planning is placement without full information — a situation we avoid.
 
-If the extraction site did not receive a bone graft, or if bone volume has already been lost, augmentation may be required before implant placement. Most patients with a preserved site can proceed directly to surgery. The implant is placed under local anesthesia in our office. The integration period takes three to four months; during that time, a temporary restoration maintains the esthetic and spatial situation.
-
-Dr. Sharobiem and Dr. Huang collaborate on complex implant cases in our practice. Single-tooth implant placement in ideal anatomy, guided by CBCT imaging, is well within the scope of what we manage here without an external surgical referral.`,
+If the extraction site did not receive a bone graft, or if bone volume has already been lost, augmentation may be required before implant placement. Most patients with a preserved site can proceed directly to surgery. The implant is placed under local anesthesia in our office. The integration period takes three to four months; during that time, a temporary restoration maintains the esthetic and spatial situation.`,
     technologyRefs: ['cbct'],
   },
 
@@ -548,9 +694,7 @@ The disease is widespread and underdiagnosed. A large portion of adults over thi
 
 We screen at every cleaning visit. When we find pocket depths and bone loss consistent with periodontitis, we treat it directly rather than monitoring it through cleaning-only appointments. Active treatment begins with scaling and root planing: thorough removal of calculus and bacterial biofilm from root surfaces below the gum margin, under local anesthesia, one quadrant at a time. For infected pockets around teeth or implants, laser-assisted decontamination with our diode laser reaches areas that instruments alone cannot adequately address.
 
-After active treatment, we schedule the patient on a periodontal maintenance program — typically every three to four months rather than the standard six-month recall. The maintenance interval is based on individual risk, disease severity, and tissue response, not a fixed standard. Periodontal disease can be controlled with consistent maintenance; it progresses reliably without it.
-
-Dr. Singh brings a periodontics specialty to the cases that require more advanced surgical management: osseous surgery, guided tissue regeneration, and complex multi-tooth involvement. Most patients do not need that level of intervention, but having it in-house means continuity of care when they do.`,
+After active treatment, we schedule the patient on a periodontal maintenance program — typically every three to four months rather than the standard six-month recall. The maintenance interval is based on individual risk, disease severity, and tissue response, not a fixed standard. Periodontal disease can be controlled with consistent maintenance; it progresses reliably without it.`,
   },
   {
     slug: 'crown-lengthening',
@@ -563,11 +707,7 @@ Dr. Singh brings a periodontics specialty to the cases that require more advance
 
 The restorative indication is more urgent. When a tooth breaks near or below the gumline, the remaining structure may be too short for a crown to grip. Attempting to place a crown without adequate tooth exposure above bone results in a restoration that violates the biologic width — the soft-tissue attachment zone the body maintains around every tooth. That violation causes chronic inflammation and progressive bone loss that undermines the restoration over time. Crown lengthening surgically repositions the gum and bone to expose the minimum tooth structure needed for a sound restoration, respecting the biologic boundary while saving a tooth that would otherwise need extraction.
 
-The cosmetic indication is different in severity but meaningful in impact. A smile that shows a disproportionate amount of gum tissue — sometimes called a "gummy smile" — often has teeth that are fully present beneath the tissue. Crown lengthening removes the excess and reveals the true proportion of the teeth, sometimes transforming the smile without any cosmetic restorative work at all.
-
-The procedure is done under local anesthesia. A small flap is made in the gum tissue, and the tissue and underlying bone are reshaped to the planned level. Sutures are placed and removed at a follow-up in about ten days. The tissue must heal fully before a permanent crown is placed, typically six to eight weeks.
-
-Dr. Singh performs crown lengthening procedures in our practice. For restorative cases, we coordinate timing with the restorative phase to avoid any delay in the restoration once healing is complete.`,
+The cosmetic indication is different in severity but meaningful in impact. A smile that shows a disproportionate amount of gum tissue — sometimes called a "gummy smile" — often has teeth that are fully present beneath the tissue. Crown lengthening removes the excess and reveals the true proportion of the teeth, sometimes transforming the smile without any cosmetic restorative work at all.`,
   },
   {
     slug: 'gingivectomy',
@@ -582,7 +722,7 @@ The most common indications fall into a few categories. Drug-induced gingival hy
 
 We perform most gingivectomies with our diode laser rather than a conventional scalpel. The laser seals tissue as it works, which means significantly less intraoperative bleeding, less post-operative swelling, and a faster recovery compared to traditional techniques. Sutures are often unnecessary for laser procedures. Most patients describe the post-operative experience as mild — some sensitivity for a few days and soft-diet guidance, but not the extended healing associated with conventional gingival surgery.
 
-The procedure is done under local anesthesia. For patients with dental anxiety, the laser approach is considerably less intimidating than scalpel surgery, and the absence of bleeding changes the experience meaningfully. We discuss sedation options for any patient who needs additional support.
+The procedure is done under local anesthesia. For patients with dental anxiety, the laser approach is considerably less intimidating than scalpel surgery, and the absence of bleeding changes the experience meaningfully.
 
 The tissue response is typically visible within a few weeks as the swelling fully resolves and the new gum margin heals in place.`,
   },
@@ -599,9 +739,7 @@ The labial frenum, the tissue connecting the upper lip to the gum above the fron
 
 Lingual frenectomy, releasing a tongue tie, addresses restriction in tongue mobility that can affect speech articulation, the ability to breastfeed in infants, and oral function in older children and adults. Tongue ties range in clinical significance from mild and functionally irrelevant to severe and meaningfully disruptive. We evaluate rather than treat automatically, because not every tongue tie requires intervention.
 
-We perform frenectomies with our diode laser. The procedure takes only a few minutes under local anesthesia. The laser approach seals the tissue as it cuts, which means minimal bleeding, rapid healing, and rarely any need for sutures. Post-operative discomfort is typically mild and short-lived.
-
-Frenectomies for infants are evaluated and coordinated with a lactation consultant or pediatrician when breastfeeding is the primary concern. For older patients, we coordinate with the referring orthodontist or speech-language pathologist to align the timing with the broader treatment plan.`,
+We perform frenectomies with our diode laser. The procedure takes only a few minutes under local anesthesia. The laser approach seals the tissue as it cuts, which means minimal bleeding, rapid healing, and rarely any need for sutures. Post-operative discomfort is typically mild and short-lived.`,
   },
   {
     slug: 'alveoloplasty',
@@ -616,9 +754,7 @@ Alveoloplasty reshapes and smooths the bony ridge at the time of extraction, rem
 
 For patients receiving an immediate denture — one placed the same day as the extractions — alveoloplasty is particularly important. The denture is made in advance using pre-extraction impressions, and the fit depends on the ridge conforming reasonably well to what the lab anticipated. Contouring the bone at extraction improves how the immediate denture seats and reduces the number of pressure-point adjustments needed in the weeks that follow.
 
-Alveoloplasty is also performed as a separate procedure in patients who have already healed after prior extractions but whose ridge shape is incompatible with a well-fitting prosthesis. This is a less common scenario, but it is an option when the situation warrants it.  Most patients benefit most from addressing it at the time of extraction.
-
-Dr. Sharobiem performs alveoloplasty in the context of complex extractions and full-arch surgical planning.`,
+Alveoloplasty is also performed as a separate procedure in patients who have already healed after prior extractions but whose ridge shape is incompatible with a well-fitting prosthesis. This is a less common scenario, but it is an option when the situation warrants it. Most patients benefit most from addressing it at the time of extraction.`,
   },
 ];
 

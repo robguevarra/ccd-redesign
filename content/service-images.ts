@@ -43,7 +43,7 @@ export const SERVICE_ILLUSTRATION_SLUGS: ReadonlySet<string> = new Set([
   'root-canal-retreatment',
   'scaling-root-planing',
   'sleep-apnea',
-  'surgical-laser-therapy',
+  'laser-photobiomodulation',
   'teeth-whitening',
   'tmj',
   'trigger-point-injections',

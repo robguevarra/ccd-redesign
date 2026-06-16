@@ -33,7 +33,15 @@ describe('redirects', () => {
     expect(map['/services/sedation-dentistry']).toBe(true);
     expect(map['/services/children-oral-healthcare']).toBe(true);
     expect(map['/services/oral-hygiene']).toBe(true);
-    expect(map['/doctors/dr-serena-hsu']).toBe(true);
+    // dr-serena-hsu 410 removed June 2026 — she's back on the roster.
+    expect(map['/doctors/dr-serena-hsu']).toBeUndefined();
+  });
+
+  test('renamed laser service redirects to its new slug', () => {
+    const map = Object.fromEntries(
+      redirects.filter((r) => r.status === 301).map((r) => [r.from, r.to]),
+    );
+    expect(map['/medical/surgical-laser-therapy']).toBe('/medical/laser-photobiomodulation');
   });
 
   test('patient-forms is no longer redirected to /contact', () => {

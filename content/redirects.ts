@@ -247,5 +247,9 @@ export const redirects: Redirect[] = [
   { from: '/services/sedation-dentistry', to: '/', status: 410, note: 'Service dropped per client audit' },
   { from: '/services/children-oral-healthcare', to: '/', status: 410, note: 'Service dropped per client audit' },
   { from: '/services/oral-hygiene', to: '/', status: 410, note: 'Folded into professional-cleaning' },
-  { from: '/doctors/dr-serena-hsu', to: '/doctors', status: 410, note: 'Doctor dropped pending dentist confirmation' },
+
+  // ------------------------------------------------------------------
+  // 6. June 2026 content update — service rename
+  // ------------------------------------------------------------------
+  { from: '/medical/surgical-laser-therapy', to: '/medical/laser-photobiomodulation', status: 301, note: 'Renamed to Laser Photobiomodulation & Muscle Therapy' },
 ];

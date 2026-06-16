@@ -17,16 +17,16 @@ const DENTAL_SUBCATS: ServiceSubcategory[] = [
 ];
 
 describe('services catalog', () => {
-  test('total count is exactly 32', () => {
-    expect(services.length).toBe(32);
+  test('total count is exactly 38', () => {
+    expect(services.length).toBe(38);
   });
 
-  test('medical lane has exactly 10 services', () => {
-    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(10);
+  test('medical lane has exactly 15 services', () => {
+    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(15);
   });
 
-  test('dental lane has exactly 22 services', () => {
-    expect(services.filter((s) => s.lane === 'dental')).toHaveLength(22);
+  test('dental lane has exactly 23 services', () => {
+    expect(services.filter((s) => s.lane === 'dental')).toHaveLength(23);
   });
 
   test('every service has a non-empty body of 50–500 words', () => {
@@ -73,6 +73,8 @@ describe('services catalog', () => {
       'root-canal-therapy',
       'tooth-extractions',
       'cleaning',
+      // Renamed June 2026 → laser-photobiomodulation
+      'surgical-laser-therapy',
     ];
     for (const slug of removed) {
       expect(getService(slug), `${slug} should be removed`).toBeUndefined();
@@ -86,9 +88,9 @@ describe('services catalog', () => {
   });
 
   test('helpers return correct subsets', () => {
-    expect(getServicesByLane('medical').length).toBe(10);
-    expect(getServicesByLane('dental').length).toBe(22);
+    expect(getServicesByLane('medical').length).toBe(15);
+    expect(getServicesByLane('dental').length).toBe(23);
     expect(getServicesBySubcategory('preventive').length).toBe(5);
-    expect(getServicesBySubcategory('restorative').length).toBe(6);
+    expect(getServicesBySubcategory('restorative').length).toBe(7);
   });
 });
