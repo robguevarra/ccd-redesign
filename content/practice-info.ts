@@ -26,7 +26,7 @@ export const practiceInfo: PracticeInfo = {
     { day: 'Tuesday', open: '09:00', close: '18:00' },
     { day: 'Wednesday', open: '08:00', close: '17:00' },
     { day: 'Thursday', open: '09:00', close: '18:00' },
-    { day: 'Friday', open: '', close: '', closed: true },
+    { day: 'Friday', open: '', close: '', closed: true, note: 'Inquire for appointments' },
     { day: 'Saturday', open: '', close: '', closed: true },
     { day: 'Sunday', open: '', close: '', closed: true },
   ],

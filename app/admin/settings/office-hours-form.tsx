@@ -11,6 +11,7 @@ interface DayState {
   open: string;
   close: string;
   closed: boolean;
+  note: string;
 }
 
 export function OfficeHoursForm({ initial }: { initial: BusinessHours[] }) {
@@ -23,6 +24,7 @@ export function OfficeHoursForm({ initial }: { initial: BusinessHours[] }) {
         open: h?.open || '09:00',
         close: h?.close || '17:00',
         closed: h?.closed ?? (!h?.open || !h?.close),
+        note: h?.note ?? '',
       };
     }),
   );
@@ -50,46 +52,55 @@ export function OfficeHoursForm({ initial }: { initial: BusinessHours[] }) {
     >
       <ul className="divide-y divide-stone-100 rounded-xl border border-stone-200">
         {days.map((d, i) => (
-          <li
-            key={d.day}
-            className="flex flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:flex-nowrap"
-          >
-            <span className="w-24 shrink-0 text-base font-medium text-stone-900">
-              {d.day}
-            </span>
+          <li key={d.day} className="px-4 py-3">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:flex-nowrap">
+              <span className="w-24 shrink-0 text-base font-medium text-stone-900">
+                {d.day}
+              </span>
 
-            <label className="flex items-center gap-2 text-sm text-stone-600 order-last sm:order-none sm:ml-auto">
-              <input
-                type="checkbox"
-                name={`${d.day}-closed`}
-                checked={d.closed}
-                onChange={(e) => update(i, { closed: e.target.checked })}
-                className="h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
-              />
-              Closed
-            </label>
+              <label className="flex items-center gap-2 text-sm text-stone-600 order-last sm:order-none sm:ml-auto">
+                <input
+                  type="checkbox"
+                  name={`${d.day}-closed`}
+                  checked={d.closed}
+                  onChange={(e) => update(i, { closed: e.target.checked })}
+                  className="h-4 w-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+                />
+                Closed
+              </label>
 
-            <div
-              className={`flex items-center gap-2 ${d.closed ? 'opacity-40' : ''}`}
-            >
-              <input
-                type="time"
-                name={`${d.day}-open`}
-                value={d.open}
-                disabled={d.closed}
-                onChange={(e) => update(i, { open: e.target.value })}
-                className="rounded-lg border-2 border-stone-300 px-3 py-2 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono tabular-nums disabled:bg-stone-50"
-              />
-              <span className="text-stone-400">–</span>
-              <input
-                type="time"
-                name={`${d.day}-close`}
-                value={d.close}
-                disabled={d.closed}
-                onChange={(e) => update(i, { close: e.target.value })}
-                className="rounded-lg border-2 border-stone-300 px-3 py-2 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono tabular-nums disabled:bg-stone-50"
-              />
+              <div
+                className={`flex items-center gap-2 ${d.closed || d.note ? 'opacity-40' : ''}`}
+              >
+                <input
+                  type="time"
+                  name={`${d.day}-open`}
+                  value={d.open}
+                  disabled={d.closed}
+                  onChange={(e) => update(i, { open: e.target.value })}
+                  className="rounded-lg border-2 border-stone-300 px-3 py-2 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono tabular-nums disabled:bg-stone-50"
+                />
+                <span className="text-stone-400">–</span>
+                <input
+                  type="time"
+                  name={`${d.day}-close`}
+                  value={d.close}
+                  disabled={d.closed}
+                  onChange={(e) => update(i, { close: e.target.value })}
+                  className="rounded-lg border-2 border-stone-300 px-3 py-2 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono tabular-nums disabled:bg-stone-50"
+                />
+              </div>
             </div>
+
+            <input
+              type="text"
+              name={`${d.day}-note`}
+              value={d.note}
+              maxLength={60}
+              onChange={(e) => update(i, { note: e.target.value })}
+              placeholder="Optional note shown instead of hours — e.g. “Inquire for appointments”"
+              className="mt-3 w-full rounded-lg border border-stone-200 px-3 py-2 text-sm bg-white focus:border-stone-900 focus:outline-none transition-colors"
+            />
           </li>
         ))}
       </ul>

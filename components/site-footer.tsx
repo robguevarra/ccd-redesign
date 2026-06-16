@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { practiceInfo } from '@/content/practice-info';
 import type { BusinessHours } from '@/content/schemas';
-import { DEFAULT_OFFICE_HOURS } from '@/lib/office-hours';
+import { DEFAULT_OFFICE_HOURS, formatDayHours } from '@/lib/office-hours';
 import { getLane } from '@/lib/lane';
 import { Wordmark } from './wordmark';
 
@@ -41,13 +41,11 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           <h3 className="text-xs uppercase tracking-[0.18em] text-[var(--color-accent-200)]">
             Hours
           </h3>
-          <ul className="mt-4 text-sm leading-relaxed font-mono tabular-nums">
+          <ul className="mt-4 text-sm leading-relaxed tabular-nums">
             {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-4">
                 <span>{dayLabel(h.day)}</span>
-                <span className="text-stone-400">
-                  {h.closed || !h.open || !h.close ? 'Closed' : `${h.open}–${h.close}`}
-                </span>
+                <span className="text-stone-400">{formatDayHours(h)}</span>
               </li>
             ))}
           </ul>

@@ -47,6 +47,7 @@ export function normalizeOfficeHours(input: unknown): BusinessHours[] {
       const closed = r.closed === true;
       const open = typeof r.open === 'string' && HHMM.test(r.open) ? r.open : '';
       const close = typeof r.close === 'string' && HHMM.test(r.close) ? r.close : '';
+      const note = typeof r.note === 'string' && r.note.trim() ? r.note.trim() : '';
       // A day with no valid open/close is treated as closed regardless of flag.
       const isClosed = closed || !open || !close;
       byDay.set(r.day, {
@@ -54,6 +55,7 @@ export function normalizeOfficeHours(input: unknown): BusinessHours[] {
         open: isClosed ? '' : open,
         close: isClosed ? '' : close,
         ...(isClosed ? { closed: true } : {}),
+        ...(note ? { note } : {}),
       });
     }
   }
@@ -77,8 +79,13 @@ export function formatTime12h(hhmm: string): string {
   return `${h}:${min} ${period}`;
 }
 
-/** Human label for a day's hours, e.g. "9:00 AM – 6:00 PM" or "Closed". */
+/**
+ * Human label for a day's hours, e.g. "9:00 AM – 6:00 PM", a custom note like
+ * "Inquire for appointments", or "Closed". A note takes precedence over the
+ * open/close times and the closed flag.
+ */
 export function formatDayHours(h: BusinessHours): string {
+  if (h.note && h.note.trim()) return h.note.trim();
   if (h.closed || !h.open || !h.close) return 'Closed';
   return `${formatTime12h(h.open)} – ${formatTime12h(h.close)}`;
 }

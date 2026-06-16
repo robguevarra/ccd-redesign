@@ -153,6 +153,12 @@ export interface BusinessHours {
   open: string;
   close: string;
   closed?: boolean;
+  /**
+   * Optional free-text shown *instead of* the "Closed"/time label, e.g.
+   * "Inquire for appointments" for a by-appointment day. Takes display
+   * precedence over open/close and the closed flag.
+   */
+  note?: string;
 }
 
 export interface PhoneNumber {

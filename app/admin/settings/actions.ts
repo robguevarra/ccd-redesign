@@ -122,9 +122,11 @@ export async function updateOfficeHours(
 
   const hours: BusinessHours[] = [];
   for (const day of DAY_ORDER) {
+    const note = String(formData.get(`${day}-note`) ?? '').trim().slice(0, 60);
+    const withNote = (h: BusinessHours): BusinessHours => (note ? { ...h, note } : h);
     const closed = checkbox(formData, `${day}-closed`);
     if (closed) {
-      hours.push({ day, open: '', close: '', closed: true });
+      hours.push(withNote({ day, open: '', close: '', closed: true }));
       continue;
     }
     const open = String(formData.get(`${day}-open`) ?? '').trim();
@@ -135,7 +137,7 @@ export async function updateOfficeHours(
     if (toMinutes(open) >= toMinutes(close)) {
       return { ok: false, error: `${day}: the closing time must be after the opening time.` };
     }
-    hours.push({ day, open, close });
+    hours.push(withNote({ day, open, close }));
   }
 
   // normalizeOfficeHours guarantees a complete, ordered 7-day array.
