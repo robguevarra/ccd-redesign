@@ -393,7 +393,7 @@ async function rowToDoctor(row: any): Promise<Doctor> {
     short: row.short,
     bio: row.bio,
     specialties: row.specialties ?? [],
-    joinedYear: row.joined_year,
+    joinedYear: row.joined_year ?? undefined,
     isLead: row.is_lead,
   };
 }

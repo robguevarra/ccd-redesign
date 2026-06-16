@@ -125,9 +125,11 @@ export default async function DoctorDetailPage({
           </ul>
         </div>
 
-        <div className="mt-10 text-sm text-stone-600">
-          With the practice since {doctor.joinedYear}.
-        </div>
+        {doctor.joinedYear && (
+          <div className="mt-10 text-sm text-stone-600">
+            With the practice since {doctor.joinedYear}.
+          </div>
+        )}
 
         <div className="mt-16 flex flex-col sm:flex-row gap-4">
           <Link

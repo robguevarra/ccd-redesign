@@ -147,8 +147,9 @@ export function DoctorEditor({ doctor }: Props) {
               placeholder="Endodontics, Microscopic endodontics"
               className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors" />
           </Field>
-          <Field label="Joined year" id="joinedYear" required>
-            <input id="joinedYear" name="joinedYear" type="number" required min="1900" max="2100"
+          <Field label="Joined year" id="joinedYear">
+            <input id="joinedYear" name="joinedYear" type="number" min="1900" max="2100"
+              placeholder="Optional"
               defaultValue={doctor?.joinedYear}
               className="w-full rounded-lg border-2 border-stone-300 px-4 py-3 text-base bg-white focus:border-stone-900 focus:outline-none transition-colors font-mono" />
           </Field>

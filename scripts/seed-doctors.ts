@@ -40,7 +40,7 @@ async function main() {
     short: d.short,
     bio: d.bio,
     specialties: d.specialties,
-    joined_year: d.joinedYear,
+    joined_year: d.joinedYear ?? null,
     is_lead: d.isLead,
     display_order: i,
     active: true,

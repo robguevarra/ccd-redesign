@@ -87,8 +87,12 @@ export interface Doctor {
   /** MDX long-form bio. */
   bio: string;
   specialties: string[];
-  /** Year joined the practice. 1999 for Brien Hsu. */
-  joinedYear: number;
+  /**
+   * Year joined the practice (1999 for Brien Hsu). Optional — omit when the
+   * year isn't known rather than inventing one; the profile then hides the
+   * "with the practice since …" line.
+   */
+  joinedYear?: number;
   isLead: boolean;
 }
 

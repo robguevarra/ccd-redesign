@@ -113,7 +113,7 @@ Giving back to the community is extremely important to him. He has participated 
       'Craniofacial biology',
       'Orofacial pain',
     ],
-    joinedYear: 2019,
+    // joinedYear intentionally omitted — not provided by the practice.
     isLead: false,
   },
 ];
