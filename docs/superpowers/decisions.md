@@ -220,3 +220,23 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 **Note on redirects:** `content/redirects.ts` is currently documentation + tested data only — it is **not** wired into `next.config.ts` or middleware. So the old `/medical/surgical-laser-therapy` path 404s rather than 301-ing (acceptable for a fresh site with no real inbound traffic to it). Worth wiring up if/when legacy URLs matter.
 
 **Artifacts:** `app/(marketing)/before-after/page.tsx`, `components/before-after/before-after-slider.tsx`, `content/before-after.ts`, `public/images/before-after/*`, `content/doctors.ts`, `content/doctors-blur.ts`, `public/images/doctors/dr-serena-hsu.webp`, `content/services.ts`, `content/service-images.ts`, `public/images/services/educational/{onlays,arthrocentesis,neuropathic-pain,custom-orthotic-device,osteonecrosis,tongue-tie-release}.png` + `laser-photobiomodulation.png`, `lib/office-hours.ts`, `components/site-footer.tsx`, `app/admin/settings/{office-hours-form,actions}.ts(x)`, `supabase/migrations/2026-06-16_doctors_joined_year_nullable.sql`.
+
+---
+
+## 2026-06-16 — New brand logos + dental⇄medical morph animation
+
+**Scope:** Practice-supplied final logo art + an animated practice mark. Same branch as the June 2026 content update.
+
+**Logos:** Replaced the placeholder `public/logos/{dental,medical}.svg` with the practice's final art. No vector tooling (Illustrator/Inkscape) on the build machine, so the static marks are the **4800px transparent PNG exports downscaled to 512px** (`public/logos/{dental,medical}.png`) — retina-crisp at the 28–40px the header uses. The static `Logo` (coin-flip swap) and the loading screen now point at the PNGs. Favicon (`app/icon.png`, combined moon+star+face+tooth on a dark square) was already on-brand and left as-is.
+
+**Morph animation (`components/logo-morph.tsx`):** Recreated as a transparent, scalable **vector** animation rather than using the supplied `animationSample.mp4` (240px, H.264, white background, no alpha — too low-res/opaque for crisp transparent overlay). Approach:
+- Auto-traced the real brand art to SVG paths with the **`potrace` npm lib** (pure JS — installed ad-hoc, not kept as a dependency; the generated `content/logo-marks.ts` is committed). Both marks land in a shared **1400×1400 viewBox with the moon in the same position**, so crossfading between them reads as "the moon stays while the inner content morphs" — tooth (dental) ⇄ star + face profile (medical), exactly the mp4's effect.
+- `<LogoMorph>` renders both path sets and crossfades via **plain CSS transitions** (opacity + a slight scale for depth) keyed off the `lane`/loop target. CSS (not Framer) was chosen after Framer's `animate` didn't track the lane prop reliably across client-side route changes. Drawn with `currentColor` (themes on light/dark); honors `prefers-reduced-motion` (snaps).
+- **One-shot on toggle:** the header mark is now `<LogoMorph lane={…}>`, so switching Dental⇄Medical morphs it.
+- **Loop on the homepage hero:** a continuously ping-ponging `<LogoMorph loop>` sits above the cold-open's "We do both." headline — the literal visual of "we do both."
+
+**Verification:** `tsc` clean, 61/61 tests pass. Confirmed in preview: header mark flips dental→medical on the toggle (opacity 1/0 → 0/1 with transition); hero loop ping-pongs continuously.
+
+**Not done (offered as follow-up):** integrating the supplied `Down Payment Animation.mp4` (would fit `/financing`); true `.ai`→`.svg` vector logos (needs Illustrator export from the practice).
+
+**Artifacts:** `components/logo-morph.tsx`, `content/logo-marks.ts`, `public/logos/{dental,medical}.png`, edits to `components/{site-header,home-cold-open-cinematic,logo,loading-screen}.tsx`.
