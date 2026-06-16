@@ -1,16 +1,35 @@
-'use client';
-
-import { useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { practiceInfo } from '@/content/practice-info';
 import type { Service } from '@/content/schemas';
+import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 interface TmjSignatureProps {
   service: Service;
 }
+
+// Scroll-scrubbed narrative for the TMJ joint sequence video:
+//   pain (man holds jaw) → problem (disc displaced, inflamed) → relief (splint, disc seats, calm).
+const TMJ_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
+  {
+    eyebrow: 'When your jaw hurts',
+    title: 'The pain is real.',
+    italicize: [3],
+    body: 'Jaw that clicks or locks. Headaches. Ear pain. A bite that feels off. TMJ disorders are easy to dismiss — but the ache has a physical cause: a small cushioning disc inside the joint has slipped out of place.',
+  },
+  {
+    eyebrow: 'How we treat it',
+    title: 'A custom appliance.',
+    italicize: [2],
+    body: 'A precisely fitted splint repositions the jaw a few millimeters and holds it there, so the joint is no longer forced to grind against itself. No surgery, no drilling — worn like a retainer.',
+  },
+  {
+    eyebrow: 'The outcome',
+    title: 'The joint settles.',
+    italicize: [2],
+    body: 'The disc seats back into place, the inflammation calms, and the jaw can finally rest. For most of our patients, that is the end of years of pain that no one else could explain.',
+  },
+];
 
 const SECTIONS = [
   {
@@ -32,62 +51,27 @@ const SECTIONS = [
 
 export function TmjSignature({ service }: TmjSignatureProps) {
   const main = practiceInfo.phones[1] ?? practiceInfo.phones[0]!;
-  const heroRef = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1.05, 0.92]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
 
   return (
     <article>
-      {/* ─────────── Pinned cinematic hero ─────────── */}
-      <section
-        ref={heroRef}
-        className="relative isolate h-[120svh] bg-stone-950 text-stone-50 overflow-hidden"
-      >
-        <motion.div
-          style={reduced ? undefined : { scale: heroScale, opacity: heroOpacity }}
-          className="sticky top-0 h-screen w-full"
-        >
-          {/* Cinematic TMJ hero illustration (dark, jaw-joint anatomy) with a
-              bottom-up scrim so the headline stays legible over it. */}
-          <div className="absolute inset-0 -z-10 bg-stone-950" />
-          <Image
-            src="/images/services/educational/tmj.png"
-            alt="Illustration of the temporomandibular joint where the lower jaw meets the skull"
-            fill
-            priority
-            sizes="100vw"
-            className="-z-10 object-cover object-center md:object-right opacity-90"
-          />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-stone-950 via-stone-950/70 to-stone-950/30" />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-stone-950/80 via-transparent to-transparent" />
-
-          <motion.div
-            style={reduced ? undefined : { y: titleY }}
-            className="absolute inset-0 flex flex-col justify-end px-5 md:px-8 pb-16 md:pb-24"
-          >
-            <div className="mx-auto max-w-7xl w-full">
-              <p className="text-xs uppercase tracking-[0.24em] text-stone-300 mb-6">
-                Signature service · Specialty
-              </p>
-              <h1 className="font-serif text-[clamp(4rem,14vw,12rem)] leading-[0.88] tracking-tighter text-stone-50 font-light">
-                TMJ
-                <br />
-                <span className="italic">treatment.</span>
-              </h1>
-              <p className="mt-10 max-w-2xl text-stone-200 text-lg md:text-xl leading-relaxed">
-                {service.summary}
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+      {/* ─────────── Scroll-scrubbed cinematic joint sequence ─────────── */}
+      <AirwayHero
+        videoSrc="/videos/tmj-joint-scrub.mp4"
+        videoSrcMobile="/videos/tmj-joint-scrub-mobile.mp4"
+        topEyebrow={<>Signature service · Specialty</>}
+        keyframes={TMJ_KEYFRAMES}
+        captionTimecodes={[6.1, 8.3]}
+        snapPoints={[0, 0.55, 0.7, 0.95]}
+        snapMode="strict"
+        autoFinishAfterLastSnap
+        variant="light-centered"
+        ariaLabel="How a TMJ disorder develops and how a custom splint resolves it"
+        fallbackHeading={
+          <>
+            The jaw pain <span className="italic">has a cause.</span>
+          </>
+        }
+      />
 
       {/* ─────────── Lede ─────────── */}
       <section className="bg-stone-50 py-24 md:py-36">

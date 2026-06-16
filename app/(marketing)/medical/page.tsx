@@ -46,7 +46,10 @@ export default function MedicalLanePage() {
   return (
     <>
       <AirwayHero
+        videoSrc="/videos/tmj-joint-scrub.mp4"
+        videoSrcMobile="/videos/tmj-joint-scrub-mobile.mp4"
         keyframes={MEDICAL_KEYFRAMES}
+        variant="light-centered"
         ariaLabel="Comfort Care Medical — orofacial pain, TMJ, sleep apnea"
         fallbackHeading={
           <>
