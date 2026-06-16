@@ -115,6 +115,15 @@ body {
   to   { transform: translateY(0); }
 }
 
+/* Walks the logo-morph sprite mask across its 29 frames (see LogoFrames). The
+   strip is 29 frames wide; each step shifts the mask left by one frame width. */
+@keyframes logo-frames {
+  to {
+    -webkit-mask-position: calc(var(--lf-s) * -29) 0;
+    mask-position: calc(var(--lf-s) * -29) 0;
+  }
+}
+
 /* Scroll cue pulse for the Frame 0 cold open. */
 @keyframes cold-open-cue-pulse {
   0%, 100% { opacity: 0.4; transform: scaleY(1); }

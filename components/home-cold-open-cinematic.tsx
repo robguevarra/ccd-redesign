@@ -11,7 +11,7 @@ import {
 } from 'framer-motion';
 import { markVideoReady } from '@/lib/video-ready';
 import { Wordmark } from '@/components/wordmark';
-import { LogoMorph } from '@/components/logo-morph';
+import { LogoFrames } from '@/components/logo-frames';
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
@@ -486,7 +486,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
                 style={{ scale: phase2Scale, y: phase2Y }}
                 className="mb-5 md:mb-7 text-stone-950"
               >
-                <LogoMorph
+                <LogoFrames
                   loop
                   size={120}
                   className="h-20 w-20 md:h-28 md:w-28"
