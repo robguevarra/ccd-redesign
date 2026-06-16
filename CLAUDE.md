@@ -39,6 +39,7 @@ A live, deployed reimagining of [dentisthsu.com](https://dentisthsu.com/). Origi
 | Phase 3 — Visual & Brand Direction | ✅ Shipped via P3.5 pre-pitch audit pass (see HANDOFF.md §5a). |
 | Phase 4 — Code build-out | ✅ Shipped. Next.js 16 App Router + Supabase + Vercel + Tailwind v4. |
 | **Phase 5 — Admin CMS expansion** | **✅ Shipped 2026-05-19** — patient forms, inquiry inbox, doctor CMS, multi-user staff auth, Tiptap WYSIWYG editor, password-reset flow. [P5 spec](docs/superpowers/specs/2026-05-19-admin-cms-expansion-design.md), [P5 plan](docs/superpowers/plans/2026-05-19-admin-cms-expansion.md). |
+| **June 2026 content update** | **✅ Shipped 2026-06-16** — `/before-after` Smile Gallery, real doctor bios + new Dr. Serena Hsu, 12h footer hours + Friday "Inquire" note, Word-doc service rewrites + 6 new procedures (catalog 38), new illustrations. See [decisions log](docs/superpowers/decisions.md#2026-06-16). |
 | Vercel project | ✅ Auto-deploys from `main` |
 | Supabase project | ✅ `qxicorwwknphfzvyjngz` — 5 tables, 3 storage buckets, RLS in place |
 | Firecrawl API key | ✅ In `.env.local` (gitignored) |

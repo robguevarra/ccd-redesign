@@ -192,3 +192,31 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 - **A11y:** click/keyboard only (no hover), Esc closes + returns focus to the caret, click-outside / focus-out close, `aria-expanded`/`aria-controls`, disclosure (not `menu`) role. Panel entrance animates transform only (never opacity) so it can never render translucent if the animation is throttled/skipped; gated behind `prefers-reduced-motion`.
 **Rationale:** ~32 services across 2 lanes / 9 subcategories — too many for a linear dropdown; a 2-D grouped panel lets users see rather than remember (NN/g). The dedicated page backstops discoverability and SEO.
 **Artifacts:** `components/lane-services-menu.tsx`, `components/mobile-lane-accordions.tsx`, `content/services.ts` (getLaneServiceGroups/serviceHref), `app/(marketing)/services/page.tsx`, header wiring in `components/site-header.tsx`, `app/globals.css` keyframe.
+
+---
+
+## 2026-06-16 — Client content update: Before/After gallery, doctor bios + new doctor, hours, service rewrites + new procedures
+
+**Scope:** Practice-supplied June 2026 batch (new page, doctor data, office hours, Word-doc service revisions, new procedures, illustrations). Branch `claude/suspicious-fermi-04fe43`.
+
+**Before & After Smiles (`/before-after`):** New marketing page — editorial hero + responsive grid of **interactive before/after sliders** (one `BeforeAfterSlider` client component per case; draggable handle via pointer capture, full keyboard support with `role="slider"` + arrows/Home/End, reduced-motion safe). Six real patient pairs supplied by the practice, optimized to WebP with LQIP blur placeholders; display names are **first name + last initial** for privacy. Added **"Smile Gallery"** to the header nav + sitemap. One source pair (Susan H.) had a portrait "before" vs. landscape "after" — handled with an aspect-locked `object-cover` box so the wipe still aligns. Data in `content/before-after.ts`; component in `components/before-after/`.
+
+**Doctors (live Supabase data, not just the repo seed):** The `doctors` table is the runtime source of truth (`content/doctors.ts` is seed only), so every doctor edit was applied to **both** the seed file and the production DB.
+- Replaced the five associate bios with the practice's **original published bios** (from `source/pages/doctors-dr-*.md`), with the redundant self-name that opened each bio removed (the name is already the page heading).
+- Added **Dr. Serena Hsu** (orthodontist & dentofacial orthopedist) with the practice-provided bio + professional headshot.
+- Removed a leftover **`test` / "Dr. Test"** row that was live in production.
+- **`joinedYear` is now optional** (schema + nullable DB column, migration `2026-06-16_doctors_joined_year_nullable.sql`). Serena's join year wasn't provided, so it's `NULL` and the profile **omits** the "With the practice since …" line rather than inventing a year. The admin doctor editor no longer requires the field. (Also removed the stale `/doctors/dr-serena-hsu` → 410 redirect from `content/redirects.ts`.)
+
+**Office hours:** Footer now renders **12-hour** times via `formatDayHours` (was raw 24h). Added an optional per-day **`note`** on `BusinessHours` that displays instead of the hours/"Closed" label; **Friday is set to "Inquire for appointments."** Wired through the schema, `normalizeOfficeHours`, footer, contact page, structured data (note-days advertise no hours), and the `/admin/settings` office-hours editor (new optional note field). Applied to the live `site_settings.hours`.
+
+**Services — Word-doc content revisions + new procedures (catalog 32 → 38):** Service bodies render from `content/services.ts` (file-based, not DB).
+- Revised ~20 dental + medical bodies per the supplied docs. Interpretation rule: the doc prose is authoritative and the "REMOVED LAST PARAGRAPH/SENTENCE" annotations are already reflected in it — in practice these trimmed the promotional "Dr. X performs …" closing paragraphs.
+- New procedures: **Onlays** (dental/restorative) + **Arthrocentesis, Neuropathic Pain, Custom-Fit Orthotic Device, Osteonecrosis, Tongue-Tie Release** (medical). Rewrote **Biopsies**.
+- Renames: **Oral Cancer Shields → "Custom Radiation Shields"** (slug kept) and **Surgical Laser Therapy → "Laser Photobiomodulation & Muscle Therapy"** (new slug `laser-photobiomodulation` + illustration file rename + 301 redirect documented).
+- Generated 6 educational illustrations (Higgsfield, `nano_banana_pro`) matching the existing clinical-render style and registered the slugs in `SERVICE_ILLUSTRATION_SLUGS`.
+
+**Verification:** `tsc --noEmit` clean; 61/61 vitest tests pass (catalog/roster/redirect invariants updated to match). All surfaces confirmed in a local preview.
+
+**Note on redirects:** `content/redirects.ts` is currently documentation + tested data only — it is **not** wired into `next.config.ts` or middleware. So the old `/medical/surgical-laser-therapy` path 404s rather than 301-ing (acceptable for a fresh site with no real inbound traffic to it). Worth wiring up if/when legacy URLs matter.
+
+**Artifacts:** `app/(marketing)/before-after/page.tsx`, `components/before-after/before-after-slider.tsx`, `content/before-after.ts`, `public/images/before-after/*`, `content/doctors.ts`, `content/doctors-blur.ts`, `public/images/doctors/dr-serena-hsu.webp`, `content/services.ts`, `content/service-images.ts`, `public/images/services/educational/{onlays,arthrocentesis,neuropathic-pain,custom-orthotic-device,osteonecrosis,tongue-tie-release}.png` + `laser-photobiomodulation.png`, `lib/office-hours.ts`, `components/site-footer.tsx`, `app/admin/settings/{office-hours-form,actions}.ts(x)`, `supabase/migrations/2026-06-16_doctors_joined_year_nullable.sql`.
