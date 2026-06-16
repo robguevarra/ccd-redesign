@@ -240,3 +240,18 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 **Not done (offered as follow-up):** integrating the supplied `Down Payment Animation.mp4` (would fit `/financing`); true `.ai`→`.svg` vector logos (needs Illustrator export from the practice).
 
 **Artifacts:** `components/logo-morph.tsx`, `content/logo-marks.ts`, `public/logos/{dental,medical}.png`, edits to `components/{site-header,home-cold-open-cinematic,logo,loading-screen}.tsx`.
+
+---
+
+## 2026-06-16 — Logo animation: use the real mp4 frames (supersedes the crossfade)
+
+**Scope:** Follow-up to the logo/morph entry above — the practice wanted the *actual* animation pattern from `animationSample.mp4`, not the recreated two-state crossfade.
+
+**Decision:** Studied the mp4's 29 frames: it isn't a clean dental↔medical swap but a **seamless loop** — the moon "comes alive" (a face profile + star emerge and recede) with the **tooth present throughout**, returning to the start (frame 28 ≈ frame 0). Replaced the crossfade with the real frames:
+- Frames extracted via ffmpeg and keyed white→transparent (black RGB, alpha = inverted luminance, preserving anti-aliasing), baked into a 39KB transparent horizontal sprite (`public/logos/morph-sprite.png`, 29×160px).
+- **`components/logo-frames.tsx`** reveals the sprite with a **CSS mask + `steps(29)` animation** (`@keyframes logo-frames` in globals.css walks `mask-position` one frame width per step). Using a mask (not a background image) keeps it transparent AND painted in `currentColor`, so it themes on any background. Reduced-motion holds frame 0.
+- **Homepage hero** (`HomeColdOpenCinematic`, "We do both."): loops the real sequence.
+- **Header** (`components/lane-mark.tsx`): rests on the static lane PNG (so the header still reflects the current practice) and plays the real sequence **once** as a flourish when the user toggles Dental⇄Medical, then settles to the new lane's static mark.
+- Removed the now-unused crossfade (`LogoMorph` + `content/logo-marks.ts`).
+
+**Verification:** `tsc` clean, tests pass. Confirmed in preview: hero mask animation steps through all frames in `currentColor`; header flourish fires on toggle and settles to the correct lane logo.
