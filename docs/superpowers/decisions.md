@@ -263,3 +263,14 @@ Append-only log of material decisions made on the dentisthsu redesign engagement
 **Finding:** Frame analysis of `animationSample.mp4` (DENTAL.png | f0 | f7 | f14 | f21 | f28 | MEDICAL.png comparison) shows the clip is a **dental-only flourish** — frame 0 and frame 28 are both the dental logo; a face profile + star emerge and recede but the **tooth is present throughout and the clean medical logo never appears**. So "play the mp4 frames and stop on the medical logo" is impossible from this asset.
 
 **Decision:** The Dental⇄Medical **toggle** now morphs between the two real logo PNGs (`components/lane-mark.tsx`): both stacked, crossfade + slight scale, settling on the destination mark (moon stays constant, inner tooth ⇄ star + face). The mp4 frames remain the **homepage-hero looping** mark (`<LogoFrames>`), where a dental-centric ambient loop is the right fit. If the practice wants the toggle to literally play to the medical logo, they'd need to supply a clip that actually morphs dental→medical.
+
+---
+
+## 2026-06-16 — Toggle: cut the real mp4 frames (supersedes the crossfade note above)
+
+**Correction:** Rather than morphing the two separate logo PNGs, the toggle now **cuts the actual mp4 frames**. The clip cycles between a dental state (frame 0 — tooth) and a medical state (frame ~14 — star + face), so `components/lane-mark.tsx` plays the real sprite frames between those two indices and stops on the destination frame:
+
+- dental → medical : frames 0 → 14
+- medical → dental : frames 14 → 28 → 0 (the recede half; 28 is the dental frame)
+
+Driven by a small JS stepper at 10fps that sets the sprite mask-position (`currentColor`, transparent; reduced-motion snaps). The medical rest frame (14) still shows a small tooth — that's the most-medical frame the clip contains (it never reaches the clean star+face-only logo). The homepage-hero loop is unchanged (`<LogoFrames>` runs the full 0→28 cycle).
