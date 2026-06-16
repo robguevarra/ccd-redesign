@@ -53,7 +53,7 @@ export function LoadingScreen() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logos/dental.svg"
+              src="/logos/dental.png"
               alt=""
               className="h-16 w-16 md:h-20 md:w-20 invert opacity-95"
             />

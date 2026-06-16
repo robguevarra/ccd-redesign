@@ -16,7 +16,7 @@ import {
   type DisclosureLane,
 } from './lane-services-menu';
 import { MobileLaneAccordions } from './mobile-lane-accordions';
-import { Logo } from './logo';
+import { LogoMorph } from './logo-morph';
 import { Wordmark } from './wordmark';
 
 const NAV_ITEMS = [
@@ -148,7 +148,11 @@ export function SiteHeader({
             className="flex items-center gap-[12px]"
             aria-label={`${practiceInfo.brandName} home`}
           >
-            <Logo size={28} mobileSize={24} decorative lane={lane} />
+            <LogoMorph
+              size={28}
+              className="h-6 w-6 md:h-7 md:w-7"
+              lane={lane === 'medical' ? 'medical' : 'dental'}
+            />
             <span className="flex flex-col">
               <Wordmark variant={variant} lane={lane} />
               <span className="relative mt-0.5 block h-4 md:h-[18px] overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">

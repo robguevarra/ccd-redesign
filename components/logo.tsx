@@ -27,8 +27,8 @@ const FLIP_TRANSITION = {
 };
 
 /**
- * Comfort Care practice mark. Two real SVG assets — `public/logos/dental.svg`
- * (used for neutral + dental lanes) and `public/logos/medical.svg` (used for
+ * Comfort Care practice mark. Two transparent PNG assets — `public/logos/dental.png`
+ * (used for neutral + dental lanes) and `public/logos/medical.png` (used for
  * the medical lane). The swap animates as a Y-axis coin flip: the outgoing
  * mark rotates 90° forward and fades, while the new one rotates 90° in from
  * the back and fades up. Combined effect reads like a coin face turning
@@ -45,7 +45,7 @@ export function Logo({
 }: LogoProps) {
   const reduced = useReducedMotion();
   const isMedical = lane === 'medical';
-  const src = isMedical ? '/logos/medical.svg' : '/logos/dental.svg';
+  const src = isMedical ? '/logos/medical.png' : '/logos/dental.png';
 
   return (
     <span

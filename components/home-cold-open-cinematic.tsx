@@ -11,6 +11,7 @@ import {
 } from 'framer-motion';
 import { markVideoReady } from '@/lib/video-ready';
 import { Wordmark } from '@/components/wordmark';
+import { LogoMorph } from '@/components/logo-morph';
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 
@@ -479,6 +480,20 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
               style={{ opacity: phase2TextOpacity }}
               className="absolute inset-0 flex flex-col items-center justify-center z-30"
             >
+              {/* Looping practice mark — morphs dental ⇄ medical, the visual
+                  embodiment of "we do both." */}
+              <motion.div
+                style={{ scale: phase2Scale, y: phase2Y }}
+                className="mb-5 md:mb-7 text-stone-950"
+              >
+                <LogoMorph
+                  loop
+                  size={120}
+                  className="h-20 w-20 md:h-28 md:w-28"
+                  label="Comfort Care — dental and medical"
+                />
+              </motion.div>
+
               <motion.h2
                 style={{ scale: phase2Scale, y: phase2Y }}
                 className="font-serif text-8xl md:text-[13rem] tracking-tight text-stone-950 font-medium leading-[0.95]"
