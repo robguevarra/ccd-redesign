@@ -121,8 +121,9 @@ export const beforeAfterCases: BeforeAfterCase[] = [
       src: '/images/before-after/susan-house-before.webp',
       width: 1400,
       height: 1867,
-      // Portrait source cropped into the 4:3 box — zoom in so the smile reads larger.
-      scale: 1.3,
+      // Full-face chair photo — zoom 2x so the crop centers on the smile and
+      // cuts off the eyes, keeping the patient unrecognizable.
+      scale: 2,
       blurDataURL:
         'data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACwBQCdASoUABsAPu1irFAppSQisBgIATAdiWoAsR9kOoAGhCQkg6uS6oXCPLm7rerj0855UIgA/gr12mWe/YX5zQ8NPQN9xUnpg8ZtWWXigaPyivPzRabIWEvzEi+fYl/poAhQdhmp0ASTa8TZVPPR4r1G8OSBh01Kzu+7GsFncryES8EJLPjglRzPcxEr7LfR2VhgoInQjjEnbN+sRMsEIb6x+G6OLQ/k/Fbq4e3D5cmNXGnyErQwkBx3vUFnnAoxsTHReVwwFMm1pY+6HfFXYdJE4v6dITs1K+pk7t4NUrSEkAAAAA==',
     },

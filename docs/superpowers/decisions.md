@@ -279,6 +279,6 @@ Driven by a small JS stepper at 10fps that sets the sprite mask-position (`curre
 
 ## 2026-06-17 — Smile gallery: anonymized; Contact: location map
 
-**Smile gallery:** Removed patient names from `/before-after` (no captions; generic alt/aria) — shown anonymously. Added optional per-image `scale`/`objectPosition` to the slider; Susan's portrait "before" uses `scale: 1.3` so the smile reads larger in the shared 4:3 crop.
+**Smile gallery:** Removed patient names from `/before-after` (no captions; generic alt/aria) — shown anonymously. Added optional per-image `scale`/`objectPosition` to the slider; Susan's full-face chair "before" uses `scale: 2` so the crop centers on the smile and cuts off the eyes — keeping the patient unrecognizable.
 
 **Location map:** Added an interactive map on `/contact` via `components/map-embed.tsx`. Chose the **keyless Google Maps embed** (`/maps?q=…&output=embed`) over the Embed API (which needs a billable key) or Leaflet/OSM (more code, less familiar to patients) — for a single location it's zero-key, zero-cost, interactive, and trusted. Lazy-loaded with an overlaid "Get directions" link; the footer address is now a directions link too. Placed in a "Find us" section under the existing Address/Call/Hours grid.
