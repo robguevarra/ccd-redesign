@@ -4,6 +4,7 @@ import { practiceInfo } from '@/content/practice-info';
 import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
 import { formatDayHours } from '@/lib/office-hours';
 import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
+import { MapEmbed } from '@/components/map-embed';
 
 export const metadata = {
   title: 'Contact',
@@ -98,6 +99,15 @@ export default async function ContactPage() {
             ))}
           </ul>
         </div>
+      </section>
+
+      {/* Find us — interactive map */}
+      <section className="mx-auto max-w-7xl px-5 md:px-8 pb-16 md:pb-24">
+        <div className="flex items-center gap-3 text-stone-900 mb-6">
+          <MapPin className="h-5 w-5" aria-hidden="true" />
+          <h2 className="font-serif text-2xl">Find us</h2>
+        </div>
+        <MapEmbed className="h-[360px] md:h-[460px]" />
       </section>
 
       <section className="bg-stone-900 text-stone-50 py-20 md:py-28">

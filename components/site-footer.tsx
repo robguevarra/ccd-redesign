@@ -30,10 +30,19 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
             Visit
           </h3>
           <address className="mt-4 not-italic text-sm leading-relaxed">
-            {practiceInfo.address.street}
-            <br />
-            {practiceInfo.address.city}, {practiceInfo.address.state}{' '}
-            {practiceInfo.address.zip}
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                `${practiceInfo.address.street}, ${practiceInfo.address.city}, ${practiceInfo.address.state} ${practiceInfo.address.zip}`,
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--color-accent-200)] transition-colors"
+            >
+              {practiceInfo.address.street}
+              <br />
+              {practiceInfo.address.city}, {practiceInfo.address.state}{' '}
+              {practiceInfo.address.zip}
+            </a>
           </address>
         </div>
 
