@@ -3,12 +3,13 @@
  * (June 2026, "Website Updates" drop). Optimized to WebP and placed under
  * `public/images/before-after/` by `scripts/optimize-images.mjs` workflow.
  *
- * Display names are first name + last initial for patient privacy. Each pair is
- * rendered with the interactive <BeforeAfterSlider>.
+ * Shown anonymously (no patient names) and rendered with the interactive
+ * <BeforeAfterSlider>.
  *
- * Note: most pairs are 4:3 landscape. The Susan H. "before" is portrait (3:4)
+ * Note: most pairs are 4:3 landscape. The Susan "before" is portrait (3:4)
  * while her "after" is landscape, so the slider object-covers both into a
- * shared 4:3 box (center-cropped) to keep the wipe aligned.
+ * shared 4:3 box (center-cropped) to keep the wipe aligned; her "before" gets
+ * an extra `scale` so the smile reads larger in the cropped frame.
  */
 
 export interface BeforeAfterImage {
@@ -16,14 +17,14 @@ export interface BeforeAfterImage {
   width: number;
   height: number;
   blurDataURL: string;
+  /** Optional extra zoom (object-cover scale), e.g. 1.25 to crop in tighter. */
+  scale?: number;
+  /** Optional object-position override, e.g. 'center 35%'. Defaults to center. */
+  objectPosition?: string;
 }
 
 export interface BeforeAfterCase {
   slug: string;
-  /** First name + last initial, for privacy. */
-  patient: string;
-  /** Optional short treatment label, e.g. "Porcelain veneers". */
-  treatment?: string;
   before: BeforeAfterImage;
   after: BeforeAfterImage;
 }
@@ -31,7 +32,6 @@ export interface BeforeAfterCase {
 export const beforeAfterCases: BeforeAfterCase[] = [
   {
     slug: 'barbie-guinn',
-    patient: 'Barbie G.',
     before: {
       src: '/images/before-after/barbie-guinn-before.webp',
       width: 1400,
@@ -49,7 +49,6 @@ export const beforeAfterCases: BeforeAfterCase[] = [
   },
   {
     slug: 'connie-wong',
-    patient: 'Connie W.',
     before: {
       src: '/images/before-after/connie-wong-before.webp',
       width: 1400,
@@ -67,7 +66,6 @@ export const beforeAfterCases: BeforeAfterCase[] = [
   },
   {
     slug: 'dylan-escobar',
-    patient: 'Dylan E.',
     before: {
       src: '/images/before-after/dylan-escobar-before.webp',
       width: 1400,
@@ -85,7 +83,6 @@ export const beforeAfterCases: BeforeAfterCase[] = [
   },
   {
     slug: 'kelly-haus',
-    patient: 'Kelly H.',
     before: {
       src: '/images/before-after/kelly-haus-before.webp',
       width: 1400,
@@ -103,7 +100,6 @@ export const beforeAfterCases: BeforeAfterCase[] = [
   },
   {
     slug: 'michelle-rubio',
-    patient: 'Michelle R.',
     before: {
       src: '/images/before-after/michelle-rubio-before.webp',
       width: 1400,
@@ -121,11 +117,12 @@ export const beforeAfterCases: BeforeAfterCase[] = [
   },
   {
     slug: 'susan-house',
-    patient: 'Susan H.',
     before: {
       src: '/images/before-after/susan-house-before.webp',
       width: 1400,
       height: 1867,
+      // Portrait source cropped into the 4:3 box — zoom in so the smile reads larger.
+      scale: 1.3,
       blurDataURL:
         'data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACwBQCdASoUABsAPu1irFAppSQisBgIATAdiWoAsR9kOoAGhCQkg6uS6oXCPLm7rerj0855UIgA/gr12mWe/YX5zQ8NPQN9xUnpg8ZtWWXigaPyivPzRabIWEvzEi+fYl/poAhQdhmp0ASTa8TZVPPR4r1G8OSBh01Kzu+7GsFncryES8EJLPjglRzPcxEr7LfR2VhgoInQjjEnbN+sRMsEIb6x+G6OLQ/k/Fbq4e3D5cmNXGnyErQwkBx3vUFnnAoxsTHReVwwFMm1pY+6HfFXYdJE4v6dITs1K+pk7t4NUrSEkAAAAA==',
     },

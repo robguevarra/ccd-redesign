@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useId, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import type { BeforeAfterCase } from '@/content/before-after';
 
@@ -20,7 +20,6 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
   const [pos, setPos] = useState(50);
   const [dragging, setDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const labelId = useId();
 
   const setFromClientX = useCallback((clientX: number) => {
     const el = containerRef.current;
@@ -76,12 +75,16 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
         {/* AFTER — base layer */}
         <Image
           src={data.after.src}
-          alt={`${data.patient} — after treatment`}
+          alt="After treatment"
           fill
           sizes="(min-width: 768px) 45vw, 92vw"
           placeholder="blur"
           blurDataURL={data.after.blurDataURL}
-          className="object-cover object-center"
+          className="object-cover"
+          style={{
+            objectPosition: data.after.objectPosition ?? 'center',
+            transform: data.after.scale ? `scale(${data.after.scale})` : undefined,
+          }}
           draggable={false}
         />
 
@@ -92,12 +95,16 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
         >
           <Image
             src={data.before.src}
-            alt={`${data.patient} — before treatment`}
+            alt="Before treatment"
             fill
             sizes="(min-width: 768px) 45vw, 92vw"
             placeholder="blur"
             blurDataURL={data.before.blurDataURL}
-            className="object-cover object-center"
+            className="object-cover"
+            style={{
+              objectPosition: data.before.objectPosition ?? 'center',
+              transform: data.before.scale ? `scale(${data.before.scale})` : undefined,
+            }}
             draggable={false}
           />
         </div>
@@ -119,8 +126,7 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
           <button
             type="button"
             role="slider"
-            aria-label={`Reveal before and after for ${data.patient}`}
-            aria-labelledby={labelId}
+            aria-label="Drag to compare before and after"
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={Math.round(pos)}
@@ -134,15 +140,6 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
           </button>
         </div>
       </div>
-
-      <figcaption id={labelId} className="mt-4 flex items-baseline justify-between gap-4">
-        <span className="font-serif text-xl tracking-tight text-stone-900">
-          {data.patient}
-        </span>
-        {data.treatment && (
-          <span className="text-sm text-stone-500">{data.treatment}</span>
-        )}
-      </figcaption>
     </figure>
   );
 }
