@@ -4,7 +4,7 @@ import { practiceInfo } from '@/content/practice-info';
 import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
 import { formatDayHours } from '@/lib/office-hours';
 import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
-import { MapDrawing } from '@/components/map-drawing';
+import { FindUsMap } from '@/components/find-us-map';
 
 export const metadata = {
   title: 'Find Us',
@@ -26,9 +26,9 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Map on top — on-brand drawn schematic (no third-party embed) */}
+      {/* Map on top — practice-supplied wayfinding map (no third-party embed) */}
       <section className="mx-auto max-w-7xl px-5 md:px-8 pt-12 md:pt-16">
-        <MapDrawing className="aspect-[16/10] md:aspect-[2/1]" />
+        <FindUsMap />
       </section>
 
       {/* Details below */}
