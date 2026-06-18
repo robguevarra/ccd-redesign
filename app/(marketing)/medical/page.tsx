@@ -14,7 +14,7 @@ import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 export const metadata: Metadata = {
   title: 'Medical Practice — Comfort Care Dental',
   description:
-    'Orofacial pain, oral medicine, sleep apnea, TMJ, oral pathology in Rancho Cucamonga. Led by Dr. Brien Hsu — board-certified in Orofacial Pain and Dental Sleep Medicine.',
+    'Orofacial pain, oral medicine, TMJ, sleep apnea, oral pathology in Rancho Cucamonga. Led by Dr. Brien Hsu — board-certified in Orofacial Pain and Dental Sleep Medicine.',
 };
 
 const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyframe] = [
@@ -26,9 +26,9 @@ const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyf
   },
   {
     eyebrow: "What you're looking at",
-    title: 'Sleep apnea, TMJ. Both manageable.',
+    title: 'TMJ, sleep apnea. Both manageable.',
     italicize: [3, 4],
-    body: 'We treat sleep apnea with custom oral appliances — no mask, no machine, no white noise. We treat TMJ with conservative splint therapy first, and surgery as a last resort. Most patients never need it. Both managed here, under one roof.',
+    body: 'We treat TMJ with conservative splint therapy first, and surgery as a last resort — most patients never need it. We treat sleep apnea with custom oral appliances — no mask, no machine, no white noise. Both managed here, under one roof.',
   },
   {
     eyebrow: 'Where this work happens',
