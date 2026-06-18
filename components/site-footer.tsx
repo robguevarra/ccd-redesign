@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { practiceInfo } from '@/content/practice-info';
 import type { BusinessHours } from '@/content/schemas';
@@ -18,15 +19,29 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
     <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <div className="space-y-5">
+          <div className="space-y-7">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-2">
+              <Image
+                src="/logos/dental.png"
+                alt=""
+                width={36}
+                height={36}
+                className="invert mb-3"
+              />
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-1">
                 Dental Practice
               </p>
               <Wordmark variant="dark" lane="dental" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-2">
+              <Image
+                src="/logos/medical.png"
+                alt=""
+                width={36}
+                height={36}
+                className="invert mb-3"
+              />
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-1">
                 Medical Practice
               </p>
               <Wordmark variant="dark" lane="medical" />
@@ -145,8 +160,8 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
       <div className="border-t border-stone-800">
         <div className="mx-auto max-w-7xl px-5 md:px-8 py-[24px] flex flex-col md:flex-row items-start md:items-center justify-between gap-[16px] text-[12px] text-stone-500">
           <p>
-            © {new Date().getFullYear()} {practiceInfo.brandName}.{' '}
-            {practiceInfo.legalName}.
+            © {new Date().getFullYear()} {practiceInfo.legalName}. All rights
+            reserved.
           </p>
           <nav className="flex flex-wrap gap-x-[20px] gap-y-[8px]">
             <Link

@@ -149,7 +149,7 @@ export function SiteHeader({
             aria-label={`${practiceInfo.brandName} home`}
           >
             <LaneMark
-              size={28}
+              size={40}
               lane={lane === 'medical' ? 'medical' : 'dental'}
             />
             <span className="flex flex-col">
