@@ -18,22 +18,21 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
     <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <Wordmark variant="dark" className="text-stone-50 h-9" />
-          <ul className="mt-6 space-y-3 text-sm">
-            <li>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)]">
+          <div className="space-y-5">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-2">
                 Dental Practice
               </p>
-              <p className="text-stone-200">{practiceInfo.brandName}</p>
-            </li>
-            <li>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)]">
+              <Wordmark variant="dark" lane="dental" />
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-2">
                 Medical Practice
               </p>
-              <p className="text-stone-200">{practiceInfo.legalName}</p>
-            </li>
-          </ul>
-          <p className="mt-5 text-sm text-stone-400 leading-relaxed">
+              <Wordmark variant="dark" lane="medical" />
+            </div>
+          </div>
+          <p className="mt-6 text-sm text-stone-400 leading-relaxed">
             Advanced dental and medical care led by Dr. Brien Hsu, DDS.
             <br />
             {practiceInfo.address.city} · Est. 1993.

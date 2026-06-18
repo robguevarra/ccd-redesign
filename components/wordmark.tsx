@@ -43,7 +43,7 @@ export function Wordmark({
 
   return (
     <span
-      aria-label={isMedical ? 'Brien Hsu, DDS MS & Associates' : 'Comfort Care Dental'}
+      aria-label={isMedical ? 'Brien Hsu, DDS, MS & Associates' : 'Comfort Care Dental'}
       className={cn(
         'relative inline-block font-serif whitespace-nowrap leading-none',
         color,
@@ -66,7 +66,7 @@ export function Wordmark({
                 Hsu,
               </span>
               <span className="font-normal text-[11px] md:text-[12px] tracking-[0.06em] uppercase opacity-80">
-                DDS MS &amp; Associates
+                DDS, MS &amp; Associates
               </span>
             </>
           ) : (
