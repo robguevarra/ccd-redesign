@@ -21,10 +21,24 @@ import 'leaflet/dist/leaflet.css';
 
 type LL = [number, number];
 
-// Exact office coordinates (from the Google Maps place page).
+// Exact office coordinates — verified against the practice's Google Maps
+// share link (maps.app.goo.gl/UJueZeNFVnqNMyRw8) and Plus Code 4CMV+MJ, both
+// of which resolve to this point. Used for the map pin and route endpoint.
 const DEST: LL = [34.1341994, -117.5559279];
 // Milliken Ave & Kenyon Way (34°08'03.4"N 117°33'30.3"W).
 const START: LL = [34.1342778, -117.5584167];
+
+// "Get directions" deep link. We send the business NAME + address rather than
+// bare coordinates: the office shares its building with other listings (e.g.
+// The Hair Inn Salon), and a coordinate-only destination makes Google label
+// the trip with whichever listing is nearest — often the salon. The unique
+// business name resolves Google to the correct Comfort Care Dental listing.
+const DIRECTIONS_QUERY =
+  'Comfort Care Dental - Brien Hsu DDS MS, ' +
+  '11458 Kenyon Way #120, Rancho Cucamonga, CA 91701';
+const DIRECTIONS_URL =
+  'https://www.google.com/maps/dir/?api=1&destination=' +
+  encodeURIComponent(DIRECTIONS_QUERY);
 
 // Pre-baked OSRM driving route (start → office). Hard-coded so we never call a
 // live router; regenerate by querying OSRM if the route ever changes.
@@ -368,11 +382,11 @@ export function FindUsMap() {
         </span>
         <a
           className="ccd-btn"
-          href="https://www.google.com/maps/dir/?api=1&destination=11458+Kenyon+Way+%23120,+Rancho+Cucamonga,+CA+91701"
+          href={DIRECTIONS_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Open in Google Maps &rarr;
+          Get directions &rarr;
         </a>
       </div>
     </div>
