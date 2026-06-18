@@ -340,7 +340,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
         >
           <div className="text-center max-w-5xl pointer-events-auto">
             <p className="text-xs uppercase tracking-[0.28em] text-stone-300/80 mb-6 md:mb-8">
-              Comfort Care · est. 1999
+              Comfort Care · est. 1993
             </p>
             <h2 className="font-serif text-6xl md:text-[10rem] leading-[0.95] tracking-tight text-stone-50">
               Two practices,{' '}
@@ -348,7 +348,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
             </h2>
             <p className="mt-8 md:mt-10 text-base md:text-lg text-stone-300/85 max-w-xl mx-auto leading-relaxed">
               Family dentistry and complex orofacial pain care, in the same office,
-              with the same team, since 1999.
+              with the same team, since 1993.
             </p>
             <div className="mt-10 md:mt-14 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link

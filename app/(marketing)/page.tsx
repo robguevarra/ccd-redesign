@@ -147,7 +147,7 @@ export default async function HomePage() {
           </div>
           <p className="max-w-2xl text-stone-300 leading-relaxed text-lg mb-16">
             Dr. Brien Hsu has been seeing patients in{' '}
-            {practiceInfo.address.city} since 1999. Four board-certified
+            {practiceInfo.address.city} since 1993. Four board-certified
             specialists practice alongside him today, in oral surgery,
             endodontics, periodontal care, and orofacial pain. Long tenure means
             we remember your case, your kids, and how your bite has changed

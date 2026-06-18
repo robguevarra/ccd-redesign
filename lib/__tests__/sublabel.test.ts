@@ -18,10 +18,10 @@ describe('getSublabel', () => {
   });
 
   test('all other routes return the practice tagline', () => {
-    expect(getSublabel('/')).toBe('EST. 1999 · RANCHO CUCAMONGA');
-    expect(getSublabel('/about')).toBe('EST. 1999 · RANCHO CUCAMONGA');
-    expect(getSublabel('/doctors')).toBe('EST. 1999 · RANCHO CUCAMONGA');
-    expect(getSublabel('/contact')).toBe('EST. 1999 · RANCHO CUCAMONGA');
-    expect(getSublabel('/blog')).toBe('EST. 1999 · RANCHO CUCAMONGA');
+    expect(getSublabel('/')).toBe('EST. 1993 · RANCHO CUCAMONGA');
+    expect(getSublabel('/about')).toBe('EST. 1993 · RANCHO CUCAMONGA');
+    expect(getSublabel('/doctors')).toBe('EST. 1993 · RANCHO CUCAMONGA');
+    expect(getSublabel('/contact')).toBe('EST. 1993 · RANCHO CUCAMONGA');
+    expect(getSublabel('/blog')).toBe('EST. 1993 · RANCHO CUCAMONGA');
   });
 });

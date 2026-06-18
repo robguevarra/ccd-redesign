@@ -15,5 +15,5 @@ export function getSublabel(pathname: string): string {
   const lane = getLane(pathname);
   if (lane === 'dental') return 'DENTAL PRACTICE';
   if (lane === 'medical') return 'OROFACIAL PAIN & ORAL MEDICINE';
-  return 'EST. 1999 · RANCHO CUCAMONGA';
+  return 'EST. 1993 · RANCHO CUCAMONGA';
 }

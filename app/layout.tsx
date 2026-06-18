@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   // OG/Twitter card description — kept in the 110–160 char sweet spot so it
   // doesn't get clipped by Slack/iMessage/Twitter previews.
-  description: `Rancho Cucamonga's five-doctor hybrid dental & medical practice. Family care, TMJ, sleep apnea, and orofacial pain — under one roof since 1999.`,
+  description: `Rancho Cucamonga's five-doctor hybrid dental & medical practice. Family care, TMJ, sleep apnea, and orofacial pain — under one roof since 1993.`,
   openGraph: {
     type: 'website',
     siteName: practiceInfo.brandName,

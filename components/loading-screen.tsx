@@ -58,7 +58,7 @@ export function LoadingScreen() {
               className="h-16 w-16 md:h-20 md:w-20 invert opacity-95"
             />
             <span className="text-[10px] uppercase tracking-[0.32em] text-stone-300">
-              Comfort Care · Est. 1999
+              Comfort Care · Est. 1993
             </span>
           </motion.div>
         </motion.div>

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { practiceInfo } from '@/content/practice-info';
 import { SITE_HOST } from '@/lib/site';
 
-export const alt = `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1999`;
+export const alt = `${practiceInfo.brandName} — Considered dentistry in ${practiceInfo.address.city} since 1993`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -41,7 +41,7 @@ export default async function OpengraphImage() {
             fontFamily: 'system-ui, -apple-system, sans-serif',
           }}
         >
-          {practiceInfo.address.city}, {practiceInfo.address.state} · Since 1999
+          {practiceInfo.address.city}, {practiceInfo.address.state} · Since 1993
         </div>
 
         <div

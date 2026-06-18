@@ -4,12 +4,12 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'About',
-  description: `${practiceInfo.brandName} — a five-doctor practice in ${practiceInfo.address.city}, in continuous service since 1999.`,
+  description: `${practiceInfo.brandName} — a five-doctor practice in ${practiceInfo.address.city}, in continuous service since 1993.`,
 };
 
 const TIMELINE = [
-  { year: '1999', label: 'The practice opens', body: 'Dr. Brien Hsu begins seeing patients in Rancho Cucamonga.' },
-  { year: '2002', label: 'Acquisition', body: 'Took over an established practice in Alta Loma serving the area since 1993.' },
+  { year: '1993', label: 'The practice is founded', body: 'An established dental office opens in Alta Loma, serving the Rancho Cucamonga area.' },
+  { year: '2002', label: 'Under Dr. Hsu', body: 'Dr. Brien Hsu takes over the practice and makes it his own.' },
   { year: '2014', label: 'CBCT introduced', body: 'Adopted 3D Cone Beam CT — early among general dental practices.' },
   { year: '2024', label: 'Trios 5 upgrade', body: 'Wireless intra-oral scanning across every operatory.' },
 ];
@@ -23,11 +23,11 @@ export default function AboutPage() {
             About the practice
           </p>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter text-stone-900 leading-[0.95]">
-            Twenty-five years.{' '}
+            Three decades.{' '}
             <span className="italic font-light">Same office.</span>
           </h1>
           <p className="mt-10 max-w-2xl text-stone-600 text-lg leading-relaxed">
-            We have been treating families in {practiceInfo.address.city} continuously since 1999.
+            We have been treating families in {practiceInfo.address.city} continuously since 1993.
             Long tenure means we know our patients — and the patients know us.
           </p>
         </div>
@@ -36,9 +36,9 @@ export default function AboutPage() {
       <section className="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-28">
         <div className="space-y-8 text-stone-700 text-lg leading-[1.7]">
           <p>
-            The practice opened in 1999 with a simple premise: dentistry should be
+            The practice opened in 1993 with a simple premise: dentistry should be
             something you don't dread, the work should last, and the doctor should
-            recognize you when you walk in. Twenty-five years later, that's still
+            recognize you when you walk in. Three decades later, that's still
             the brief.
           </p>
           <p>
