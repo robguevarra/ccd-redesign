@@ -59,11 +59,15 @@ const BAKED_ROUTE: LL[] = [
   [34.134302, -117.556149],
 ];
 
-// Wayfinding landmark labels. Coordinates are approximate; refine if needed.
+// Wayfinding landmark labels — both businesses share the clinic's building.
+// Positions estimated from the practice's annotated satellite image: the music
+// academy at the building's north end (≈ due north of the clinic pin), the
+// salon on the west/parking-lot side (north-west of the pin).
 const LANDMARKS: { name: string; ll: LL }[] = [
-  { name: 'Applause Music Academy', ll: [34.1345994, -117.5558279] },
-  { name: 'The Hair Inn Salon', ll: [34.1343794, -117.5561079] },
-  { name: 'Lupe Rincon Hair Dresser', ll: [34.1344794, -117.5559779] },
+  // Both inside the shared building: Applause sits just inside the building's
+  // west (left) edge, a little north of the Hair Inn; the salon is mid-front.
+  { name: 'Applause Music Academy', ll: [34.134338, -117.555958] },
+  { name: 'The Hair Inn Salon', ll: [34.134285, -117.556015] },
 ];
 
 const TEAL = '#346a66';

@@ -46,8 +46,8 @@ export default async function ContactPage() {
             {practiceInfo.address.zip}
           </address>
           <a
-            href={`https://maps.google.com/?q=${encodeURIComponent(
-              `${practiceInfo.address.street}, ${practiceInfo.address.city}, ${practiceInfo.address.state}`,
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              `Comfort Care Dental - Brien Hsu DDS MS, ${practiceInfo.address.street}, ${practiceInfo.address.city}, ${practiceInfo.address.state} ${practiceInfo.address.zip}`,
             )}`}
             target="_blank"
             rel="noopener noreferrer"
