@@ -4,10 +4,10 @@ import { practiceInfo } from '@/content/practice-info';
 import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
 import { formatDayHours } from '@/lib/office-hours';
 import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
-import { MapEmbed } from '@/components/map-embed';
+import { MapDrawing } from '@/components/map-drawing';
 
 export const metadata = {
-  title: 'Contact',
+  title: 'Find Us',
   description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[0]?.number}.`,
 };
 
@@ -18,15 +18,20 @@ export default async function ContactPage() {
       <section className="bg-stone-100/60 py-24 md:py-32 border-b border-stone-200">
         <div className="mx-auto max-w-5xl px-5 md:px-8">
           <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-6">
-            Visit · Call · Find us
+            Visit · Call · Directions
           </p>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter text-stone-900 leading-[0.95]">
-            We're easy to{' '}
-            <span className="italic font-light">find.</span>
+            Find <span className="italic font-light">us.</span>
           </h1>
         </div>
       </section>
 
+      {/* Map on top — on-brand drawn schematic (no third-party embed) */}
+      <section className="mx-auto max-w-7xl px-5 md:px-8 pt-12 md:pt-16">
+        <MapDrawing className="aspect-[16/10] md:aspect-[2/1]" />
+      </section>
+
+      {/* Details below */}
       <section className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-24 grid md:grid-cols-3 gap-12">
         {/* Address */}
         <div className="space-y-6">
@@ -99,15 +104,6 @@ export default async function ContactPage() {
             ))}
           </ul>
         </div>
-      </section>
-
-      {/* Find us — interactive map */}
-      <section className="mx-auto max-w-7xl px-5 md:px-8 pb-16 md:pb-24">
-        <div className="flex items-center gap-3 text-stone-900 mb-6">
-          <MapPin className="h-5 w-5" aria-hidden="true" />
-          <h2 className="font-serif text-2xl">Find us</h2>
-        </div>
-        <MapEmbed className="h-[360px] md:h-[460px]" />
       </section>
 
       <section className="bg-stone-900 text-stone-50 py-20 md:py-28">
