@@ -186,12 +186,12 @@ export function SiteHeader({
 
         {/* RIGHT — Nav + CTAs + Hamburger */}
         <div className="md:flex-1 flex items-center justify-end gap-[20px]">
-          <nav className="hidden md:flex items-center gap-[20px] text-[12px]">
+          <nav className="hidden md:flex items-center gap-[18px] text-[12px]">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="opacity-80 hover:opacity-100 transition-opacity"
+                className="whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity"
               >
                 {item.label}
               </Link>
@@ -208,19 +208,6 @@ export function SiteHeader({
           >
             Request appointment
           </Link>
-          <a
-            href={`tel:${main.tel}`}
-            className={cn(
-              'hidden sm:inline-flex shrink-0 items-center gap-[8px] rounded-full px-[16px] py-[8px] text-[14px] font-medium border transition-colors whitespace-nowrap',
-              variant === 'light'
-                ? 'border-stone-900 hover:bg-stone-900 hover:text-stone-50'
-                : 'border-stone-100/50 hover:bg-stone-100 hover:text-ink-950',
-            )}
-            aria-label={`Call ${practiceInfo.brandName} at ${main.number}`}
-          >
-            <Phone className="h-[16px] w-[16px]" aria-hidden="true" />
-            <span>{main.number}</span>
-          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
