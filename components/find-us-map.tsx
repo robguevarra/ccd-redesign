@@ -1,148 +1,380 @@
+'use client';
+
 /**
- * "Find Us" wayfinding map — a self-contained, practice-supplied SVG + HTML
- * block (parking lot, landmarks, walking path to the corner entrance, and
- * step-by-step directions). Scoped under `.ccd-findus` so its styles don't
- * leak. Rendered via dangerouslySetInnerHTML because the markup is static,
- * trusted, hand-authored art — converting the dense SVG to JSX would only risk
- * transcription errors. No third-party calls; the "Get directions" link deep-
- * links to Google Maps.
+ * "Find Us" map — a real, interactive street map (Leaflet) with a pre-baked,
+ * self-drawing driving route from Milliken & Kenyon to the office, plus a
+ * looping arrow and wayfinding landmark labels.
+ *
+ * Why Leaflet instead of a Google embed: Google's free embed is a sealed
+ * iframe we can't draw on. Leaflet lets us layer the animated route and
+ * landmarks, and needs no API key/billing.
+ *
+ * Leaflet is bundled (npm), not loaded from a CDN. The route is pre-computed
+ * and hard-coded (BAKED_ROUTE) so the page never depends on a live router or
+ * geocoder at runtime — only the basemap tiles are fetched (CARTO). All
+ * markers use divIcons/circleMarkers, so there are no Leaflet image assets to
+ * resolve.
  */
 
-const FIND_US_MAP_HTML = `
-<div class="ccd-findus">
-  <style>
-    .ccd-findus{
-      --ink:#2b3a39;
-      --muted:#6e7c7a;
-      --teal:#346a66;
-      --teal-dk:#28524f;
-      --sand:#bfae9a;
-      --sand-dk:#a08d75;
-      --lot:#e8f1f0;
-      --lot-line:#c4d6d4;
-      --road:#faf3e7;
-      --road-text:#a8965f;
-      --card:#ffffff;
-      --border:#e7decf;
-      --shadow:0 10px 30px rgba(40,82,79,.12);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      color:var(--ink);
-      max-width:780px;margin:0 auto;background:var(--card);
-      border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;
-    }
-    .ccd-findus *{box-sizing:border-box;}
-    .ccd-head{padding:22px 24px 6px;}
-    .ccd-head h2{margin:0;font-size:20px;letter-spacing:.2px;color:var(--teal-dk);}
-    .ccd-head p{margin:6px 0 0;font-size:14px;color:var(--muted);line-height:1.45;}
-    .ccd-map{display:block;width:100%;height:auto;padding:8px 14px 0;}
-    .ccd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 24px 22px;}
-    .ccd-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink);}
-    .ccd-num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sand);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
-    .ccd-step.is-entrance .ccd-num{background:var(--teal);}
-    .ccd-foot{border-top:1px solid var(--border);padding:14px 24px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted);}
-    .ccd-foot strong{color:var(--ink);}
-    .ccd-btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:9px 16px;border-radius:10px;font-weight:600;font-size:13px;white-space:nowrap;}
-    .ccd-btn:hover{background:var(--teal-dk);}
-    @media (max-width:560px){.ccd-steps{grid-template-columns:1fr;gap:8px;}.ccd-head h2{font-size:18px;}}
-  </style>
+import { useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
 
-  <div class="ccd-head">
-    <h2>How to find Comfort Care Dental</h2>
-    <p>Our entrance is on the <strong>corner facing Kenyon Way</strong> &mdash; around the side from where you park. Park near <strong>The Hair Inn Salon</strong> and <strong>Applause Music Academy</strong> (both on the left/lot side), then walk around to the corner door.</p>
-  </div>
+type LL = [number, number];
 
-  <svg class="ccd-map" viewBox="0 0 900 700" role="img"
-       aria-label="Simplified map: park in the lot near The Hair Inn Salon and Applause Music Academy, then walk around to the Comfort Care Dental entrance on the corner facing Kenyon Way.">
+// Exact office coordinates (from the Google Maps place page).
+const DEST: LL = [34.1341994, -117.5559279];
+// Milliken Ave & Kenyon Way (34°08'03.4"N 117°33'30.3"W).
+const START: LL = [34.1342778, -117.5584167];
 
-    <rect x="0" y="0" width="900" height="700" fill="#ffffff"/>
+// Pre-baked OSRM driving route (start → office). Hard-coded so we never call a
+// live router; regenerate by querying OSRM if the route ever changes.
+const BAKED_ROUTE: LL[] = [
+  [34.134315, -117.558418],
+  [34.134316, -117.558351],
+  [34.134316, -117.558327],
+  [34.134323, -117.557827],
+  [34.134308, -117.557456],
+  [34.134275, -117.557098],
+  [34.134214, -117.556773],
+  [34.134688, -117.556641],
+  [34.134686, -117.556368],
+  [34.134686, -117.556294],
+  [34.134667, -117.556157],
+  [34.134662, -117.556127],
+  [34.134619, -117.555965],
+  [34.134302, -117.556149],
+];
 
-    <rect x="0" y="612" width="820" height="74" fill="var(--road)"/>
-    <line x1="0" y1="649" x2="820" y2="649" stroke="#ffffff" stroke-width="3" stroke-dasharray="22 18"/>
-    <text x="40" y="675" font-size="17" font-weight="700" fill="var(--road-text)" letter-spacing=".5">KENYON WAY</text>
+// Wayfinding landmark labels. Coordinates are approximate; refine if needed.
+const LANDMARKS: { name: string; ll: LL }[] = [
+  { name: 'Applause Music Academy', ll: [34.1345994, -117.5558279] },
+  { name: 'The Hair Inn Salon', ll: [34.1343794, -117.5561079] },
+  { name: 'Lupe Rincon Hair Dresser', ll: [34.1344794, -117.5559779] },
+];
 
-    <rect x="812" y="0" width="88" height="686" fill="var(--road)"/>
-    <line x1="856" y1="0" x2="856" y2="612" stroke="#ffffff" stroke-width="3" stroke-dasharray="22 18"/>
-    <text x="858" y="300" font-size="16" font-weight="700" fill="var(--road-text)" letter-spacing=".5"
-          transform="rotate(90 858 300)">WOODRUFF PL</text>
+const TEAL = '#346a66';
+const ROUTE = '#d9573f';
 
-    <rect x="34" y="40" width="690" height="560" rx="10" fill="var(--lot)" stroke="var(--lot-line)" stroke-width="2"/>
-    <g stroke="var(--lot-line)" stroke-width="2">
-      <line x1="80" y1="90" x2="80" y2="150"/><line x1="120" y1="90" x2="120" y2="150"/><line x1="160" y1="90" x2="160" y2="150"/><line x1="200" y1="90" x2="200" y2="150"/><line x1="240" y1="90" x2="240" y2="150"/><line x1="280" y1="90" x2="280" y2="150"/><line x1="320" y1="90" x2="320" y2="150"/><line x1="360" y1="90" x2="360" y2="150"/><line x1="400" y1="90" x2="400" y2="150"/><line x1="440" y1="90" x2="440" y2="150"/><line x1="480" y1="90" x2="480" y2="150"/><line x1="520" y1="90" x2="520" y2="150"/><line x1="560" y1="90" x2="560" y2="150"/><line x1="600" y1="90" x2="600" y2="150"/><line x1="640" y1="90" x2="640" y2="150"/><line x1="680" y1="90" x2="680" y2="150"/><line x1="60" y1="150" x2="700" y2="150"/>
-      <line x1="80" y1="250" x2="80" y2="320"/><line x1="120" y1="250" x2="120" y2="320"/><line x1="160" y1="250" x2="160" y2="320"/><line x1="200" y1="250" x2="200" y2="320"/><line x1="60" y1="285" x2="220" y2="285"/>
-    </g>
-    <text x="120" y="210" font-size="16" font-weight="600" fill="#8aa3a0">Shopping-center parking</text>
-
-    <path d="M470 250 H770 V560 H510 L470 520 V250 Z"
-          fill="var(--sand)" stroke="var(--sand-dk)" stroke-width="3" stroke-linejoin="round"/>
-
-    <g>
-      <rect x="214" y="392" width="244" height="34" rx="8" fill="#fff" stroke="var(--border)" stroke-width="1.5"/>
-      <text x="230" y="414" font-size="13.5" font-weight="600" fill="var(--ink)">Applause Music Academy</text>
-      <line x1="458" y1="409" x2="470" y2="409" stroke="var(--teal)" stroke-width="2.5"/>
-      <circle cx="470" cy="409" r="8" fill="#fff" stroke="var(--teal)" stroke-width="3"/>
-      <circle cx="470" cy="409" r="3" fill="var(--teal)"/>
-    </g>
-    <g>
-      <rect x="214" y="452" width="244" height="34" rx="8" fill="#fff" stroke="var(--border)" stroke-width="1.5"/>
-      <text x="230" y="474" font-size="13.5" font-weight="600" fill="var(--ink)">The Hair Inn Salon</text>
-      <line x1="458" y1="469" x2="470" y2="469" stroke="var(--teal)" stroke-width="2.5"/>
-      <circle cx="470" cy="469" r="8" fill="#fff" stroke="var(--teal)" stroke-width="3"/>
-      <circle cx="470" cy="469" r="3" fill="var(--teal)"/>
-    </g>
-
-    <g>
-      <rect x="250" y="300" width="150" height="40" rx="20" fill="var(--sand)"/>
-      <text x="325" y="325" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">P &nbsp;Park here</text>
-    </g>
-
-    <path d="M325 342 C 316 430, 360 505, 452 540"
-          fill="none" stroke="var(--teal)" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="2 14"/>
-    <path d="M436 522 L462 544 L432 550 Z" fill="var(--teal)"/>
-    <text x="360" y="470" font-size="13" font-weight="700" fill="var(--teal-dk)" transform="rotate(57 360 470)">walk this way</text>
-
-    <line x1="500" y1="552" x2="478" y2="530" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-    <g>
-      <path d="M468 552 C 468 552, 442 514, 442 500 a 26 26 0 1 1 52 0 C 494 514, 468 552, 468 552 Z"
-            fill="var(--teal)" stroke="#fff" stroke-width="3"/>
-      <circle cx="468" cy="500" r="16" fill="#fff"/>
-      <path d="M468 491c-6 0-10 4-10 9 0 4 2 7 3 11 1 2 2 3 3 3s1-2 1-4c0-3 1-5 3-5s3 2 3 5c0 2 0 4 1 4s2-1 3-3c1-4 3-7 3-11 0-5-4-9-10-9z" fill="var(--teal)"/>
-    </g>
-    <g>
-      <line x1="430" y1="566" x2="452" y2="540" stroke="var(--teal)" stroke-width="2.5"/>
-      <rect x="120" y="540" width="312" height="58" rx="10" fill="var(--teal)"/>
-      <text x="276" y="565" text-anchor="middle" font-size="14.5" font-weight="800" fill="#fff">OUR ENTRANCE</text>
-      <text x="276" y="584" text-anchor="middle" font-size="12.5" font-weight="600" fill="#fff">on the corner, facing Kenyon Way</text>
-    </g>
-
-    <g transform="translate(160,90)">
-      <circle r="26" fill="#fff" stroke="var(--border)" stroke-width="2"/>
-      <path d="M0 -18 L8 8 L0 2 L-8 8 Z" fill="var(--ink)"/>
-      <text x="0" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">N</text>
-    </g>
-  </svg>
-
-  <div class="ccd-steps">
-    <div class="ccd-step">
-      <span class="ccd-num">1</span>
-      <span>Pull into the <strong>shopping-center lot</strong> off Kenyon Way and park toward the back-right building.</span>
-    </div>
-    <div class="ccd-step">
-      <span class="ccd-num">2</span>
-      <span>On the lot side you&rsquo;ll see <strong>Applause Music Academy</strong> and <strong>The Hair Inn Salon</strong> &mdash; head toward them.</span>
-    </div>
-    <div class="ccd-step is-entrance">
-      <span class="ccd-num">3</span>
-      <span>Walk to the <strong>corner</strong> of the building. Our entrance faces <strong>Kenyon Way</strong>.</span>
-    </div>
-  </div>
-
-  <div class="ccd-foot">
-    <span><strong>Comfort Care Dental &mdash; Brien Hsu DDS MS</strong><br>11458 Kenyon Way #120, Rancho Cucamonga, CA 91701</span>
-    <a class="ccd-btn" href="https://www.google.com/maps/dir/?api=1&destination=11458+Kenyon+Way+%23120,+Rancho+Cucamonga,+CA+91701" target="_blank" rel="noopener">Get directions &rarr;</a>
-  </div>
-</div>
+const CSS = `
+.ccd-findus{
+  --ink:#2b3a39; --muted:#6e7c7a; --teal:#346a66; --teal-dk:#28524f; --sand:#bfae9a;
+  --route:#d9573f; --card:#ffffff; --border:#e7decf; --shadow:0 10px 30px rgba(40,82,79,.12);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); max-width:820px; margin:0 auto; background:var(--card);
+  border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); overflow:hidden;
+}
+.ccd-findus *{box-sizing:border-box;}
+.ccd-findus .ccd-head{padding:22px 24px 14px;}
+.ccd-findus .ccd-head h2{margin:0;font-size:20px;letter-spacing:.2px;color:var(--teal-dk);}
+.ccd-findus .ccd-head p{margin:6px 0 0;font-size:14px;color:var(--muted);line-height:1.45;}
+.ccd-findus .ccd-mapwrap{position:relative;margin:0 14px;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.ccd-findus .ccd-map{height:clamp(320px,56vw,460px);width:100%;background:#eef1f0;z-index:0;}
+.ccd-findus .ccd-note{position:absolute;left:12px;bottom:12px;z-index:500;background:var(--teal);color:#fff;
+  font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:9px;box-shadow:var(--shadow);max-width:72%;line-height:1.3;pointer-events:none;}
+.ccd-findus .ccd-pin{filter:drop-shadow(0 3px 4px rgba(0,0,0,.28));animation:ccdDrop .5s cubic-bezier(.22,1.3,.4,1) both;}
+@keyframes ccdDrop{0%{transform:translateY(-22px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
+.ccd-findus .ccd-start{width:16px;height:16px;border-radius:50%;background:#fff;border:5px solid var(--route);box-shadow:0 1px 3px rgba(0,0,0,.45);}
+.ccd-findus .ccd-arrow{width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:transform .05s linear;}
+.leaflet-tooltip.ccd-lm{background:rgba(255,255,255,.94);border:1px solid #e7decf;border-radius:7px;
+  box-shadow:0 1px 4px rgba(0,0,0,.12);color:#2b3a39;font:600 11.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:4px 7px;white-space:nowrap;}
+.leaflet-tooltip.ccd-lm:before{display:none;}
+.ccd-findus .ccd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 24px 20px;}
+.ccd-findus .ccd-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink);}
+.ccd-findus .ccd-num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sand);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.ccd-findus .ccd-step.is-end .ccd-num{background:var(--teal);}
+.ccd-findus .ccd-foot{border-top:1px solid var(--border);padding:14px 24px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted);}
+.ccd-findus .ccd-foot strong{color:var(--ink);}
+.ccd-findus .ccd-btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:9px 16px;border-radius:10px;font-weight:600;font-size:13px;white-space:nowrap;}
+.ccd-findus .ccd-btn:hover{background:var(--teal-dk);}
+.leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:13px;color:#2b3a39;}
+@media (max-width:560px){.ccd-findus .ccd-steps{grid-template-columns:1fr;gap:8px;}.ccd-findus .ccd-head h2{font-size:18px;}}
 `;
 
+function bearing(a: LL, b: LL): number {
+  const toR = Math.PI / 180,
+    toD = 180 / Math.PI;
+  const y = Math.sin((b[1] - a[1]) * toR) * Math.cos(b[0] * toR);
+  const x =
+    Math.cos(a[0] * toR) * Math.sin(b[0] * toR) -
+    Math.sin(a[0] * toR) * Math.cos(b[0] * toR) * Math.cos((b[1] - a[1]) * toR);
+  return (Math.atan2(y, x) * toD + 360) % 360;
+}
+
 export function FindUsMap() {
-  return <div dangerouslySetInnerHTML={{ __html: FIND_US_MAP_HTML }} />;
+  const mapEl = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = mapEl.current;
+    if (!el) return;
+
+    let cancelled = false;
+    let cleanup: () => void = () => {};
+
+    (async () => {
+      const L = (await import('leaflet')).default;
+      if (cancelled || !mapEl.current) return;
+
+      const reduce = window.matchMedia?.(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+
+      const map = L.map(el, { scrollWheelZoom: false }).setView(DEST, 17);
+      L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          maxZoom: 20,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+      ).addTo(map);
+
+      const pinIcon = (color: string) => {
+        const s = 42,
+          h = 54;
+        return L.divIcon({
+          className: '',
+          iconSize: [s, h],
+          iconAnchor: [s / 2, h - 1],
+          popupAnchor: [0, -h + 10],
+          html:
+            '<div class="ccd-pin"><svg width="' +
+            s +
+            '" height="' +
+            h +
+            '" viewBox="0 0 24 30"><path d="M12 29C12 29 2 16 2 9A10 10 0 1 1 22 9C22 16 12 29 12 29Z" fill="' +
+            color +
+            '" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="9.3" r="4" fill="#fff"/></svg></div>',
+        });
+      };
+      const dotIcon = () =>
+        L.divIcon({
+          className: '',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8],
+          html: '<div class="ccd-start"></div>',
+        });
+      const arrowIcon = () =>
+        L.divIcon({
+          className: '',
+          iconSize: [26, 26],
+          iconAnchor: [13, 13],
+          html:
+            '<div class="ccd-arrow"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2 L20 21 L12 16 L4 21 Z" fill="' +
+            ROUTE +
+            '" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>',
+        });
+
+      const path = BAKED_ROUTE;
+      let drawer: ReturnType<typeof setInterval> | null = null;
+      let raf: number | null = null;
+
+      // start dot
+      L.marker(START, { icon: dotIcon() })
+        .addTo(map)
+        .bindTooltip('Start here', { direction: 'top', offset: [0, -8] });
+
+      // white casing under the route
+      L.polyline(path, {
+        color: '#ffffff',
+        weight: 10,
+        opacity: 0.95,
+        lineJoin: 'round',
+        lineCap: 'round',
+      }).addTo(map);
+
+      const route = L.polyline([], {
+        color: ROUTE,
+        weight: 6,
+        opacity: 0.95,
+        lineJoin: 'round',
+        lineCap: 'round',
+      }).addTo(map);
+      map.fitBounds(L.latLngBounds(path).extend(DEST).pad(0.18));
+
+      const dropPin = () => {
+        L.marker(DEST, { icon: pinIcon(TEAL) })
+          .addTo(map)
+          .bindPopup(
+            '<strong>Comfort Care Dental</strong><br>Brien Hsu DDS MS<br><span style="color:#6e7c7a">Entrance faces Kenyon Way</span>',
+          )
+          .openPopup();
+      };
+
+      // looping arrow that travels the route at constant speed
+      const flow = () => {
+        const cum = [0];
+        let total = 0;
+        for (let k = 1; k < path.length; k++) {
+          total += L.latLng(path[k - 1]!).distanceTo(L.latLng(path[k]!));
+          cum.push(total);
+        }
+        if (total === 0) return;
+
+        const first = path[0]!;
+        const last = path[path.length - 1]!;
+
+        const mover = L.marker(first, {
+          icon: arrowIcon(),
+          interactive: false,
+          keyboard: false,
+          zIndexOffset: 1000,
+        }).addTo(map);
+        const DURATION = 6500;
+        let t0: number | null = null;
+
+        const pointAt = (d: number): { pos: LL; brg: number } => {
+          if (d <= 0) return { pos: first, brg: bearing(first, path[1] || first) };
+          if (d >= total)
+            return {
+              pos: last,
+              brg: bearing(path[path.length - 2] || first, last),
+            };
+          let lo = 0,
+            hi = cum.length - 1;
+          while (lo < hi - 1) {
+            const mid = (lo + hi) >> 1;
+            if (cum[mid]! <= d) lo = mid;
+            else hi = mid;
+          }
+          const seg = cum[hi]! - cum[lo]!,
+            f = seg ? (d - cum[lo]!) / seg : 0;
+          const a = path[lo]!,
+            b = path[hi]!;
+          return {
+            pos: [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f],
+            brg: bearing(a, b),
+          };
+        };
+
+        const frame = (ts: number) => {
+          if (t0 === null) t0 = ts;
+          const f = ((ts - t0) % DURATION) / DURATION;
+          const p = pointAt(f * total);
+          mover.setLatLng(p.pos);
+          const elm = mover.getElement();
+          if (elm) {
+            const a = elm.querySelector<HTMLElement>('.ccd-arrow');
+            if (a) a.style.transform = 'rotate(' + p.brg + 'deg)';
+          }
+          raf = requestAnimationFrame(frame);
+        };
+        raf = requestAnimationFrame(frame);
+      };
+
+      if (reduce) {
+        // No motion: show the full route + pin immediately.
+        route.setLatLngs(path);
+        dropPin();
+      } else {
+        let i = 0;
+        const stepN = Math.max(1, Math.floor(path.length / 110));
+        drawer = setInterval(() => {
+          i += stepN;
+          route.setLatLngs(path.slice(0, Math.min(i, path.length)));
+          if (i >= path.length) {
+            if (drawer) clearInterval(drawer);
+            drawer = null;
+            dropPin();
+            flow();
+          }
+        }, 16);
+      }
+
+      // landmark labels
+      LANDMARKS.forEach((m) => {
+        L.circleMarker(m.ll, {
+          radius: 5,
+          color: '#fff',
+          weight: 2,
+          fillColor: TEAL,
+          fillOpacity: 1,
+        })
+          .addTo(map)
+          .bindTooltip(m.name, {
+            permanent: true,
+            direction: 'right',
+            offset: [6, 0],
+            className: 'ccd-lm',
+          });
+      });
+
+      // click-to-zoom (don't hijack page scroll)
+      map.on('focus', () => map.scrollWheelZoom.enable());
+      map.on('blur', () => map.scrollWheelZoom.disable());
+
+      cleanup = () => {
+        if (drawer) clearInterval(drawer);
+        if (raf) cancelAnimationFrame(raf);
+        map.remove();
+      };
+    })();
+
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
+  }, []);
+
+  return (
+    <div className="ccd-findus">
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+
+      <div className="ccd-head">
+        <h2>Find Comfort Care Dental</h2>
+        <p>
+          From <strong>Milliken Ave &amp; Kenyon Way</strong>, head east on
+          Kenyon Way into the Vineyards Marketplace lot. We&rsquo;re in the
+          corner by <strong>Woodruff Pl</strong>{' '}&mdash; our entrance faces
+          Kenyon Way.
+        </p>
+      </div>
+
+      <div className="ccd-mapwrap">
+        <div className="ccd-map" ref={mapEl} />
+        <div className="ccd-note">
+          Entrance faces Kenyon Way &mdash; around the corner from the lot
+        </div>
+      </div>
+
+      <div className="ccd-steps">
+        <div className="ccd-step">
+          <span className="ccd-num">1</span>
+          <span>
+            At <strong>Milliken Ave &amp; Kenyon Way</strong>, head{' '}
+            <strong>east</strong> on Kenyon Way.
+          </span>
+        </div>
+        <div className="ccd-step">
+          <span className="ccd-num">2</span>
+          <span>
+            Turn into the <strong>Vineyards Marketplace lot</strong>{' '}(past
+            Johnny O&rsquo;s) and drive to the back-right.
+          </span>
+        </div>
+        <div className="ccd-step is-end">
+          <span className="ccd-num">3</span>
+          <span>
+            We&rsquo;re in the <strong>corner by Woodruff Pl</strong>. The
+            entrance faces <strong>Kenyon Way</strong>.
+          </span>
+        </div>
+      </div>
+
+      <div className="ccd-foot">
+        <span>
+          <strong>Comfort Care Dental &mdash; Brien Hsu DDS MS</strong>
+          <br />
+          11458 Kenyon Way #120, Rancho Cucamonga, CA 91701
+        </span>
+        <a
+          className="ccd-btn"
+          href="https://www.google.com/maps/dir/?api=1&destination=11458+Kenyon+Way+%23120,+Rancho+Cucamonga,+CA+91701"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open in Google Maps &rarr;
+        </a>
+      </div>
+    </div>
+  );
 }
