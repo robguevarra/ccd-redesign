@@ -60,8 +60,8 @@ export function TmjSignature({ service }: TmjSignatureProps) {
         videoSrcMobile="/videos/tmj-joint-scrub-mobile.mp4"
         topEyebrow={<>Signature service · Specialty</>}
         keyframes={TMJ_KEYFRAMES}
-        captionTimecodes={[6.1, 8.3]}
-        snapPoints={[0, 0.55, 0.7, 0.95]}
+        captionTimecodes={[7.5, 12]}
+        snapPoints={[0, 0.35, 0.62, 0.92]}
         snapMode="strict"
         autoFinishAfterLastSnap
         variant="light-centered"
