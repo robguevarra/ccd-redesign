@@ -282,3 +282,11 @@ Driven by a small JS stepper at 10fps that sets the sprite mask-position (`curre
 **Smile gallery:** Removed patient names from `/before-after` (no captions; generic alt/aria) — shown anonymously. Added optional per-image `scale`/`objectPosition` to the slider; Susan's full-face chair "before" uses `scale: 2` so the crop centers on the smile and cuts off the eyes — keeping the patient unrecognizable.
 
 **Location map:** Added an interactive map on `/contact` via `components/map-embed.tsx`. Chose the **keyless Google Maps embed** (`/maps?q=…&output=embed`) over the Embed API (which needs a billable key) or Leaflet/OSM (more code, less familiar to patients) — for a single location it's zero-key, zero-cost, interactive, and trusted. Lazy-loaded with an overlaid "Get directions" link; the footer address is now a directions link too. Placed in a "Find us" section under the existing Address/Call/Hours grid.
+
+---
+
+## 2026-06-17 — "Find Us" page + drawn map (replaces the Google embed)
+
+**Page:** Renamed Contact → "Find Us" (page title + nav label); reordered the page so the map is on top and the address/call/hours details sit below.
+
+**Map — simpler implementation:** The practice wanted a simpler map and asked "can we just have a drawing instead?" Replaced the keyless Google Maps iframe with `components/map-drawing.tsx` — a hand-drawn-style **inline-SVG schematic** (210 freeway, Milliken Ave × Kenyon Way, the Vineyards Marketplace plaza, an accent pin on the practice). Rationale: no iframe / no API key / no third-party calls, instant load, fully on-brand and themeable; the "Get directions" button still deep-links to Google Maps for real turn-by-turn, so nothing functional is lost. Geography verified via web search (Vineyards Marketplace at Kenyon Way & Milliken, south of the 210). `components/map-embed.tsx` (the keyless Google embed) is kept in the repo as an alternative; the drawing can also be swapped for a commissioned illustration (the component is just an SVG/image + a directions link).
