@@ -18,6 +18,7 @@
 
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
+import { MAPS_DIRECTIONS_URL } from '@/lib/maps';
 
 type LL = [number, number];
 
@@ -27,18 +28,6 @@ type LL = [number, number];
 const DEST: LL = [34.1341994, -117.5559279];
 // Milliken Ave & Kenyon Way (34°08'03.4"N 117°33'30.3"W).
 const START: LL = [34.1342778, -117.5584167];
-
-// "Get directions" deep link. We send the business NAME + address rather than
-// bare coordinates: the office shares its building with other listings (e.g.
-// The Hair Inn Salon), and a coordinate-only destination makes Google label
-// the trip with whichever listing is nearest — often the salon. The unique
-// business name resolves Google to the correct Comfort Care Dental listing.
-const DIRECTIONS_QUERY =
-  'Comfort Care Dental - Brien Hsu DDS MS, ' +
-  '11458 Kenyon Way #120, Rancho Cucamonga, CA 91701';
-const DIRECTIONS_URL =
-  'https://www.google.com/maps/dir/?api=1&destination=' +
-  encodeURIComponent(DIRECTIONS_QUERY);
 
 // Pre-baked OSRM driving route (start → office). Hard-coded so we never call a
 // live router; regenerate by querying OSRM if the route ever changes.
@@ -386,7 +375,7 @@ export function FindUsMap() {
         </span>
         <a
           className="ccd-btn"
-          href={DIRECTIONS_URL}
+          href={MAPS_DIRECTIONS_URL}
           target="_blank"
           rel="noopener noreferrer"
         >

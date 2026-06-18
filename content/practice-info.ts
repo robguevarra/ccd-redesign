@@ -15,12 +15,17 @@ import type { PracticeInfo } from './schemas';
 export const practiceInfo: PracticeInfo = {
   brandName: 'Comfort Care Dental',
   legalName: 'Brien Hsu, DDS, MS & Associates',
+  googleListingName: 'Comfort Care Dental - Brien Hsu DDS MS',
   address: {
     street: '11458 Kenyon Way, Suite 120',
     city: 'Rancho Cucamonga',
     state: 'CA',
     zip: '91701',
   },
+  // Verified against the practice's Google Maps share link
+  // (maps.app.goo.gl/UJueZeNFVnqNMyRw8) and Plus Code 4CMV+MJ.
+  geo: { lat: 34.1341994, lng: -117.5559279 },
+  googleMapsUrl: 'https://maps.app.goo.gl/UJueZeNFVnqNMyRw8',
   hours: [
     { day: 'Monday', open: '09:00', close: '18:00' },
     { day: 'Tuesday', open: '09:00', close: '18:00' },

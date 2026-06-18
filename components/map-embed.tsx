@@ -1,5 +1,6 @@
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
+import { MAPS_DIRECTIONS_URL } from '@/lib/maps';
 
 /**
  * Interactive location map for the practice. Uses Google Maps' keyless embed
@@ -8,15 +9,19 @@ import { cn } from '@/lib/cn';
  * `loading="lazy"` so it never blocks page render, and a "Get directions" link
  * is overlaid as both a convenience and a no-JS fallback.
  *
- * Address/brand come from the single practice-info source of truth.
+ * Address/brand come from the single practice-info source of truth; the
+ * directions link routes through lib/maps so it resolves to the clinic listing
+ * (not a neighbor sharing the building).
  */
 
-const { brandName, address } = practiceInfo;
+const { brandName, googleListingName, address } = practiceInfo;
 const fullAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
-const query = `${brandName}, ${fullAddress}`;
+// Lead the embed query with the exact listing name so the iframe centers on
+// the clinic, not a neighboring business at the same address.
+const query = `${googleListingName}, ${fullAddress}`;
 
 const EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
-const DIRECTIONS_HREF = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
+const DIRECTIONS_HREF = MAPS_DIRECTIONS_URL;
 
 export function MapEmbed({ className }: { className?: string }) {
   return (

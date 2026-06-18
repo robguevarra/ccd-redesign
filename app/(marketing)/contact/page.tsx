@@ -5,6 +5,7 @@ import { getWeaveConfig, getOfficeHours } from '@/lib/supabase/queries';
 import { formatDayHours } from '@/lib/office-hours';
 import { WeaveTextConnect } from '@/components/weave/weave-text-connect';
 import { FindUsMap } from '@/components/find-us-map';
+import { MAPS_PLACE_URL } from '@/lib/maps';
 
 export const metadata = {
   title: 'Find Us',
@@ -46,9 +47,7 @@ export default async function ContactPage() {
             {practiceInfo.address.zip}
           </address>
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              `Comfort Care Dental - Brien Hsu DDS MS, ${practiceInfo.address.street}, ${practiceInfo.address.city}, ${practiceInfo.address.state} ${practiceInfo.address.zip}`,
-            )}`}
+            href={MAPS_PLACE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm font-medium text-stone-900 hover:underline underline-offset-4"

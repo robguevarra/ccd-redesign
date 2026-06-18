@@ -179,7 +179,17 @@ export interface PracticeInfo {
   brandName: string;
   /** Legal/professional entity name. */
   legalName: string;
+  /**
+   * Exact business name as it appears on the practice's Google Maps listing.
+   * Used to disambiguate map links from neighboring businesses that share the
+   * building — a bare address geocodes to the wrong unit.
+   */
+  googleListingName: string;
   address: { street: string; city: string; state: string; zip: string };
+  /** Verified geo coordinates of the practice (Google listing / Plus Code). */
+  geo: { lat: number; lng: number };
+  /** Canonical Google Maps place/share URL for the practice listing. */
+  googleMapsUrl?: string;
   hours: BusinessHours[];
   phones: PhoneNumber[];
   email: string | null;

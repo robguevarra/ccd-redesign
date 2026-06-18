@@ -26,6 +26,14 @@ export async function PracticeStructuredData() {
       postalCode: practiceInfo.address.zip,
       addressCountry: 'US',
     },
+    // Exact verified coordinates so Google pins the practice precisely rather
+    // than geocoding the address to a neighboring unit in the same building.
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: practiceInfo.geo.lat,
+      longitude: practiceInfo.geo.lng,
+    },
+    ...(practiceInfo.googleMapsUrl ? { hasMap: practiceInfo.googleMapsUrl } : {}),
     openingHoursSpecification: hours
       .filter((h) => !h.closed && h.open && h.close)
       .map((h) => ({

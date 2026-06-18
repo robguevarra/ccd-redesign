@@ -7,6 +7,7 @@ import { practiceInfo } from '@/content/practice-info';
 import type { BusinessHours } from '@/content/schemas';
 import { DEFAULT_OFFICE_HOURS, formatDayHours } from '@/lib/office-hours';
 import { getLane } from '@/lib/lane';
+import { MAPS_DIRECTIONS_URL } from '@/lib/maps';
 import { Wordmark } from './wordmark';
 
 export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessHours[] }) {
@@ -60,9 +61,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           </h3>
           <address className="mt-4 not-italic text-sm leading-relaxed">
             <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                `${practiceInfo.address.street}, ${practiceInfo.address.city}, ${practiceInfo.address.state} ${practiceInfo.address.zip}`,
-              )}`}
+              href={MAPS_DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[var(--color-accent-200)] transition-colors"
