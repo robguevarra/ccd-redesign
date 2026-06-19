@@ -38,7 +38,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           </div>
           <div className="flex items-center gap-3.5">
             <Image
-              src="/logos/medical.png"
+              src="/logos/medical-2.png"
               alt=""
               width={44}
               height={44}

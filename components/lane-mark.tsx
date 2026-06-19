@@ -22,7 +22,7 @@ import { cn } from '@/lib/cn';
 const SPRITE = '/logos/morph-sprite.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
   dental: '/logos/dental.png',
-  medical: '/logos/medical.png',
+  medical: '/logos/medical-2.png',
 };
 const FRAMES = 29;
 const FPS = 10; // matches the source clip
