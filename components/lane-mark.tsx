@@ -1,25 +1,29 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/cn';
 
 /**
- * Header practice mark, driven by the real animation frames (the transparent
- * sprite from animationSample.mp4 — see <LogoFrames>). The clip cycles between
- * a dental state (frame 0, tooth) and a medical state (frame ~14, star + face),
- * so the Dental⇄Medical toggle plays the actual frames *between those two
- * points* and stops on the destination frame — a real cut of the clip, not a
- * crossfade or a play-then-snap.
+ * Header practice mark. At rest it shows the crisp 512px PNG (sharp on every
+ * display); during a dental⇄medical change it plays the real morph frames (the
+ * transparent sprite from animationSample.mp4) so the tooth/face transition
+ * animates, then settles back to the crisp PNG.
  *
  *   dental → medical : frames 0 → 14   (face + star emerge)
  *   medical → dental : frames 14 → 28  (recede; 28 == the dental frame)
  *
- * Painted via a CSS mask in `currentColor` (transparent, themes on any
- * background). Honors prefers-reduced-motion by snapping to the rest frame.
+ * The morph is painted via a CSS mask in `currentColor`; the rest image is a
+ * real <Image> (browser image scaling = no mask-downscaling jaggies). Honors
+ * prefers-reduced-motion by snapping straight to the destination.
  */
 
 const SPRITE = '/logos/morph-sprite.png';
+const REST_PNG: Record<'dental' | 'medical', string> = {
+  dental: '/logos/dental.png',
+  medical: '/logos/medical.png',
+};
 const FRAMES = 29;
 const FPS = 10; // matches the source clip
 const DENTAL_FRAME = 0;
@@ -29,6 +33,8 @@ interface LaneMarkProps {
   lane: 'dental' | 'medical';
   /** Square pixel size. Default 28. */
   size?: number;
+  /** Render the mark light (white) for dark backgrounds. */
+  invert?: boolean;
   className?: string;
 }
 
@@ -44,28 +50,36 @@ function sequence(toMedical: boolean): number[] {
   return seq;
 }
 
-export function LaneMark({ lane, size = 28, className }: LaneMarkProps) {
+export function LaneMark({
+  lane,
+  size = 28,
+  invert = false,
+  className,
+}: LaneMarkProps) {
   const reduced = useReducedMotion();
   const restFrame = lane === 'medical' ? MEDICAL_FRAME : DENTAL_FRAME;
   const [frame, setFrame] = useState(restFrame);
+  const [animating, setAnimating] = useState(false);
   const prevLane = useRef(lane);
 
   useEffect(() => {
-    if (prevLane.current === lane) return; // initial mount: stay on rest frame
-    const wasLane = prevLane.current;
+    if (prevLane.current === lane) return; // initial mount: stay at rest
     prevLane.current = lane;
     if (reduced) {
       setFrame(restFrame);
+      setAnimating(false);
       return;
     }
-    // only animate on an actual dental⇄medical change
-    if (wasLane === lane) return;
     const seq = sequence(lane === 'medical');
     let i = 0;
+    setAnimating(true);
     const id = setInterval(() => {
       setFrame(seq[i]!);
       i += 1;
-      if (i >= seq.length) clearInterval(id);
+      if (i >= seq.length) {
+        clearInterval(id);
+        setAnimating(false);
+      }
     }, 1000 / FPS);
     return () => clearInterval(id);
   }, [lane, reduced, restFrame]);
@@ -76,21 +90,44 @@ export function LaneMark({ lane, size = 28, className }: LaneMarkProps) {
   return (
     <span
       aria-hidden="true"
-      className={cn('inline-block select-none', className)}
+      className={cn('relative inline-block select-none', className)}
       style={{
         ['--lf-s' as string]: `${size}px`,
         width: 'var(--lf-s)',
         height: 'var(--lf-s)',
-        backgroundColor: 'currentColor',
-        WebkitMaskImage: `url(${SPRITE})`,
-        maskImage: `url(${SPRITE})`,
-        WebkitMaskRepeat: 'no-repeat',
-        maskRepeat: 'no-repeat',
-        WebkitMaskSize: maskSize,
-        maskSize: maskSize,
-        WebkitMaskPosition: maskPos,
-        maskPosition: maskPos,
       }}
-    />
+    >
+      {/* Crisp resting mark (hidden while the morph plays). */}
+      <Image
+        src={REST_PNG[lane]}
+        alt=""
+        width={size}
+        height={size}
+        priority
+        className={cn(invert && 'invert')}
+        style={{
+          width: 'var(--lf-s)',
+          height: 'var(--lf-s)',
+          opacity: animating ? 0 : 1,
+        }}
+      />
+      {/* Morph frames — only mounted during a lane change. */}
+      {animating && (
+        <span
+          className="absolute inset-0"
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: `url(${SPRITE})`,
+            maskImage: `url(${SPRITE})`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskSize: maskSize,
+            maskSize: maskSize,
+            WebkitMaskPosition: maskPos,
+            maskPosition: maskPos,
+          }}
+        />
+      )}
+    </span>
   );
 }

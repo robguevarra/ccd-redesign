@@ -18,43 +18,48 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
 
   return (
     <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
-      <div className="mx-auto max-w-7xl px-5 md:px-8 py-16 md:py-20 grid gap-12 md:grid-cols-4">
-        <div className="md:col-span-1">
-          <div className="space-y-7">
+      {/* Brand — full-width row so each practice's logo sits beside its name */}
+      <div className="mx-auto max-w-7xl px-5 md:px-8 pt-16 md:pt-20">
+        <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 md:flex-row md:items-center md:gap-12">
+          <div className="flex items-center gap-3.5">
+            <Image
+              src="/logos/dental.png"
+              alt=""
+              width={44}
+              height={44}
+              className="invert shrink-0"
+            />
             <div>
-              <Image
-                src="/logos/dental.png"
-                alt=""
-                width={36}
-                height={36}
-                className="invert mb-3"
-              />
               <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-1">
                 Dental Practice
               </p>
               <Wordmark variant="dark" lane="dental" />
             </div>
+          </div>
+          <div className="flex items-center gap-3.5">
+            <Image
+              src="/logos/medical.png"
+              alt=""
+              width={44}
+              height={44}
+              className="invert shrink-0"
+            />
             <div>
-              <Image
-                src="/logos/medical.png"
-                alt=""
-                width={36}
-                height={36}
-                className="invert mb-3"
-              />
               <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-200)] mb-1">
                 Medical Practice
               </p>
               <Wordmark variant="dark" lane="medical" />
             </div>
           </div>
-          <p className="mt-6 text-sm text-stone-400 leading-relaxed">
-            Advanced dental and medical care led by Dr. Brien Hsu, DDS.
+          <p className="text-sm text-stone-400 leading-relaxed md:ml-auto md:max-w-[15rem]">
+            Advanced dental and medical care led by Dr. Brien Hsu.
             <br />
             {practiceInfo.address.city} · Est. 1993.
           </p>
         </div>
+      </div>
 
+      <div className="mx-auto max-w-7xl px-5 md:px-8 py-12 md:py-16 grid gap-12 sm:grid-cols-3">
         <div>
           <h3 className="text-xs uppercase tracking-[0.18em] text-[var(--color-accent-200)]">
             Visit

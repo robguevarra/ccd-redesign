@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Mail, Menu, Phone, X } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { practiceInfo } from '@/content/practice-info';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
@@ -57,6 +57,29 @@ export function SiteHeader({
   const lane = getLane(pathname);
   const main = practiceInfo.phones[0]!;
   const [open, setOpen] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  // Brand identity shown in the header. On a dental/medical page it locks to
+  // that lane. On neutral pages it slowly loops dental⇄medical — the mark
+  // morphs (tooth⇄face) and the wordmark crossfades (Comfort Care Dental ⇄
+  // Brien Hsu, DDS, MS) — so both practices read over time without clutter.
+  const [brandLane, setBrandLane] = useState<'dental' | 'medical'>(
+    lane === 'medical' ? 'medical' : 'dental',
+  );
+  useEffect(() => {
+    if (lane !== 'neutral') {
+      setBrandLane(lane);
+      return;
+    }
+    setBrandLane('dental');
+    if (reducedMotion) return; // no looping for reduced-motion users
+    let cur: 'dental' | 'medical' = 'dental';
+    const id = setInterval(() => {
+      cur = cur === 'dental' ? 'medical' : 'dental';
+      setBrandLane(cur);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [lane, reducedMotion]);
 
   // Desktop "services under Dental/Medical" disclosure panel.
   const [servicesLane, setServicesLane] = useState<DisclosureLane | null>(null);
@@ -150,10 +173,11 @@ export function SiteHeader({
           >
             <LaneMark
               size={40}
-              lane={lane === 'medical' ? 'medical' : 'dental'}
+              lane={brandLane}
+              invert={variant === 'dark'}
             />
             <span className="flex flex-col">
-              <Wordmark variant={variant} lane={lane} />
+              <Wordmark variant={variant} lane={brandLane} />
               <span className="relative mt-0.5 block h-4 md:h-[18px] overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
                 <AnimatePresence mode="wait" initial={false}>
                   {resolvedSublabel && (
