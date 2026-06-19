@@ -48,6 +48,32 @@ const BAKED_ROUTE: LL[] = [
   [34.134302, -117.556149],
 ];
 
+// Quadratic Bézier sampler — used to draw a soft curve from the driving
+// route's end to the office door.
+function quadBezier(a: LL, ctrl: LL, b: LL, steps: number): LL[] {
+  const pts: LL[] = [];
+  for (let i = 1; i <= steps; i++) {
+    const t = i / steps;
+    const u = 1 - t;
+    pts.push([
+      u * u * a[0] + 2 * u * t * ctrl[0] + t * t * b[0],
+      u * u * a[1] + 2 * u * t * ctrl[1] + t * t * b[1],
+    ]);
+  }
+  return pts;
+}
+
+// Continue the red line from the driving route's end to the entrance, so it
+// leads to the door instead of stopping in the lot. The control point pulls
+// the curve gently toward Kenyon Way for a soft bend.
+const DOOR_APPROACH: LL[] = quadBezier(
+  BAKED_ROUTE[BAKED_ROUTE.length - 1]!,
+  [34.13421, -117.55604],
+  DEST,
+  6,
+);
+const ROUTE_PATH: LL[] = [...BAKED_ROUTE, ...DOOR_APPROACH];
+
 // Wayfinding landmark labels — both businesses share the clinic's building.
 // Positions estimated from the practice's annotated satellite image: the music
 // academy at the building's north end (≈ due north of the clinic pin), the
@@ -85,6 +111,10 @@ const CSS = `
 .leaflet-tooltip.ccd-lm{background:rgba(255,255,255,.94);border:1px solid #e7decf;border-radius:7px;
   box-shadow:0 1px 4px rgba(0,0,0,.12);color:#2b3a39;font:600 11.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:4px 7px;white-space:nowrap;}
 .leaflet-tooltip.ccd-lm:before{display:none;}
+.leaflet-tooltip.ccd-clinic{background:#346a66;border:0;border-radius:8px;
+  box-shadow:0 2px 10px rgba(40,82,79,.4);color:#fff;font:800 13.5px/1.05 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  letter-spacing:.4px;padding:8px 12px;white-space:nowrap;text-transform:uppercase;}
+.leaflet-tooltip.ccd-clinic:before{display:none;}
 .ccd-findus .ccd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 24px 20px;}
 .ccd-findus .ccd-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink);}
 .ccd-findus .ccd-num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sand);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
@@ -171,7 +201,7 @@ export function FindUsMap() {
             '" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>',
         });
 
-      const path = BAKED_ROUTE;
+      const path = ROUTE_PATH;
       let drawer: ReturnType<typeof setInterval> | null = null;
       let raf: number | null = null;
 
@@ -196,15 +226,27 @@ export function FindUsMap() {
         lineJoin: 'round',
         lineCap: 'round',
       }).addTo(map);
-      map.fitBounds(L.latLngBounds(path).extend(DEST).pad(0.18));
+      // Asymmetric padding: the destination sits at the east end and its
+      // labels extend to the right, so reserve extra room on that side.
+      map.fitBounds(L.latLngBounds(path).extend(DEST), {
+        paddingTopLeft: [24, 28],
+        paddingBottomRight: [185, 34],
+      });
 
       const dropPin = () => {
         L.marker(DEST, { icon: pinIcon(TEAL) })
           .addTo(map)
+          // Prominent, always-visible clinic label (bolder than the landmark
+          // chips). The popup stays available on click for the full detail.
+          .bindTooltip('Comfort Care Dental', {
+            permanent: true,
+            direction: 'right',
+            offset: [10, 0],
+            className: 'ccd-clinic',
+          })
           .bindPopup(
             '<strong>Comfort Care Dental</strong><br>Brien Hsu DDS MS<br><span style="color:#6e7c7a">Entrance faces Kenyon Way</span>',
-          )
-          .openPopup();
+          );
       };
 
       // looping arrow that travels the route at constant speed
