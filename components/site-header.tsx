@@ -177,7 +177,26 @@ export function SiteHeader({
               invert={variant === 'dark'}
             />
             <span className="flex flex-col">
-              <Wordmark variant={variant} lane={brandLane} />
+              {/* Reserve the widest name's width (invisible sizers stacked in
+                  one grid cell) so the looping name swap never resizes the
+                  brand block — which would otherwise shove the nav around. */}
+              <span className="grid">
+                <span
+                  aria-hidden="true"
+                  className="invisible pointer-events-none [grid-area:1/1]"
+                >
+                  <Wordmark variant={variant} lane="dental" />
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="invisible pointer-events-none [grid-area:1/1]"
+                >
+                  <Wordmark variant={variant} lane="medical" />
+                </span>
+                <span className="[grid-area:1/1]">
+                  <Wordmark variant={variant} lane={brandLane} />
+                </span>
+              </span>
               <span className="relative mt-0.5 block h-4 md:h-[18px] overflow-hidden text-[9px] md:text-[10px] uppercase tracking-[0.24em] opacity-60">
                 <AnimatePresence mode="wait" initial={false}>
                   {resolvedSublabel && (
