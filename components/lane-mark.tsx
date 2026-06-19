@@ -60,6 +60,10 @@ export function LaneMark({
   const restFrame = lane === 'medical' ? MEDICAL_FRAME : DENTAL_FRAME;
   const [frame, setFrame] = useState(restFrame);
   const [animating, setAnimating] = useState(false);
+  // The lane whose crisp rest PNG is shown. It lags `lane` through a morph so
+  // the destination mark never flashes for a frame before the animation plays
+  // — the rest image stays on the origin mark until the morph actually lands.
+  const [settledLane, setSettledLane] = useState(lane);
   const prevLane = useRef(lane);
 
   useEffect(() => {
@@ -67,6 +71,7 @@ export function LaneMark({
     prevLane.current = lane;
     if (reduced) {
       setFrame(restFrame);
+      setSettledLane(lane);
       setAnimating(false);
       return;
     }
@@ -79,6 +84,7 @@ export function LaneMark({
       if (i >= seq.length) {
         clearInterval(id);
         setAnimating(false);
+        setSettledLane(lane); // only now swap the rest PNG to the destination
       }
     }, 1000 / FPS);
     return () => clearInterval(id);
@@ -97,9 +103,10 @@ export function LaneMark({
         height: 'var(--lf-s)',
       }}
     >
-      {/* Crisp resting mark (hidden while the morph plays). */}
+      {/* Crisp resting mark (hidden while the morph plays). Uses settledLane
+          so it never flashes the destination before the morph runs. */}
       <Image
-        src={REST_PNG[lane]}
+        src={REST_PNG[settledLane]}
         alt=""
         width={size}
         height={size}
