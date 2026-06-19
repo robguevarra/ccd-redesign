@@ -112,8 +112,10 @@ const CSS = `
   box-shadow:0 1px 4px rgba(0,0,0,.12);color:#2b3a39;font:600 11.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:4px 7px;white-space:nowrap;}
 .leaflet-tooltip.ccd-lm:before{display:none;}
 .leaflet-tooltip.ccd-clinic{background:#346a66;border:0;border-radius:8px;
-  box-shadow:0 2px 10px rgba(40,82,79,.4);color:#fff;font:800 13.5px/1.05 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  letter-spacing:.4px;padding:8px 12px;white-space:nowrap;text-transform:uppercase;}
+  box-shadow:0 2px 10px rgba(40,82,79,.4);color:#fff;padding:7px 12px;white-space:nowrap;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.25;}
+.leaflet-tooltip.ccd-clinic .ccd-clinic-name,
+.leaflet-tooltip.ccd-clinic .ccd-clinic-sub{display:block;font-weight:700;font-size:12.5px;letter-spacing:.2px;}
 .leaflet-tooltip.ccd-clinic:before{display:none;}
 .ccd-findus .ccd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 24px 20px;}
 .ccd-findus .ccd-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink);}
@@ -238,14 +240,18 @@ export function FindUsMap() {
           .addTo(map)
           // Prominent, always-visible clinic label (bolder than the landmark
           // chips). The popup stays available on click for the full detail.
-          .bindTooltip('Comfort Care Dental', {
-            permanent: true,
-            direction: 'right',
-            offset: [10, 0],
-            className: 'ccd-clinic',
-          })
+          .bindTooltip(
+            '<span class="ccd-clinic-name">Comfort Care Dental</span>' +
+              '<span class="ccd-clinic-sub">Brien Hsu, DDS, MS &amp; Associates</span>',
+            {
+              permanent: true,
+              direction: 'right',
+              offset: [10, 0],
+              className: 'ccd-clinic',
+            },
+          )
           .bindPopup(
-            '<strong>Comfort Care Dental</strong><br>Brien Hsu DDS MS<br><span style="color:#6e7c7a">Entrance faces Kenyon Way</span>',
+            '<strong>Comfort Care Dental</strong><br>Brien Hsu, DDS, MS &amp; Associates<br><span style="color:#6e7c7a">Entrance faces Kenyon Way</span>',
           );
       };
 
