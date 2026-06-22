@@ -21,7 +21,14 @@ import { cn } from '@/lib/cn';
  * snapping straight to the destination.
  */
 
-const SPRITE = '/logos/morph-sprite-2.png';
+// Header-sized morph sprite: the 2500px master downscaled (high-quality, AA
+// baked in) to 128px/frame. The mark only renders at ~40px, so a 400px/frame
+// sheet would be downscaled ~5× at runtime — and browsers use fast/low-quality
+// (bilinear, no mipmaps) sampling while an image animates, which aliases badly
+// past ~2× and made the moving mark look jagged. A display-sized sprite keeps
+// the runtime downscale ≤~1.6× (DPR 2–3) so the morph stays crisp in motion.
+// (The cold-open uses the full-res morph-sprite-2.png — it renders at 120px.)
+const SPRITE = '/logos/morph-sprite-header.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
   dental: '/logos/dental-2.png',
   medical: '/logos/medical-3.png',
