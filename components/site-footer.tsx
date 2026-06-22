@@ -20,7 +20,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
     <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
       {/* Brand — full-width row so each practice's logo sits beside its name */}
       <div className="mx-auto max-w-7xl px-5 md:px-8 pt-16 md:pt-20">
-        <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 md:flex-row md:items-center md:gap-12">
+        <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-6 lg:grid lg:grid-cols-3 lg:gap-12">
           <div className="flex items-center gap-3.5">
             <Image
               src="/logos/dental-2.png"
@@ -51,7 +51,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
               <Wordmark variant="dark" lane="medical" />
             </div>
           </div>
-          <p className="text-sm text-stone-400 leading-relaxed md:ml-auto md:max-w-[15rem]">
+          <p className="text-sm text-stone-400 leading-relaxed md:max-w-[15rem]">
             Advanced dental and medical care led by Dr. Brien Hsu.
             <br />
             {practiceInfo.address.city} · Est. 1993.
@@ -130,6 +130,18 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
                   className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
                 >
                   Facebook
+                </a>
+              </li>
+            )}
+            {practiceInfo.socials.google && (
+              <li>
+                <a
+                  href={practiceInfo.socials.google}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
+                >
+                  Google
                 </a>
               </li>
             )}

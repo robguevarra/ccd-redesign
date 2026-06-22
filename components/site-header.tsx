@@ -18,6 +18,7 @@ import {
 import { MobileLaneAccordions } from './mobile-lane-accordions';
 import { LaneMark } from './lane-mark';
 import { Wordmark } from './wordmark';
+import { AboutMenu } from './about-menu';
 
 const NAV_ITEMS = [
   { href: '/doctors', label: 'Doctors' },
@@ -31,6 +32,7 @@ const NAV_ITEMS = [
 
 const MOBILE_EXTRA_ITEMS = [
   { href: '/patient-forms', label: 'Patient Forms' },
+  { href: '/financing', label: 'Financing' },
 ];
 
 const SURFACE_FOR_LANE: Record<'dental' | 'medical' | 'neutral', string> = {
@@ -230,15 +232,19 @@ export function SiteHeader({
         {/* RIGHT — Nav + CTAs + Hamburger */}
         <div className="md:flex-1 flex items-center justify-end gap-[20px]">
           <nav className="hidden md:flex items-center gap-[18px] text-[12px]">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) =>
+              item.href === '/about' ? (
+                <AboutMenu key={item.href} variant={variant} />
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
           <Link
             href="/request-appointment"

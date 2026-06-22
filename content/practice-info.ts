@@ -41,6 +41,7 @@ export const practiceInfo: PracticeInfo = {
   email: 'advancedcare@dentisthsu.com',
   socials: {
     facebook: 'https://www.facebook.com/pages/category/Dentist---Dental-Office/Comfort-Care-Dental-Brien-Hsu-DDS-203187206359000/',
+    google: 'https://maps.app.goo.gl/UJueZeNFVnqNMyRw8',
     yelp: 'https://www.yelp.com/biz/comfort-care-dental-practice-brien-hsu-dds-rancho-cucamonga',
     twitter: 'https://twitter.com/drbrienhsu',
   },

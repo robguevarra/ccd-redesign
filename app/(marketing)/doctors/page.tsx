@@ -28,7 +28,7 @@ export default async function DoctorsPage() {
           </h1>
           <p className="mt-12 max-w-2xl text-stone-600 text-lg leading-relaxed">
             Long-tenured staff means we remember your case, your kids, and how
-            your bite has changed since 2007. Board-certified specialists in oral
+            your bite has changed since 2002. Board-certified specialists in oral
             surgery, endodontics, and orofacial pain practice alongside Dr. Brien —
             continuity by design.
           </p>

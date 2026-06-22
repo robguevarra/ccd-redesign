@@ -3,7 +3,6 @@ import { ArrowRight, Phone } from 'lucide-react';
 import type { Metadata } from 'next';
 import { practiceInfo } from '@/content/practice-info';
 import {
-  getServicesByLane,
   getServicesBySubcategory,
   SERVICE_SUBCATEGORY_BY_LANE,
   SERVICE_SUBCATEGORY_LABELS,
@@ -41,7 +40,6 @@ const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyf
 export default function MedicalLanePage() {
   const main = practiceInfo.phones[0]!;
   const subcats = SERVICE_SUBCATEGORY_BY_LANE.medical;
-  const all = getServicesByLane('medical');
 
   return (
     <>
@@ -75,26 +73,6 @@ export default function MedicalLanePage() {
               Dr. Brien Hsu, board-certified by both the American Board of Orofacial Pain
               and the American Board of Dental Sleep Medicine.
             </p>
-            <div className="mt-12 grid sm:grid-cols-3 gap-y-6 gap-x-10 max-w-3xl">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-2">
-                  Subcategories
-                </p>
-                <p className="text-stone-900 leading-snug">{subcats.length}</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-2">
-                  Services
-                </p>
-                <p className="text-stone-900 leading-snug">{all.length}</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent-600)] mb-2">
-                  Specialists
-                </p>
-                <p className="text-stone-900 leading-snug">Hsu &middot; Sharobiem</p>
-              </div>
-            </div>
           </div>
         </section>
       </FadeUp>
@@ -114,12 +92,12 @@ export default function MedicalLanePage() {
                   </h2>
                 </div>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-300">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 border-t border-l border-stone-300">
                 {items.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/medical/${s.slug}`}
-                    className="group bg-stone-50 p-6 md:p-8 hover:bg-[var(--color-accent-50)] transition-colors flex flex-col justify-between min-h-[200px]"
+                    className="group border-r border-b border-stone-300 bg-stone-50 p-6 md:p-8 hover:bg-[var(--color-accent-50)] transition-colors flex flex-col justify-between min-h-[200px]"
                   >
                     <div>
                       <h3 className="font-serif text-xl md:text-2xl tracking-tight text-stone-900">

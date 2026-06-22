@@ -99,6 +99,7 @@ const CSS = `
 .ccd-findus *{box-sizing:border-box;}
 .ccd-findus .ccd-head{padding:22px 24px 14px;}
 .ccd-findus .ccd-head h2{margin:0;font-size:20px;letter-spacing:.2px;color:var(--teal-dk);}
+.ccd-findus .ccd-head h2 .ccd-h2-sub{font-weight:400;color:var(--muted);white-space:nowrap;}
 .ccd-findus .ccd-head p{margin:6px 0 0;font-size:14px;color:var(--muted);line-height:1.45;}
 .ccd-findus .ccd-mapwrap{position:relative;margin:0 14px;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
 .ccd-findus .ccd-map{height:clamp(320px,56vw,460px);width:100%;background:#eef1f0;z-index:0;}
@@ -375,7 +376,10 @@ export function FindUsMap() {
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
       <div className="ccd-head">
-        <h2>Find Comfort Care Dental</h2>
+        <h2>
+          Find Comfort Care Dental{' '}
+          <span className="ccd-h2-sub">| Brien Hsu, DDS, MS &amp; Associates</span>
+        </h2>
         <p>
           From <strong>Milliken Ave &amp; Kenyon Way</strong>, head east on
           Kenyon Way into the Vineyards Marketplace lot. We&rsquo;re in the

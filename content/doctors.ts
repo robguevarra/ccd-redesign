@@ -51,15 +51,14 @@ Immediately, Dr. Hsu's popularity as "the gentle dentist" grew exponentially and
   {
     slug: 'dr-amandeep-singh',
     name: 'Dr. Amandeep Singh',
-    title: 'DMD · Periodontal Specialist',
+    title: 'DMD',
     portrait: { src: '/images/doctors/dr-amandeep-singh.webp', alt: 'Dr. Amandeep Singh', objectPosition: '50% center', blurDataURL: portraitBlurMap['dr-amandeep-singh'] },
     short:
       'Focused on dental hygiene and periodontal care since 2006, bringing both expertise and a gentle touch to every patient interaction.',
     bio: `A dental hygiene specialist who earned his Bachelor of Science in Biology at the University of California, Irvine. He then continued his education at the University of Pennsylvania School of Dental Medicine, where he earned his Doctorate of Dental Medicine. His accomplishments include serving as an Assistant Instructor to first-year dental students on periodontal treatment, the Dean's Honor Roll, and Secretary and Treasurer of the Medical Health Science Society. He has been specializing in dental hygiene procedures since 2006, and is known by many of his patients for providing professional, yet gentle periodontal care.`,
     specialties: [
       'Dental hygiene',
-      'Periodontal treatment',
-      'Periodontal surgery',
+      'Periodontal care',
     ],
     joinedYear: 2006,
     isLead: false,

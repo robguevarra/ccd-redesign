@@ -3,7 +3,6 @@ import { ArrowRight, Phone } from 'lucide-react';
 import type { Metadata } from 'next';
 import { practiceInfo } from '@/content/practice-info';
 import {
-  getServicesByLane,
   getServicesBySubcategory,
   SERVICE_SUBCATEGORY_BY_LANE,
   SERVICE_SUBCATEGORY_LABELS,
@@ -34,14 +33,13 @@ const DENTAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfr
     eyebrow: 'What stays',
     title: 'Saved, not replaced.',
     italicize: [2, 3],
-    body: 'Twenty-five years of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2007. The tooth we restore today is the same tooth you keep for the next forty years.',
+    body: 'Twenty-five years of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2002. The tooth we restore today is the same tooth you keep for the next forty years.',
   },
 ];
 
 export default function DentalLanePage() {
   const main = practiceInfo.phones[0]!;
   const subcats = SERVICE_SUBCATEGORY_BY_LANE.dental;
-  const allDental = getServicesByLane('dental');
 
   return (
     <>
@@ -79,26 +77,6 @@ export default function DentalLanePage() {
               reads. Twenty-five years of family dentistry, under one roof with
               our medical practice.
             </p>
-            <div className="mt-12 grid sm:grid-cols-3 gap-y-6 gap-x-10 max-w-3xl">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                  Subcategories
-                </p>
-                <p className="text-stone-900 leading-snug">{subcats.length}</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                  Services
-                </p>
-                <p className="text-stone-900 leading-snug">{allDental.length}</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500 mb-2">
-                  Doctors
-                </p>
-                <p className="text-stone-900 leading-snug">5 · {practiceInfo.address.city}</p>
-              </div>
-            </div>
           </div>
         </section>
       </FadeUp>
@@ -118,12 +96,12 @@ export default function DentalLanePage() {
                   </h2>
                 </div>
               </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-300">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 border-t border-l border-stone-300">
                 {items.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/dental/${s.slug}`}
-                    className="group bg-stone-50 p-6 md:p-8 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[200px]"
+                    className="group border-r border-b border-stone-300 bg-stone-50 p-6 md:p-8 hover:bg-stone-100 transition-colors flex flex-col justify-between min-h-[200px]"
                   >
                     <div>
                       <h3 className="font-serif text-xl md:text-2xl tracking-tight text-stone-900">

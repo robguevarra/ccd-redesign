@@ -151,7 +151,7 @@ export default async function HomePage() {
             specialists practice alongside him today, in oral surgery,
             endodontics, periodontal care, and orofacial pain. Long tenure means
             we remember your case, your kids, and how your bite has changed
-            since 2007.
+            since 2002.
           </p>
 
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">

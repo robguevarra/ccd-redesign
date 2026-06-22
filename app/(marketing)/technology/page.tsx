@@ -16,8 +16,8 @@ const TECHNOLOGIES = [
     body: 'A traditional dental X-ray captures one slice. A CBCT captures the whole jaw, in 3D, in seconds — letting us plan implants without surprises, see cracked teeth that 2D X-rays miss, evaluate the TM joint accurately, and avoid nerves during extractions. We invested in 2014 when most general practices still considered this a specialist tool.',
   },
   {
-    name: '3Shape Trios 5 intra-oral scanner',
-    since: 2024,
+    name: '3Shape Trios intra-oral scanner',
+    since: 2017,
     summary:
       'Digital impressions instead of traditional impression trays.',
     body: 'A handheld wand replaces the goop-and-tray impression most patients dread. The scan is more accurate, the lab turnaround is faster, and we can evaluate the result on a screen with you immediately. Upgraded to the Trios 5 in 2024 with wireless connectivity across every operatory.',

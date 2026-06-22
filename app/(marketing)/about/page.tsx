@@ -11,6 +11,7 @@ const TIMELINE = [
   { year: '1993', label: 'The practice is founded', body: 'An established dental office opens in Alta Loma, serving the Rancho Cucamonga area.' },
   { year: '2002', label: 'Under Dr. Hsu', body: 'Dr. Brien Hsu takes over the practice and makes it his own.' },
   { year: '2014', label: 'CBCT introduced', body: 'Adopted 3D Cone Beam CT — early among general dental practices.' },
+  { year: '2017', label: '3Shape Trios scanner', body: 'Digital impressions replace the goop-and-tray method.' },
   { year: '2024', label: 'Trios 5 upgrade', body: 'Wireless intra-oral scanning across every operatory.' },
 ];
 
@@ -45,7 +46,7 @@ export default function AboutPage() {
             Four doctors work alongside Dr. Brien Hsu today — board-certified
             specialists in oral surgery, endodontics, and orofacial pain. We
             invest in technology when it actually improves a clinical outcome
-            (3D CBCT in 2014, the Trios scanner in 2024) and we leave the rest
+            (3D CBCT in 2014, the Trios scanner in 2017) and we leave the rest
             of the dental industry's gimmicks alone.
           </p>
           <p>

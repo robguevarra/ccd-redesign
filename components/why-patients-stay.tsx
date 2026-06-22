@@ -41,7 +41,7 @@ const PANELS: Panel[] = [
     eyebrow: 'Who we serve',
     title: 'Same office, same family.',
     italicize: [2, 3],
-    body: 'Long tenure means we remember your case, your kids, and how your bite has changed since 2007. We treat the children of the people we first treated thirty years ago — alongside a board-certified oral surgeon, a board-certified endodontist, and two family dentists who know your name. Continuity by design, not by accident.',
+    body: 'Long tenure means we remember your case, your kids, and how your bite has changed since 2002. We treat the children of the people we first treated thirty years ago — alongside a board-certified oral surgeon, a board-certified endodontist, and two family dentists who know your name. Continuity by design, not by accident.',
     cta: 'Meet the team',
     href: '/doctors',
   },
