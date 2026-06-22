@@ -7,27 +7,32 @@ import { cn } from '@/lib/cn';
 
 /**
  * Header practice mark. At rest it shows the crisp 512px PNG (sharp on every
- * display); during a dental⇄medical change it plays the real morph frames (the
- * transparent sprite from animationSample.mp4) so the tooth/face transition
- * animates, then settles back to the crisp PNG.
+ * display); during a dental⇄medical change it plays the real morph frames (a
+ * high-res sprite sheet rendered from the 2500px ProRes master, Comp 1.mov) so
+ * the tooth/face transition animates, then settles back to the crisp PNG.
  *
- *   dental → medical : frames 0 → 14   (face + star emerge)
- *   medical → dental : frames 14 → 28  (recede; 28 == the dental frame)
+ * The sprite is one-directional (frame 0 = dental, frame 29 = medical), so:
+ *   dental → medical : frames 0 → 29   (face + star emerge)
+ *   medical → dental : frames 29 → 0   (the same clip, played in reverse)
  *
  * The morph is painted via a CSS mask in `currentColor`; the rest image is a
  * real <Image> (browser image scaling = no mask-downscaling jaggies). Honors
  * prefers-reduced-motion by snapping straight to the destination.
  */
 
-const SPRITE = '/logos/morph-sprite.png';
+const SPRITE = '/logos/morph-sprite-2.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
   dental: '/logos/dental.png',
   medical: '/logos/medical-2.png',
 };
-const FRAMES = 29;
-const FPS = 10; // matches the source clip
+const FRAMES = 30;
+// The sprite is a COLS×ROWS grid (kept small in both dimensions so it stays
+// under mobile GPU texture limits — a 12000px-wide single row would not).
+const COLS = 6;
+const ROWS = 5;
+const FPS = 20; // 30 frames over ~1.5s
 const DENTAL_FRAME = 0;
-const MEDICAL_FRAME = 14;
+const MEDICAL_FRAME = FRAMES - 1;
 
 interface LaneMarkProps {
   lane: 'dental' | 'medical';
@@ -41,11 +46,9 @@ interface LaneMarkProps {
 function sequence(toMedical: boolean): number[] {
   const seq: number[] = [];
   if (toMedical) {
-    for (let f = DENTAL_FRAME; f <= MEDICAL_FRAME; f++) seq.push(f);
+    for (let f = 0; f < FRAMES; f++) seq.push(f); // 0 → 29
   } else {
-    // recede through the back half, landing on the dental frame
-    for (let f = MEDICAL_FRAME; f < FRAMES; f++) seq.push(f);
-    seq.push(DENTAL_FRAME);
+    for (let f = FRAMES - 1; f >= 0; f--) seq.push(f); // 29 → 0 (reverse)
   }
   return seq;
 }
@@ -90,8 +93,8 @@ export function LaneMark({
     return () => clearInterval(id);
   }, [lane, reduced, restFrame]);
 
-  const maskSize = `calc(var(--lf-s) * ${FRAMES}) var(--lf-s)`;
-  const maskPos = `calc(var(--lf-s) * ${-frame}) 0`;
+  const maskSize = `calc(var(--lf-s) * ${COLS}) calc(var(--lf-s) * ${ROWS})`;
+  const maskPos = `calc(var(--lf-s) * ${-(frame % COLS)}) calc(var(--lf-s) * ${-Math.floor(frame / COLS)})`;
 
   return (
     <span
