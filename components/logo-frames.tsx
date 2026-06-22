@@ -1,69 +1,88 @@
 'use client';
 
-import type { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/cn';
 
 /**
- * Plays the practice's real logo animation — the 29 frames of the supplied
- * `animationSample.mp4` (moon "coming alive": a face profile + star emerge and
- * recede with the tooth present throughout, looping back to the start).
+ * Plays the practice mark morph for the homepage cold-open ("We do both").
  *
- * The frames are baked into a transparent horizontal sprite sheet
- * (`public/logos/morph-sprite.png`, 29×160px) and revealed with a CSS mask, so
- * the mark is transparent AND painted in `currentColor` (themes on any
- * background). A `steps(29)` animation walks the mask across the strip.
+ * Uses the SAME high-res asset and technique as the header mark (LaneMark): the
+ * 2500px ProRes master baked into a 6×5 grid sprite (`morph-sprite-2.png`,
+ * 400px per frame), drawn as a raster `background-image` — NOT a CSS mask.
  *
- * `loop` runs it forever (homepage hero). Otherwise it plays once — change
- * `playKey` to replay (the element remounts). Honors `prefers-reduced-motion`
- * by holding the first frame.
+ * Why this matters: the old version masked a 240px-per-frame strip, which a DPR-3
+ * phone has to UPSCALE (120px × 3 = 360 device px > 240 source) → pixelated while
+ * animating. A 400px source downscales on every display → crisp. Masks are also
+ * softened by mobile browsers; rasters are not.
+ *
+ * `loop` ping-pongs dental → medical → dental forever (frame 0 = dental, 29 =
+ * medical). Otherwise it plays once. `prefers-reduced-motion` holds frame 0.
  */
 
-const SPRITE = '/logos/morph-sprite.png';
-const FRAMES = 29;
-const DURATION_S = 2.9; // 29 frames @ 10fps, matching the source mp4
+const SPRITE = '/logos/morph-sprite-2.png';
+const FRAMES = 30;
+const COLS = 6;
+const ROWS = 5;
+const DEFAULT_FPS = 16;
+
+// Ping-pong 0→29→1 so the loop never pauses on the end frames before reversing.
+function loopSequence(): number[] {
+  const seq: number[] = [];
+  for (let f = 0; f < FRAMES; f++) seq.push(f);
+  for (let f = FRAMES - 2; f > 0; f--) seq.push(f);
+  return seq;
+}
+const ONESHOT = Array.from({ length: FRAMES }, (_, i) => i);
 
 interface LogoFramesProps {
   /** Square pixel size. Default 28. */
   size?: number;
-  /** Loop continuously instead of playing once. */
+  /** Loop continuously (ping-pong) instead of playing once. */
   loop?: boolean;
+  /** Animation speed. Default 16fps. */
+  fps?: number;
   /** Change this value to replay a one-shot (forces a remount). */
   playKey?: string | number;
   /** Accessible label. Omit to render decoratively (aria-hidden). */
   label?: string;
+  /** Render the mark light (white) for dark backgrounds. */
+  invert?: boolean;
   className?: string;
 }
 
 export function LogoFrames({
   size = 28,
   loop = false,
+  fps = DEFAULT_FPS,
   playKey,
   label,
+  invert = false,
   className,
 }: LogoFramesProps) {
   const reduced = useReducedMotion();
-  const maskValue = `url(${SPRITE})`;
-  const maskSize = `calc(var(--lf-s) * ${FRAMES}) var(--lf-s)`;
+  const [frame, setFrame] = useState(0);
 
-  const style: CSSProperties = {
-    // custom prop consumed by the @keyframes (see globals.css)
-    ['--lf-s' as string]: `${size}px`,
-    width: 'var(--lf-s)',
-    height: 'var(--lf-s)',
-    backgroundColor: 'currentColor',
-    WebkitMaskImage: maskValue,
-    maskImage: maskValue,
-    WebkitMaskRepeat: 'no-repeat',
-    maskRepeat: 'no-repeat',
-    WebkitMaskSize: maskSize,
-    maskSize: maskSize,
-    WebkitMaskPosition: '0 0',
-    maskPosition: '0 0',
-    animation: reduced
-      ? undefined
-      : `logo-frames ${DURATION_S}s steps(${FRAMES}) ${loop ? 'infinite' : '1 both'}`,
-  };
+  useEffect(() => {
+    if (reduced) {
+      setFrame(0);
+      return;
+    }
+    const seq = loop ? loopSequence() : ONESHOT;
+    let i = 0;
+    const id = setInterval(() => {
+      setFrame(seq[i]!);
+      i += 1;
+      if (i >= seq.length) {
+        if (loop) i = 0;
+        else clearInterval(id);
+      }
+    }, 1000 / fps);
+    return () => clearInterval(id);
+  }, [loop, fps, reduced, playKey]);
+
+  const spriteSize = `calc(var(--lf-s) * ${COLS}) calc(var(--lf-s) * ${ROWS})`;
+  const spritePos = `calc(var(--lf-s) * ${-(frame % COLS)}) calc(var(--lf-s) * ${-Math.floor(frame / COLS)})`;
 
   return (
     <span
@@ -71,8 +90,16 @@ export function LogoFrames({
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={cn('inline-block select-none', className)}
-      style={style}
+      className={cn('inline-block select-none', invert && 'invert', className)}
+      style={{
+        ['--lf-s' as string]: `${size}px`,
+        width: 'var(--lf-s)',
+        height: 'var(--lf-s)',
+        backgroundImage: `url(${SPRITE})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: spriteSize,
+        backgroundPosition: spritePos,
+      }}
     />
   );
 }

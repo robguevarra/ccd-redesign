@@ -489,7 +489,6 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
                 <LogoFrames
                   loop
                   size={120}
-                  className="h-20 w-20 md:h-28 md:w-28"
                   label="Comfort Care — dental and medical"
                 />
               </motion.div>
