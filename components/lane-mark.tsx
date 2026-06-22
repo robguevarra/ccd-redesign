@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/cn';
 
@@ -15,9 +14,11 @@ import { cn } from '@/lib/cn';
  *   dental → medical : frames 0 → 29   (face + star emerge)
  *   medical → dental : frames 29 → 0   (the same clip, played in reverse)
  *
- * The morph is painted via a CSS mask in `currentColor`; the rest image is a
- * real <Image> (browser image scaling = no mask-downscaling jaggies). Honors
- * prefers-reduced-motion by snapping straight to the destination.
+ * Both the morph frames and the rest image are rendered as rasters (sprite
+ * background-image + <Image>), not CSS masks — so the browser's image scaling
+ * keeps them sharp instead of the soft mask-downscaling. They're black line art
+ * inverted to white on dark backgrounds. Honors prefers-reduced-motion by
+ * snapping straight to the destination.
  */
 
 const SPRITE = '/logos/morph-sprite-2.png';
@@ -93,8 +94,8 @@ export function LaneMark({
     return () => clearInterval(id);
   }, [lane, reduced, restFrame]);
 
-  const maskSize = `calc(var(--lf-s) * ${COLS}) calc(var(--lf-s) * ${ROWS})`;
-  const maskPos = `calc(var(--lf-s) * ${-(frame % COLS)}) calc(var(--lf-s) * ${-Math.floor(frame / COLS)})`;
+  const spriteSize = `calc(var(--lf-s) * ${COLS}) calc(var(--lf-s) * ${ROWS})`;
+  const spritePos = `calc(var(--lf-s) * ${-(frame % COLS)}) calc(var(--lf-s) * ${-Math.floor(frame / COLS)})`;
 
   return (
     <span
@@ -106,35 +107,31 @@ export function LaneMark({
         height: 'var(--lf-s)',
       }}
     >
-      {/* Crisp resting mark (hidden while the morph plays). Uses settledLane
-          so it never flashes the destination before the morph runs. */}
-      <Image
-        src={REST_PNG[settledLane]}
-        alt=""
-        width={size}
-        height={size}
-        priority
-        className={cn(invert && 'invert')}
+      {/* Resting mark — raw raster scaled by the browser (crisp), matching the
+          morph's sharpness instead of next/image's softened tiny variant.
+          Hidden while the morph plays; settledLane keeps it on the origin mark
+          until the morph lands so the destination never flashes early. */}
+      <span
+        className={cn('absolute inset-0', invert && 'invert')}
         style={{
-          width: 'var(--lf-s)',
-          height: 'var(--lf-s)',
+          backgroundImage: `url(${REST_PNG[settledLane]})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'var(--lf-s) var(--lf-s)',
+          backgroundPosition: 'center',
           opacity: animating ? 0 : 1,
         }}
       />
-      {/* Morph frames — only mounted during a lane change. */}
+      {/* Morph frames — only mounted during a lane change. Rendered as a raster
+          sprite (not a CSS mask) so the browser's image scaling keeps it sharp;
+          inverted on dark backgrounds to match the rest mark. */}
       {animating && (
         <span
-          className="absolute inset-0"
+          className={cn('absolute inset-0', invert && 'invert')}
           style={{
-            backgroundColor: 'currentColor',
-            WebkitMaskImage: `url(${SPRITE})`,
-            maskImage: `url(${SPRITE})`,
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-            WebkitMaskSize: maskSize,
-            maskSize: maskSize,
-            WebkitMaskPosition: maskPos,
-            maskPosition: maskPos,
+            backgroundImage: `url(${SPRITE})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: spriteSize,
+            backgroundPosition: spritePos,
           }}
         />
       )}
