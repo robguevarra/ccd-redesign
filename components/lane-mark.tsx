@@ -22,8 +22,8 @@ import { cn } from '@/lib/cn';
 
 const SPRITE = '/logos/morph-sprite-2.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
-  dental: '/logos/dental.png',
-  medical: '/logos/medical-2.png',
+  dental: '/logos/dental-2.png',
+  medical: '/logos/medical-3.png',
 };
 const FRAMES = 30;
 // The sprite is a COLS×ROWS grid (kept small in both dimensions so it stays

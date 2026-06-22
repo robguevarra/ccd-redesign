@@ -23,7 +23,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
         <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 md:flex-row md:items-center md:gap-12">
           <div className="flex items-center gap-3.5">
             <Image
-              src="/logos/dental.png"
+              src="/logos/dental-2.png"
               alt=""
               width={44}
               height={44}
@@ -38,7 +38,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           </div>
           <div className="flex items-center gap-3.5">
             <Image
-              src="/logos/medical-2.png"
+              src="/logos/medical-3.png"
               alt=""
               width={44}
               height={44}
