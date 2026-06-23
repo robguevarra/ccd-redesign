@@ -77,6 +77,18 @@ export function LaneMark({
   const [settledLane, setSettledLane] = useState(lane);
   const prevLane = useRef(lane);
 
+  // Preload + decode the morph sprite and BOTH rest PNGs on mount. On a
+  // lane-locked page only the current lane's rest PNG is otherwise fetched, so
+  // the first toggle would flash a blank frame while the destination asset
+  // loads/decodes at the morph→rest handoff. Warming them up avoids that.
+  useEffect(() => {
+    for (const src of [SPRITE, REST_PNG.dental, REST_PNG.medical]) {
+      const img = new Image();
+      img.src = src;
+      img.decode?.().catch(() => {});
+    }
+  }, []);
+
   useEffect(() => {
     if (prevLane.current === lane) return; // initial mount: stay at rest
     prevLane.current = lane;
@@ -114,20 +126,25 @@ export function LaneMark({
         height: 'var(--lf-s)',
       }}
     >
-      {/* Resting mark — raw raster scaled by the browser (crisp), matching the
-          morph's sharpness instead of next/image's softened tiny variant.
-          Hidden while the morph plays; settledLane keeps it on the origin mark
+      {/* Resting marks — raw rasters scaled by the browser (crisp), matching the
+          morph's sharpness instead of next/image's softened tiny variant. BOTH
+          lanes are rendered as persistent layers (kept decoded), so the
+          morph→rest handoff is a pure opacity swap with no blank decode gap.
+          Hidden while the morph plays; settledLane keeps the origin mark shown
           until the morph lands so the destination never flashes early. */}
-      <span
-        className={cn('absolute inset-0', invert && 'invert')}
-        style={{
-          backgroundImage: `url(${REST_PNG[settledLane]})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'var(--lf-s) var(--lf-s)',
-          backgroundPosition: 'center',
-          opacity: animating ? 0 : 1,
-        }}
-      />
+      {(['dental', 'medical'] as const).map((l) => (
+        <span
+          key={l}
+          className={cn('absolute inset-0', invert && 'invert')}
+          style={{
+            backgroundImage: `url(${REST_PNG[l]})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'var(--lf-s) var(--lf-s)',
+            backgroundPosition: 'center',
+            opacity: !animating && settledLane === l ? 1 : 0,
+          }}
+        />
+      ))}
       {/* Morph frames — only mounted during a lane change. Rendered as a raster
           sprite (not a CSS mask) so the browser's image scaling keeps it sharp;
           inverted on dark backgrounds to match the rest mark. */}
