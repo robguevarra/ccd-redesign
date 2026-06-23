@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn';
  * Plays the practice mark morph for the homepage cold-open ("We do both").
  *
  * Uses the SAME high-res asset and technique as the header mark (LaneMark): the
- * 2500px ProRes master baked into a 6×5 grid sprite (`morph-sprite-2.png`,
+ * 2500px ProRes master baked into a 6×5 grid sprite (`morph-sprite-3.png`,
  * 400px per frame), drawn as a raster `background-image` — NOT a CSS mask.
  *
  * Why this matters: the old version masked a 240px-per-frame strip, which a DPR-3
@@ -20,7 +20,7 @@ import { cn } from '@/lib/cn';
  * medical). Otherwise it plays once. `prefers-reduced-motion` holds frame 0.
  */
 
-const SPRITE = '/logos/morph-sprite-2.png';
+const SPRITE = '/logos/morph-sprite-3.png';
 const FRAMES = 30;
 const COLS = 6;
 const ROWS = 5;

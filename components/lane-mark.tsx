@@ -27,11 +27,11 @@ import { cn } from '@/lib/cn';
 // (bilinear, no mipmaps) sampling while an image animates, which aliases badly
 // past ~2× and made the moving mark look jagged. A display-sized sprite keeps
 // the runtime downscale ≤~1.6× (DPR 2–3) so the morph stays crisp in motion.
-// (The cold-open uses the full-res morph-sprite-2.png — it renders at 120px.)
-const SPRITE = '/logos/morph-sprite-header.png';
+// (The cold-open uses the full-res morph-sprite-3.png — it renders at 120px.)
+const SPRITE = '/logos/morph-sprite-header-2.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
-  dental: '/logos/dental-2.png',
-  medical: '/logos/medical-3.png',
+  dental: '/logos/dental-3.png',
+  medical: '/logos/medical-4.png',
 };
 const FRAMES = 30;
 // The sprite is a COLS×ROWS grid (kept small in both dimensions so it stays
