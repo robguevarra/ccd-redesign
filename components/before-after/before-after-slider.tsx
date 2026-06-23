@@ -9,8 +9,8 @@ import type { BeforeAfterCase } from '@/content/before-after';
  * layer; the "before" image is overlaid and clipped to the left of the handle,
  * so dragging the handle wipes between the two.
  *
- * Both images object-cover a shared 4:3 box so mismatched source aspect ratios
- * (e.g. a portrait "before" with a landscape "after") still align under the wipe.
+ * Both images object-cover a shared 16:9 box (the source photos are uniform
+ * 16:9), so the wipe stays aligned between the before and after layers.
  *
  * Accessibility: the handle is a `role="slider"` with full keyboard support
  * (arrows, Home/End). Pointer dragging works with mouse and touch. No motion is
@@ -70,7 +70,7 @@ export function BeforeAfterSlider({ data }: { data: BeforeAfterCase }) {
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-stone-200 select-none touch-none cursor-ew-resize"
+        className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-200 select-none touch-none cursor-ew-resize"
       >
         {/* AFTER — base layer */}
         <Image

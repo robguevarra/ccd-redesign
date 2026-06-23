@@ -1,15 +1,11 @@
 /**
  * Before & After smile cases. Real patient photos supplied by the practice
- * (June 2026, "Website Updates" drop). Optimized to WebP and placed under
- * `public/images/before-after/` by `scripts/optimize-images.mjs` workflow.
+ * (Smile Gallery refresh). Anonymous intraoral close-ups, all uniform 16:9
+ * and consistently framed, so the slider shows them full-frame with no
+ * per-image zoom/position adjustments.
  *
- * Shown anonymously (no patient names) and rendered with the interactive
- * <BeforeAfterSlider>.
- *
- * Note: most pairs are 4:3 landscape. The Susan "before" is portrait (3:4)
- * while her "after" is landscape, so the slider object-covers both into a
- * shared 4:3 box (center-cropped) to keep the wipe aligned; her "before" gets
- * an extra `scale` so the smile reads larger in the cropped frame.
+ * WebP optimized + LQIP blur generated from the supplied PNGs. Rendered with
+ * the interactive <BeforeAfterSlider>.
  */
 
 export interface BeforeAfterImage {
@@ -31,108 +27,139 @@ export interface BeforeAfterCase {
 
 export const beforeAfterCases: BeforeAfterCase[] = [
   {
-    slug: 'barbie-guinn',
+    slug: 'case-1',
     before: {
-      src: '/images/before-after/barbie-guinn-before.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-1-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQBACdASoUAA8APu1iqU2ppaOiMAgBMB2JQBOmUABeN8XSeU+IZMRizE/QAPRDf/i3LpCZ+WODDaKJy1V3wE4+SZTCUcBOW53h3a3HiG4W4yWHj41pYufcw13QdklxGsfapOvAAAA=',
+        'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoQAAkABABoJQBOgBOkFgAA/kmXmdG3wKqemMBbfBiGK52PbBMThDC4MPpZTc6IAAA=',
     },
     after: {
-      src: '/images/before-after/barbie-guinn-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-1-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAA8APu1iqU2ppaOiMAgBMB2JYwCdMoABwZD8WIExAXZoAP4b78ZyFKECZLATHX9obvO/faq54XkMY7RmmnPc5UDywQkEPRP0bKEAAAA=',
+        'data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABQAQCdASoQAAkABABoJQBOgCgAAP657f1usJXUzZFx2OOxpPibsDAA',
     },
   },
   {
-    slug: 'connie-wong',
+    slug: 'case-2',
     before: {
-      src: '/images/before-after/connie-wong-before.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-2-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQBACdASoUAA8APu1iqU2ppaOiMAgBMB2JYwCdMoADf2eBl/a3OdfZ7fQOAP7ckeaVtUGTcglNfnc5uRQGPqwNKsdAeukUlW5Q778cRaDvUsOs/VzC2AJw8MybIoQMs8bx4VH40QAAAA==',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACQAQCdASoQAAkABABoJQBOgCHF39AA/j60eqYAAtmx+QpEi6ErSaRIAAA=',
     },
     after: {
-      src: '/images/before-after/connie-wong-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-2-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoUAA8APu1iqU2ppaQiMAgBMB2JQBOmUABYjH2vdOvICWtAAP59OJpLx7lJvH3ay4sVEzfTYMHCAwDYNesiZVrPFXdwef1B6sPlg/v9Ak7P8ZzUmlsPEP8jjAA=',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACQAQCdASoQAAkABABoJQBOgB5qmDAA/sAwQ4OXiDq7f63kuHdX7kgAAAA=',
     },
   },
   {
-    slug: 'dylan-escobar',
+    slug: 'case-3',
     before: {
-      src: '/images/before-after/dylan-escobar-before.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-3-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAwBACdASoUAA8APu1iqU2ppaQiMAgBMB2JQBdgBFTApyCtJ2VILbFAAuAA881pgD+f1dS5Gse0F/LmdDEpyLhc+JwHno/f323fttlEwRbqY/fGulnsggF2cf8Lxb3l88Ad68Kob4d13WCPcXAGsCBJAAA=',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABQAQCdASoQAAkABABoJQBOgCgAAP7nGMIdf+o3S4l/2FuGS79rXimMAAA=',
     },
     after: {
-      src: '/images/before-after/dylan-escobar-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-3-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADQAwCdASoUAA8APu1iqU2ppaQiMAgBMB2JYgC7IExB9rO2o/Qa2AAA/U/Zclz1UdsHs+UmXl/pXyEmAB49RHD5K9skplA9arStL1QoqOLIOkOIZ6+K6vV4UQ0UEzyWXuxScrnIckQgIAwAAAA=',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoQAAkABABoJQBOgBi3CGIAAP6Akjey25lT8xYsTYPp+yHJ8AA=',
     },
   },
   {
-    slug: 'kelly-haus',
+    slug: 'case-4',
     before: {
-      src: '/images/before-after/kelly-haus-before.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-4-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoUAA8APu1iqk2ppaQiMAgBMB2JZACdAAM4PDVHlnwAAAD6LnAAR/dnGjBFPd2xPeSumeugwCylUW7PUXfyfrIIMtVCPdwxUx5kngrzOJYnVxcLa4AT9G9NbDfMHvquwAA=',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACQAQCdASoQAAkABABoJQBOgBjEuWAA/ql/rxx9xFSkjEMuxK2dkOEgAAA=',
     },
     after: {
-      src: '/images/before-after/kelly-haus-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-4-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoUAA8APu1kqU2ppaQiMAgBMB2JYgCsLwABmc6QG1SdrMAA/W9pwVjxjiW3PCDqfPJp4jSpn3JaIc7lp6qomvOGt5R57WG5kBuHPduhtXEFZSnw4AA=',
+        'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkABABoJZACdADFz6wwAAD7km2FSTsImIdquPfIaL1TKvWicoAA',
     },
   },
   {
-    slug: 'michelle-rubio',
+    slug: 'case-5',
     before: {
-      src: '/images/before-after/michelle-rubio-before.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-5-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA8APu1iqU2ppaQiMAgBMB2JQBOgA2xbGKm5vkyRIAD+Gc/WVqUY8FVxQ5VPNvmR24rDU2eCd6AZ5WkLZ517t6TZ3J3J+l6rafEuVvOKcAevHpUvBhHW7KfnAH2oEg8UULNUAAA=',
+        'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAkABABoJZACdADwB3akAP06ISo64rVxDddIVR0alAi8NwZbdqUAAAA=',
     },
     after: {
-      src: '/images/before-after/michelle-rubio-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-5-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoUAA8APu1iqU2ppaOiMAgBMB2JQBYdgeLCEUIzAkxxEADJ25771QjeYZQBhzVnNQVh3yqp0OZ9ogLXZ1pEIPBltsSqBRdTVTbCMonc8ic5uqNnNWGtWbqI7Y+0DVAA',
+        'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADwAQCdASoQAAkABABoJZACdADwG18ZzgAA/j+VBSuL8ypL70O1sXVgLtGVetE5QAA=',
     },
   },
   {
-    slug: 'susan-house',
+    slug: 'case-6',
     before: {
-      src: '/images/before-after/susan-house-before.webp',
-      width: 1400,
-      height: 1867,
-      // Full-face chair photo — zoom 2x so the crop centers on the smile and
-      // cuts off the eyes, keeping the patient unrecognizable.
-      scale: 2,
+      src: '/images/before-after/case-6-before.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACwBQCdASoUABsAPu1irFAppSQisBgIATAdiWoAsR9kOoAGhCQkg6uS6oXCPLm7rerj0855UIgA/gr12mWe/YX5zQ8NPQN9xUnpg8ZtWWXigaPyivPzRabIWEvzEi+fYl/poAhQdhmp0ASTa8TZVPPR4r1G8OSBh01Kzu+7GsFncryES8EJLPjglRzPcxEr7LfR2VhgoInQjjEnbN+sRMsEIb6x+G6OLQ/k/Fbq4e3D5cmNXGnyErQwkBx3vUFnnAoxsTHReVwwFMm1pY+6HfFXYdJE4v6dITs1K+pk7t4NUrSEkAAAAA==',
+        'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACQAQCdASoQAAkABABoJZgCdABV8gAA/rrnjTCRFUmE2wdr/xHEYooFK0V00wAA',
     },
     after: {
-      src: '/images/before-after/susan-house-after.webp',
-      width: 1400,
-      height: 1050,
+      src: '/images/before-after/case-6-after.webp',
+      width: 1600,
+      height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBACdASoUAA8APu1iqU2ppaOiMAgBMB2JYgCxGwABWVwIkiXhI3lfwAD+RgrBG6r3098o/uRYS+FpXuo8LJJmwDgN7XIlNUivGAaIQkl8T9kXiSgaIrduN2PhtJdJ48WXlD9oAAA=',
+        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJYgCdACpSHW4AP01INYecr7RpuPxGkYaNYMttggAAA==',
+    },
+  },
+  {
+    slug: 'case-7',
+    before: {
+      src: '/images/before-after/case-7-before.webp',
+      width: 1600,
+      height: 900,
+      blurDataURL:
+        'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoQAAkABABoJZgCdAChJtXQAP4TeRm3zYlODqHfXEYaNd0n6n8oAAAA',
+    },
+    after: {
+      src: '/images/before-after/case-7-after.webp',
+      width: 1600,
+      height: 900,
+      blurDataURL:
+        'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAkABABoJZACdACf2QgAAP2YwoIBYVHvexVixnGVzpGGjWDLc7KAAAA=',
+    },
+  },
+  {
+    slug: 'case-8',
+    before: {
+      src: '/images/before-after/case-8-before.webp',
+      width: 1600,
+      height: 900,
+      blurDataURL:
+        'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAkABABoJagCdACyx35scAD+HWl5RBLX7fLr78lFhhME64Ela2AGoAA=',
+    },
+    after: {
+      src: '/images/before-after/case-8-after.webp',
+      width: 1600,
+      height: 900,
+      blurDataURL:
+        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJZACdACh0vAgANxtalbR2iuzvTF60XguBJWUErgAAA==',
     },
   },
 ];
