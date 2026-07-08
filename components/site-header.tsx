@@ -146,6 +146,33 @@ export function SiteHeader({
         className,
       )}
     >
+      {/* Utility strip — office phone always visible for easy patient access
+          (client request #27, mirrors the old site's top bar). Solid background
+          + z-10 so the lane wipe below never paints over it. Height is exactly
+          32px — the mobile drawer offsets below depend on it. */}
+      <div
+        className={cn(
+          'relative z-10',
+          variant === 'light'
+            ? 'bg-stone-900 text-stone-50'
+            : 'bg-stone-100 text-ink-950',
+        )}
+      >
+        <div className="mx-auto max-w-7xl h-[32px] px-[20px] md:px-[32px] flex items-center justify-between gap-4 text-[12px]">
+          <span className="hidden md:block opacity-70 truncate">
+            {practiceInfo.address.street} · {practiceInfo.address.city},{' '}
+            {practiceInfo.address.state} {practiceInfo.address.zip}
+          </span>
+          <a
+            href={`tel:${main.tel}`}
+            className="inline-flex items-center gap-[8px] font-semibold tracking-wide hover:opacity-80 transition-opacity whitespace-nowrap"
+          >
+            <Phone className="h-[13px] w-[13px]" aria-hidden="true" />
+            {main.number}
+          </a>
+        </div>
+      </div>
+
       {/* Wipe overlay — paints the new lane's surface color across the bar on lane change.
           Keyed by lane so it re-mounts; AnimatePresence handles the fade-out of the previous wipe. */}
       <AnimatePresence initial={false}>
@@ -165,7 +192,7 @@ export function SiteHeader({
           }}
         />
       </AnimatePresence>
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between md:justify-start gap-[24px] px-[20px] py-[16px] md:px-[32px] md:py-[20px]">
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between md:justify-start gap-[16px] px-[20px] py-[16px] md:px-[24px] md:py-[20px]">
         {/* LEFT — Brand */}
         <div className="md:flex-1 flex items-center justify-start">
           <Link
@@ -230,8 +257,8 @@ export function SiteHeader({
         </div>
 
         {/* RIGHT — Nav + CTAs + Hamburger */}
-        <div className="md:flex-1 flex items-center justify-end gap-[20px]">
-          <nav className="hidden md:flex items-center gap-[18px] text-[12px]">
+        <div className="md:flex-1 flex items-center justify-end gap-[14px]">
+          <nav className="hidden md:flex items-center gap-[14px] text-[12px]">
             {NAV_ITEMS.map((item) =>
               item.href === '/about' ? (
                 <AboutMenu key={item.href} variant={variant} />
@@ -305,12 +332,12 @@ export function SiteHeader({
       <div
         id="mobile-menu"
         className={cn(
-          'md:hidden fixed inset-x-0 top-[124px] bg-stone-50 transition-[opacity,transform] duration-300 ease-out',
+          'md:hidden fixed inset-x-0 top-[176px] bg-stone-50 transition-[opacity,transform] duration-300 ease-out',
           open
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-2 pointer-events-none',
         )}
-        style={{ height: 'calc(100svh - 124px)' }}
+        style={{ height: 'calc(100svh - 176px)' }}
         aria-hidden={!open}
       >
         <div className="flex flex-col h-full overflow-y-auto px-5 pt-8 pb-12">
