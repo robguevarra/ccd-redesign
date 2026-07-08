@@ -1123,21 +1123,21 @@ function MaskWord({
 }) {
   // clipPath allows italic glyphs to extend past the right edge of the word
   // box (italic leans right) while still clipping vertical for the slide-up.
-  // The bottom edge starts at 0 (masking the slide) and opens to -0.3em once
-  // the word has landed — otherwise descenders (the "j" in "joint") stay
-  // clipped at rest because the 0.95 line-height box is shorter than glyphs.
+  // The bottom edge is STATICALLY open by 0.28em so descenders (the "j" in
+  // "joint") render the moment the word lands — the 0.95 line-height box is
+  // shorter than the glyphs. To keep the reveal masked despite the open
+  // bottom, the word starts its slide deeper (145% ≈ box height + the open
+  // 0.28em). No clip animation: toggling it caused stray ascender/descender
+  // artifacts during keyframe transitions.
   return (
-    <motion.span
+    <span
       className="inline-block align-bottom"
-      initial={{ clipPath: 'inset(-0.05em -0.4em 0 -0.05em)' }}
-      animate={{ clipPath: 'inset(-0.05em -0.4em -0.3em -0.05em)' }}
-      exit={{ clipPath: 'inset(-0.05em -0.4em 0 -0.05em)' }}
-      transition={{ duration: 0.01, delay: delay + 1.0 }}
+      style={{ clipPath: 'inset(-0.05em -0.4em -0.28em -0.05em)' }}
     >
       <motion.span
-        initial={{ y: '110%' }}
+        initial={{ y: '145%' }}
         animate={{ y: '0%' }}
-        exit={{ y: '-110%', transition: { duration: 0.35, ease: EASE_PREMIUM } }}
+        exit={{ y: '-115%', transition: { duration: 0.35, ease: EASE_PREMIUM } }}
         transition={{ duration: 1.0, ease: EASE_PREMIUM, delay }}
         className={cn(
           'inline-block',
@@ -1147,7 +1147,7 @@ function MaskWord({
       >
         {children}
       </motion.span>
-    </motion.span>
+    </span>
   );
 }
 

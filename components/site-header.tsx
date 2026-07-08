@@ -147,25 +147,29 @@ export function SiteHeader({
       )}
     >
       {/* Utility strip — office phone always visible for easy patient access
-          (client request #27, mirrors the old site's top bar). Solid background
-          + z-10 so the lane wipe below never paints over it. Height is exactly
-          32px — the mobile drawer offsets below depend on it. */}
+          (client request #27). Light surface so it reads as part of the header
+          rather than a black bar; solid bg + z-10 keeps the lane wipe from
+          painting over it. Height is exactly 32px (31 + border) — the mobile
+          drawer offsets below depend on it. */}
       <div
         className={cn(
-          'relative z-10',
+          'relative z-10 border-b',
           variant === 'light'
-            ? 'bg-stone-900 text-stone-50'
-            : 'bg-stone-100 text-ink-950',
+            ? 'bg-[var(--color-surface)] border-stone-200/70 text-stone-600'
+            : 'bg-ink-950/80 border-ink-700/40 text-stone-300',
         )}
       >
-        <div className="mx-auto max-w-7xl h-[32px] px-[20px] md:px-[32px] flex items-center justify-between gap-4 text-[12px]">
-          <span className="hidden md:block opacity-70 truncate">
+        <div className="mx-auto max-w-7xl h-[31px] px-[20px] md:px-[32px] flex items-center justify-between gap-4 text-[12px]">
+          <span className="hidden md:block truncate">
             {practiceInfo.address.street} · {practiceInfo.address.city},{' '}
             {practiceInfo.address.state} {practiceInfo.address.zip}
           </span>
           <a
             href={`tel:${main.tel}`}
-            className="inline-flex items-center gap-[8px] font-semibold tracking-wide hover:opacity-80 transition-opacity whitespace-nowrap"
+            className={cn(
+              'inline-flex items-center gap-[8px] font-semibold tracking-wide transition-opacity hover:opacity-70 whitespace-nowrap',
+              variant === 'light' ? 'text-stone-900' : 'text-stone-50',
+            )}
           >
             <Phone className="h-[13px] w-[13px]" aria-hidden="true" />
             {main.number}

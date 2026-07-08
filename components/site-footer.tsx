@@ -8,16 +8,34 @@ import type { BusinessHours } from '@/content/schemas';
 import { DEFAULT_OFFICE_HOURS, formatDayHours } from '@/lib/office-hours';
 import { getLane } from '@/lib/lane';
 import { MAPS_DIRECTIONS_URL } from '@/lib/maps';
+import { cn } from '@/lib/cn';
 import { Wordmark } from './wordmark';
+
+// Routes whose last section is a dark (stone-900) CTA band. On those the
+// footer sits flush with a hairline divider — the default mt-32 would show a
+// 128px slice of light page background between two identical dark blocks.
+const DARK_ENDING_ROUTES = new Set([
+  '/medical/tmj',
+  '/reviews',
+  '/financing',
+  '/technology',
+]);
 
 export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessHours[] }) {
   const pathname = usePathname();
   const lane = getLane(pathname);
   const dayLabel = (day: string) => day.slice(0, 3);
   const primaryPhone = practiceInfo.phones[0];
+  const flushDark = DARK_ENDING_ROUTES.has(pathname);
 
   return (
-    <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
+    <footer
+      data-lane={lane}
+      className={cn(
+        'bg-stone-900 text-stone-200 transition-colors duration-500 ease-out',
+        flushDark ? 'border-t border-stone-800' : 'mt-32',
+      )}
+    >
       {/* Brand — full-width row so each practice's logo sits beside its name */}
       <div className="mx-auto max-w-7xl px-5 md:px-8 pt-16 md:pt-20">
         {/* Client request #28: practice names on the sides, tagline centered. */}
