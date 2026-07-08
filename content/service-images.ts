@@ -32,6 +32,7 @@ export const SERVICE_ILLUSTRATION_SLUGS: ReadonlySet<string> = new Set([
   'frenectomy',
   'gingivectomy',
   'implants',
+  'myofascial-pain-therapy',
   'neuropathic-pain',
   'occlusal-splints',
   'onlays',
@@ -53,6 +54,7 @@ export const SERVICE_ILLUSTRATION_SLUGS: ReadonlySet<string> = new Set([
   'tmj',
   'tongue-tie-release',
   'trigger-point-injections',
+  'ultrasound-guided-procedures',
 ]);
 
 /** Intrinsic aspect ratio of every generated illustration (3:2). */
