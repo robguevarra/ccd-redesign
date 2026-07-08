@@ -329,7 +329,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
         className="relative w-full min-h-screen bg-stone-950 flex items-center justify-center overflow-hidden"
       >
         <video
-          src="/videos/home-cold-open-web.mp4"
+          src="/videos/office-broll-web.mp4"
           autoPlay
           loop
           muted
@@ -421,7 +421,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
           >
             <video
               ref={videoLeftRef}
-              src="/videos/home-cold-open-mobile.mp4"
+              src="/videos/office-broll-mobile.mp4"
               autoPlay
               loop
               muted
@@ -444,7 +444,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
             >
               <video
                 ref={videoLeftRef}
-                src="/videos/home-cold-open-web.mp4"
+                src="/videos/office-broll-web.mp4"
                 autoPlay
                 loop
                 muted

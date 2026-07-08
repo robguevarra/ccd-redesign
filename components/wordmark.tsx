@@ -61,10 +61,11 @@ export function Wordmark({
         >
           {isMedical ? (
             <>
-              {/* Whole name carries equal weight — client asked that "Hsu" not
-                  render lighter than "Brien". */}
-              <span className="font-normal text-[18px] md:text-[21px]">Brien</span>
-              <span className="font-normal text-[18px] md:text-[21px]">Hsu,</span>
+              {/* Whole name carries equal weight AND the same size as "Comfort
+                  Care Dental" — client asked that the two practice names read
+                  with equal prominence (header + footer). */}
+              <span className="font-normal text-[22px] md:text-[26px]">Brien</span>
+              <span className="font-normal text-[22px] md:text-[26px]">Hsu,</span>
               <span className="font-normal text-[11px] md:text-[12px] tracking-[0.06em] uppercase opacity-80">
                 DDS, MS &amp; Associates
               </span>

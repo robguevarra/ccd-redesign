@@ -167,11 +167,11 @@ export function SiteHeader({
           <a
             href={`tel:${main.tel}`}
             className={cn(
-              'inline-flex items-center gap-[8px] font-semibold tracking-wide transition-opacity hover:opacity-70 whitespace-nowrap',
+              'inline-flex items-center gap-[8px] text-[15px] font-bold tracking-wide transition-opacity hover:opacity-70 whitespace-nowrap',
               variant === 'light' ? 'text-stone-900' : 'text-stone-50',
             )}
           >
-            <Phone className="h-[13px] w-[13px]" aria-hidden="true" />
+            <Phone className="h-[15px] w-[15px]" aria-hidden="true" />
             {main.number}
           </a>
         </div>
