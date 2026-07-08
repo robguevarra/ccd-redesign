@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Phone } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 import type { Service } from '@/content/schemas';
@@ -36,16 +37,22 @@ const SECTIONS = [
     label: 'How we evaluate',
     body:
       'Comprehensive bite analysis, jaw-joint imaging via 3D Cone Beam CT, muscle palpation, and a careful review of headache, ear, and sleep symptoms. Most TMJ cases are misdiagnosed as ear infections or tension headaches first.',
+    image: '/images/services/educational/tmj.png',
+    imageAlt: 'Educational render of the temporomandibular joint',
   },
   {
     label: 'How we treat',
     body:
       'Custom splint therapy, bite equilibration, physical therapy coordination, and targeted muscle work. We avoid surgical intervention except as a last resort and have not had to refer for surgery in the majority of our cases.',
+    image: '/images/services/educational/custom-orthotic-device.png',
+    imageAlt: 'Educational render of a custom orthotic splint',
   },
   {
     label: 'What patients tell us',
     body:
       "Most TMJ patients have been to multiple practices before us. The shared experience: someone is finally listening to the whole symptom picture, not just the part of it that's in the mouth.",
+    image: '/images/services/educational/orofacial-pain.png',
+    imageAlt: 'Educational render of orofacial pain regions',
   },
 ];
 
@@ -154,11 +161,17 @@ function Section({
         }`}
       >
         <div className="lg:col-span-7 [direction:ltr]">
+          {/* Educational render fills the panel (was an empty skin-toned
+              gradient placeholder — client asked for pictures here, #19). */}
           <div className="relative aspect-[4/3] overflow-hidden bg-stone-200 flex items-end p-10 md:p-14">
-            {/* Editorial gradient placeholder. Replaced with the practice's
-                own photo session in v2. */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(245,236,219,0.6),transparent_55%),radial-gradient(ellipse_at_70%_80%,rgba(184,85,58,0.18),transparent_55%)]" />
-            <div className="absolute inset-0 bg-stone-200 -z-10" />
+            <Image
+              src={sec.image}
+              alt={sec.imageAlt}
+              fill
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-50/90 via-stone-50/25 to-transparent" />
             <p className="relative font-serif text-3xl md:text-5xl text-stone-900 italic font-light leading-[1.1] max-w-md">
               {sec.label}.
             </p>

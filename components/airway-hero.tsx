@@ -1123,10 +1123,16 @@ function MaskWord({
 }) {
   // clipPath allows italic glyphs to extend past the right edge of the word
   // box (italic leans right) while still clipping vertical for the slide-up.
+  // The bottom edge starts at 0 (masking the slide) and opens to -0.3em once
+  // the word has landed — otherwise descenders (the "j" in "joint") stay
+  // clipped at rest because the 0.95 line-height box is shorter than glyphs.
   return (
-    <span
+    <motion.span
       className="inline-block align-bottom"
-      style={{ clipPath: 'inset(-0.05em -0.4em 0 -0.05em)' }}
+      initial={{ clipPath: 'inset(-0.05em -0.4em 0 -0.05em)' }}
+      animate={{ clipPath: 'inset(-0.05em -0.4em -0.3em -0.05em)' }}
+      exit={{ clipPath: 'inset(-0.05em -0.4em 0 -0.05em)' }}
+      transition={{ duration: 0.01, delay: delay + 1.0 }}
     >
       <motion.span
         initial={{ y: '110%' }}
@@ -1141,7 +1147,7 @@ function MaskWord({
       >
         {children}
       </motion.span>
-    </span>
+    </motion.span>
   );
 }
 
