@@ -20,8 +20,9 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
     <footer data-lane={lane} className="bg-stone-900 text-stone-200 mt-32 transition-colors duration-500 ease-out">
       {/* Brand — full-width row so each practice's logo sits beside its name */}
       <div className="mx-auto max-w-7xl px-5 md:px-8 pt-16 md:pt-20">
-        <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-6 lg:grid lg:grid-cols-3 lg:gap-12">
-          <div className="flex items-center gap-3.5">
+        {/* Client request #28: practice names on the sides, tagline centered. */}
+        <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 lg:grid lg:grid-cols-3 lg:items-center lg:gap-12">
+          <div className="flex items-center gap-3.5 lg:justify-self-start">
             <Image
               src="/logos/dental-3.png"
               alt=""
@@ -36,7 +37,12 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
               <Wordmark variant="dark" lane="dental" />
             </div>
           </div>
-          <div className="flex items-center gap-3.5">
+          <p className="text-sm text-stone-400 leading-relaxed lg:max-w-[17rem] lg:justify-self-center lg:text-center">
+            Advanced dental and medical care led by Dr. Brien Hsu.
+            <br />
+            {practiceInfo.address.city} · Est. 1993.
+          </p>
+          <div className="flex items-center gap-3.5 lg:justify-self-end">
             <Image
               src="/logos/medical-4.png"
               alt=""
@@ -51,11 +57,6 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
               <Wordmark variant="dark" lane="medical" />
             </div>
           </div>
-          <p className="text-sm text-stone-400 leading-relaxed md:max-w-[15rem]">
-            Advanced dental and medical care led by Dr. Brien Hsu.
-            <br />
-            {practiceInfo.address.city} · Est. 1993.
-          </p>
         </div>
       </div>
 
