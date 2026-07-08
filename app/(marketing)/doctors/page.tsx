@@ -29,7 +29,7 @@ export default async function DoctorsPage() {
           <p className="mt-12 max-w-2xl text-stone-600 text-lg leading-relaxed">
             Long-tenured staff means we remember your case, your kids, and how
             your bite has changed since 2002. Board-certified specialists in oral
-            surgery, endodontics, and orofacial pain practice alongside Dr. Brien —
+            surgery, endodontics, and orofacial pain practice alongside Dr. Brien Hsu —
             continuity by design.
           </p>
         </div>
@@ -56,8 +56,9 @@ export default async function DoctorsPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-950/30 to-transparent" />
                   </div>
                   <p className="text-xs uppercase tracking-[0.22em] text-stone-500 mb-2">
+                    {/* CMS titles already carry "· Lead Clinician" — appending
+                        isLead here printed "Lead" twice. */}
                     {d.title}
-                    {d.isLead && ' · Lead'}
                   </p>
                   <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 group-hover:underline underline-offset-4 decoration-stone-400">
                     {d.name}

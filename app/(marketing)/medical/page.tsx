@@ -31,9 +31,9 @@ const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyf
   },
   {
     eyebrow: 'Where this work happens',
-    title: 'Twenty-five years on Kenyon Way.',
+    title: 'Three decades on Kenyon Way.',
     italicize: [3, 4],
-    body: "Dr. Brien Hsu has been managing complex orofacial pain cases at this office since the late 1990s. He earned his USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders, then brought that work into a practice the neighborhood already knew. This is still the only office in Rancho Cucamonga where this medical work happens.",
+    body: "Dr. Brien Hsu has been managing complex orofacial pain cases at this office since the early 2000s. He earned his USC Master's in Orofacial Pain, Oral Medicine, and Sleep Disorders, then brought that work into a practice the neighborhood already knew. This is still the only office in Rancho Cucamonga where this medical work happens.",
   },
 ];
 

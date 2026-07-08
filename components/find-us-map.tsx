@@ -407,7 +407,7 @@ export function FindUsMap() {
           <span className="ccd-num">2</span>
           <span>
             Turn into the <strong>Vineyards Marketplace lot</strong>{' '}(past
-            Johnny O&rsquo;s) and drive to the back-right.
+            Johnny O&rsquo;s) and drive to the far right side.
           </span>
         </div>
         <div className="ccd-step is-end">

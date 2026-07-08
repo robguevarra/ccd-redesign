@@ -73,20 +73,30 @@ export default function ReviewsPage() {
       <section className="bg-stone-900 text-stone-50 py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 md:px-8 text-center">
           <h2 className="font-serif text-3xl md:text-5xl tracking-tighter mb-8">
-            Read every review on Yelp.
+            Read every review on Yelp and Google.
           </h2>
           <p className="text-stone-300 text-lg max-w-xl mx-auto mb-10">
             We curate the ones above for length and clarity, but everything is
             published in full at the source.
           </p>
-          <a
-            href={practiceInfo.socials.yelp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-stone-50 text-stone-900 px-8 py-4 text-base font-medium hover:bg-stone-200 transition-colors"
-          >
-            Open Yelp page <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={practiceInfo.socials.yelp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-stone-50 text-stone-900 px-8 py-4 text-base font-medium hover:bg-stone-200 transition-colors"
+            >
+              Open Yelp page <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <a
+              href={practiceInfo.socials.google}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-stone-50 text-stone-50 px-8 py-4 text-base font-medium hover:bg-stone-50 hover:text-stone-900 transition-colors"
+            >
+              Open Google reviews <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </section>
     </>

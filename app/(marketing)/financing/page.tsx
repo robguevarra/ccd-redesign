@@ -4,19 +4,16 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Financing',
-  description: 'CareCredit, in-house payment plans, and the insurance plans we accept.',
+  description: 'CareCredit and the insurance plans we accept.',
 };
 
+// In-house payment plans intentionally omitted — the practice arranges those
+// on a patient-to-patient basis, in person only (client request, 2026-07).
 const PAYMENT_OPTIONS = [
   {
     label: 'CareCredit',
     description:
       'No-interest plans of 6 or 12 months for qualifying patients. Pay the minimum monthly and the balance in full by the end of the term — no interest is charged.',
-  },
-  {
-    label: 'In-house payment plans',
-    description:
-      "For patients who don't qualify for CareCredit, we offer in-house plans of 3–12 months with no fees and no interest. Tailored to the specific treatment plan.",
   },
   {
     label: 'Major insurance plans',
@@ -39,14 +36,14 @@ export default function FinancingPage() {
           </h1>
           <p className="mt-10 max-w-2xl text-stone-600 text-lg leading-relaxed">
             Cost shouldn't be the reason you delay treatment that affects your
-            health. We work with most insurance plans, accept CareCredit, and
-            offer in-house payment plans for treatment plans of any size.
+            health. We work with most insurance plans and accept CareCredit for
+            treatment plans of any size.
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28">
-        <ul className="grid gap-px md:grid-cols-3 bg-stone-200">
+        <ul className="grid gap-px md:grid-cols-2 bg-stone-200">
           {PAYMENT_OPTIONS.map((opt) => (
             <li key={opt.label} className="bg-stone-50 p-8 md:p-10">
               <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-4">

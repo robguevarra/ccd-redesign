@@ -86,14 +86,15 @@ export default async function DoctorDetailPage({
           </div>
           <FadeUp className="mx-auto max-w-7xl w-full">
             <p className="text-xs uppercase tracking-[0.24em] text-stone-300 mb-6">
+              {/* CMS titles already carry "· Lead Clinician" where it applies —
+                  appending isLead here printed it twice. */}
               {doctor.title}
-              {doctor.isLead && ' · Lead Clinician'}
             </p>
             <h1 className="font-serif text-[clamp(3.5rem,12vw,11rem)] tracking-tighter text-stone-50 leading-[0.9] font-light">
               {doctor.name.split(' ').slice(0, -1).join(' ')}
               <br />
               <span className="italic">
-                {doctor.name.split(' ').slice(-1)[0]}.
+                {doctor.name.split(' ').slice(-1)[0]}
               </span>
             </h1>
             <p className="mt-10 max-w-2xl text-stone-200 text-lg leading-relaxed">
@@ -130,7 +131,7 @@ export default async function DoctorDetailPage({
             href="/request-appointment"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-900 text-stone-50 px-6 py-3 text-sm font-medium hover:bg-stone-700 transition-colors"
           >
-            Request to see {doctor.name.split(' ')[1] ?? doctor.name.split(' ')[0]}
+            Request to see a provider
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           <a

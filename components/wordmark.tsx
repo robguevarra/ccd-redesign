@@ -61,10 +61,10 @@ export function Wordmark({
         >
           {isMedical ? (
             <>
+              {/* Whole name carries equal weight — client asked that "Hsu" not
+                  render lighter than "Brien". */}
               <span className="font-normal text-[18px] md:text-[21px]">Brien</span>
-              <span className="font-light italic text-[18px] md:text-[21px]">
-                Hsu,
-              </span>
+              <span className="font-normal text-[18px] md:text-[21px]">Hsu,</span>
               <span className="font-normal text-[11px] md:text-[12px] tracking-[0.06em] uppercase opacity-80">
                 DDS, MS &amp; Associates
               </span>

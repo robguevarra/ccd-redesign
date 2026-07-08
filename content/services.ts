@@ -61,7 +61,7 @@ export const services: Service[] = [
       'Comprehensive evaluation and treatment for temporomandibular joint disorders. Most cases are managed without surgery.',
     signature: true,
     technologyRefs: ['cbct'],
-    body: `If you have jaw pain, clicking, popping, headaches, ear pressure, or limited opening, it's likely been misdiagnosed for years before someone connected it to bite mechanics. Most patients who find us have already seen a physician, a neurologist, or an ENT specialist, and nothing has been resolved. The problem lives at the intersection of dentistry and medicine, and very few practices are equipped to evaluate both sides.
+    body: `If you have jaw pain, clicking, popping, headaches, ear pressure, or limited opening, it's likely been misdiagnosed for years before someone connected it to bite mechanics. Most patients who find us have already seen a physician, a neurologist, or an ENT specialist, and nothing has been resolved. The problem lies at the intersection of dentistry and medicine, and very few practices are equipped to evaluate both sides.
 
 We approach TMJ disorders the way a specialty clinic should: with a thorough history, a physical examination of the joint and masticatory muscles, and CBCT imaging that shows the joint in three dimensions. That imaging, taken with our iCAT FLX, reveals the bony architecture of the condyle, the degree of joint space narrowing, and any degenerative changes that would shift the treatment plan. What cannot be seen on a flat panoramic X-ray becomes visible. Decisions get better from there.
 
@@ -254,7 +254,7 @@ When something warrants a closer look, we document it, photograph it, and discus
 
 Risk factors worth knowing about: tobacco and alcohol use remain the primary risk factors, but HPV-associated oropharyngeal cancers are increasing substantially in non-smokers. Age is a factor; so is chronic sun exposure to the lips. None of these are required for a cancer to develop, which is why we screen everyone.
 
-You should not need to ask for this screen. We perform it automatically.`,
+You should not need to ask for this screening. We perform it automatically.`,
   },
   {
     slug: 'oral-cancer-shields',
@@ -407,9 +407,9 @@ If it has been years since your last professional cleaning, do not let that dela
       'Full-mouth diagnostic exam with full-mouth series or panoramic imaging, periodontal charting, and oral cancer screening.',
     body: `A thorough diagnosis at the start of care prevents a long list of problems that come from treating teeth in isolation. The comprehensive exam is where we establish a baseline for your whole oral health: not just the chief complaint, not just the teeth that hurt, but the full picture.
 
-At a new-patient visit we take a full-mouth series of X-rays or a panoramic radiograph, depending on what your anatomy and history call for. We perform a complete periodontal chart, recording pocket depths, bleeding on probing, recession, and mobility, so we can track the actual disease status of your gums over time rather than relying on visual inspection alone.
+At a new-patient visit we take a full-mouth series of X-rays or a panoramic radiograph, depending on what your anatomy and history call for. We perform complete periodontal charting, recording pocket depths, bleeding on probing, recession, and mobility, so we can track the actual disease status of your gums over time rather than relying on visual inspection alone.
 
-The soft-tissue examination covers lips, cheeks, tongue, floor of mouth, palate, and the back of the throat. This is the oral cancer screening, performed at every comprehensive exam at no extra cost. Early detection is the single largest factor in survival, and the screen takes only a few minutes.
+The soft-tissue examination covers lips, cheeks, tongue, floor of mouth, palate, and the back of the throat. This is the oral cancer screening, performed at every comprehensive exam at no extra cost. Early detection is the single largest factor in survival, and the screening takes only a few minutes.
 
 We also evaluate your bite, look for signs of grinding or clenching, and check existing restorations for integrity and marginal fit.
 
@@ -458,7 +458,7 @@ We recommend fluoride for patients across all ages with elevated decay risk: tho
 
 A custom occlusal splint protects your teeth at night from the wear that happens when you clench and grind. It does not stop the bruxism itself, as this is a normal neurological response, but it intercepts the damage pathway. Worn enamel does not grow back; protecting what remains is the whole point.
 
-We fabricate splints from digital scans or conventional impressions. The splint is fit and adjusted at a follow-up appointment, with particular attention to the way it sits in your bite. We adjust and refine over time as the appliance wears and as your bite changes.
+We fabricate splints from digital scans or conventional impressions. The splint is fitted and then adjusted during a follow-up appointment, with particular attention to the way it sits in your bite. We adjust and refine over time as the appliance wears and as your bite changes.
 
 An occlusal splint for bruxism is a distinct device from a TMJ oral appliance, even though both are worn during sleep. TMJ appliances are designed with specific measurements to unload and protect the TMJ joints from further wear when sleeping. If you have both conditions, we address them with the appropriate appliances for each.`,
   },
@@ -541,11 +541,11 @@ Porcelain veneers are strong and stain-resistant, but they are not indestructibl
 
 We design and plan crowns using our 3Shape Trios digital scanner. The scanner captures the tooth and the surrounding dentition in three dimensions without the discomfort and distortion of conventional impression trays. Digital files go directly to the laboratory, which shortens turnaround time and produces restorations with consistently accurate fit at the margin. That fit is the single most important variable in how long a crown stays in service.
 
-Material selection is matched to the clinical situation. Full zirconia is the current standard for posterior teeth under heavy load: extremely strong, biocompatible, and conservative in preparation requirements. Lithium disilicate (e-max) offers exceptional esthetics with good strength for anterior and premolar positions. Porcelain-fused-to-metal remains an option where specific clinical factors favor it. We discuss the trade-offs with you before any preparation begins.
+Material selection is matched to the clinical situation. Full zirconia is the current standard for posterior teeth under heavy load: extremely strong, biocompatible, and conservative in preparation requirements. Lithium disilicate (eMax) offers exceptional esthetics with good strength for anterior and premolar positions. Porcelain-fused-to-metal remains an option where specific clinical factors favor it. We discuss the trade-offs with you before any preparation begins.
 
 A bridge replaces one or more missing teeth by crowning the teeth on either side of the gap and suspending one or more artificial teeth between them. The adjacent teeth serve as anchors, which means some healthy tooth structure must be prepared to accommodate the crowns. For patients with natural, unrestored adjacent teeth, we discuss implants as an alternative that preserves that structure entirely.
 
-The crown and bridge appointment involves two visits: preparation and temporaries at the first, delivery and adjustment at the second. The temporary protects the prepared tooth between visits and gives you a preview of the final restoration's shape.`,
+The crown and bridge appointment involves two visits: preparation and temporaries at the first; delivery and adjustment at the second. The temporary protects the prepared tooth between visits and gives you a preview of the final restoration's shape.`,
     technologyRefs: ['trios'],
   },
   {
@@ -558,7 +558,7 @@ The crown and bridge appointment involves two visits: preparation and temporarie
 
 A conventional full denture is fabricated after the extraction sites have healed and the ridge has remodeled — typically four to six weeks after extractions. This timeline allows the denture to be fitted to stable tissue, which means better initial fit and less need for early relining. The process involves several appointments: impressions, bite registration, a try-in with the teeth set in wax where you approve the look before final processing, and the delivery appointment.
 
-Immediate dentures are made before the extractions occur and placed at the same appointment as the extractions. The patient leaves without a gap in their smile, which is the primary advantage. The trade-off is that the tissue continues to remodel for months after extraction, which means the immediate denture will loosen and require relining as the ridge changes shape. Most patients with immediate dentures need a reline within the first year.
+Immediate dentures are made before the extractions occur and the denture is placed at the same appointment as the extractions. The patient leaves without a gap in their smile, which is the primary advantage. The trade-off is that the tissue continues to remodel for months after extraction, which means the immediate denture will loosen and require relining as the ridge changes shape. Most patients with immediate dentures need a reline within the first year.
 
 Partial dentures replace several missing teeth in an arch where natural teeth remain. A framework of metal or flexible resin clasps onto the remaining teeth for retention. Partial dentures prevent the remaining teeth from drifting into the gap and restore chewing balance across the arch.
 
@@ -571,7 +571,7 @@ For patients who want greater stability and retention than a conventional dentur
     subcategory: 'restorative',
     summary:
       'In-office and at-home whitening, including deep-bleaching for stubborn cases.',
-    body: `Teeth discolor for different reasons, and the reason determines what whitening will actually work. Extrinsic staining from coffee, tea, or wine responds quickly to surface bleaching agents. Intrinsic discoloration, the kind embedded in the dentin, resulting from aging, old restorations, tetracycline exposure, or fluorosis, requires a different approach. Most whitening products, including the higher-end over-the-counter options, do not adequately address intrinsic color.
+    body: `Teeth discolor for different reasons, and the reason determines which type of whitening will actually work. Extrinsic staining from coffee, tea, or wine responds quickly to surface bleaching agents. Intrinsic discoloration, the kind embedded in the dentin, resulting from aging, old restorations, tetracycline exposure, or fluorosis, requires a different approach. Most whitening products, including the higher-end over-the-counter options, do not adequately address intrinsic color.
 
 The problem with many whitening treatments is that they prioritize initial brightness without addressing tooth permeability — the capacity of the whitening agent to penetrate into the dentin where the deeper staining lives. Dehydration from in-office plasma lights creates an apparent whitening effect that partially reverses when the tooth rehydrates. High-concentration gel without preparation can cause sensitivity.
 
@@ -607,7 +607,7 @@ Most cases are completed in a single appointment; multi-rooted teeth or cases wi
     subcategory: 'endodontics',
     summary:
       "Surgical endodontic procedure to save a tooth when conventional retreatment isn't viable.",
-    body: `Sometimes a root canal that was completed correctly, years or decades ago, develops new problems at the root tip. Residual infection, a cyst that has formed around the apex, or a canal that cannot be reached from above because of a post or a well-fitting crown that would be difficult to remove and replace. In those cases, the surgical approach is to address the problem from the other direction: through the gum and bone rather than through the crown of the tooth.
+    body: `Sometimes a root canal that was completed correctly, years or decades ago, develops new problems at the root tip: residual infection, a cyst that has formed around the apex, or a canal that cannot be reached from above because of a post or a well-fitting crown that would be difficult to remove and replace. In those cases, the surgical approach is to address the problem from the other direction: through the gum and bone rather than through the crown of the tooth.
 
 An apicoectomy (surgical endodontic treatment) removes the tip of the root and the surrounding infected tissue, then seals the canal from the apex to prevent reinfection. The access is made through a small flap in the gum tissue, a small opening in the overlying bone, and the root tip is removed with a precise amount of the root length to eliminate the source of the problem. A retrograde filling material seals the end of the canal.
 
@@ -639,7 +639,7 @@ If retreatment is not viable because of fracture, anatomy, or the condition of t
     subcategory: 'oral-surgery-dental',
     summary:
       'Simple and surgical extractions, performed in-house using CBCT planning.',
-    body: `Our goal is to save every tooth we can. When extraction is necessary, we make that determination based on clinical evidence: extensive decay that leaves too little tooth structure for a restoration to hold, advanced periodontal disease with bone loss that cannot support the tooth's function, a fracture that extends below the bone level, symptomatic impaction, or orthodontic requirements. We explain the reasoning before we proceed.
+    body: `Our goal is to save every tooth we can. However, when extraction is necessary, we make that determination based on clinical evidence: extensive decay that leaves too little tooth structure for a restoration to hold, advanced periodontal disease with bone loss that cannot support the tooth's function, a fracture that extends below the bone level, symptomatic impaction, or orthodontic requirements. We explain the reasoning before we proceed.
 
 Most extractions can be done in our office under local anesthesia without a hospital referral or general sedation. Simple extractions (teeth with intact roots that can be loosened and removed in one piece) are straightforward. Surgical extractions involve sectioning the tooth, removing bone where necessary, or working around curved or fused root anatomy. We handle both.
 
@@ -703,7 +703,7 @@ After active treatment, we schedule the patient on a periodontal maintenance pro
     subcategory: 'periodontal-surgical',
     summary:
       'Surgical exposure of additional tooth structure for restorative or cosmetic reasons.',
-    body: `Crown lengthening creates access to tooth structure that the gum tissue and bone are covering — either because the tooth has broken at or below the gumline, or because the gum line itself sits too high to allow a restoration or veneer to be placed with proper margins.
+    body: `Crown lengthening creates access to tooth structure that the gum tissue and bone are covering — either because the tooth has broken at or below the gumline, or because the gumline itself sits too high to allow a restoration or veneer to be placed with proper margins.
 
 The restorative indication is more urgent. When a tooth breaks near or below the gumline, the remaining structure may be too short for a crown to grip. Attempting to place a crown without adequate tooth exposure above bone results in a restoration that violates the biologic width — the soft-tissue attachment zone the body maintains around every tooth. That violation causes chronic inflammation and progressive bone loss that undermines the restoration over time. Crown lengthening surgically repositions the gum and bone to expose the minimum tooth structure needed for a sound restoration, respecting the biologic boundary while saving a tooth that would otherwise need extraction.
 

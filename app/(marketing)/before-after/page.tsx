@@ -28,7 +28,7 @@ export default function BeforeAfterPage() {
             </h1>
             <p className="mt-10 max-w-3xl text-stone-700 text-xl md:text-2xl leading-relaxed font-light">
               Real smiles from our patients. Drag the handle on any photo to
-              wipe between where they started and the result we delivered.
+              swipe between where they started and the result we delivered.
             </p>
           </div>
         </section>

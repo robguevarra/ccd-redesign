@@ -27,13 +27,13 @@ const DENTAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyfr
     eyebrow: 'What we do',
     title: 'Conservative, by design.',
     italicize: [1, 2],
-    body: 'Composite before crowns when the tooth allows it. The least invasive treatment that works. Our restorations are designed around how a smile actually moves and reads — not around the cheapest path through the chair.',
+    body: 'Composite before crowns when the tooth allows it. The least invasive treatment that works. Our restorations are designed around how a smile actually functions and the message it conveys — not around the cheapest path through the chair.',
   },
   {
     eyebrow: 'What stays',
     title: 'Saved, not replaced.',
     italicize: [2, 3],
-    body: 'Twenty-five years of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2002. The tooth we restore today is the same tooth you keep for the next forty years.',
+    body: 'Three decades of family dentistry at this office. We remember your case, your kids, and how your bite has changed since 2002. The tooth we restore today is the same tooth you keep for the foreseeable next few decades.',
   },
 ];
 

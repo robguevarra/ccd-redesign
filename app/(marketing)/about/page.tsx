@@ -40,14 +40,15 @@ export default function AboutPage() {
             The practice opened in 1993 with a simple premise: dentistry should be
             something you don't dread, the work should last, and the doctor should
             recognize you when you walk in. Three decades later, that's still
-            the brief.
+            the belief.
           </p>
           <p>
-            Four doctors work alongside Dr. Brien Hsu today — board-certified
+            Five doctors work alongside Dr. Brien Hsu today — board-certified
             specialists in oral surgery, endodontics, and orofacial pain. We
             invest in technology when it actually improves a clinical outcome
-            (3D CBCT in 2014, the Trios scanner in 2017) and we leave the rest
-            of the dental industry's gimmicks alone.
+            (3D CBCT in 2014, upgraded larger field of range 3D CBCT in 2020,
+            Trios scanner in 2017, second 3Shape Trios 5 scanner added in 2024)
+            and we leave the rest of the dental industry's gimmicks alone.
           </p>
           <p>
             Outside of the practice, our doctors volunteer with the ADA Give Kids a
