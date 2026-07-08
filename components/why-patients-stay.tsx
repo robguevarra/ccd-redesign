@@ -25,7 +25,7 @@ const PANELS: Panel[] = [
     eyebrow: 'Why patients stay',
     title: 'The gentle dentist, still.',
     italicize: [3],
-    body: 'Twenty-five years on Kenyon Way. Dr. Brien Hsu earned the nickname his second year in practice, and a generation of Rancho Cucamonga families has stayed with him since. The office grew around them, never the other way around.',
+    body: 'Three decades on Kenyon Way. Dr. Brien Hsu earned the nickname his second year in practice, and a generation of Rancho Cucamonga families has stayed with him since. The office grew around them, never the other way around.',
     cta: 'The story so far',
     href: '/about',
   },

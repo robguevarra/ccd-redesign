@@ -9,7 +9,7 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Doctors',
   description:
-    'Five doctors. Twenty-five years of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
+    'Six doctors. Three decades of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
 };
 
 export default async function DoctorsPage() {

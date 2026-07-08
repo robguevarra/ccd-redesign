@@ -25,43 +25,10 @@ export interface BeforeAfterCase {
   after: BeforeAfterImage;
 }
 
+// NOTE (July 2026): the client-supplied "BeforeAfterPT1-2" photos turned out
+// to be the same two cases already in this set (case-1 and case-2 below), so
+// no new entries were added — adding them again duplicated rows 1&2 as 3&4.
 export const beforeAfterCases: BeforeAfterCase[] = [
-  // Patient 1 & 2 — July 2026 client additions (full-mouth rehabilitation
-  // cases supplied as "BeforeAfterPT1-2"). Shown first as the newest work.
-  {
-    slug: 'patient-1',
-    before: {
-      src: '/images/before-after/patient-1-before.webp',
-      width: 1600,
-      height: 900,
-      blurDataURL:
-        'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAkABABoJagCdAEXU5GbCYAA/txvltX9Bj4pW/ip7AYUJk0sR2Htvro6DHMDYAA=',
-    },
-    after: {
-      src: '/images/before-after/patient-1-after.webp',
-      width: 1600,
-      height: 900,
-      blurDataURL:
-        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJYgCdACyahnAAP6DHCewSo85iOUyxJ92sKbnYkAAAA==',
-    },
-  },
-  {
-    slug: 'patient-2',
-    before: {
-      src: '/images/before-after/patient-2-before.webp',
-      width: 1600,
-      height: 900,
-      blurDataURL:
-        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJZACdADzeSfAAP2Xl01kXmymzslCMNGsGW508AAAAA==',
-    },
-    after: {
-      src: '/images/before-after/patient-2-after.webp',
-      width: 1600,
-      height: 900,
-      blurDataURL:
-        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoQAAkABABoJQBOgB6Q8v8KAAD+0LlVo8AqfmKyhkZBbLRRoAA=',
-    },
-  },
   {
     slug: 'case-1',
     before: {

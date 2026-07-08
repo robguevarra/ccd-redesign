@@ -61,6 +61,21 @@ export const SERVICE_ILLUSTRATION_SLUGS: ReadonlySet<string> = new Set([
 export const SERVICE_ILLUSTRATION_RATIO = { width: 1200, height: 800 } as const;
 
 /**
+ * Optional second illustration for services that need two figures.
+ * Dentures & Partial Dentures shows both appliance types (client request:
+ * "dentures and partial dentures should be two different images").
+ */
+export const SERVICE_SECONDARY_ILLUSTRATIONS: Record<
+  string,
+  { src: string; caption: string }
+> = {
+  dentures: {
+    src: '/images/services/educational/dentures-partial.png',
+    caption: 'a removable partial denture with a metal clasp framework',
+  },
+};
+
+/**
  * Public path to a service's educational illustration, or `null` if the service
  * has no generated illustration yet.
  */
