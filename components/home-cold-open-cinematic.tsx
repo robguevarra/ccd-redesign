@@ -41,7 +41,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoLeftRef = useRef<HTMLVideoElement>(null);
-  const videoRightRef = useRef<HTMLVideoElement>(null);
+  const canvasRightRef = useRef<HTMLCanvasElement>(null);
   const progressMV = useMotionValue(0);
   const [questionIdx, setQuestionIdx] = useState(0);
 
@@ -81,20 +81,59 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     return () => clearInterval(id);
   }, [reduced]);
 
-  // Sync the two video elements so they always show the same frame.
-  // The right video mirrors the left.
+  // The right half mirrors the left video onto a canvas. A second <video>
+  // decoder drifts against the first and needed seek-corrections, and those
+  // mid-playback seeks paint black frames on many GPUs — the reported
+  // "half the hero goes black at random times" glitch. drawImage from the
+  // single playing decoder is pixel-perfect sync with no seeking at all.
   useEffect(() => {
-    const left = videoLeftRef.current;
-    const right = videoRightRef.current;
-    if (!left || !right) return;
-    const onTimeUpdate = () => {
-      if (Math.abs(left.currentTime - right.currentTime) > 0.05) {
-        right.currentTime = left.currentTime;
+    const video = videoLeftRef.current;
+    const canvas = canvasRightRef.current;
+    if (!video || !canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    let raf = 0;
+    const draw = () => {
+      raf = requestAnimationFrame(draw);
+      if (video.readyState < 2) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const cw = Math.round(canvas.clientWidth * dpr);
+      const ch = Math.round(canvas.clientHeight * dpr);
+      if (!cw || !ch) return;
+      if (canvas.width !== cw || canvas.height !== ch) {
+        canvas.width = cw;
+        canvas.height = ch;
       }
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+      if (!vw || !vh) return;
+      // object-cover math — canvas has no native cover-fit.
+      const scale = Math.max(cw / vw, ch / vh);
+      const dw = vw * scale;
+      const dh = vh * scale;
+      ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
     };
-    left.addEventListener('timeupdate', onTimeUpdate);
-    return () => left.removeEventListener('timeupdate', onTimeUpdate);
-  }, []);
+    raf = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(raf);
+  }, [isMobile]);
+
+  // Resilience: if the browser evicts/pauses the hero decoder (tab switches,
+  // memory pressure — Safari does this), kick playback again.
+  useEffect(() => {
+    const video = videoLeftRef.current;
+    if (!video) return;
+    const kick = () => {
+      if (video.paused) video.play().catch(() => {});
+    };
+    document.addEventListener('visibilitychange', kick);
+    video.addEventListener('stalled', kick);
+    video.addEventListener('emptied', kick);
+    return () => {
+      document.removeEventListener('visibilitychange', kick);
+      video.removeEventListener('stalled', kick);
+      video.removeEventListener('emptied', kick);
+    };
+  }, [isMobile]);
 
   // Split: video halves slide apart 75% → 92%, fully off-screen by reveal-settled.
   const splitProgress = useTransform(progressMV, [0.75, 0.92], [0, 1]);
@@ -425,15 +464,10 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
               }}
               className="absolute inset-0 z-10"
             >
-              <video
-                ref={videoRightRef}
-                src="/videos/home-cold-open-web.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="h-full w-full object-cover"
+              <canvas
+                ref={canvasRightRef}
+                aria-hidden="true"
+                className="h-full w-full"
                 style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
               />
             </motion.div>
