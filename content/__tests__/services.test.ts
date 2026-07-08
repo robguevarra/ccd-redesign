@@ -17,23 +17,25 @@ const DENTAL_SUBCATS: ServiceSubcategory[] = [
 ];
 
 describe('services catalog', () => {
-  test('total count is exactly 38', () => {
-    expect(services.length).toBe(38);
+  test('total count is exactly 40', () => {
+    expect(services.length).toBe(40);
   });
 
-  test('medical lane has exactly 15 services', () => {
-    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(15);
+  test('medical lane has exactly 17 services', () => {
+    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(17);
   });
 
   test('dental lane has exactly 23 services', () => {
     expect(services.filter((s) => s.lane === 'dental')).toHaveLength(23);
   });
 
-  test('every service has a non-empty body of 50–500 words', () => {
+  test('every service has a non-empty body of 50–900 words', () => {
     for (const s of services) {
       const wordCount = s.body.trim().split(/\s+/).length;
       expect(wordCount, `${s.slug} body length`).toBeGreaterThanOrEqual(40);
-      expect(wordCount, `${s.slug} body length`).toBeLessThanOrEqual(500);
+      // Cap raised from 500: the July 2026 client additions include two
+      // long-form client-supplied bodies (myofascial, ultrasound-guided).
+      expect(wordCount, `${s.slug} body length`).toBeLessThanOrEqual(900);
     }
   });
 
@@ -88,7 +90,7 @@ describe('services catalog', () => {
   });
 
   test('helpers return correct subsets', () => {
-    expect(getServicesByLane('medical').length).toBe(15);
+    expect(getServicesByLane('medical').length).toBe(17);
     expect(getServicesByLane('dental').length).toBe(23);
     expect(getServicesBySubcategory('preventive').length).toBe(5);
     expect(getServicesBySubcategory('restorative').length).toBe(7);

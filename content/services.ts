@@ -1,7 +1,7 @@
 import type { Service, ServiceLane, ServiceSubcategory } from './schemas';
 
 /**
- * Service catalog. 38 services across 9 subcategories under 2 lanes
+ * Service catalog. 40 services across 9 subcategories under 2 lanes
  * (medical, dental). Source: docs/superpowers/specs/2026-05-06-dentisthsu-pre-pitch-audit-pass.md §5
  * plus the June 2026 client content update (new procedures + revised bodies).
  */
@@ -48,10 +48,10 @@ export const SERVICE_SUBCATEGORY_BY_LANE: Record<ServiceLane, ServiceSubcategory
 
 export const services: Service[] = [
   // ═════════════════════════════════════════════════════════════════
-  // MEDICAL LANE (15 services across 4 subcategories)
+  // MEDICAL LANE (17 services across 4 subcategories)
   // ═════════════════════════════════════════════════════════════════
 
-  // ─────── TMJ & Orofacial Pain (7) ───────
+  // ─────── TMJ & Orofacial Pain (8) ───────
   {
     slug: 'tmj',
     name: 'TMJ Treatment',
@@ -121,9 +121,7 @@ This is not a cosmetic facial filler treatment. Our use of PRF and PRP is in the
     subcategory: 'tmj-orofacial-pain',
     summary:
       'A minimally invasive washout of the jaw joint to relieve TMJ pain, locking, and limited opening — optionally enhanced with PRF.',
-    body: `This procedure is essentially a gentle washout of the jaw joint. We place a small needle into the joint space and flush it with sterile fluid to help remove inflammation and reduce pressure. The goal is to help your jaw move better, decrease pain, and improve symptoms like locking or limited opening.
-
-During the procedure, the provider places a small needle into the jaw joint and gently flushes the joint with sterile fluid. This helps wash out inflammation, remove debris, and release pressure within the joint. In many cases, it can also help improve movement of the joint if it feels stuck or locked.
+    body: `This procedure is essentially a gentle washout of the jaw joint. The provider places a small needle into the joint space and gently flushes it with sterile fluid, washing out inflammation, removing debris, and releasing pressure within the joint. The goal is to help your jaw move better, decrease pain, and improve symptoms like locking or limited opening — in many cases it can also free a joint that feels stuck.
 
 This procedure is commonly recommended for patients who have:
 • Jaw pain
@@ -187,6 +185,29 @@ How it works:
 • It encourages the jaw to rest in a more balanced position
 
 Patients typically wear the splint at night and sometimes during the day depending on the provider's recommendations. It may take a short adjustment period as the muscles and joints adapt. Don't worry — we are with you every step of the way, with routine follow-ups and adjustments to the orthotic device.`,
+  },
+  {
+    slug: 'myofascial-pain-therapy',
+    name: 'Myofascial Pain Therapy & Exercises',
+    lane: 'medical',
+    subcategory: 'tmj-orofacial-pain',
+    summary:
+      'A comprehensive exercise program combining myofunctional therapy, myofascial therapy, and isotonic and isometric exercises for TMJ, facial pain, and sleep-disordered breathing.',
+    body: `Poor muscle function, muscle tension, and chronic muscle pain are often significant contributors to temporomandibular joint (TMJ) disorders, facial pain, and obstructive sleep apnea. While treatment typically focuses on managing symptoms, there are few comprehensive therapy programs specifically designed to improve the function of the muscles involved in these conditions. Drawing on more than a decade of experience in orofacial pain, oral medicine, sleep disorders, and the myofunctional complex, Dr. Hsu has developed a comprehensive exercise program that combines myofunctional therapy, myofascial therapy, and isotonic and isometric exercises to address a variety of orofacial conditions. During your therapy appointments, our clinical team provides hands-on instruction, monitors your progress, and ensures you are performing each exercise correctly so you can achieve the greatest therapeutic benefit.
+
+Myofunctional therapy: A specialized program of exercises that trains the muscles of the tongue, lips, cheeks, and face to work together properly. These muscles play an important role in breathing, swallowing, speaking, chewing, and maintaining a healthy jaw and airway. When they are not functioning correctly, they can contribute to TMJ pain and muscle tension, teeth grinding or clenching, mouth breathing, snoring and sleep-disordered breathing, tongue thrusting, difficulty swallowing, and poor tongue posture. The goal is to retrain these muscles through a series of simple, repetitive exercises performed both in the office and at home — over time, healthy muscle patterns become automatic. Myofunctional therapy is often recommended alongside TMJ splint therapy, lingual frenectomy, sleep apnea treatment, and oral surgery. For patients with a tongue-tie it is especially important: the exercises strengthen the tongue, improve mobility, and teach the tongue to rest against the roof of the mouth after the release procedure. Without therapy, the tongue may continue its restricted movement patterns, limiting the benefits of treatment.
+
+Myofascial therapy: Similar to physical therapy for the muscles and connective tissue (fascia) of the face, jaw, head, and neck. Gentle manual techniques release tight muscles, decrease trigger points, improve circulation, and restore normal movement. It is commonly recommended for TMJ disorders, facial pain, jaw muscle tension, headaches and migraines, neck pain, limited jaw opening, and muscle soreness from clenching or grinding.
+
+In our office we combine two types of exercise for our orofacial pain and TMD patients — isometric and isotonic — the same approaches used in TMJ rehabilitation, myofunctional therapy, and physical therapy to strengthen muscles, improve coordination, and restore normal jaw function.
+
+Isometric exercises (static strengthening): the muscle contracts without movement. These strengthen muscles without placing excessive stress on the TMJ, improve stability and endurance, reduce muscle guarding and pain, and promote neuromuscular control. Because they are gentle on an irritated joint, rehabilitation programs often start here.
+
+Isotonic exercises (movement strengthening): the muscle contracts while moving through a range of motion. These build strength through movement, increase jaw mobility, restore coordination and function, and improve endurance for everyday activities like chewing and speaking. They are introduced as pain decreases and muscle control improves.
+
+The connection to TMJ and sleep: your tongue is one of the strongest and most influential muscles in your mouth. Ideally it rests gently against the roof of the mouth, supporting your jaw and helping keep your airway open. If the tongue sits low, pushes against the teeth, or cannot move properly due to a tongue-tie or muscle dysfunction, it can contribute to jaw strain, bite problems, mouth breathing, snoring, and obstructive sleep apnea. Myofascial therapy helps restore proper tongue posture and muscle function, allowing your jaw and airway to work more naturally.
+
+What to expect: myofascial therapy is not a quick fix — it is a training program. Just like physical therapy after an injury, the best results come from consistent practice and participation. Most patients begin noticing improvements in muscle awareness and function within a few weeks, with continued progress over several months. The goal is lasting change to muscle habits and better overall oral function.`,
   },
 
   // ─────── Oral Medicine & Pathology (5) ───────
@@ -359,21 +380,40 @@ During the procedure, the provider carefully releases the tight tissue to allow 
 After the procedure, patients can expect some soreness and swelling for a few days. Stretching exercises may also be recommended to help retrain tongue movement and reduce the chance of the tissue tightening again during healing. Often, if the patient does not perform the exercises regularly, scar tissue will form around the area of the tongue tie and removal of this tissue will be needed at another visit.`,
   },
 
-  // ─────── Surgical & Regenerative — medical context (1) ───────
+  // ─────── Surgical & Regenerative — medical context (2) ───────
   {
     slug: 'laser-photobiomodulation',
-    name: 'Laser Photobiomodulation & Muscle Therapy',
+    name: 'Low Level Laser Therapy / Photobiomodulation',
     lane: 'medical',
     subcategory: 'surgical-regenerative-medical',
     summary:
-      'Low-level therapeutic light to relieve nerve and muscle pain, support healing, and aid recovery of the orofacial region.',
-    body: `Our Laser Photobiomodulation and Orofacial Muscle Laser Therapy utilizes low-level therapeutic light to promote tissue healing, reduce pain, and enhance recovery of the nerves and muscles involved in jaw function.
+      '810–980 nm diode laser therapy to relieve nerve and muscle pain, support healing, and aid recovery of the orofacial region.',
+    body: `Our Low Level Laser/Photobiomodulation therapy for orofacial pain utilizes 810–980 nm therapeutic diode laser light to promote tissue healing, reduce pain, and enhance recovery of the nerves and muscles involved in jaw motor and sensory function.
 
-Laser Photobiomodulation (PBM): This therapy is recommended for patients who have experienced significant trauma or injury to the jaw and orofacial region resulting in nerve pain, altered sensation, or numbness. Photobiomodulation delivers specific wavelengths of light energy that stimulate cellular repair, encourage nerve regeneration, and help restore normal nerve signaling pathways. By supporting the healing process, this treatment can improve sensation and reduce neuropathic discomfort over time.
+Photobiomodulation (PBM): This laser therapy is recommended for patients who have experienced significant trauma or injury to the jaw and orofacial region resulting in nerve pain, altered sensation, or numbness. PBM delivers specific wavelengths of light energy that stimulate cellular repair, encourage nerve regeneration, and help restore normal nerve signaling pathways. By supporting the healing process, this treatment can improve sensation and reduce neuropathic discomfort over time.
 
-Orofacial Muscle Red Light Laser Therapy: This treatment targets the muscles of the jaw, face, and surrounding structures to decrease inflammation, improve circulation, and promote muscle relaxation and healing. It is commonly used in conjunction with our custom orthotic appliance therapy to optimize muscle function and relieve tension associated with temporomandibular disorders (TMD). Additionally, it is frequently performed following PRP/PRF (Platelet-Rich Plasma/Platelet-Rich Fibrin) injections to enhance the body's natural healing response, accelerate recovery, and support regeneration of the treated muscles and soft tissues.
+Orofacial Muscle Low Level Laser Therapy: This treatment targets the muscles of the jaw, face, and surrounding structures to decrease inflammation, improve circulation, and promote muscle relaxation and healing. It is commonly used in conjunction with our orofacial exercise program and custom orthotic appliance therapy to optimize muscle function and relieve tension associated with temporomandibular disorders (TMD). Additionally, it is frequently performed following PRP/PRF (Platelet-Rich Plasma/Platelet-Rich Fibrin) trigger point injections to enhance the body's natural healing response, accelerate recovery, and support regeneration of the treated muscles and soft tissues.
 
 Together, these non-invasive laser therapies are designed to reduce pain, improve function, and promote long-term healing of both the nerves and muscles of the orofacial region.`,
+  },
+  {
+    slug: 'ultrasound-guided-procedures',
+    name: 'Ultrasound-Guided Procedures',
+    lane: 'medical',
+    subcategory: 'surgical-regenerative-medical',
+    summary:
+      'Real-time ultrasound imaging guides blood draws and therapeutic injections precisely — fewer needle sticks, greater accuracy, and improved safety.',
+    body: `Ultrasound-guided blood draw: An ultrasound-guided blood draw uses real-time ultrasound imaging to locate veins that are difficult to see or feel. A trained medical professional uses a handheld ultrasound probe to visualize the vein and guide a needle directly into the blood vessel, increasing the likelihood of successful access on the first attempt. This technique minimizes discomfort and reduces the need for multiple needle sticks. It is recommended for patients with difficult venous access, including those who have deep veins that cannot be easily felt through the skin, chronic illnesses requiring frequent blood draws or IV access, scar tissue from repeated needle insertions, veins that are dehydrated or collapse easily, or other physical characteristics that make veins difficult to locate.
+
+Ultrasound-guided injection: An ultrasound-guided injection is a minimally invasive procedure in which a healthcare provider uses live ultrasound imaging to precisely guide a needle into a joint, tendon, bursa, muscle, or around a nerve. This allows medication — typically a local anesthetic or other therapeutic agent — to be delivered directly to the source of pain or inflammation, improving accuracy, effectiveness, and safety. Your provider may recommend an ultrasound-guided injection to improve the accuracy of medication placement, diagnose the source of pain, treat joint, tendon, ligament, bursa, or nerve-related conditions, reduce inflammation and relieve pain, or avoid nearby nerves, blood vessels, and other important structures.
+
+Compared with traditional landmark-guided techniques, ultrasound guidance offers several important advantages:
+• Greater accuracy — real-time imaging allows precise needle placement
+• Fewer needle sticks — significantly reduces failed attempts and repeat insertions
+• Increased comfort — less tissue trauma results in less pain and bruising
+• Improved safety — helps avoid nerves, arteries, and other sensitive structures
+• Better treatment outcomes — ensures medication reaches the intended target for maximum effectiveness
+• Faster care — reduces delays by improving first-attempt success, especially in patients with difficult vein access`,
   },
 
   // ═════════════════════════════════════════════════════════════════
