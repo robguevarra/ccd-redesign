@@ -41,6 +41,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoLeftRef = useRef<HTMLVideoElement>(null);
+  const canvasLeftRef = useRef<HTMLCanvasElement>(null);
   const canvasRightRef = useRef<HTMLCanvasElement>(null);
   const progressMV = useMotionValue(0);
   const [questionIdx, setQuestionIdx] = useState(0);
@@ -81,37 +82,47 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
     return () => clearInterval(id);
   }, [reduced]);
 
-  // The right half mirrors the left video onto a canvas. A second <video>
-  // decoder drifts against the first and needed seek-corrections, and those
-  // mid-playback seeks paint black frames on many GPUs — the reported
-  // "half the hero goes black at random times" glitch. drawImage from the
-  // single playing decoder is pixel-perfect sync with no seeking at all.
+  // Both desktop halves are canvases painted from the single hidden video.
+  // History: two independent <video> decoders desynced (seek-corrections
+  // painted black frames — "half the hero goes black"), and one video + one
+  // canvas mirror had a gamma/color mismatch (faint dark cast + center seam),
+  // since browsers color-manage <video> differently from canvas drawImage.
+  // One decoder → two identical canvas paints = perfect sync AND identical
+  // color on both halves.
   useEffect(() => {
     const video = videoLeftRef.current;
-    const canvas = canvasRightRef.current;
-    if (!video || !canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const canvases = [canvasLeftRef.current, canvasRightRef.current].filter(
+      (c): c is HTMLCanvasElement => !!c,
+    );
+    if (!video || canvases.length === 0) return;
+    const ctxs = canvases
+      .map((c) => c.getContext('2d'))
+      .filter((c): c is CanvasRenderingContext2D => !!c);
+    if (ctxs.length !== canvases.length) return;
     let raf = 0;
     const draw = () => {
       raf = requestAnimationFrame(draw);
       if (video.readyState < 2) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const cw = Math.round(canvas.clientWidth * dpr);
-      const ch = Math.round(canvas.clientHeight * dpr);
-      if (!cw || !ch) return;
-      if (canvas.width !== cw || canvas.height !== ch) {
-        canvas.width = cw;
-        canvas.height = ch;
-      }
       const vw = video.videoWidth;
       const vh = video.videoHeight;
       if (!vw || !vh) return;
-      // object-cover math — canvas has no native cover-fit.
-      const scale = Math.max(cw / vw, ch / vh);
-      const dw = vw * scale;
-      const dh = vh * scale;
-      ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      for (let i = 0; i < canvases.length; i++) {
+        const canvas = canvases[i]!;
+        const ctx = ctxs[i]!;
+        const cw = Math.round(canvas.clientWidth * dpr);
+        const ch = Math.round(canvas.clientHeight * dpr);
+        if (!cw || !ch) continue;
+        if (canvas.width !== cw || canvas.height !== ch) {
+          canvas.width = cw;
+          canvas.height = ch;
+        }
+        // object-cover math — canvas has no native cover-fit.
+        const scale = Math.max(cw / vw, ch / vh);
+        const dw = vw * scale;
+        const dh = vh * scale;
+        ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      }
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);
@@ -433,7 +444,27 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
           </motion.div>
         ) : (
           <>
-            {/* ─────────── Desktop: left video half (clip-path: right 50%) ─────────── */}
+            {/* Hidden decoder — BOTH visible halves are canvases painted from
+                this single element so they share one rendering pipeline.
+                Showing one half as a raw <video> and the other as a canvas
+                produced a subtle gamma/color mismatch (a faint dark cast on
+                the canvas half and a visible center seam), because browsers
+                color-manage <video> rendering differently from canvas
+                drawImage output. Kept 1px + opacity-0 (not display:none) so
+                playback and decoding continue. */}
+            <video
+              ref={videoLeftRef}
+              src="/videos/office-broll-web.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              className="absolute h-px w-px opacity-0 pointer-events-none"
+            />
+
+            {/* ─────────── Desktop: left half (clip-path: right 50%) ─────────── */}
             <motion.div
               style={{
                 x: xLeft,
@@ -442,20 +473,15 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
               }}
               className="absolute inset-0 z-10"
             >
-              <video
-                ref={videoLeftRef}
-                src="/videos/office-broll-web.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="h-full w-full object-cover"
+              <canvas
+                ref={canvasLeftRef}
+                aria-hidden="true"
+                className="h-full w-full"
                 style={{ filter: 'grayscale(0.7) brightness(0.95) contrast(1.05)' }}
               />
             </motion.div>
 
-            {/* ─────────── Desktop: right video half (clip-path: left 50%) ─────────── */}
+            {/* ─────────── Desktop: right half (clip-path: left 50%) ─────────── */}
             <motion.div
               style={{
                 x: xRight,
