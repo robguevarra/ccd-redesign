@@ -20,6 +20,9 @@ export function ServiceIllustration({ slug, name }: ServiceIllustrationProps) {
   const src = serviceIllustrationSrc(slug);
   if (!src) return null;
   const secondary = SERVICE_SECONDARY_ILLUSTRATIONS[slug];
+  // Anchored secondaries render inside the body copy (see <ServiceBody>);
+  // only un-anchored ones stack here under the primary.
+  const stackedSecondary = secondary && !secondary.anchor ? secondary : null;
 
   return (
     <FadeUp as="section" className="bg-stone-50 pb-16 md:pb-24">
@@ -37,18 +40,18 @@ export function ServiceIllustration({ slug, name }: ServiceIllustrationProps) {
             A simple look at {name.toLowerCase()} — for illustration only.
           </figcaption>
         </figure>
-        {secondary && (
+        {stackedSecondary && (
           <figure className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
             <Image
-              src={secondary.src}
-              alt={`Educational illustration showing ${secondary.caption}`}
+              src={stackedSecondary.src}
+              alt={`Educational illustration showing ${stackedSecondary.caption}`}
               width={SERVICE_ILLUSTRATION_RATIO.width}
               height={SERVICE_ILLUSTRATION_RATIO.height}
               sizes="(min-width: 768px) 768px, 100vw"
               className="h-auto w-full"
             />
             <figcaption className="border-t border-stone-100 px-5 py-3 text-center text-xs text-stone-500">
-              A simple look at {secondary.caption} — for illustration only.
+              A simple look at {stackedSecondary.caption} — for illustration only.
             </figcaption>
           </figure>
         )}

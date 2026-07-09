@@ -73,9 +73,9 @@ export default function DentalLanePage() {
             </h1>
             <p className="mt-10 max-w-2xl text-stone-700 text-lg md:text-xl leading-relaxed">
               Cleanings calibrated to your risk profile. Restorations meant to
-              last. Cosmetic work designed around how a smile actually moves and
-              reads. Three decades of family dentistry, under one roof with
-              our medical practice.
+              last. Cosmetic work designed around how a smile actually functions
+              and the message it conveys. Three decades of family dentistry,
+              under one roof with our medical practice.
             </p>
           </div>
         </section>

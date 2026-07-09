@@ -44,7 +44,12 @@ export function FadeUp({
     <Component
       initial={{ opacity: 0, y: distance }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.2 }}
+      // Height-independent trigger: fire once the element's top is ~90px into
+      // the viewport. The previous `amount: 0.2` required 20% of the ELEMENT
+      // to be visible — a section much taller than the viewport (e.g. the
+      // myofascial service body on a phone) could never reach that threshold
+      // and stayed invisible ("blank section", client report 2026-07).
+      viewport={{ once, margin: '0px 0px -90px 0px' }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
       {...props}

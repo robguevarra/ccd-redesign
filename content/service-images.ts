@@ -64,14 +64,20 @@ export const SERVICE_ILLUSTRATION_RATIO = { width: 1200, height: 800 } as const;
  * Optional second illustration for services that need two figures.
  * Dentures & Partial Dentures shows both appliance types (client request:
  * "dentures and partial dentures should be two different images").
+ *
+ * `anchor` places the figure inside the body copy, right after the first
+ * paragraph containing that phrase (client: "the partial denture image
+ * should go next to the partial denture section"). Without an anchor the
+ * figure renders under the primary illustration at the top.
  */
 export const SERVICE_SECONDARY_ILLUSTRATIONS: Record<
   string,
-  { src: string; caption: string }
+  { src: string; caption: string; anchor?: string }
 > = {
   dentures: {
     src: '/images/services/educational/dentures-partial.png',
     caption: 'a removable partial denture with a metal clasp framework',
+    anchor: 'Partial dentures replace',
   },
 };
 
