@@ -25,42 +25,43 @@ export interface BeforeAfterCase {
   after: BeforeAfterImage;
 }
 
-// NOTE (July 2026): the client-supplied "BeforeAfterPT1-2" photos turned out
-// to be the same two cases already in this set (case-1 and case-2 below), so
-// no new entries were added — adding them again duplicated rows 1&2 as 3&4.
+// NOTE (July 2026): cases 1 & 2 use the client's "BeforeAfterPT1-2" files —
+// the same two patients as the original June set, but the newer photos are
+// uncropped (wider framing), so they replace the June versions per client
+// request. File names stay patient-* to cache-bust the old case-* URLs.
 export const beforeAfterCases: BeforeAfterCase[] = [
   {
     slug: 'case-1',
     before: {
-      src: '/images/before-after/case-1-before.webp',
+      src: '/images/before-after/patient-1-before.webp',
       width: 1600,
       height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoQAAkABABoJQBOgBOkFgAA/kmXmdG3wKqemMBbfBiGK52PbBMThDC4MPpZTc6IAAA=',
+        'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAkABABoJagCdAEXU5GbCYAA/txvltX9Bj4pW/ip7AYUJk0sR2Htvro6DHMDYAA=',
     },
     after: {
-      src: '/images/before-after/case-1-after.webp',
+      src: '/images/before-after/patient-1-after.webp',
       width: 1600,
       height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABQAQCdASoQAAkABABoJQBOgCgAAP657f1usJXUzZFx2OOxpPibsDAA',
+        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJYgCdACyahnAAP6DHCewSo85iOUyxJ92sKbnYkAAAA==',
     },
   },
   {
     slug: 'case-2',
     before: {
-      src: '/images/before-after/case-2-before.webp',
+      src: '/images/before-after/patient-2-before.webp',
       width: 1600,
       height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACQAQCdASoQAAkABABoJQBOgCHF39AA/j60eqYAAtmx+QpEi6ErSaRIAAA=',
+        'data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABABoJZACdADzeSfAAP2Xl01kXmymzslCMNGsGW508AAAAA==',
     },
     after: {
-      src: '/images/before-after/case-2-after.webp',
+      src: '/images/before-after/patient-2-after.webp',
       width: 1600,
       height: 900,
       blurDataURL:
-        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACQAQCdASoQAAkABABoJQBOgB5qmDAA/sAwQ4OXiDq7f63kuHdX7kgAAAA=',
+        'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoQAAkABABoJQBOgB6Q8v8KAAD+0LlVo8AqfmKyhkZBbLRRoAA=',
     },
   },
   {
