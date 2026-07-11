@@ -25,6 +25,12 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  // Self-referencing canonical on every page ('./' resolves against
+  // metadataBase + the current path). Guards against the www host serving
+  // duplicate content until the Vercel-level www -> apex redirect is set.
+  alternates: {
+    canonical: './',
+  },
   // Production: indexable. The pitch-era noindex was removed at the
   // 2026-07 switchover; /admin keeps its own noindex in app/admin/layout.tsx.
 };
