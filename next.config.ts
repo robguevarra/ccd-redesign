@@ -1,8 +1,16 @@
 import type { NextConfig } from 'next';
+import { permanentRedirects } from './lib/redirect-rules';
 
 const nextConfig: NextConfig = {
   // Strict mode is the default in Next 15+, but explicit:
   reactStrictMode: true,
+
+  // Migration 301s from the old WordPress dentisthsu.com URL space, flattened
+  // to single hops. 410 Gone paths are handled in proxy.ts (redirects() can't
+  // emit 410).
+  async redirects() {
+    return permanentRedirects;
+  },
 
   // Pin Turbopack to the project root so it ignores parent-dir lockfiles.
   turbopack: {

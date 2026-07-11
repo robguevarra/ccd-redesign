@@ -87,7 +87,7 @@ Typed code in [`content/`](content/):
 - **Hosting:** Vercel (Hobby tier)
 - **Email:** Resend
 - **CMS:** Supabase-backed `/admin` route. No Sanity / Contentful / etc.
-- **Pitch URL:** `ccd-redesign.vercel.app` (Vercel subdomain, not the dentist's domain). Canonical URL is centralized in [lib/site.ts](lib/site.ts) — change there only.
+- **Production URL:** `dentisthsu.com` (switchover 2026-07; `ccd-redesign.vercel.app` was the pitch-era URL). Canonical URL is centralized in [lib/site.ts](lib/site.ts) — change there only.
 
 ## Non-negotiables
 

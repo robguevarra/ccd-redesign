@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+import { gonePaths } from './lib/redirect-rules';
 
 /**
  * Refresh the Supabase auth session on every request and gate /admin/* routes
@@ -8,6 +9,16 @@ import { createServerClient } from '@supabase/ssr';
  * In Next 16+ the file/export convention is `proxy` (was `middleware`).
  */
 export async function proxy(request: NextRequest) {
+  // 410 Gone for retired WordPress URLs (zombie/theme-demo pages, dropped
+  // services). Next's redirects() can only 3xx, so these answer here —
+  // before any Supabase work, since bots hammer these paths.
+  if (gonePaths.has(request.nextUrl.pathname)) {
+    return new NextResponse('Gone', {
+      status: 410,
+      headers: { 'content-type': 'text/plain' },
+    });
+  }
+
   let response = NextResponse.next({
     request: { headers: request.headers },
   });

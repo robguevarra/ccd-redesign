@@ -3,9 +3,13 @@ import type { Redirect } from './schemas';
 /**
  * 301 / 410 redirect map for the dentisthsu.com migration.
  *
- * Consumed by `vercel.ts` `redirects` config in P4. Each redirect has a
- * stable canonical destination so SEO equity from the old WordPress URLs
- * transfers cleanly.
+ * Consumed by `lib/redirect-rules.ts`, which flattens redirect chains and
+ * feeds the 301s to `next.config.ts` and the 410s to `proxy.ts`. Each
+ * redirect has a stable canonical destination so SEO equity from the old
+ * WordPress URLs transfers cleanly.
+ *
+ * Rules may chain (legacy URL -> intermediate -> lane URL); the consumer
+ * flattens them so visitors see a single hop.
  *
  * Three redirect categories:
  *   1. Service slug normalization      (`/services-X-html` -> `/services/X`)
@@ -76,7 +80,7 @@ export const redirects: Redirect[] = [
   { from: '/doctors-dr-earlene-milone-2', to: '/doctors/dr-amandeep-singh', status: 301, note: 'Old WP slug was for prior associate; current doctor is Dr. Singh' },
   { from: '/doctors-dr-rachel-lim', to: '/doctors/dr-rachel-lim', status: 301 },
   { from: '/doctors-dr-robert-sharobiem', to: '/doctors/dr-robert-sharobiem', status: 301 },
-  { from: '/doctors-dr-serena-hsu', to: '/doctors', status: 410, note: 'Doctor dropped per audit — direct 410 (no 301 hop through removed slug)' },
+  { from: '/doctors-dr-serena-hsu', to: '/doctors/dr-serena-hsu', status: 301, note: 'Was 410 (dropped per audit); Dr. Serena Hsu re-added in June 2026 content update' },
   { from: '/aboutus-associates-html', to: '/doctors', status: 301 },
   { from: '/our-team', to: '/doctors', status: 301 },
   { from: '/aboutus-interview-html', to: '/about', status: 301 },
@@ -234,9 +238,10 @@ export const redirects: Redirect[] = [
   { from: '/services/porcelain-veneers', to: '/dental/porcelain-veneers', status: 301, note: 'Lane migration (was cosmetic)' },
   { from: '/services/teeth-whitening', to: '/dental/teeth-whitening', status: 301, note: 'Lane migration (was cosmetic)' },
   { from: '/services/periodontal-treatment', to: '/dental/periodontal-treatment', status: 301, note: 'Lane migration' },
+  { from: '/services/dental-implants', to: '/dental/implants', status: 301, note: 'Lane migration + rename (rule was missing; legacy implant URLs chained here)' },
 
-  // Lane index redirects
-  { from: '/services', to: '/dental', status: 301, note: 'Default lane is dental for legacy /services traffic' },
+  // Lane index redirect retired 2026-07-11: /services is now a live page
+  // (the All Services index), so legacy /services traffic lands on it directly.
 
   // ------------------------------------------------------------------
   // 5. P3.5 audit-pass: 410 Gone — services dropped from catalog

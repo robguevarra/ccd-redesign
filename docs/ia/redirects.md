@@ -1,8 +1,21 @@
 # Redirect Map (human-readable mirror)
 
-**Date:** 2026-05-05
-**Source of truth:** [`content/redirects.ts`](../../content/redirects.ts) — typed array consumed by `vercel.ts` in P4
+**Date:** 2026-05-05 (wired live 2026-07-11)
+**Source of truth:** [`content/redirects.ts`](../../content/redirects.ts) — typed array consumed by `lib/redirect-rules.ts`, which flattens chains and feeds 301s to `next.config.ts` and 410s to `proxy.ts`
 **Source spec:** [P2 spec §8](../superpowers/specs/2026-05-05-dentisthsu-phase-2-ia-content-strategy.md#8-301--410-redirect-map)
+
+> **2026-07-11 switchover update.** The map is now live in the app (it was
+> previously data-only). Three rule changes at wiring time:
+> 1. `/doctors-dr-serena-hsu` — was 410; now **301 → `/doctors/dr-serena-hsu`**
+>    (Dr. Serena Hsu was re-added in the June 2026 content update).
+> 2. Added `/services/dental-implants` → **301 `/dental/implants`** (lane
+>    migration rule was missing; legacy implant URLs chained through it).
+> 3. Retired `/services` → `/dental` — `/services` is now a live page (the
+>    All Services index).
+>
+> Chains in the map (legacy → pitch-era → lane URL) are flattened at build
+> time so every legacy URL answers with a single permanent redirect, and
+> legacy URLs whose chain ends in a retired service answer 410 directly.
 
 This is a markdown mirror of `content/redirects.ts` for human review. **`content/redirects.ts` is the canonical source.** If this file diverges, the TypeScript file wins.
 

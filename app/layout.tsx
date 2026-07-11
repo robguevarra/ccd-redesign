@@ -25,17 +25,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
-  // Pitch site: do not index. See app/robots.ts for the matching rule and
-  // the rationale. Flip both back together when promoting to production.
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-    },
-  },
+  // Production: indexable. The pitch-era noindex was removed at the
+  // 2026-07 switchover; /admin keeps its own noindex in app/admin/layout.tsx.
 };
 
 export default function RootLayout({

@@ -290,3 +290,17 @@ Driven by a small JS stepper at 10fps that sets the sprite mask-position (`curre
 **Page:** Renamed Contact → "Find Us" (page title + nav label); reordered the page so the map is on top and the address/call/hours details sit below.
 
 **Map — simpler implementation:** The practice wanted a simpler map and asked "can we just have a drawing instead?" Replaced the keyless Google Maps iframe with `components/map-drawing.tsx` — a hand-drawn-style **inline-SVG schematic** (210 freeway, Milliken Ave × Kenyon Way, the Vineyards Marketplace plaza, an accent pin on the practice). Rationale: no iframe / no API key / no third-party calls, instant load, fully on-brand and themeable; the "Get directions" button still deep-links to Google Maps for real turn-by-turn, so nothing functional is lost. Geography verified via web search (Vineyards Marketplace at Kenyon Way & Milliken, south of the 210). `components/map-embed.tsx` (the keyless Google embed) is kept in the repo as an alternative; the drawing can also be swapped for a commissioned illustration (the component is just an SVG/image + a directions link).
+
+---
+
+## 2026-07-11 — Production switchover prep: redirects wired, robots flipped, canonical → dentisthsu.com
+
+The practice is cutting over from the old WordPress dentisthsu.com to this site. Changes:
+
+**Redirect map wired (finally live).** `content/redirects.ts` had been data-only since P2 — nothing consumed it. New `lib/redirect-rules.ts` flattens redirect chains at build time (legacy WP URL → pitch-era URL → lane URL becomes one hop) and splits the map: 301s feed `next.config.ts` `redirects()` (served as 308s, SEO-equivalent), 410s are answered in `proxy.ts` (Next redirects() can't emit 410; the check runs before any Supabase work). Verified locally with `next start` + curl across all rule categories.
+
+**Three map corrections at wiring time:** (1) `/doctors-dr-serena-hsu` 410 → 301 `/doctors/dr-serena-hsu` — she was re-added in the June 2026 update, the 410 was stale; (2) added missing `/services/dental-implants` → `/dental/implants` lane rule — legacy implant URLs (`/services-implants-html`, `/portfolio-dental-implants-2`) chained through it and would have 404'd; (3) retired `/services` → `/dental` — `/services` is now the live All Services page.
+
+**Pitch mode off.** `lib/site.ts` SITE_URL → `https://dentisthsu.com` (apex, matching the old WP canonical form — old crawl confirms no www). Root-layout `robots: index:false` removed; `app/robots.ts` flipped from disallow-all to allow-all + `Disallow: /admin` + sitemap pointer. `/admin` keeps its own layout-level noindex.
+
+**Remaining cutover steps are DNS/Vercel-level (not code):** add `dentisthsu.com` + `www.dentisthsu.com` to the Vercel project (www → apex redirect is automatic), point DNS, and park/redirect the three legacy subdomains (`2017.`, `www.blog.`, `www.familyblog.`) at DNS level per the note in `content/redirects.ts` §4.
