@@ -133,7 +133,7 @@ export default async function HomePage() {
           </p>
           <div className="md:flex md:items-end md:justify-between mb-14">
             <h2 className="font-serif text-4xl md:text-6xl tracking-tighter max-w-3xl">
-              {doctors.length === 5 ? 'Five' : doctors.length} doctors,{' '}
+              {['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][doctors.length] ?? doctors.length} doctors,{' '}
               <span className="italic font-light text-stone-300">
                 one office.
               </span>

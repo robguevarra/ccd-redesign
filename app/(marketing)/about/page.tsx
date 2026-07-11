@@ -4,7 +4,7 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'About',
-  description: `${practiceInfo.brandName} — a five-doctor practice in ${practiceInfo.address.city}, in continuous service since 1993.`,
+  description: `${practiceInfo.brandName} — a six-doctor practice in ${practiceInfo.address.city}, in continuous service since 1993.`,
 };
 
 const TIMELINE = [
