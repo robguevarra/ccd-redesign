@@ -26,6 +26,9 @@ export const practiceInfo: PracticeInfo = {
   // (maps.app.goo.gl/UJueZeNFVnqNMyRw8) and Plus Code 4CMV+MJ.
   geo: { lat: 34.1341994, lng: -117.5559279 },
   googleMapsUrl: 'https://maps.app.goo.gl/UJueZeNFVnqNMyRw8',
+  // Opens the Google reviews list directly (place_id derived from the listing's
+  // CID). Unlike the ?cid= link, this lands on the reviews tab, not Overview.
+  googleReviewsUrl: 'https://search.google.com/local/reviews?placeid=ChIJ0_PK9yE2w4ARmjObJmbZs-k',
   hours: [
     { day: 'Monday', open: '09:00', close: '18:00' },
     { day: 'Tuesday', open: '09:00', close: '18:00' },

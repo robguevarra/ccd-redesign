@@ -97,7 +97,7 @@ export default async function ReviewsPage() {
               Open Yelp page <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
             <a
-              href={practiceInfo.socials.google}
+              href={practiceInfo.googleReviewsUrl ?? practiceInfo.socials.google}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-stone-50 text-stone-50 px-8 py-4 text-base font-medium hover:bg-stone-50 hover:text-stone-900 transition-colors"

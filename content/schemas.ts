@@ -190,6 +190,8 @@ export interface PracticeInfo {
   geo: { lat: number; lng: number };
   /** Canonical Google Maps place/share URL for the practice listing. */
   googleMapsUrl?: string;
+  /** Deep link that opens the practice's Google reviews list directly. */
+  googleReviewsUrl?: string;
   hours: BusinessHours[];
   phones: PhoneNumber[];
   email: string | null;
