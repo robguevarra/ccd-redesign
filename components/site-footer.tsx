@@ -152,10 +152,10 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
                 </a>
               </li>
             )}
-            {practiceInfo.socials.google && (
+            {(practiceInfo.googleReviewsUrl || practiceInfo.socials.google) && (
               <li>
                 <a
-                  href={practiceInfo.socials.google}
+                  href={practiceInfo.googleReviewsUrl ?? practiceInfo.socials.google}
                   rel="noopener noreferrer"
                   target="_blank"
                   className="text-stone-400 hover:text-[var(--color-accent-200)] transition-colors"
