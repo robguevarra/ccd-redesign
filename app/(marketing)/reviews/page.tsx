@@ -1,20 +1,24 @@
 import Link from 'next/link';
 import { ArrowRight, Star } from 'lucide-react';
-import { reviews } from '@/content/reviews';
+import { listReviews } from '@/lib/supabase/queries';
 import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Reviews',
-  description: `What patients say about ${practiceInfo.brandName} — curated 5★ reviews from Yelp.`,
+  description: `What patients say about ${practiceInfo.brandName} — curated 5★ reviews from Yelp and Google.`,
 };
 
-const SOURCE_LABEL = {
+export const revalidate = 60;
+
+const SOURCE_LABEL: Record<string, string> = {
   yelp: 'Yelp',
   google: 'Google',
   facebook: 'Facebook',
-} as const;
+};
 
-export default function ReviewsPage() {
+export default async function ReviewsPage() {
+  const reviews = await listReviews();
+
   return (
     <>
       <section className="bg-stone-100/60 py-24 md:py-32 border-b border-stone-200">
@@ -27,9 +31,9 @@ export default function ReviewsPage() {
             <span className="italic font-light">in our patients' words.</span>
           </h1>
           <p className="mt-10 max-w-2xl text-stone-600 text-lg leading-relaxed">
-            Curated from the practice's actual Yelp page. Click through to see
-            them in original context, plus all reviews — including the ones we
-            haven't featured here.
+            Curated from the practice's real Yelp reviews. See them in original
+            context — plus every review on Yelp and Google, including the ones
+            we haven't featured here.
           </p>
         </div>
       </section>
@@ -56,14 +60,18 @@ export default function ReviewsPage() {
               <footer className="mt-8 text-sm text-stone-600">
                 <span className="font-medium text-stone-900">{r.authorName}</span>
                 <span className="text-stone-400"> · </span>
-                <a
-                  href={r.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-stone-900 underline-offset-4 hover:underline"
-                >
-                  {SOURCE_LABEL[r.source]}
-                </a>
+                {r.sourceUrl ? (
+                  <a
+                    href={r.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-stone-900 underline-offset-4 hover:underline"
+                  >
+                    {SOURCE_LABEL[r.source] ?? r.source}
+                  </a>
+                ) : (
+                  <span>{SOURCE_LABEL[r.source] ?? r.source}</span>
+                )}
               </footer>
             </li>
           ))}

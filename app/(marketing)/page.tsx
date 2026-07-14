@@ -2,8 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone, Star } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
-import { listDoctors } from '@/lib/supabase/queries';
-import { featuredReviews } from '@/content/reviews';
+import { listDoctors, getFeaturedReviews } from '@/lib/supabase/queries';
 import { FadeUp } from '@/components/motion/fade-up';
 import { WhyPatientsStay } from '@/components/why-patients-stay';
 import { cn } from '@/lib/cn';
@@ -56,6 +55,7 @@ export const revalidate = 60;
 export default async function HomePage() {
   const main = practiceInfo.phones[0]!;
   const doctors = await listDoctors();
+  const featuredReviews = await getFeaturedReviews();
 
   return (
     <>

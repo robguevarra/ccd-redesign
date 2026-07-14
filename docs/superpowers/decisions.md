@@ -304,3 +304,19 @@ The practice is cutting over from the old WordPress dentisthsu.com to this site.
 **Pitch mode off.** `lib/site.ts` SITE_URL → `https://dentisthsu.com` (apex, matching the old WP canonical form — old crawl confirms no www). Root-layout `robots: index:false` removed; `app/robots.ts` flipped from disallow-all to allow-all + `Disallow: /admin` + sitemap pointer. `/admin` keeps its own layout-level noindex.
 
 **Remaining cutover steps are DNS/Vercel-level (not code):** add `dentisthsu.com` + `www.dentisthsu.com` to the Vercel project (www → apex redirect is automatic), point DNS, and park/redirect the three legacy subdomains (`2017.`, `www.blog.`, `www.familyblog.`) at DNS level per the note in `content/redirects.ts` §4.
+
+## 2026-07-14 — Post-launch fixes + Reviews moved into the admin CMS
+
+Batch of fixes from the practice's "Other Website Errors" doc, plus a new admin capability.
+
+**Password reset → localhost (config, not code).** Reset emails were landing on `localhost:3000`. Root cause was Supabase Auth **URL Configuration**, not the app: the code builds the correct `redirectTo` from the request host, but GoTrue only honors a `redirectTo` that matches the **Redirect URLs** allowlist — otherwise it falls back to the **Site URL**, which was still the dev `http://localhost:3000`. Fixed in the Supabase dashboard (Site URL → `https://dentisthsu.com`, added `https://dentisthsu.com/**` to the allowlist). Confirmed via auth logs. Note: the correct owner account is `brienhsu@yahoo.com` (active, never logged in); the earlier `brienhsu@outlook.com` was a mistaken/fake address, already deactivated.
+
+**Medical front page branding.** `/medical` hero body + tab title now read **"Brien Hsu, DDS, MS & Associates"** instead of "Comfort Care Dental" (the medical practice is branded under the doctor's name; the wordmark already switched on the medical lane). Title set `absolute` so the global "— Comfort Care Dental" template suffix isn't appended.
+
+**Header address → Google Maps link.** The utility-strip address (and the mobile drawer "Visit" block) is now a link to the canonical listing via `MAPS_PLACE_URL` (`lib/maps.ts`), matching the footer/Find-Us convention.
+
+**Find Us map — mobile street label.** On mobile, `fitBounds` with heavy right-padding forced a zoom-out so CARTO never rendered the "Kenyon Way" street label. Added a breakpoint-aware view in `components/find-us-map.tsx`: mobile centers on the clinic at zoom 17 (label renders), with the clinic tooltip moved above the pin and capped so it doesn't clip off the narrow map. Desktop unchanged.
+
+**Reviews page → real Google reviews.** The "Open Google reviews" button pointed at the Maps share link (a map pin), not reviews, and the intro only mentioned Yelp. Resolved the listing's CID from the share link and set `practiceInfo.socials.google` → `https://www.google.com/maps?cid=16840042464426013594` (canonical listing, reviews visible). Reviews-page intro now mentions Yelp **and** Google.
+
+**Reviews CMS (new).** Reviews were hardcoded in `content/reviews.ts` (redeploy to change). Moved them into a Supabase `reviews` table with an `/admin/reviews` CMS mirroring the Doctors CMS: add/edit/delete, reorder ↑↓, Featured (homepage) + Visible toggles, per-review source + source URL. RLS matches doctors (anon reads `active` only; writes limited to `is_active_staff()`; owner+editor can manage, front-office excluded). Migration `supabase/migrations/2026-07-14_create_reviews.sql` (applied to prod, 8 reviews seeded). Public `/reviews` + homepage strip now read from the DB via `listReviews()` / `getFeaturedReviews()` (ISR + on-save `revalidatePath`); `content/reviews.ts` deleted; `Review.rating` widened `5` → `number`.

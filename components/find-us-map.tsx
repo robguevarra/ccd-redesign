@@ -127,7 +127,10 @@ const CSS = `
 .ccd-findus .ccd-btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:9px 16px;border-radius:10px;font-weight:600;font-size:13px;white-space:nowrap;}
 .ccd-findus .ccd-btn:hover{background:var(--teal-dk);}
 .leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:13px;color:#2b3a39;}
-@media (max-width:560px){.ccd-findus .ccd-steps{grid-template-columns:1fr;gap:8px;}.ccd-findus .ccd-head h2{font-size:18px;}}
+@media (max-width:560px){.ccd-findus .ccd-steps{grid-template-columns:1fr;gap:8px;}.ccd-findus .ccd-head h2{font-size:18px;}
+  /* Sits above the pin on mobile — let the doctor's-name line wrap and cap the
+     width so it never overflows the narrow map. */
+  .leaflet-tooltip.ccd-clinic{white-space:normal;max-width:190px;text-align:center;}}
 `;
 
 function bearing(a: LL, b: LL): number {
@@ -157,6 +160,11 @@ export function FindUsMap() {
       const reduce = window.matchMedia?.(
         '(prefers-reduced-motion: reduce)',
       ).matches;
+      // On a narrow (mobile) container, fitting the whole route forces a big
+      // zoom-out and the CARTO tiles stop rendering the "Kenyon Way" street
+      // label. Prioritize a clinic-centered view at a zoom where the street
+      // name is legible without the patient needing to pinch-zoom.
+      const isMobile = window.matchMedia?.('(max-width: 560px)').matches;
 
       const map = L.map(el, { scrollWheelZoom: false }).setView(DEST, 17);
       L.tileLayer(
@@ -229,12 +237,20 @@ export function FindUsMap() {
         lineJoin: 'round',
         lineCap: 'round',
       }).addTo(map);
-      // Asymmetric padding: the destination sits at the east end and its
-      // labels extend to the right, so reserve extra room on that side.
-      map.fitBounds(L.latLngBounds(path).extend(DEST), {
-        paddingTopLeft: [24, 28],
-        paddingBottomRight: [185, 34],
-      });
+      if (isMobile) {
+        // Clinic-centered at a zoom that keeps the "Kenyon Way" street label
+        // rendered. Nudge the view east so the pin sits left-of-center,
+        // leaving the numbered steps below to describe the short route.
+        map.setView(DEST, 17, { animate: false });
+        map.panBy([48, -24], { animate: false });
+      } else {
+        // Asymmetric padding: the destination sits at the east end and its
+        // labels extend to the right, so reserve extra room on that side.
+        map.fitBounds(L.latLngBounds(path).extend(DEST), {
+          paddingTopLeft: [24, 28],
+          paddingBottomRight: [185, 34],
+        });
+      }
 
       const dropPin = () => {
         L.marker(DEST, { icon: pinIcon(TEAL) })
@@ -246,8 +262,10 @@ export function FindUsMap() {
               '<span class="ccd-clinic-sub">Brien Hsu, DDS, MS &amp; Associates</span>',
             {
               permanent: true,
-              direction: 'right',
-              offset: [10, 0],
+              // Above the pin on mobile so the wide label doesn't clip off the
+              // right edge of the narrow map; beside it on desktop.
+              direction: isMobile ? 'top' : 'right',
+              offset: isMobile ? [0, -6] : [10, 0],
               className: 'ccd-clinic',
             },
           )

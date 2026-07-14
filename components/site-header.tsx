@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Mail, Menu, Phone, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { practiceInfo } from '@/content/practice-info';
+import { MAPS_PLACE_URL } from '@/lib/maps';
 import { cn } from '@/lib/cn';
 import { getSublabel } from '@/lib/sublabel';
 import { getLane } from '@/lib/lane';
@@ -160,10 +161,15 @@ export function SiteHeader({
         )}
       >
         <div className="mx-auto max-w-7xl h-[31px] px-[20px] md:px-[32px] flex items-center justify-between gap-4 text-[12px]">
-          <span className="hidden md:block truncate">
+          <a
+            href={MAPS_PLACE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:block truncate transition-opacity hover:opacity-70"
+          >
             {practiceInfo.address.street} · {practiceInfo.address.city},{' '}
             {practiceInfo.address.state} {practiceInfo.address.zip}
-          </span>
+          </a>
           <a
             href={`tel:${main.tel}`}
             className={cn(
@@ -406,11 +412,18 @@ export function SiteHeader({
 
           <div className="mt-auto pt-10 text-xs text-stone-500 leading-relaxed">
             <p className="uppercase tracking-[0.24em] mb-3">Visit</p>
-            <p>{practiceInfo.address.street}</p>
-            <p>
-              {practiceInfo.address.city}, {practiceInfo.address.state}{' '}
-              {practiceInfo.address.zip}
-            </p>
+            <a
+              href={MAPS_PLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block transition-opacity hover:opacity-70"
+            >
+              <p>{practiceInfo.address.street}</p>
+              <p>
+                {practiceInfo.address.city}, {practiceInfo.address.state}{' '}
+                {practiceInfo.address.zip}
+              </p>
+            </a>
           </div>
         </div>
       </div>

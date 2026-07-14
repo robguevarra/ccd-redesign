@@ -2,7 +2,7 @@ import 'server-only';
 import { unstable_cache } from 'next/cache';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { createClient } from './server';
-import type { BlogPost, AppointmentRequest, AppointmentStatus, Doctor, Image } from '@/content/schemas';
+import type { BlogPost, AppointmentRequest, AppointmentStatus, Doctor, Image, Review } from '@/content/schemas';
 import { publicUrlFor } from './storage';
 import { normalizeWeaveConfig, WEAVE_DEFAULTS, type WeaveConfig } from '@/lib/weave';
 import { normalizeOfficeHours, DEFAULT_OFFICE_HOURS } from '@/lib/office-hours';
@@ -455,4 +455,58 @@ export async function getDoctorRow(slug: string): Promise<DoctorRow | null> {
     active: row.active,
     portraitPath: row.portrait_path,
   };
+}
+
+/* ---- reviews --------------------------------------------------------- */
+
+function rowToReview(row: any): Review {
+  return {
+    id: row.id,
+    source: row.source,
+    authorName: row.author_name,
+    authorInitial: row.author_initial ?? null,
+    rating: row.rating,
+    body: row.body,
+    sourceUrl: row.source_url ?? '',
+    featured: row.featured,
+    order: row.display_order,
+  };
+}
+
+/** Public: all visible reviews, in display order. */
+export async function listReviews(): Promise<Review[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('reviews').select('*').eq('active', true)
+    .order('display_order', { ascending: true });
+  return (data ?? []).map(rowToReview);
+}
+
+/** Public: visible + featured reviews for the homepage. */
+export async function getFeaturedReviews(): Promise<Review[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('reviews').select('*').eq('active', true).eq('featured', true)
+    .order('display_order', { ascending: true });
+  return (data ?? []).map(rowToReview);
+}
+
+export interface ReviewRow extends Review {
+  active: boolean;
+}
+
+/** Admin: every review (incl. hidden), in display order. */
+export async function listReviewRows(): Promise<ReviewRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('reviews').select('*').order('display_order', { ascending: true });
+  return (data ?? []).map((row) => ({ ...rowToReview(row), active: row.active }));
+}
+
+export async function getReviewRow(id: string): Promise<ReviewRow | null> {
+  const supabase = await createClient();
+  const { data: row } = await supabase
+    .from('reviews').select('*').eq('id', id).maybeSingle();
+  if (!row) return null;
+  return { ...rowToReview(row), active: row.active };
 }

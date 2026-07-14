@@ -13,6 +13,7 @@ const BASE_ITEMS = [
   { href: '/admin/dashboard', label: 'Dashboard' },
   { href: '/admin/posts', label: 'Posts' },
   { href: '/admin/doctors', label: 'Doctors' },
+  { href: '/admin/reviews', label: 'Reviews' },
   { href: '/admin/patient-forms', label: 'Patient Forms' },
   { href: '/admin/inquiries', label: 'Inquiries' },
 ];

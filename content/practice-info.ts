@@ -41,7 +41,9 @@ export const practiceInfo: PracticeInfo = {
   email: 'advancedcare@dentisthsu.com',
   socials: {
     facebook: 'https://www.facebook.com/pages/category/Dentist---Dental-Office/Comfort-Care-Dental-Brien-Hsu-DDS-203187206359000/',
-    google: 'https://maps.app.goo.gl/UJueZeNFVnqNMyRw8',
+    // Canonical Google listing (cid resolved from the practice's Maps share
+    // link) — opens the business profile with its reviews, not just a map pin.
+    google: 'https://www.google.com/maps?cid=16840042464426013594',
     yelp: 'https://www.yelp.com/biz/comfort-care-dental-practice-brien-hsu-dds-rancho-cucamonga',
     twitter: 'https://twitter.com/drbrienhsu',
   },

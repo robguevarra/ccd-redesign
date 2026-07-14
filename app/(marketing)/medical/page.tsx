@@ -11,7 +11,9 @@ import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 export const metadata: Metadata = {
-  title: 'Medical Practice — Comfort Care Dental',
+  // Absolute so the global "— Comfort Care Dental" template suffix is not
+  // appended: the medical practice is branded under the doctor's name.
+  title: { absolute: 'Medical Practice — Brien Hsu, DDS, MS & Associates' },
   description:
     'Orofacial pain, oral medicine, TMJ, sleep apnea, oral pathology in Rancho Cucamonga. Led by Dr. Brien Hsu — board-certified in Orofacial Pain and Dental Sleep Medicine.',
 };
@@ -21,7 +23,7 @@ const MEDICAL_KEYFRAMES: [AirwayHeroKeyframe, AirwayHeroKeyframe, AirwayHeroKeyf
     eyebrow: 'Why people drive in',
     title: 'Pain you thought was permanent.',
     italicize: [4],
-    body: 'TMJ. Sleep apnea. Headaches the GP couldn\'t explain. Jaw clicks that everyone said were "just stress." These are the cases most dental offices send away. Comfort Care Dental is one of the few practices that takes them on.',
+    body: 'TMJ. Sleep apnea. Headaches the GP couldn\'t explain. Jaw clicks that everyone said were "just stress." These are the cases most dental offices send away. Brien Hsu, DDS, MS & Associates is one of the few practices that takes them on.',
   },
   {
     eyebrow: "What you're looking at",

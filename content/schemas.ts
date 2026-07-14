@@ -125,8 +125,8 @@ export interface Review {
   authorName: string;
   /** e.g. 'M.B.' — rendered when the reviewer requested anonymity. */
   authorInitial: string | null;
-  /** We curate only 5-star reviews. */
-  rating: 5;
+  /** 1–5. We curate 5-star reviews, but the field allows the full range. */
+  rating: number;
   body: string;
   sourceUrl: string;
   /** True = surfaced on the homepage. */
