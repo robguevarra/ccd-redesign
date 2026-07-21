@@ -8,7 +8,7 @@ import { FindUsMap } from '@/components/find-us-map';
 import { MAPS_PLACE_URL } from '@/lib/maps';
 
 export const metadata = {
-  title: 'Find Us',
+  title: { absolute: 'Find Us — Rancho Cucamonga Dentist | Comfort Care Dental' },
   description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[0]?.number}.`,
 };
 

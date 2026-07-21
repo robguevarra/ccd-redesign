@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
-  title: 'About',
+  title: { absolute: 'About — Rancho Cucamonga Dentist | Comfort Care Dental' },
   description: `${practiceInfo.brandName} — a six-doctor practice in ${practiceInfo.address.city}, in continuous service since 1993.`,
 };
 

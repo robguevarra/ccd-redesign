@@ -7,7 +7,7 @@ import { BeforeAfterSlider } from '@/components/before-after/before-after-slider
 import { FadeUp } from '@/components/motion/fade-up';
 
 export const metadata: Metadata = {
-  title: 'Before & After Smiles',
+  title: { absolute: 'Before & After Smiles — Rancho Cucamonga | Comfort Care Dental' },
   description:
     'Real smile transformations from our patients. Drag each slider to compare before and after results from cosmetic and restorative treatment.',
 };

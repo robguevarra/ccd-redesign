@@ -7,7 +7,7 @@ import { FadeUp } from '@/components/motion/fade-up';
 export const revalidate = 60;
 
 export const metadata = {
-  title: 'Doctors',
+  title: { absolute: 'Our Dentists — Rancho Cucamonga | Comfort Care Dental' },
   description:
     'Six doctors. Three decades of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
 };

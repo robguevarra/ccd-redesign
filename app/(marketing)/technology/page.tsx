@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
-  title: 'Technology',
+  title: { absolute: 'Dental Technology — Rancho Cucamonga | Comfort Care Dental' },
   description: `${practiceInfo.brandName} invests early in dental technology that improves clinical outcomes — 3D Cone Beam CT, 3Shape Trios scanner, and surgical-grade microscopy.`,
 };
 

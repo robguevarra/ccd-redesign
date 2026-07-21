@@ -4,7 +4,7 @@ import { listReviews } from '@/lib/supabase/queries';
 import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
-  title: 'Reviews',
+  title: { absolute: 'Patient Reviews — Rancho Cucamonga Dentist | Comfort Care Dental' },
   description: `What patients say about ${practiceInfo.brandName} — curated 5★ reviews from Yelp and Google.`,
 };
 
