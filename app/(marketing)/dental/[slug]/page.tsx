@@ -34,7 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // append a second brand suffix. Leads with the service + city — the
     // "[service] Rancho Cucamonga" query pattern the practice ranks for.
     title: { absolute: `${service.name} — Rancho Cucamonga | Comfort Care Dental` },
-    description: service.summary,
+    // City in the description too — Google bolds the matched location in the
+    // SERP snippet, which lifts click-through on "[service] rancho cucamonga".
+    description: `${service.summary} Comfort Care Dental in Rancho Cucamonga, CA.`,
   };
 }
 
