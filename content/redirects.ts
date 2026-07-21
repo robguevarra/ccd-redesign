@@ -36,7 +36,7 @@ export const redirects: Redirect[] = [
   { from: '/services-oralhygiene-html', to: '/services/oral-hygiene', status: 301 },
   { from: '/services-periodontaltreatment-html', to: '/services/periodontal-treatment', status: 301 },
   { from: '/services-implants-html', to: '/services/dental-implants', status: 301, note: 'New service in v2 IA' },
-  { from: '/services-onlays-html', to: '/services/crowns-caps', status: 301, note: 'Onlays merge into crowns category' },
+  { from: '/services-onlays-html', to: '/dental/onlays', status: 301, note: 'Onlays became its own service again in the June 2026 catalog' },
   { from: '/services-dentures-html', to: '/services/dentures', status: 301 },
   { from: '/services-sedationdentistry-html', to: '/services/sedation-dentistry', status: 301 },
 
@@ -115,7 +115,7 @@ export const redirects: Redirect[] = [
   { from: '/portfolio-composite-fillings', to: '/services/composite-fillings', status: 301 },
   { from: '/portfolio-dental-implants-2', to: '/services/dental-implants', status: 301 },
   { from: '/portfolio-fixed-bridges', to: '/services/fixed-bridges', status: 301 },
-  { from: '/portfolio-onlays', to: '/services/crowns-caps', status: 301 },
+  { from: '/portfolio-onlays', to: '/dental/onlays', status: 301, note: 'Onlays became its own service again in the June 2026 catalog' },
   { from: '/portfolio-oral-hygiene', to: '/services/oral-hygiene', status: 301 },
   { from: '/portfolio-veneers-lumineers', to: '/services/porcelain-veneers', status: 301 },
   { from: '/portfolio-crowns-caps', to: '/services/crowns-caps', status: 301 },
@@ -251,10 +251,115 @@ export const redirects: Redirect[] = [
   { from: '/services/removable-orthodontics', to: '/', status: 410, note: 'Service dropped per client audit' },
   { from: '/services/sedation-dentistry', to: '/', status: 410, note: 'Service dropped per client audit' },
   { from: '/services/children-oral-healthcare', to: '/', status: 410, note: 'Service dropped per client audit' },
-  { from: '/services/oral-hygiene', to: '/', status: 410, note: 'Folded into professional-cleaning' },
+  { from: '/services/oral-hygiene', to: '/dental/professional-cleaning', status: 301, note: 'Folded into professional-cleaning — was 410, but a replacement exists so 301 per our own conventions (changed 2026-07-21)' },
 
   // ------------------------------------------------------------------
   // 6. June 2026 content update — service rename
   // ------------------------------------------------------------------
   { from: '/medical/surgical-laser-therapy', to: '/medical/laser-photobiomodulation', status: 301, note: 'Renamed to Laser Photobiomodulation & Muscle Therapy' },
+
+  // ------------------------------------------------------------------
+  // 7. 2026-07-21 post-switchover gap fix — REAL WordPress URL shapes
+  //
+  // The P2 map was authored from dash-normalized scrape filenames
+  // (`/testimonial-ali`, `/services-compositefillings-html`), but the live
+  // WordPress permalinks used slashes and bare slugs (`/testimonial/ali`,
+  // `/composite-fillings`). Post-cutover sweep of all 146 crawled URLs
+  // found 72 of them 404ing — including the highest-value service pages.
+  // These rules cover the real shapes; the dash forms above are kept in
+  // case any were ever indexed.
+  // ------------------------------------------------------------------
+
+  // Top-level service slugs (the actual WP permalinks)
+  { from: '/composite-fillings', to: '/dental/composite-fillings', status: 301 },
+  { from: '/root-canal-therapy', to: '/dental/root-canal', status: 301 },
+  { from: '/crowns-caps', to: '/dental/crowns-and-bridges', status: 301 },
+  { from: '/fixed-bridges', to: '/dental/crowns-and-bridges', status: 301 },
+  { from: '/dental-implants', to: '/dental/implants', status: 301 },
+  { from: '/dentures-partial-dentures', to: '/dental/dentures', status: 301 },
+  { from: '/tooth-extractions', to: '/dental/extractions', status: 301 },
+  { from: '/teeth-whitening', to: '/dental/teeth-whitening', status: 301 },
+  { from: '/veneers', to: '/dental/porcelain-veneers', status: 301 },
+  { from: '/onlays', to: '/dental/onlays', status: 301, note: 'Onlays became its own service again in the June 2026 catalog' },
+  { from: '/periodontal-treatment', to: '/dental/periodontal-treatment', status: 301 },
+  { from: '/oral-hygiene', to: '/dental/professional-cleaning', status: 301, note: 'Folded into professional-cleaning' },
+  { from: '/laser-dentistry', to: '/dental/periodontal-treatment', status: 301, note: 'Laser dentistry consolidates into periodontal' },
+  { from: '/oral-pathology', to: '/medical/oral-pathology', status: 301 },
+  { from: '/orofacial-pain', to: '/medical/orofacial-pain', status: 301 },
+  { from: '/sleep-apnea-treatment', to: '/medical/sleep-apnea', status: 301 },
+  { from: '/sleep-apnea', to: '/medical/sleep-apnea', status: 301, note: 'Defensive alias' },
+  { from: '/tmj', to: '/medical/tmj', status: 301, note: 'Defensive alias' },
+  { from: '/dentures', to: '/dental/dentures', status: 301, note: 'Defensive alias' },
+
+  // Dropped services (real WP shapes; same 410 treatment as section 5)
+  { from: '/amalgam-fillings', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/orthodontics', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/removable-orthodontics', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/sedation-dentistry', to: '/', status: 410, note: 'Service dropped per client audit' },
+  { from: '/children-oral-healthcare', to: '/', status: 410, note: 'Service dropped per client audit' },
+
+  // Testimonials — real WP shape was /testimonial/<slug>
+  { from: '/testimonial/ali', to: '/reviews', status: 301 },
+  { from: '/testimonial/anon', to: '/reviews', status: 301 },
+  { from: '/testimonial/anthony-a', to: '/reviews', status: 301 },
+  { from: '/testimonial/baby-m', to: '/reviews', status: 301 },
+  { from: '/testimonial/cat-h', to: '/reviews', status: 301 },
+  { from: '/testimonial/d-j', to: '/reviews', status: 301 },
+  { from: '/testimonial/danny-c', to: '/reviews', status: 301 },
+  { from: '/testimonial/g-c', to: '/reviews', status: 301 },
+  { from: '/testimonial/g-m', to: '/reviews', status: 301 },
+  { from: '/testimonial/g-s', to: '/reviews', status: 301 },
+  { from: '/testimonial/gg-mitrescu', to: '/reviews', status: 301 },
+  { from: '/testimonial/jen-c', to: '/reviews', status: 301 },
+  { from: '/testimonial/jenny-h', to: '/reviews', status: 301 },
+  { from: '/testimonial/jerry-g', to: '/reviews', status: 301 },
+  { from: '/testimonial/john-d', to: '/reviews', status: 301 },
+  { from: '/testimonial/juice-m', to: '/reviews', status: 301 },
+  { from: '/testimonial/mary-s', to: '/reviews', status: 301 },
+  { from: '/testimonial/melissa-b', to: '/reviews', status: 301 },
+  { from: '/testimonial/michael-s', to: '/reviews', status: 301 },
+  { from: '/testimonial/nathan-fields', to: '/reviews', status: 301 },
+  { from: '/testimonial/p-c', to: '/reviews', status: 301 },
+  { from: '/testimonial/peter-j', to: '/reviews', status: 301 },
+  { from: '/testimonial/pvr', to: '/reviews', status: 301 },
+  { from: '/testimonial/sam-d', to: '/reviews', status: 301 },
+  { from: '/testimonial/tina-p', to: '/reviews', status: 301 },
+  { from: '/testimonial/w-mamba', to: '/reviews', status: 301 },
+
+  // Portfolio — real WP shape was /portfolio/<slug>
+  { from: '/portfolio/composite-fillings', to: '/dental/composite-fillings', status: 301 },
+  { from: '/portfolio/crowns-caps', to: '/dental/crowns-and-bridges', status: 301 },
+  { from: '/portfolio/dental-implants-2', to: '/dental/implants', status: 301 },
+  { from: '/portfolio/fixed-bridges', to: '/dental/crowns-and-bridges', status: 301 },
+  { from: '/portfolio/onlays', to: '/dental/onlays', status: 301 },
+  { from: '/portfolio/oral-hygiene', to: '/dental/professional-cleaning', status: 301 },
+  { from: '/portfolio/veneers-lumineers', to: '/dental/porcelain-veneers', status: 301 },
+
+  // WP archives / author / doctor
+  { from: '/author/brienhsu', to: '/doctors/dr-brien-hsu', status: 301 },
+  { from: '/tag/general', to: '/blog', status: 301 },
+  { from: '/tag/information', to: '/blog', status: 301 },
+  { from: '/doctors/dr-earlene-milone-2', to: '/doctors/dr-amandeep-singh', status: 301, note: 'Old WP slug for prior associate; current doctor is Dr. Singh' },
+  { from: '/feed', to: '/blog', status: 301, note: 'WP RSS feed' },
+
+  // Theme-demo shells (real WP shapes; same 410 treatment as section 3)
+  { from: '/section/dental', to: '/', status: 410 },
+  { from: '/section/medical', to: '/', status: 410 },
+  { from: '/wds-slider/preview', to: '/', status: 410 },
+
+  // Yoast XML sitemaps — real .xml URLs. These 301 to the live sitemap
+  // rather than 410: crawlers still fetching them get pointed at the real
+  // one. (Dots in the path mean proxy.ts would never see them anyway —
+  // its matcher skips file-extension paths — so they must be 301s.)
+  { from: '/sitemap_index.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/page-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/post-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/category-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/post_tag-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/portfolio-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/team_group-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/team_member-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/testimonial_group-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/testimonial-sitemap.xml', to: '/sitemap.xml', status: 301 },
+  { from: '/wds-slider-sitemap.xml', to: '/sitemap.xml', status: 301 },
 ];
