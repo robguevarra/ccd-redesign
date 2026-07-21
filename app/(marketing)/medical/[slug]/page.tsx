@@ -57,7 +57,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Not found' };
   }
   return {
-    title: `${service.name} — Comfort Care Dental`,
+    // `absolute` so the layout's `%s — Comfort Care Dental` template doesn't
+    // append a second brand suffix. Leads with the service + city — the
+    // "[service] Rancho Cucamonga" query pattern the practice ranks for.
+    title: { absolute: `${service.name} — Rancho Cucamonga | Comfort Care Dental` },
     description: service.summary,
   };
 }

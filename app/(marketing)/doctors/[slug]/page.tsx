@@ -40,7 +40,9 @@ export async function generateMetadata({
   const doctor = await getDoctorBySlug(slug);
   if (!doctor) return {};
   return {
-    title: doctor.name,
+    // Name first (for name searches) + city + brand. `absolute` keeps the
+    // layout template from appending a second brand suffix.
+    title: { absolute: `${doctor.name} — Comfort Care Dental, Rancho Cucamonga` },
     description: doctor.short,
   };
 }

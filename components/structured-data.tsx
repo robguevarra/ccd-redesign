@@ -34,6 +34,12 @@ export async function PracticeStructuredData() {
       longitude: practiceInfo.geo.lng,
     },
     ...(practiceInfo.googleMapsUrl ? { hasMap: practiceInfo.googleMapsUrl } : {}),
+    // Cities the practice serves — the practice's home city plus the adjacent
+    // communities its prior sites ranked for. Helps Google associate the
+    // practice with "dentist <town>" queries across the local area.
+    areaServed: [practiceInfo.address.city, ...practiceInfo.nearbyAreas].map(
+      (name) => ({ '@type': 'City', name }),
+    ),
     openingHoursSpecification: hours
       .filter((h) => !h.closed && h.open && h.close)
       .map((h) => ({

@@ -11,7 +11,8 @@ import { FadeUp } from '@/components/motion/fade-up';
 import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 
 export const metadata: Metadata = {
-  title: 'Dental Practice — Comfort Care Dental',
+  // `absolute` so the layout template doesn't append a second brand suffix.
+  title: { absolute: 'Dentist Rancho Cucamonga — Dental Practice | Comfort Care Dental' },
   description:
     'Family, restorative, and cosmetic dentistry in Rancho Cucamonga. Cleanings, fillings, crowns and bridges, veneers, whitening, root canals, implants, periodontal care.',
 };

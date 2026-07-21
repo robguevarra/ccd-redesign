@@ -22,6 +22,9 @@ export const practiceInfo: PracticeInfo = {
     state: 'CA',
     zip: '91701',
   },
+  // Adjacent communities the practice serves — the exact towns the prior
+  // dentisthsu.com sites ranked for. Feeds schema.org areaServed.
+  nearbyAreas: ['Alta Loma', 'Upland', 'Fontana', 'Ontario'],
   // Verified against the practice's Google Maps share link
   // (maps.app.goo.gl/UJueZeNFVnqNMyRw8) and Plus Code 4CMV+MJ.
   geo: { lat: 34.1341994, lng: -117.5559279 },

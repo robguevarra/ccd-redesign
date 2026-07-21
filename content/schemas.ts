@@ -186,6 +186,13 @@ export interface PracticeInfo {
    */
   googleListingName: string;
   address: { street: string; city: string; state: string; zip: string };
+  /**
+   * Neighboring cities/communities the practice draws patients from. Used for
+   * schema.org `areaServed` and local-SEO copy. These are the exact towns the
+   * practice's prior sites ranked for ("Rancho Cucamonga, Alta Loma, Upland,
+   * & Fontana").
+   */
+  nearbyAreas: string[];
   /** Verified geo coordinates of the practice (Google listing / Plus Code). */
   geo: { lat: number; lng: number };
   /** Canonical Google Maps place/share URL for the practice listing. */
