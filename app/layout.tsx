@@ -8,10 +8,12 @@ import { LenisProvider } from '@/components/lenis-provider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  // Default title is the OG card title — kept under 60 chars so it doesn't
-  // truncate in link previews. Page-specific titles slot into the template.
+  // Default title leads with the practice's proven local-SEO phrase —
+  // the old WordPress site ranked pages 1–5 for years with this exact
+  // pattern, and the post-switchover rebuild had dropped it (2026-07-21).
+  // Page-specific titles slot into the template.
   title: {
-    default: `${practiceInfo.brandName} — TMJ & dental care, ${practiceInfo.address.city}`,
+    default: `Dentist ${practiceInfo.address.city} | ${practiceInfo.brandName} — Dr. Brien Hsu`,
     template: `%s — ${practiceInfo.brandName}`,
   },
   // OG/Twitter card description — kept in the 110–160 char sweet spot so it
