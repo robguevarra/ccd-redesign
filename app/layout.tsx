@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   // pattern, and the post-switchover rebuild had dropped it (2026-07-21).
   // Page-specific titles slot into the template.
   title: {
-    default: `Dentist ${practiceInfo.address.city} | ${practiceInfo.brandName} — Dr. Brien Hsu`,
+    default: `Dentist ${practiceInfo.address.city} — Dr. Brien Hsu | ${practiceInfo.brandName}`,
     template: `%s — ${practiceInfo.brandName}`,
   },
   // OG/Twitter card description — kept in the 110–160 char sweet spot so it
