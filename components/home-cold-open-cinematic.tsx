@@ -165,6 +165,9 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
 
   // "Two practices, under one roof" reveal — fades in as the split opens (0.78 → 0.92).
   const revealOpacity = useTransform(progressMV, [0.78, 0.92], [0, 1]);
+  // CTAs are hit-testable only once visible — while invisible (phases 1–2) taps
+  // must fall through, not land on transparent "Enter dental/medical" links.
+  const revealPointerEvents = useTransform(revealOpacity, (v) => (v > 0.5 ? 'auto' : 'none'));
   // Reveal y-entry — slides up softly with the fade-in.
   const revealY = useTransform(progressMV, [0.78, 0.92], [24, 0]);
 
@@ -388,7 +391,10 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
           style={{ opacity: revealOpacity, y: revealY, paddingTop: `${headerH}px`, willChange: 'transform, opacity' }}
           className="absolute inset-0 flex flex-col items-center justify-center z-0 px-6 pointer-events-none"
         >
-          <div className="text-center max-w-5xl pointer-events-auto">
+          <motion.div
+            style={{ pointerEvents: revealPointerEvents }}
+            className="text-center max-w-5xl"
+          >
             <p className="text-xs uppercase tracking-[0.28em] text-stone-300/80 mb-6 md:mb-8">
               Comfort Care · est. 1993
             </p>
@@ -416,19 +422,21 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {isMobile ? (
           /* ─────────── Mobile: single full-bleed video, opacity-fade exit ─────────── */
           /* One decoder instead of two eliminates the seam caused by GPU desync on iOS. */
           /* Phase 3 "split" becomes a simple opacity fade (mobileVideoOpacity). */
+          /* pointer-events-none: at opacity 0 this layer still spans the viewport
+             above the reveal CTAs (z-10 over z-0) and would swallow their taps. */
           <motion.div
             style={{
               opacity: mobileVideoOpacity,
               willChange: 'transform, opacity',
             }}
-            className="absolute inset-0 z-10"
+            className="absolute inset-0 z-10 pointer-events-none"
           >
             <video
               ref={videoLeftRef}
@@ -471,7 +479,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
                 clipPath: 'inset(0 50% 0 0)',
                 willChange: 'transform, opacity',
               }}
-              className="absolute inset-0 z-10"
+              className="absolute inset-0 z-10 pointer-events-none"
             >
               <canvas
                 ref={canvasLeftRef}
@@ -488,7 +496,7 @@ export function HomeColdOpenCinematic({ heightVh = 1.6 }: { heightVh?: number })
                 clipPath: 'inset(0 0 0 50%)',
                 willChange: 'transform, opacity',
               }}
-              className="absolute inset-0 z-10"
+              className="absolute inset-0 z-10 pointer-events-none"
             >
               <canvas
                 ref={canvasRightRef}
