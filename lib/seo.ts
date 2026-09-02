@@ -54,3 +54,24 @@ export function serviceMetaDescription(summary: string): string {
   }
   return base + SERVICE_SUFFIXES[SERVICE_SUFFIXES.length - 1]!;
 }
+
+/**
+ * Titles. Bing warns above 70 characters; Google truncates around 60 but
+ * still reads the rest. Service titles keep the practice's stated priority
+ * order (service, city, brand last) and drop the brand only when the service
+ * name alone would push the title past 70.
+ */
+export const TITLE_MAX = 70;
+
+export function serviceTitle(name: string): string {
+  const withBrand = `${name} — ${practiceInfo.address.city} | ${practiceInfo.brandName}`;
+  if (withBrand.length <= TITLE_MAX) return withBrand;
+  const cityOnly = `${name} — ${practiceInfo.address.city}, CA`;
+  return cityOnly.length <= TITLE_MAX ? cityOnly : name;
+}
+
+/** Blog titles are authored in the CMS; only append the brand when it fits. */
+export function blogTitle(title: string): string {
+  const withBrand = `${title} — ${practiceInfo.brandName}`;
+  return withBrand.length <= TITLE_MAX ? withBrand : title;
+}

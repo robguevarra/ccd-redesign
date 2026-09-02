@@ -1068,7 +1068,9 @@ function ActivePanel({
       variants={{ initial: {}, enter: {}, exit: {} }}
       className={variant === 'column' ? 'w-full' : ''}
     >
-      <h1
+      {/* h2, not h1: the page owns its single h1 (Bing flagged duplicate h1s
+          on /dental, /medical, /medical/sleep-apnea — 2026-09-02 site scan). */}
+<h2
         className={`font-serif ${titleSize} leading-[0.95] tracking-tighter ${titleColor} font-light max-w-4xl`}
       >
         <span className="inline-flex flex-wrap gap-x-[0.28em]">
@@ -1083,7 +1085,7 @@ function ActivePanel({
             </MaskWord>
           ))}
         </span>
-      </h1>
+      </h2>
 
       <motion.p
         initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}

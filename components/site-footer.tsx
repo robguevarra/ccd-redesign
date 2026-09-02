@@ -43,7 +43,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           <div className="flex items-center gap-3.5 lg:justify-self-start">
             <Image
               src="/logos/dental-3.png"
-              alt=""
+              alt="Comfort Care Dental practice mark"
               width={44}
               height={44}
               className="invert shrink-0"
@@ -63,7 +63,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           <div className="flex items-center gap-3.5 lg:justify-self-end">
             <Image
               src="/logos/medical-4.png"
-              alt=""
+              alt="Brien Hsu, DDS, MS & Associates medical practice mark"
               width={44}
               height={44}
               className="invert shrink-0"
@@ -243,6 +243,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
             </Link>
             <Link
               href="/admin/login"
+              rel="nofollow"
               className="text-stone-600 hover:text-[var(--color-accent-200)] transition-colors"
               aria-label="Staff admin sign in"
             >

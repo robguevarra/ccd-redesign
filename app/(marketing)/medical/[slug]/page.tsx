@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { serviceMetaDescription } from '@/lib/seo';
+import { serviceMetaDescription, serviceTitle } from '@/lib/seo';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // `absolute` so the layout's `%s — Comfort Care Dental` template doesn't
     // append a second brand suffix. Leads with the service + city — the
     // "[service] Rancho Cucamonga" query pattern the practice ranks for.
-    title: { absolute: `${service.name} — Rancho Cucamonga | Comfort Care Dental` },
+    title: { absolute: serviceTitle(service.name) },
     // City in the description too — Google bolds the matched location in the
     // SERP snippet, which lifts click-through on "[service] rancho cucamonga".
     // Length-aware: Bing flags descriptions under 150 chars (see lib/seo.ts).
@@ -89,6 +89,9 @@ export default async function MedicalServiceDetail({ params }: PageProps) {
   return (
     <>
       {isSleepApnea ? (
+        <>
+          {/* The cinematic hero renders h2 slogans; keep one real h1 for the document. */}
+          <h1 className="sr-only">{service.name}</h1>
         <AirwayHero
           keyframes={SLEEP_APNEA_KEYFRAMES}
           ariaLabel="Comfort Care — sleep apnea treatment"
@@ -98,6 +101,7 @@ export default async function MedicalServiceDetail({ params }: PageProps) {
             </>
           }
         />
+        </>
       ) : (
         <FadeUp>
           <section className="bg-stone-50 py-24 md:py-36 border-b border-[var(--color-accent-200)]">

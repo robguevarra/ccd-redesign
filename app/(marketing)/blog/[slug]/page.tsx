@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { blogTitle } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -24,7 +25,9 @@ export async function generateMetadata({
   const post = await getPublishedPost(slug);
   if (!post) return {};
   return {
-    title: post.title,
+    // Bing warns above 70 chars — the layout template would append the
+    // brand unconditionally, so set an absolute title that only adds it when it fits.
+    title: { absolute: blogTitle(post.title) },
     description: post.excerpt,
   };
 }

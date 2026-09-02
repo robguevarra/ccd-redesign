@@ -13,7 +13,8 @@ import { AirwayHero, type AirwayHeroKeyframe } from '@/components/airway-hero';
 export const metadata: Metadata = {
   // Absolute so the global "— Comfort Care Dental" template suffix is not
   // appended: the medical practice is branded under the doctor's name.
-  title: { absolute: 'TMJ & Orofacial Pain — Rancho Cucamonga | Brien Hsu, DDS, MS & Associates' },
+  // ≤70 chars for Bing: dropped the ", MS" from the medical-lane brand suffix.
+  title: { absolute: 'TMJ & Orofacial Pain — Rancho Cucamonga | Brien Hsu, DDS & Associates' },
   description:
     'Orofacial pain, oral medicine, TMJ, sleep apnea, oral pathology in Rancho Cucamonga. Led by Dr. Brien Hsu — board-certified in Orofacial Pain and Dental Sleep Medicine.',
 };

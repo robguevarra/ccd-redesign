@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { serviceMetaDescription } from '@/lib/seo';
+import { serviceMetaDescription, serviceTitle } from '@/lib/seo';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // `absolute` so the layout's `%s — Comfort Care Dental` template doesn't
     // append a second brand suffix. Leads with the service + city — the
     // "[service] Rancho Cucamonga" query pattern the practice ranks for.
-    title: { absolute: `${service.name} — Rancho Cucamonga | Comfort Care Dental` },
+    title: { absolute: serviceTitle(service.name) },
     // City in the description too — Google bolds the matched location in the
     // SERP snippet, which lifts click-through on "[service] rancho cucamonga".
     // Length-aware: Bing flags descriptions under 150 chars (see lib/seo.ts).

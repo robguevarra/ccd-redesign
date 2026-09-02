@@ -1,6 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import { services } from '@/content/services';
-import { META_DESCRIPTION_MAX, META_DESCRIPTION_MIN, serviceMetaDescription } from '../seo';
+import {
+  blogTitle,
+  META_DESCRIPTION_MAX,
+  META_DESCRIPTION_MIN,
+  serviceMetaDescription,
+  serviceTitle,
+  TITLE_MAX,
+} from '../seo';
 
 describe('serviceMetaDescription', () => {
   test('every service description lands in the 150–165 band (or was already longer)', () => {
@@ -28,5 +35,30 @@ describe('serviceMetaDescription', () => {
   test('uses the shortest suffix that reaches the minimum', () => {
     const long = 'x'.repeat(120) + '.';
     expect(serviceMetaDescription(long)).toBe(`${long} Comfort Care Dental in Rancho Cucamonga, CA.`);
+  });
+});
+
+describe('serviceTitle', () => {
+  test('every service title is at most 70 characters and names the city', () => {
+    for (const s of services) {
+      const t = serviceTitle(s.name);
+      expect(t.length, `${s.slug}: ${t}`).toBeLessThanOrEqual(TITLE_MAX);
+      expect(t).toContain('Rancho Cucamonga');
+    }
+  });
+
+  test('keeps the brand when it fits, drops it when it does not', () => {
+    expect(serviceTitle('Implants')).toBe('Implants — Rancho Cucamonga | Comfort Care Dental');
+    expect(serviceTitle('Low Level Laser Therapy / Photobiomodulation')).toBe(
+      'Low Level Laser Therapy / Photobiomodulation — Rancho Cucamonga, CA',
+    );
+  });
+});
+
+describe('blogTitle', () => {
+  test('appends the brand only when the result stays within 70 characters', () => {
+    expect(blogTitle('Short post')).toBe('Short post — Comfort Care Dental');
+    const long = 'A patient story: when whitening toothpaste was the problem';
+    expect(blogTitle(long)).toBe(long);
   });
 });
