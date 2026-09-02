@@ -3,7 +3,8 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Accessibility',
-  description: `Accessibility statement for ${practiceInfo.brandName} — our commitment to WCAG 2.1 AA and how to report a barrier.`,
+  description:
+    `Accessibility statement for dentisthsu.com: ${practiceInfo.brandName}'s commitment to WCAG 2.1 AA, the accommodations we offer, and how to report a barrier to us.`,
 };
 
 export default function AccessibilityPage() {

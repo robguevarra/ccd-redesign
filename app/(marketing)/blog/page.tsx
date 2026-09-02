@@ -5,7 +5,8 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Blog',
-  description: `Articles, technology updates, and clinical perspective from the doctors at ${practiceInfo.brandName}.`,
+  description:
+    `Articles, technology updates, and clinical perspective from the doctors at ${practiceInfo.brandName} in Rancho Cucamonga, CA: dentistry, TMJ, and sleep apnea.`,
 };
 
 // Re-rendered on demand via revalidateTag('blog-posts') from the admin

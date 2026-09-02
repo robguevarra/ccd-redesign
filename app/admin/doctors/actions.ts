@@ -2,6 +2,8 @@
 
 import { redirect } from 'next/navigation';
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { after } from 'next/server';
+import { notifyIndexNow } from '@/lib/indexnow';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { uploadToBucket, deleteFromBucket } from '@/lib/supabase/storage';
@@ -44,6 +46,8 @@ function revalidateAll(slug: string) {
   revalidatePath('/');
   revalidatePath('/admin/doctors');
   revalidatePath(`/admin/doctors/${slug}`);
+  // Tell Bing/Yahoo after the response is sent (no-op outside production).
+  after(() => notifyIndexNow(['/', '/doctors', `/doctors/${slug}`]));
 }
 
 export async function createDoctor(formData: FormData): Promise<DoctorActionResult> {

@@ -6,7 +6,8 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Patient Forms',
-  description: `Download patient forms for ${practiceInfo.brandName}. Print, fill out, and bring to your visit.`,
+  description:
+    `Download new-patient and medical history forms for ${practiceInfo.brandName} in Rancho Cucamonga, CA. Print, fill them out at home, and bring them to your visit.`,
 };
 
 export const revalidate = 60;

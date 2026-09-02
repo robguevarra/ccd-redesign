@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { serviceMetaDescription } from '@/lib/seo';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -63,7 +64,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: { absolute: `${service.name} — Rancho Cucamonga | Comfort Care Dental` },
     // City in the description too — Google bolds the matched location in the
     // SERP snippet, which lifts click-through on "[service] rancho cucamonga".
-    description: `${service.summary} Comfort Care Dental in Rancho Cucamonga, CA.`,
+    // Length-aware: Bing flags descriptions under 150 chars (see lib/seo.ts).
+    description: serviceMetaDescription(service.summary),
   };
 }
 

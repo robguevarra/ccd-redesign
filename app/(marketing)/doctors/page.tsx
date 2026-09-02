@@ -9,7 +9,7 @@ export const revalidate = 60;
 export const metadata = {
   title: { absolute: 'Our Dentists — Rancho Cucamonga | Comfort Care Dental' },
   description:
-    'Six doctors. Three decades of continuous practice in Rancho Cucamonga. Led by Dr. Brien Hsu, DDS.',
+    `Meet the six doctors at Comfort Care Dental in Rancho Cucamonga, CA: general dentistry, endodontics, orthodontics, oral surgery, and TMJ care by Dr. Brien Hsu.`,
 };
 
 export default async function DoctorsPage() {

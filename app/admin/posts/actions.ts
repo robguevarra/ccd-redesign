@@ -2,6 +2,8 @@
 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { after } from 'next/server';
+import { notifyIndexNow } from '@/lib/indexnow';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { uploadToBucket } from '@/lib/supabase/storage';
@@ -39,6 +41,8 @@ function parseTags(raw: string | undefined | null): string[] {
 function revalidatePublic(slug: string) {
   revalidatePath('/blog');
   revalidatePath(`/blog/${slug}`);
+  // Tell Bing/Yahoo after the response is sent (no-op outside production).
+  after(() => notifyIndexNow(['/blog', `/blog/${slug}`]));
 }
 
 export async function createPost(formData: FormData): Promise<PostActionResult> {

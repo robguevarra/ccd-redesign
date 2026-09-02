@@ -2,6 +2,8 @@
 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { after } from 'next/server';
+import { notifyIndexNow } from '@/lib/indexnow';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 
@@ -60,6 +62,8 @@ function revalidateAll() {
   revalidatePath('/reviews');
   revalidatePath('/');
   revalidatePath('/admin/reviews');
+  // Tell Bing/Yahoo after the response is sent (no-op outside production).
+  after(() => notifyIndexNow(['/', '/reviews']));
 }
 
 export async function createReview(formData: FormData): Promise<ReviewActionResult> {

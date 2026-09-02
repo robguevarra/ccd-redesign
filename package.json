@@ -21,6 +21,7 @@
     "p1:lighthouse": "tsx scripts/p1-discovery/06-lighthouse.ts",
     "p1:axe": "tsx scripts/p1-discovery/07-axe.ts",
     "p1:run-all": "tsx scripts/p1-discovery/run-all.ts",
+    "indexnow:submit": "INDEXNOW_FORCE=1 tsx scripts/indexnow-submit.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

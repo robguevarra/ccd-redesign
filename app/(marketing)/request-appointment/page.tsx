@@ -5,7 +5,8 @@ import { AppointmentForm } from './appointment-form';
 
 export const metadata = {
   title: 'Request Appointment',
-  description: `Send an appointment request to ${practiceInfo.brandName}. We'll call back the same business day.`,
+  description:
+    `Request an appointment with ${practiceInfo.brandName} in Rancho Cucamonga, CA. Send your preferred day and time and our front desk calls back the same business day.`,
 };
 
 export default async function RequestAppointmentPage() {

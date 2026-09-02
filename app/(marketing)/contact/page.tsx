@@ -9,7 +9,8 @@ import { MAPS_PLACE_URL } from '@/lib/maps';
 
 export const metadata = {
   title: { absolute: 'Find Us — Rancho Cucamonga Dentist | Comfort Care Dental' },
-  description: `Visit ${practiceInfo.brandName} at ${practiceInfo.address.street}, ${practiceInfo.address.city}, CA. Call ${practiceInfo.phones[0]?.number}.`,
+  description:
+    `Visit ${practiceInfo.brandName} at 11458 Kenyon Way, Suite 120, Rancho Cucamonga, CA 91701. Call (909) 941-2811, get directions, and check our office hours.`,
 };
 
 export default async function ContactPage() {

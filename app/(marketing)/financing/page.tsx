@@ -4,7 +4,8 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: 'Financing',
-  description: 'CareCredit and the insurance plans we accept.',
+  description:
+    `Dental financing at ${practiceInfo.brandName} in Rancho Cucamonga, CA: CareCredit monthly payment plans and the dental insurance plans we accept. Call (909) 941-2811.`,
 };
 
 // In-house payment plans intentionally omitted — the practice arranges those

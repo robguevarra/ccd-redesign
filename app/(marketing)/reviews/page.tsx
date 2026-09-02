@@ -5,7 +5,8 @@ import { practiceInfo } from '@/content/practice-info';
 
 export const metadata = {
   title: { absolute: 'Patient Reviews — Rancho Cucamonga Dentist | Comfort Care Dental' },
-  description: `What patients say about ${practiceInfo.brandName} — curated 5★ reviews from Yelp and Google.`,
+  description:
+    `What patients say about ${practiceInfo.brandName} in Rancho Cucamonga, CA: real five-star Google and Yelp reviews for Dr. Brien Hsu and our dental and medical team.`,
 };
 
 export const revalidate = 60;
