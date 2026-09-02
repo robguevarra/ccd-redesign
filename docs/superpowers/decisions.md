@@ -330,3 +330,19 @@ Ten days post-switchover the practice lost Google rankings. Live sweep of all 14
 Added redirect-map section 7 (~70 rules) covering the real URL shapes: top-level service slugs → lane URLs, `/testimonial/<slug>` → `/reviews`, `/portfolio/<slug>` → service pages, WP archives/author/feed, real `.xml` Yoast sitemap URLs → 301 `/sitemap.xml` (dots in path mean proxy.ts never sees them, so they must be 301s not 410s). Also: `/services/oral-hygiene` and `/oral-hygiene` now 301 → `/dental/professional-cleaning` (was 410 — content was folded, not dropped, so 301 per our own conventions); onlays rules retargeted `/dental/onlays` (own service again since June). Verified locally: 0 of 146 old URLs 404 (94×308, 41×410, 6+5×200).
 
 Still outstanding at DNS/dashboard level (flagged 2026-07-11, still unfixed as of this entry): www → apex redirect in Vercel; `2017.dentisthsu.com` still resolving to old GoDaddy host and indexed by Google; spam-parameter URLs (`/?smile=…`) from the old WP hack still in the index — clean up via GSC removal tool once access exists.
+
+---
+
+## 2026-09-02 — Bing/Yahoo visibility: IndexNow, root favicon.ico, meta-description lengths
+
+Practice reported (a) the site not surfacing on Bing/Yahoo for "dentist Rancho Cucamonga", (b) no favicon on Bing/Yahoo, (c) a missing Oral Cancer page for the medical lane. Findings: Bing *had* the site indexed (brand query → new URLs + Bing Places listing with 136 reviews) but still held stale WP URLs and the dead `2017.`/`www.blog.` subdomains; `/favicon.ico` returned **404** — Bing/Yahoo fetch that exact path and ignore the query-string PNG `<link>` Next emits. Yahoo serves Bing's index, so every fix below covers both.
+
+**Bing Webmaster Tools** — Rob imported the site from Google Search Console 2026-09-02. **IndexNow** enabled with key `2171c98f59cd441c88ebe29cfe77285a` (public by protocol; key file in `public/`). `lib/indexnow.ts` normalizes paths → on-host URLs and POSTs to `api.indexnow.org`; admin post/doctor/review actions ping via `after()` **in production only** (`VERCEL_ENV`), so previews never submit. `pnpm indexnow:submit` bulk-submits the live sitemap (first run: 66 URLs, HTTP 202).
+
+**Favicon** — added `app/favicon.ico` (16/32/48 BMP, 15 KB; the png-to-ico default 256px entry was dropped, it was 270 KB). Live: `/favicon.ico` → 200 `image/vnd.microsoft.icon`.
+
+**Meta descriptions** — Bing flagged 12 pages "too short" (<150); live audit found ~45 under the line. `lib/seo.ts` `serviceMetaDescription()` keeps the service summary verbatim and appends the shortest local-SEO suffix (city always; phone / "Dr. Brien Hsu and associates" as needed) that reaches 150 — ladder steps ≤12 chars so nothing overshoots 165 unless the summary alone was already long. Nine static pages rewritten to 150–160 with city + brand. Doctor pages read `short` from Supabase and were left alone (one at 131: Dr. Singh).
+
+**Billing** — all of the above is warranty (180-day, launched 2026-07) + included support hours; not invoiced. Oral Cancer page = slot 9 of the prepaid 7–15 additional-pages bundle; pending copy from the practice, goes in Medical › Oral Medicine beside Biopsies / Oral Cancer Screening.
+
+Also fixed a stale test: `redirects.test.ts` still asserted `/services/oral-hygiene` was 410 after the 2026-07-21 change to 301.

@@ -32,7 +32,8 @@ describe('redirects', () => {
     expect(map['/services/removable-orthodontics']).toBe(true);
     expect(map['/services/sedation-dentistry']).toBe(true);
     expect(map['/services/children-oral-healthcare']).toBe(true);
-    expect(map['/services/oral-hygiene']).toBe(true);
+    // oral-hygiene 410 → 301 /dental/professional-cleaning on 2026-07-21 (content folded, not dropped).
+    expect(map['/services/oral-hygiene']).toBeUndefined();
     // dr-serena-hsu 410 removed June 2026 — she's back on the roster.
     expect(map['/doctors/dr-serena-hsu']).toBeUndefined();
   });
