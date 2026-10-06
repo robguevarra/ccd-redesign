@@ -34,6 +34,7 @@ export const SERVICE_ILLUSTRATION_SLUGS: ReadonlySet<string> = new Set([
   'implants',
   'myofascial-pain-therapy',
   'neuropathic-pain',
+  'oncology-journey',
   'occlusal-splints',
   'onlays',
   'oral-cancer-screening',
