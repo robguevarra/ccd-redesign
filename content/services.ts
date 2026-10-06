@@ -1,7 +1,7 @@
 import type { Service, ServiceLane, ServiceSubcategory } from './schemas';
 
 /**
- * Service catalog. 40 services across 9 subcategories under 2 lanes
+ * Service catalog. 41 services across 9 subcategories under 2 lanes
  * (medical, dental). Source: docs/superpowers/specs/2026-05-06-dentisthsu-pre-pitch-audit-pass.md §5
  * plus the June 2026 client content update (new procedures + revised bodies).
  */
@@ -48,7 +48,7 @@ export const SERVICE_SUBCATEGORY_BY_LANE: Record<ServiceLane, ServiceSubcategory
 
 export const services: Service[] = [
   // ═════════════════════════════════════════════════════════════════
-  // MEDICAL LANE (17 services across 4 subcategories)
+  // MEDICAL LANE (18 services across 4 subcategories)
   // ═════════════════════════════════════════════════════════════════
 
   // ─────── TMJ & Orofacial Pain (8) ───────
@@ -210,7 +210,7 @@ The connection to TMJ and sleep: your tongue is one of the strongest and most in
 What to expect: myofascial therapy is not a quick fix — it is a training program. Just like physical therapy after an injury, the best results come from consistent practice and participation. Most patients begin noticing improvements in muscle awareness and function within a few weeks, with continued progress over several months. The goal is lasting change to muscle habits and better overall oral function.`,
   },
 
-  // ─────── Oral Medicine & Pathology (5) ───────
+  // ─────── Oral Medicine & Pathology (6) ───────
   {
     slug: 'oral-pathology',
     name: 'Oral Pathology',
@@ -227,6 +227,23 @@ Oral pathology encompasses a broad range of conditions: benign and malignant neo
 When we find something that needs pathological confirmation, we perform the biopsy in our office under local anesthesia and send the specimen to a board-certified oral pathologist. We do not send patients elsewhere for that step unless the anatomy requires a different surgical approach.
 
 We also see patients on referral from other dentists and physicians who encounter oral findings outside their clinical comfort zone. A second opinion on an unusual lesion is always appropriate.`,
+  },
+  {
+    slug: 'oral-cancer-screening',
+    name: 'Oral Cancer Screening',
+    lane: 'medical',
+    subcategory: 'oral-medicine-pathology',
+    summary:
+      'Visual and tactile examination for soft-tissue lesions and early signs of oral malignancy.',
+    body: `Oral cancer is among the most survivable cancers when caught early, and among the most deadly when caught late. The difference almost always comes down to whether someone was looking. We screen every patient at every hygiene visit, because the lesion that will matter most to you may be the one you would never notice on your own.
+
+The screening is a visual and tactile examination: lips, labial mucosa, buccal mucosa, gingiva, hard and soft palate, floor of the mouth, lateral and ventral tongue, oropharynx. We check for lesions, unusual color changes (red, white, or speckled), tissue thickening, ulcerations that have not healed, and asymmetry. It adds five minutes to the visit and is included in the cost of your cleaning.
+
+When something warrants a closer look, we document it, photograph it, and discuss it with you honestly. Some findings are clearly benign and need only monitoring. Some are indeterminate and get a follow-up appointment in two to four weeks to see if they resolve on their own. Many inflammatory lesions do. Findings that do not resolve, or that present with characteristics associated with malignancy, are biopsied in our office without delay.
+
+Risk factors worth knowing about: tobacco and alcohol use remain the primary risk factors, but HPV-associated oropharyngeal cancers are increasing substantially in non-smokers. Age is a factor; so is chronic sun exposure to the lips. None of these are required for a cancer to develop, which is why we screen everyone.
+
+You should not need to ask for this screening. We perform it automatically.`,
   },
   {
     slug: 'biopsies',
@@ -261,21 +278,165 @@ After the biopsy, patients may have mild soreness, swelling, or minor bleeding f
 What sets us apart? When it comes to oral lesions, we take them very seriously, and we make sure that all care within our scope can be done under our roof. No referrals to separate facilities, no scheduling delays across multiple practices, no gap between the clinician who found the lesion and the one who explains the results. We review the report with you directly: the findings, what they mean, and the treatment plan that follows. If the results warrant referrals to other specialties or further treatment, we coordinate and adapt to the change immediately and stay involved in your care. We know results can be scary, which is why we will be here with you every step of the way. You will never be handed a report and left to interpret it alone. Often we will also educate patients on the possible causes of their lesions and help guide them on methods to reduce or even avoid re-occurrence.`,
   },
   {
-    slug: 'oral-cancer-screening',
-    name: 'Oral Cancer Screening',
+    slug: 'oncology-journey',
+    name: 'The Oncology Journey',
     lane: 'medical',
     subcategory: 'oral-medicine-pathology',
     summary:
-      'Visual and tactile examination for soft-tissue lesions and early signs of oral malignancy.',
-    body: `Oral cancer is among the most survivable cancers when caught early, and among the most deadly when caught late. The difference almost always comes down to whether someone was looking. We screen every patient at every hygiene visit, because the lesion that will matter most to you may be the one you would never notice on your own.
+      'Pre-op, treatment, and post-op dental care for patients facing cancer, coordinated with your oncology team from first consultation through restoring your smile.',
+    body: `Cancer treatment can feel stressful and overwhelming, and it is completely understandable to have questions, concerns, or uncertainty about what comes next. You do not have to navigate it all alone. Our goal is to help take some of the weight off your shoulders by guiding you through each step of the process. From your initial consultation to your procedure and pathology results, our team will help coordinate your care, communicate with your providers, and guide you through each step of the process. Our goal is simple! We want to help you get the answers you need while making the process as clear, compassionate, and seamless as possible.
 
-The screening is a visual and tactile examination: lips, labial mucosa, buccal mucosa, gingiva, hard and soft palate, floor of the mouth, lateral and ventral tongue, oropharynx. We check for lesions, unusual color changes (red, white, or speckled), tissue thickening, ulcerations that have not healed, and asymmetry. It adds five minutes to the visit and is included in the cost of your cleaning.
+Our team at Brien Hsu, DDS, MS & Associates is here to support you, advocate for you, and make this part of your journey as comfortable and manageable as possible.
 
-When something warrants a closer look, we document it, photograph it, and discuss it with you honestly. Some findings are clearly benign and need only monitoring. Some are indeterminate and get a follow-up appointment in two to four weeks to see if they resolve on their own. Many inflammatory lesions do. Findings that do not resolve, or that present with characteristics associated with malignancy, are biopsied in our office without delay.
+## Pre-Operative (Pre-Cancer Treatment)
 
-Risk factors worth knowing about: tobacco and alcohol use remain the primary risk factors, but HPV-associated oropharyngeal cancers are increasing substantially in non-smokers. Age is a factor; so is chronic sun exposure to the lips. None of these are required for a cancer to develop, which is why we screen everyone.
+### Referral from PCP/Specialist for consultation on lesion
 
-You should not need to ask for this screening. We perform it automatically.`,
+#### Pre-treatment consultation
+
+We understand that being referred for a biopsy, second opinion, or evaluation of a concerning lesion can feel overwhelming. Our goal is to make the process as comfortable, organized, and straightforward as possible while ensuring you receive the answers you need. Your pre-treatment consultation may begin in one of two ways. If you have been referred to our office for a biopsy or second opinion you will first meet with Dr. Brien Hsu for a comprehensive consultation.
+
+#### Your initial consultation
+
+During your consultation, we will take the time to understand your medical and dental history, discuss your concerns, perform a thorough examination, and take detailed photographs of the area being evaluated. These consultations typically take approximately two hours because we believe you deserve the time and attention necessary to fully understand your situation and determine the appropriate next steps. Once your evaluation is complete, our team will gather the necessary documentation and submit the information to your insurance company for authorization, when required.
+
+#### Preparing for your procedure
+
+While we are working with your insurance, we are also working behind the scenes to keep your care moving forward. Our team of specialists is already in communication to review your case, discuss any questions, and prepare for your procedure. We understand that when a biopsy or diagnosis is needed, time matters. Whenever possible, we will begin coordinating your surgical appointments before you even leave our office. This allows us to minimize unnecessary delays and keeps the process moving forward.
+
+#### Your surgical appointment
+
+On the day of your procedure, you will meet with our specialist(s), who will review the procedure with you, answer any questions you may have, and help you feel comfortable, every step of the way. Although this may be your first time meeting some of our other specialist(s), we have already reviewed your history and the information gathered during your consultation. Our team works together to ensure that your care is coordinated and that you do not have to repeatedly explain your story.
+
+#### After your biopsy
+
+Once the procedure is complete, the specimen will be carefully submitted to the appropriate laboratory for detailed pathological evaluation. The pathology report provides important information about the tissue that was removed and helps your doctors determine the appropriate diagnosis and next step in your care.
+
+### Referral from PCP/Specialist for dental clearance to begin treatment
+
+A pre-treatment dental consultation is an evaluation performed before cancer treatment begins to identify and address existing dental or oral problems that can become more serious during or after cancer treatment.
+
+The goal is not to necessarily complete every dental procedure. The goal is to make the mouth as healthy and stable as possible before cancer treatment begins, particularly when radiation to the head or neck is planned.
+
+#### What do we evaluate?
+
+• Teeth
+  ◦ Cavities or decay
+  ◦ Broken or fractured teeth
+  ◦ Teeth with poor or guarded prognoses
+  ◦ Root canal infections
+  ◦ Abscesses and/or other dental infections
+  ◦ Teeth that may be difficult to maintain during cancer treatment
+• Gums and supporting bone
+  ◦ Gingivitis
+  ◦ Periodontal disease
+  ◦ Deep periodontal pockets
+  ◦ Bone loss
+  ◦ Active infection
+• Existing dental work
+  ◦ Crowns
+  ◦ Bridges
+  ◦ Dentures
+  ◦ Partial dentures
+  ◦ Implants
+  ◦ Other dental appliances
+• Soft tissue
+  ◦ Oral lesions
+  ◦ Ulcers
+  ◦ Suspicious areas
+  ◦ Irritation or trauma
+  ◦ Signs of infection
+• Jawbone
+  ◦ Previous radiation exposure
+  ◦ Previous or current medications that affect bone healing
+  ◦ Areas of exposed bone
+  ◦ Existing bone abnormalities
+
+#### Why is this evaluation important before radiation?
+
+Radiation therapy to the head and neck can permanently affect the tissues and blood supply of the jaw. It can also reduce saliva production, increase the risk of tooth decay, and make it more difficult for the jawbone to heal after certain procedures.
+
+One serious complication that cancer teams try to prevent is osteoradionecrosis, which is damage and breakdown of irradiated jawbone that does not heal normally. Because of this, our team here at Brien Hsu, DDS, MS & Associates may recommend addressing teeth that have a poor prognosis before radiation begins, when appropriate.
+
+#### Does every patient need teeth removed?
+
+No. The decision to do this treatment is individualized. A tooth that is healthy and maintainable may simply be monitored. A tooth with significant decay, infection, advanced periodontal disease, fracture, or a poor long-term prognosis may be considered for treatment or extraction before cancer therapy.
+
+Our providers here have to balance the dental condition with:
+
+• The patient’s cancer diagnosis
+• The location of planned radiation
+• The timing of cancer treatment
+• The patient’s overall health
+• The patient’s ability to heal
+• Current and previous medications
+• The planned chemotherapy, immunotherapy, or radiation
+• The urgency of the cancer treatment
+
+#### What happens if the patient needs an extraction?
+
+If an extraction is recommended, timing becomes very important. Ideally, necessary dental surgery is completed before radiation begins, allowing adequate time for the tissue to heal. However, the exact timing will be coordinated with your oncologist and radiation teams because cancer treatment should not be unnecessarily delayed. This is something that our office will take care of for you. You have enough on your plate so let us take care of this for you. The dental provider may also coordinate with the oncologist, radiation oncologist, and other specialists that you may be seeing.
+
+#### What happens if the patient has no dental problems?
+
+The patient may simply receive from our office:
+
+• A comprehensive examination
+• Necessary X-rays
+• Oral hygiene instructions
+• Fluoride recommendations
+• Dietary counseling
+• Management of existing dental appliances
+• A preventive dental plan
+• Instructions for maintaining oral health throughout cancer treatment
+
+## Post-Operative (Post-Cancer Treatment)
+
+### Restoring your smile after cancer treatment
+
+Finishing cancer treatment is a tremendous milestone. Being told that you are cancer-free or in remission can bring a sense of relief. However, for many patients, the journey doesn’t end here. The effects of oral cancer surgery, radiation, and other cancer treatments can continue to affect the mouth, jaw, bite, and ability to eat and speak long after the cancer itself has been treated.
+
+Our goal is to help you move into the next chapter of your recovery by carefully evaluating what has changed and developing a plan to restore your oral function as safely as possible.
+
+#### Why does dental treatment after your cancer is in remission take time?
+
+Restoring a mouth after cancer treatment is often a gradual process.
+
+Unlike routine dental treatment, post-cancer reconstruction may require additional planning, healing periods, temporary appliances, adjustments, imaging, and multiple stages of treatment. We may need to begin with a more conservative approach, allow your tissues to adapt, and evaluate how your bite and jaw respond before moving forward with a more definitive prosthesis.
+
+We understand patients are often eager to get back to eating, speaking, smiling, and feeling like themselves again. However, moving too quickly can create unnecessary risks.
+
+#### Restoring your bite and oral function
+
+Depending on your individual needs, restorative treatment may involve dentures, partial dentures, crowns, bridges, implant-supported prostheses, or other customized oral prostheses.
+
+In some cases, medical insurance may provide benefits toward reconstructive or restorative treatment related to a patient’s cancer treatment. Coverage varies by insurance plan and individual circumstance, and our team can help you understand the authorization and documentation process.
+
+Our goal is not simply to replace missing teeth. We want to help restore proper support, function, comfort, and stability while taking into consideration the changes caused by your cancer treatment.
+
+**We would rather take the time to do it safely than rush the process.**
+
+#### Understanding risks
+
+Previous cancer treatment can change the way your mouth and jaw respond to dental treatment. This is particularly important for patients who have received radiation involving the head, neck, or jaw.
+
+Depending on your treatment history, certain procedures may carry an increased risk of delayed healing, infection, tissue complications, or problems with the jawbone. In some patients, there may also be risks of osteoradionecrosis or other complications following procedures that affect previous irradiated bone.
+
+These risks do not mean that restorative treatment cannot be performed. They mean that your treatment needs to be carefully planned around your individual medical history.
+
+#### Working together with your cancer care team
+
+**Your safety comes first.**
+
+We work closely with your oncology and radiation teams throughout the restorative process. When appropriate, we communicate with your oncologist, radiation oncologist, oral surgeon, and other specialists involved in your care to understand your treatment history and ensure that our dental treatment complements your overall medical treatment plan.
+
+We may request medical records, radiation information, imaging, or medical clearance before proceeding with certain procedures. This collaboration allows us to make informed decisions about what can be done safely, when it should be done, and whether additional healing or evaluation is needed before moving forward.
+
+**Your recovery doesn’t have to be rushed. You have already come a long way. Let us help you take the next step.**
+
+Cancer treatment can change many things. Rebuilding your oral health after treatment is a process, and every patient’s path will be different.
+
+We are here to help guide you through that process, one step at a time. Our goal is to provide thoughtful, coordinated care that respects what your body has already been through while working toward improved comfort, function, and confidence.`,
   },
   {
     slug: 'oral-cancer-shields',

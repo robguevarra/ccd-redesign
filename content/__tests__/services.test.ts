@@ -17,12 +17,12 @@ const DENTAL_SUBCATS: ServiceSubcategory[] = [
 ];
 
 describe('services catalog', () => {
-  test('total count is exactly 40', () => {
-    expect(services.length).toBe(40);
+  test('total count is exactly 41', () => {
+    expect(services.length).toBe(41);
   });
 
-  test('medical lane has exactly 17 services', () => {
-    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(17);
+  test('medical lane has exactly 18 services', () => {
+    expect(services.filter((s) => s.lane === 'medical')).toHaveLength(18);
   });
 
   test('dental lane has exactly 23 services', () => {
@@ -30,7 +30,11 @@ describe('services catalog', () => {
   });
 
   test('every service has a non-empty body of 50–900 words', () => {
+    // The Oncology Journey is a full client-supplied patient guide (Oct 2026),
+    // rendered as structured long-form copy — exempt from the cap.
+    const LONG_FORM = new Set(['oncology-journey']);
     for (const s of services) {
+      if (LONG_FORM.has(s.slug)) continue;
       const wordCount = s.body.trim().split(/\s+/).length;
       expect(wordCount, `${s.slug} body length`).toBeGreaterThanOrEqual(40);
       // Cap raised from 500: the July 2026 client additions include two
@@ -89,8 +93,19 @@ describe('services catalog', () => {
     expect(sigs[0]?.slug).toBe('tmj');
   });
 
+  test('oral medicine & pathology follows the practice-specified order', () => {
+    expect(getServicesBySubcategory('oral-medicine-pathology').map((s) => s.slug)).toEqual([
+      'oral-pathology',
+      'oral-cancer-screening',
+      'biopsies',
+      'oncology-journey',
+      'oral-cancer-shields',
+      'osteonecrosis',
+    ]);
+  });
+
   test('helpers return correct subsets', () => {
-    expect(getServicesByLane('medical').length).toBe(17);
+    expect(getServicesByLane('medical').length).toBe(18);
     expect(getServicesByLane('dental').length).toBe(23);
     expect(getServicesBySubcategory('preventive').length).toBe(5);
     expect(getServicesBySubcategory('restorative').length).toBe(7);
