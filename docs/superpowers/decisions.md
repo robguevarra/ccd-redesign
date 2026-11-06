@@ -360,3 +360,13 @@ Dr. Hsu sent the cancer-care document (pre-op / treatment / post-op) titled **Th
 ## 2026-11-06 — "Several" board-certified specialists, not a fixed count
 
 Dr. Hsu: the practice has 4 board-certified specialists in total (3 besides him) and may add more, so copy shouldn't state a number. Homepage "Four board-certified specialists" → "Several". `/about` implied all five associates were board-certified specialists → "Five doctors … including several board-certified specialists". Checked all 67 sitemap pages, including Supabase-driven bios, meta descriptions and JSON-LD. "Six doctors" / "six-doctor" stay: that's the roster count, not a specialist count.
+
+## 2026-11-06 — Logo morph rebuilt from layers; moon is now a fixed layer
+
+Every existing clip (`ProRes 444.mov`, `Comp 1.mov`, `animationSample.mp4`) warps the moon's inner line at frames 42–46, and a white line under the chin erases the moon as the face travels. Rob's rule: **the moon must not change unless the face overlaps it.** Rebuilt the 78 frames from the layered art (`052926 MOON.png`, `TOOTH.png`, `full logo.svg`) with the moon as one fixed layer; face, tooth and star keep the approved path and timing, measured frame by frame from the master. Uncovered moon pixels change by 0 across all frames.
+
+**Deliberate differences:** the medical logo's moon line now runs unbroken up to the jaw (no white line), so `medical-5.png` differs slightly from the old rest logo there. The moon's inner curve right of the neck isn't in the approved logo, so it tucks behind the neck as the face arrives.
+
+**Assets:** `morph-sprite-4.png`, `morph-sprite-header-3.png`, `dental-4.png`, `medical-5.png` (renamed for cache-busting), all downscaled straight from the 2500px frames. Frames and scripts: `~/Downloads/comfort-care-logo-morph-apng/v4-rebuilt-from-layers/source/`. Dr. Hsu gets the APNGs from that folder.
+
+**Pixelation:** sizing rule from 3eea688 / e1d886a / 30636eb is now enforced by `lib/__tests__/logo-morph-assets.test.ts`. New: 1× monitors were still at a 3.2× downscale, so `LaneMark` and `LogoFrames` pick a `-1x` sprite when `devicePixelRatio < 1.5`, keeping every screen at ≤~1.7×. Change a display size and the test fails until the sprite is regenerated.

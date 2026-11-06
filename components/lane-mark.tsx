@@ -6,9 +6,10 @@ import { cn } from '@/lib/cn';
 
 /**
  * Header practice mark. At rest it shows the crisp 512px PNG (sharp on every
- * display); during a dental⇄medical change it plays the real morph frames (a
- * high-res sprite sheet rendered from the 2500px ProRes master, Comp 1.mov) so
- * the tooth/face transition animates, then settles back to the crisp PNG.
+ * display); during a dental⇄medical change it plays the morph frames (a sprite
+ * sheet rendered from 2500px frames rebuilt from the layered logo art, with the
+ * moon as one fixed layer) so the tooth/face transition animates, then settles
+ * back to the crisp PNG.
  *
  * The sprite is one-directional (frame 0 = dental, frame 29 = medical), so:
  *   dental → medical : frames 0 → 29   (face + star emerge)
@@ -21,17 +22,19 @@ import { cn } from '@/lib/cn';
  * snapping straight to the destination.
  */
 
-// Header-sized morph sprite: the 2500px master downscaled (high-quality, AA
+// Header-sized morph sprite: the 2500px frames downscaled (high-quality, AA
 // baked in) to 128px/frame. The mark only renders at ~40px, so a 400px/frame
 // sheet would be downscaled ~5× at runtime — and browsers use fast/low-quality
 // (bilinear, no mipmaps) sampling while an image animates, which aliases badly
 // past ~2× and made the moving mark look jagged. A display-sized sprite keeps
 // the runtime downscale ≤~1.6× (DPR 2–3) so the morph stays crisp in motion.
-// (The cold-open uses the full-res morph-sprite-3.png — it renders at 120px.)
-const SPRITE = '/logos/morph-sprite-header-2.png';
+// (The cold-open uses the full-res morph-sprite-4.png — it renders at 120px.)
+const SPRITE = '/logos/morph-sprite-header-3.png';
+// 64px/frame for 1× monitors, where the 128px sheet would be a 3.2× downscale.
+const SPRITE_1X = '/logos/morph-sprite-header-3-1x.png';
 const REST_PNG: Record<'dental' | 'medical', string> = {
-  dental: '/logos/dental-3.png',
-  medical: '/logos/medical-4.png',
+  dental: '/logos/dental-4.png',
+  medical: '/logos/medical-5.png',
 };
 const FRAMES = 30;
 // The sprite is a COLS×ROWS grid (kept small in both dimensions so it stays
@@ -76,13 +79,16 @@ export function LaneMark({
   // — the rest image stays on the origin mark until the morph actually lands.
   const [settledLane, setSettledLane] = useState(lane);
   const prevLane = useRef(lane);
+  const [sprite, setSprite] = useState(SPRITE);
 
   // Preload + decode the morph sprite and BOTH rest PNGs on mount. On a
   // lane-locked page only the current lane's rest PNG is otherwise fetched, so
   // the first toggle would flash a blank frame while the destination asset
   // loads/decodes at the morph→rest handoff. Warming them up avoids that.
   useEffect(() => {
-    for (const src of [SPRITE, REST_PNG.dental, REST_PNG.medical]) {
+    const chosen = window.devicePixelRatio < 1.5 ? SPRITE_1X : SPRITE;
+    setSprite(chosen);
+    for (const src of [chosen, REST_PNG.dental, REST_PNG.medical]) {
       const img = new Image();
       img.src = src;
       img.decode?.().catch(() => {});
@@ -152,7 +158,7 @@ export function LaneMark({
         <span
           className={cn('absolute inset-0', invert && 'invert')}
           style={{
-            backgroundImage: `url(${SPRITE})`,
+            backgroundImage: `url(${sprite})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: spriteSize,
             backgroundPosition: spritePos,

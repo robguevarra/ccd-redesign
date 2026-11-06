@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn';
  * Plays the practice mark morph for the homepage cold-open ("We do both").
  *
  * Uses the SAME high-res asset and technique as the header mark (LaneMark): the
- * 2500px ProRes master baked into a 6×5 grid sprite (`morph-sprite-3.png`,
+ * 2500px rebuilt frames baked into a 6×5 grid sprite (`morph-sprite-4.png`,
  * 400px per frame), drawn as a raster `background-image` — NOT a CSS mask.
  *
  * Why this matters: the old version masked a 240px-per-frame strip, which a DPR-3
@@ -20,7 +20,9 @@ import { cn } from '@/lib/cn';
  * medical). Otherwise it plays once. `prefers-reduced-motion` holds frame 0.
  */
 
-const SPRITE = '/logos/morph-sprite-3.png';
+const SPRITE = '/logos/morph-sprite-4.png';
+// 192px/frame for 1× monitors, where the 400px sheet would be a 3.3× downscale.
+const SPRITE_1X = '/logos/morph-sprite-4-1x.png';
 const FRAMES = 30;
 const COLS = 6;
 const ROWS = 5;
@@ -62,6 +64,11 @@ export function LogoFrames({
 }: LogoFramesProps) {
   const reduced = useReducedMotion();
   const [frame, setFrame] = useState(0);
+  const [sprite, setSprite] = useState(SPRITE);
+
+  useEffect(() => {
+    if (window.devicePixelRatio < 1.5) setSprite(SPRITE_1X);
+  }, []);
 
   useEffect(() => {
     if (reduced) {
@@ -95,7 +102,7 @@ export function LogoFrames({
         ['--lf-s' as string]: `${size}px`,
         width: 'var(--lf-s)',
         height: 'var(--lf-s)',
-        backgroundImage: `url(${SPRITE})`,
+        backgroundImage: `url(${sprite})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: spriteSize,
         backgroundPosition: spritePos,

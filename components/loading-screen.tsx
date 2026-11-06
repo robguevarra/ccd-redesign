@@ -53,7 +53,7 @@ export function LoadingScreen() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logos/dental-3.png"
+              src="/logos/dental-4.png"
               alt="Comfort Care Dental"
               className="h-16 w-16 md:h-20 md:w-20 invert opacity-95"
             />

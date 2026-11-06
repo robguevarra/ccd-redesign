@@ -42,7 +42,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
         <div className="flex flex-col gap-8 border-b border-stone-800 pb-12 lg:grid lg:grid-cols-3 lg:items-center lg:gap-12">
           <div className="flex items-center gap-3.5 lg:justify-self-start">
             <Image
-              src="/logos/dental-3.png"
+              src="/logos/dental-4.png"
               alt="Comfort Care Dental practice mark"
               width={44}
               height={44}
@@ -62,7 +62,7 @@ export function SiteFooter({ hours = DEFAULT_OFFICE_HOURS }: { hours?: BusinessH
           </p>
           <div className="flex items-center gap-3.5 lg:justify-self-end">
             <Image
-              src="/logos/medical-4.png"
+              src="/logos/medical-5.png"
               alt="Brien Hsu, DDS, MS & Associates medical practice mark"
               width={44}
               height={44}
