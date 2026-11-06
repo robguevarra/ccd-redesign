@@ -44,8 +44,9 @@ export default function AboutPage() {
             the belief.
           </p>
           <p>
-            Five doctors work alongside Dr. Brien Hsu today — board-certified
-            specialists in oral surgery, endodontics, and orofacial pain. We
+            Five doctors work alongside Dr. Brien Hsu today, including several
+            board-certified specialists in oral surgery, endodontics, and
+            orofacial pain. We
             invest in technology when it actually improves a clinical outcome
             (3D CBCT in 2014, upgraded larger field of range 3D CBCT in 2020,
             Trios scanner in 2017, second 3Shape Trios 5 scanner added in 2024)
